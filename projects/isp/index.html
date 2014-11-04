@@ -302,7 +302,7 @@ sup {
 	}
 }
 </style>
-<title>ISP: Big Spatial Data Processing using Impala</title>
+<title>Introduction</title>
 
 </head>
 <body>
@@ -323,6 +323,29 @@ sup {
 <h2>Performance</h2>
 
 <p>We have tested several tasks on a 10-noode Amazon EC2 cluster. For aggregating New York City Taxi data (~170 million points, from <a href="http://chriswhong.com/open-data/foil_nyc_taxi/">here</a>) with census blocks  (data from <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">here</a>), ISP with GPU enabled is 5x faster than <a href="http://simin.me/projects/spatialspark/">SpatialSpark</a>.</p>
+
+<h3>Repeat Experiment on Taxi Data</h3>
+
+<p><strong>Preprocessing</strong><br/>
+Download data and format it to tab-separated files, representing geometries using WKT format. Then import data to HDFS, and create appropriate table schema in Impala.</p>
+
+<p><strong>Environment Setup</strong><br/>
+1. start HDFS <br/>
+2. start PostgreSQL for Hive metastore<br/>
+3. start Hive metastore <code>hive --service metastore</code><br/>
+4. start Impala catalogd and statestored <code>bin/start-catalogd.sh</code> and <code>bin/start-statestored.sh</code><br/>
+5. start impalad <code>bin/start-impalad.sh</code>, <code>-geos=true</code> will use GEOS library for geometry operation otherwise set it to <code>false</code> to use our own implementation. <code>-mem_limit=15g</code> will set memory limit for impalad.</p>
+
+<p><strong>Enable Spatial UDFs</strong><br/>
+Upload <code>impala-sp.ll</code> to <code>/lib/</code> on HDFS, and import it in impala-shell.<br/>
+<code>create function st_within(string, string) returns boolean location '/lib/impala-sp.ll' symbol='ST_Within';</code></p>
+
+<p><strong>Run Query</strong><br/>
+In impala shell, run<br/>
+<code>select count(*) from taxi_geom spatial join nycb where st_within(taxi_geom.geom, nycb.wkt);</code></p>
+
+<p>For a small example, run<br/>
+<code>select count(*) from point spatial join pluto where st_within(point.geom, pluto.wkt);</code></p>
 
 <h2>Work In Progress</h2>
 
