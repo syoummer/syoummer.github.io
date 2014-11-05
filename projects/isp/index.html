@@ -302,15 +302,15 @@ sup {
 	}
 }
 </style>
-<title>Introduction</title>
+<title>ISP: Big Spatial Data Processing On Impala Using Multicore CPUs and GPUs</title>
 
 </head>
 <body>
-<h1>ISP: Big Spatial Data Processing using Impala</h1>
+<h1>ISP: Big Spatial Data Processing On Impala Using Multicore CPUs and GPUs</h1>
 
 <h2>Introduction</h2>
 
-<p>In this project, we extend <a href="http://impala.io/">Cloudera Impala</a> with big spatial data processing capacity. ISP contains a set of UDFs (User-Defined Functions) to support spatial operations. In addition to spatial extensions using UDFs, we have also developed an efficient parallel spatial join module, which is accelerated by not only multicore CPUs but also GPUs. Since ISP is natively developed in C++ as Impala does, no additional overhead will be imposed when running the GPU module. Because of current inefficient Java support on GPUs, ISP has great potentials to outperform other GPU enabled big spatial data solutions that use Java based systems.</p>
+<p>In this project, we extend <a href="http://impala.io/">Cloudera Impala</a> with big spatial data processing capacity. ISP contains a set of UDFs (User-Defined Functions) to support spatial operations. In addition to spatial extensions using UDFs, we have also developed an efficient parallel spatial join module, which is accelerated by not only multicore CPUs but also GPUs. Since ISP is natively developed in C++ as Impala does, no additional overhead will be imposed when running the GPU module. Because of current inefficient Java support on GPUs, ISP has great potentials to outperform other GPU enabled big spatial data solutions that use Java based systems. The goal of ISP is to combine</p>
 
 <h2>Parallel Spatial Join</h2>
 
@@ -322,7 +322,7 @@ sup {
 
 <h2>Performance</h2>
 
-<p>We have tested several tasks on a 10-noode Amazon EC2 cluster. For aggregating New York City Taxi data (~170 million points, from <a href="http://chriswhong.com/open-data/foil_nyc_taxi/">here</a>) with census blocks  (data from <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">here</a>), ISP with GPU enabled is 5x faster than <a href="http://simin.me/projects/spatialspark/">SpatialSpark</a>.</p>
+<p>We have tested several tasks on a 10-noode Amazon EC2 cluster (g2.2xlarge). For aggregating New York City Taxi data (~170 million points, from <a href="http://chriswhong.com/open-data/foil_nyc_taxi/">here</a>) with census blocks  (~40k polygons, data from <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">here</a>), ISP with GPU enabled can achieve 5x faster than <a href="http://simin.me/projects/spatialspark/">SpatialSpark</a>.</p>
 
 <h3>Repeat Experiment on Taxi Data</h3>
 
