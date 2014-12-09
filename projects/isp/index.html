@@ -1,9 +1,9 @@
-<!doctype html>
-<html>
+<!DOCTYPE html><html>
+
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<style>
+<title>index</title>
+<style type="text/css">
 body {
   font-family: Helvetica, arial, sans-serif;
   font-size: 14px;
@@ -302,72 +302,72 @@ sup {
 	}
 }
 </style>
-<title>ISP: Big Spatial Data Processing On Impala Using Multicore CPUs and GPUs</title>
-
 </head>
 <body>
-<h1>ISP: Big Spatial Data Processing On Impala Using Multicore CPUs and GPUs</h1>
+<h1 id="toc_0">ISP: Big Spatial Data Processing On Impala Using Multicore CPUs and GPUs</h1>
 
-<h2>Introduction</h2>
+<h2 id="toc_1">Introduction</h2>
 
-<p>In this project, we extend <a href="http://impala.io/">Cloudera Impala</a> with big spatial data processing capacity. ISP contains a set of UDFs (User-Defined Functions) to support spatial operations. In addition to spatial extensions using UDFs, we have also developed an efficient parallel spatial join module, which is accelerated by not only multicore CPUs but also GPUs. Since ISP is natively developed in C++ as Impala does, no additional overhead will be imposed when running the GPU module. Because of current inefficient Java support on GPUs, ISP has great potentials to outperform other GPU enabled big spatial data solutions that use Java based systems. The goal of ISP is to combine</p>
+<p>In this project, we extend <a href="http://impala.io/">Cloudera Impala</a> with big spatial data processing capacity. ISP contains a set of UDFs (User-Defined Functions) to support spatial operations. In addition to spatial extensions using UDFs, we have also developed an efficient parallel spatial join module, which is accelerated by not only multicore CPUs but also GPUs. Since ISP is natively developed in C++ as Impala does, no additional overhead will be imposed when running the GPU module. Because of current inefficient Java support on GPUs, ISP has great potentials to outperform other GPU enabled big spatial data solutions that use Java based systems. The goal of ISP is to combine </p>
 
-<h2>Parallel Spatial Join</h2>
+<h2 id="toc_2">Parallel Spatial Join</h2>
 
-<p>The spatial join module we have implemented is a broadcast spatial join, which is also developed in our <a href="http://simin.me/projects/spatialspark/">SpatialSpark</a> project. Ideally, this kind of spatial join is more suitable for joining a big dataset with a considerable small dataset (usually it fits in main memory). Similar to hash join in original Impala, our spatial join module is also parallelized for multi-core CPUs. Meanwhile, we also incorporate our previous GPU accelerated spatial join work to seek higher performance.</p>
+<p>The spatial join module we have implemented is a broadcast spatial join, which is also developed in our <a href="http://simin.me/projects/spatialspark/">SpatialSpark</a> project. Ideally, this kind of spatial join is more suitable for joining a big dataset with a considerable small dataset (usually it fits in main memory). Similar to hash join in original Impala, our spatial join module is also parallelized for multi-core CPUs. Meanwhile, we also incorporate our previous GPU accelerated spatial join work to seek higher performance. </p>
 
-<p style="text-align:center;"> <img src="./figures/ISP_broadcast_join.svg" alt="broadcast" /></p>
+<p>-&gt; <img src="./figures/ISP_broadcast_join.svg" alt="broadcast"> &lt;-</p>
 
 <p>More details can be found from our <a href="">technical report</a></p>
 
-<h2>Performance</h2>
+<h2 id="toc_3">Performance</h2>
 
-<p>We have tested several tasks on a 10-noode Amazon EC2 cluster (g2.2xlarge). For aggregating New York City Taxi data (~170 million points, from <a href="http://chriswhong.com/open-data/foil_nyc_taxi/">here</a>) with census blocks  (~40k polygons, data from <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">here</a>), ISP with GPU enabled can achieve 5x faster than <a href="http://simin.me/projects/spatialspark/">SpatialSpark</a>.</p>
+<p>We have tested several tasks on a 10-noode Amazon EC2 cluster (g2.2xlarge). For aggregating New York City Taxi data (~170 million points, from <a href="http://chriswhong.com/open-data/foil_nyc_taxi/">here</a>) with census blocks  (~40k polygons, data from <a href="http://www.nyc.gov/html/dcp/html/bytes/applbyte.shtml">here</a>), ISP with GPU enabled can achieve 5x faster than <a href="http://simin.me/projects/spatialspark/">SpatialSpark</a>. </p>
 
-<h3>Repeat Experiment on Taxi Data</h3>
+<h3 id="toc_4">Repeat Experiment on Taxi Data</h3>
 
-<p><strong>Preprocessing</strong><br/>
+<p><strong>Preprocessing</strong><br>
 Download data and format it to tab-separated files, representing geometries using WKT format. Then import data to HDFS, and create appropriate table schema in Impala.</p>
 
-<p><strong>Environment Setup</strong><br/>
-1. start HDFS <br/>
-2. start PostgreSQL for Hive metastore<br/>
-3. start Hive metastore <code>hive --service metastore</code><br/>
-4. start Impala catalogd and statestored <code>bin/start-catalogd.sh</code> and <code>bin/start-statestored.sh</code><br/>
-5. start impalad <code>bin/start-impalad.sh</code>, <code>-geos=true</code> will use GEOS library for geometry operation otherwise set it to <code>false</code> to use our own implementation. <code>-mem_limit=15g</code> will set memory limit for impalad.</p>
+<p><strong>Environment Setup</strong><br>
+1. start HDFS<br>
+2. start PostgreSQL for Hive metastore<br>
+3. start Hive metastore <code>hive --service metastore</code><br>
+4. start Impala catalogd and statestored <code>bin/start-catalogd.sh</code> and <code>bin/start-statestored.sh</code><br>
+5. start impalad <code>bin/start-impalad.sh</code>, <code>-geos=true</code> will use GEOS library for geometry operation otherwise set it to <code>false</code> to use our own implementation. <code>-mem_limit=15g</code> will set memory limit for impalad. </p>
 
-<p><strong>Enable Spatial UDFs</strong><br/>
-Upload <code>impala-sp.ll</code> to <code>/lib/</code> on HDFS, and import it in impala-shell.<br/>
-<code>create function st_within(string, string) returns boolean location '/lib/impala-sp.ll' symbol='ST_Within';</code></p>
+<p><strong>Enable Spatial UDFs</strong><br>
+Upload <code>impala-sp.ll</code> to <code>/lib/</code> on HDFS, and import it in impala-shell.<br>
+<code>create function st_within(string, string) returns boolean location &#39;/lib/impala-sp.ll&#39; symbol=&#39;ST_Within&#39;;</code>  </p>
 
-<p><strong>Run Query</strong><br/>
-In impala shell, run<br/>
+<p><strong>Run Query</strong><br>
+In impala shell, run<br>
 <code>select count(*) from taxi_geom spatial join nycb where st_within(taxi_geom.geom, nycb.wkt);</code></p>
 
-<p>For a small example, run<br/>
+<p>For a small example, run<br>
 <code>select count(*) from point spatial join pluto where st_within(point.geom, pluto.wkt);</code></p>
 
-<h2>Work In Progress</h2>
+<h2 id="toc_5">Work In Progress</h2>
 
 <p>We are implementing partitioned spatial join to support joining two big datasets as we did in our <a href="http://simin.me/projects/spatialspark/">SpatialSpark</a>. On the other hand, we are desigining spatial index support in Impala for efficient spatial range query using both multi-core GPUs and GPUs.</p>
 
-<h2>Code and Report</h2>
+<h2 id="toc_6">Code</h2>
 
 <p>coming soon</p>
 
-<h2>Related Reports</h2>
+<h2 id="toc_7">Related Technical Reports</h2>
 
 <ul>
-<li>Simin You, Jianting Zhang and Le Gruenwald <strong>ISP: Large-Scale In-memory Spatial Data Processing System</strong> [<a href="http://www-cs.ccny.cuny.edu/~jzhang/papers/isp.pdf">technical report</a>]</li>
+<li>Simin You, Jianting Zhang and Le Gruenwald <strong>ISP: Large-Scale In-memory Spatial Data Processing System</strong> [<a href="http://www-cs.ccny.cuny.edu/%7Ejzhang/papers/isp.pdf">technical report</a>]</li>
+<li>Simin You, Jianting Zhang and Le Gruenwald <strong>Scalable and Efficient Spatial Data Management on Multi-Core CPU and GPU Clusters: A Preliminary Implementation based on Impala</strong> [<a href="http://www-cs.ccny.cuny.edu/%7Ejzhang/papers/isp_gpu_tr.pdf">technical report</a>]</li>
 </ul>
 
-
-<h2>Contact</h2>
+<h2 id="toc_8">Contact</h2>
 
 <ul>
 <li><a href="http://simin.me">Simin You</a></li>
-<li><a href="http://www-cs.ccny.cuny.edu/~jzhang/">Jianting Zhang</a></li>
+<li><a href="http://www-cs.ccny.cuny.edu/%7Ejzhang/">Jianting Zhang</a></li>
 </ul>
 
+
 </body>
+
 </html>
