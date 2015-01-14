@@ -316,9 +316,9 @@ sup {
 
 <p>We have developed two different spatial join operators, namely broadcast spatial join and partitioned spatial join. Broadcast spatial join is designed for joining one big dataset with another small dataset efficiently. For example, reverse geocoding a very large geo-tagged tweets dataset to city/county boundaries. This kind of spatial join involves a big dataset (geo-tagged tweets) and a considerable small datasets (political boundaries). Partitioned spatial join is more general for joining two big datasets. The basic idea is divide-and-conquer and follows similar designs of <a href="https://sites.google.com/site/hadoopgis/">HadoopGIS</a>. The two big datasets are divided into small pieces via space decomposition, and each small piece is processed by a executor.</p>
 
-<p><img src="./figures/broadcast_join.svg" width="250" alt="broadcast" /> <img src="./figures/partitioned_join.svg" width="250" alt="partition" /></p>
+<p><img src="./figures/broadcast_join.svg" width="250" alt="broadcast" />  <img src="./figures/partitioned_join.svg" width="250" alt="partition" /></p>
 
-<p>More details are in our <a href="">technical report</a>.</p>
+<p>More details are in our <a href="http://www-cs.ccny.cuny.edu/~jzhang/papers/spatial_cc_tr.pdf">technical report</a>.</p>
 
 <h2>Spatial Query</h2>
 
@@ -328,7 +328,7 @@ sup {
 
 <h2>Code and Report</h2>
 
-<p>Source code is available at <a href="">github</a>(<em>coming soon</em>), a techinical report is <a href="">here</a> (<em>coming soon</em>).</p>
+<p>Source code is available at <a href="">github</a>(<em>coming soon</em>), a techinical report is <a href="http://www-cs.ccny.cuny.edu/~jzhang/papers/spatial_cc_tr.pdf">here</a>.</p>
 
 <p><strong>Note:</strong> We are preparing the first release. If you want to have early access, please contact authors.</p>
 
