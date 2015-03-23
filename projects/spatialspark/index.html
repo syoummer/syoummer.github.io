@@ -322,7 +322,7 @@ sup {
 
 <h2>Spatial Query</h2>
 
-<p>Currently, we have only implemented range query (window query) without index support. A full scan will be performed to generate query results. The query region is specified as a geometry object (in WKT format). We plan to develop index support for efficient range queries, as well as kNN queries.</p>
+<p>We have implemented range query (window query) with/without index support. A full scan will be performed to generate query results if no index exists. Otherwise, an indexed query will be performed using pre-built index. We plan to develop more efficient index support for range queries, as well as kNN queries.</p>
 
 <p><img src="./figures/full_scan.svg" width="250" alt="full_scan" /></p>
 
