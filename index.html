@@ -147,6 +147,7 @@
             background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
             position: absolute;
             left: 0;
+            z-index: 1;
         }
 
         .btn-reject:hover {
@@ -158,7 +159,8 @@
             background: linear-gradient(135deg, #51cf66, #37b24d);
             position: absolute;
             right: 0;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2;
         }
 
         .btn-accept:hover {
@@ -217,6 +219,7 @@
         let rejectHoverTimer = null;
         let acceptScale = 1;
         let isRejectHovered = false;
+        let isCoveringReject = false;
 
         // 眼睛跟随鼠标
         document.addEventListener('mousemove', (e) => {
@@ -305,24 +308,44 @@
             }
         }
 
-        // 拒绝按钮悬停逻辑
-        btnReject.addEventListener('mouseenter', () => {
-            isRejectHovered = true;
-            rejectHoverTimer = setTimeout(() => {
-                if (isRejectHovered) {
-                    moveRejectButton();
-                    enlargeAcceptButton();
-                }
-            }, 100);
-        });
+        // 检测是否为移动设备
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                         ('ontouchstart' in window) || 
+                         (navigator.maxTouchPoints > 0);
 
-        btnReject.addEventListener('mouseleave', () => {
-            isRejectHovered = false;
-            if (rejectHoverTimer) {
-                clearTimeout(rejectHoverTimer);
-                rejectHoverTimer = null;
-            }
-        });
+        // 移动端：点击拒绝按钮时，接受按钮覆盖上去
+        if (isMobile) {
+            btnReject.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                coverRejectWithAccept();
+            });
+            
+            btnReject.addEventListener('mousedown', (e) => {
+                if (!isCoveringReject) {
+                    e.preventDefault();
+                    coverRejectWithAccept();
+                }
+            });
+        } else {
+            // 桌面端：拒绝按钮悬停逻辑
+            btnReject.addEventListener('mouseenter', () => {
+                isRejectHovered = true;
+                rejectHoverTimer = setTimeout(() => {
+                    if (isRejectHovered) {
+                        moveRejectButton();
+                        enlargeAcceptButton();
+                    }
+                }, 100);
+            });
+
+            btnReject.addEventListener('mouseleave', () => {
+                isRejectHovered = false;
+                if (rejectHoverTimer) {
+                    clearTimeout(rejectHoverTimer);
+                    rejectHoverTimer = null;
+                }
+            });
+        }
 
         function moveRejectButton() {
             const containerRect = buttonsContainer.getBoundingClientRect();
@@ -380,14 +403,37 @@
             btnAccept.style.transform = `scale(${acceptScale})`;
         }
 
+        function coverRejectWithAccept() {
+            isCoveringReject = true;
+            const rejectRect = btnReject.getBoundingClientRect();
+            const containerRect = buttonsContainer.getBoundingClientRect();
+            
+            // 计算拒绝按钮相对于容器的位置
+            const rejectLeft = rejectRect.left - containerRect.left;
+            const rejectTop = rejectRect.top - containerRect.top;
+            
+            // 将接受按钮移动到拒绝按钮的位置
+            btnAccept.style.right = 'auto';
+            btnAccept.style.left = `${rejectLeft}px`;
+            btnAccept.style.top = `${rejectTop}px`;
+            
+            // 添加一个动画效果
+            btnAccept.classList.add('shake');
+            setTimeout(() => btnAccept.classList.remove('shake'), 300);
+        }
+
         // 点击接受按钮
         btnAccept.addEventListener('click', () => {
             alert('✅ 请假申请已批准！');
             // 重置
             acceptScale = 1;
             btnAccept.style.transform = 'scale(1)';
+            btnAccept.style.right = '0';
+            btnAccept.style.left = 'auto';
+            btnAccept.style.top = '0';
             btnReject.style.left = '0';
             btnReject.style.top = '0';
+            isCoveringReject = false;
         });
 
         // 点击拒绝按钮
@@ -396,8 +442,12 @@
             // 重置
             acceptScale = 1;
             btnAccept.style.transform = 'scale(1)';
+            btnAccept.style.right = '0';
+            btnAccept.style.left = 'auto';
+            btnAccept.style.top = '0';
             btnReject.style.left = '0';
             btnReject.style.top = '0';
+            isCoveringReject = false;
         });
     </script>
 </body>
