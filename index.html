@@ -148,6 +148,7 @@
             position: absolute;
             left: 0;
             z-index: 1;
+            pointer-events: none;
         }
 
         .btn-reject:hover {
@@ -158,7 +159,9 @@
         .btn-accept {
             background: linear-gradient(135deg, #51cf66, #37b24d);
             position: absolute;
+            left: 0;
             right: 0;
+            width: 100%;
             transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
             z-index: 2;
         }
@@ -404,18 +407,8 @@
         }
 
         function coverRejectWithAccept() {
+            // 接受按钮已经覆盖整个区域，不需要移动
             isCoveringReject = true;
-            const rejectRect = btnReject.getBoundingClientRect();
-            const containerRect = buttonsContainer.getBoundingClientRect();
-            
-            // 计算拒绝按钮相对于容器的位置
-            const rejectLeft = rejectRect.left - containerRect.left;
-            const rejectTop = rejectRect.top - containerRect.top;
-            
-            // 将接受按钮移动到拒绝按钮的位置
-            btnAccept.style.right = 'auto';
-            btnAccept.style.left = `${rejectLeft}px`;
-            btnAccept.style.top = `${rejectTop}px`;
             
             // 添加一个动画效果
             btnAccept.classList.add('shake');
@@ -428,27 +421,12 @@
             // 重置
             acceptScale = 1;
             btnAccept.style.transform = 'scale(1)';
-            btnAccept.style.right = '0';
-            btnAccept.style.left = 'auto';
-            btnAccept.style.top = '0';
             btnReject.style.left = '0';
             btnReject.style.top = '0';
             isCoveringReject = false;
         });
 
-        // 点击拒绝按钮
-        btnReject.addEventListener('click', () => {
-            alert('❌ 请假申请已拒绝！');
-            // 重置
-            acceptScale = 1;
-            btnAccept.style.transform = 'scale(1)';
-            btnAccept.style.right = '0';
-            btnAccept.style.left = 'auto';
-            btnAccept.style.top = '0';
-            btnReject.style.left = '0';
-            btnReject.style.top = '0';
-            isCoveringReject = false;
-        });
+        // 拒绝按钮点击已禁用
     </script>
 </body>
 </html>
