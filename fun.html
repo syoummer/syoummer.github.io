@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>请假申请</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .face-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 40px;
+            position: relative;
+        }
+
+        .face {
+            width: 100%;
+            height: 100%;
+            background: #FFD700;
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
+        }
+
+        .eye {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            top: 60px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .eye-left {
+            left: 50px;
+        }
+
+        .eye-right {
+            right: 50px;
+        }
+
+        .pupil {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: #333;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.1s ease;
+        }
+
+        .mouth {
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            bottom: 50px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+        }
+
+        .mouth path {
+            stroke: #333;
+            stroke-width: 4;
+            fill: none;
+            stroke-linecap: round;
+        }
+
+        .eyebrow {
+            position: absolute;
+            width: 35px;
+            height: 4px;
+            background: #333;
+            border-radius: 2px;
+            top: 45px;
+            transition: all 0.3s ease;
+        }
+
+        .eyebrow-left {
+            left: 45px;
+            transform-origin: left center;
+        }
+
+        .eyebrow-right {
+            right: 45px;
+            transform-origin: right center;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+            height: 80px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-reject {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            position: absolute;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .btn-reject:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-accept {
+            background: linear-gradient(135deg, #51cf66, #37b24d);
+            position: absolute;
+            left: 0;
+            right: 0;
+            width: 100%;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 2;
+        }
+
+        .btn-accept:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(81, 207, 102, 0.4);
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>您的学生向辅导员提出请假申请，是否接受？</h1>
+        
+        <div class="face-container">
+            <div class="face" id="face">
+                <div class="eyebrow eyebrow-left" id="eyebrowLeft"></div>
+                <div class="eyebrow eyebrow-right" id="eyebrowRight"></div>
+                <div class="eye eye-left">
+                    <div class="pupil" id="pupilLeft"></div>
+                </div>
+                <div class="eye eye-right">
+                    <div class="pupil" id="pupilRight"></div>
+                </div>
+                <svg class="mouth" id="mouth" viewBox="0 0 80 40">
+                    <path id="mouthPath" d="M 10 20 Q 40 20 70 20"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="buttons" id="buttonsContainer">
+            <button class="btn btn-reject" id="btnReject">拒绝</button>
+            <button class="btn btn-accept" id="btnAccept">接受</button>
+        </div>
+    </div>
+
+    <script>
+        const face = document.getElementById('face');
+        const pupilLeft = document.getElementById('pupilLeft');
+        const pupilRight = document.getElementById('pupilRight');
+        const mouthPath = document.getElementById('mouthPath');
+        const eyebrowLeft = document.getElementById('eyebrowLeft');
+        const eyebrowRight = document.getElementById('eyebrowRight');
+        const btnReject = document.getElementById('btnReject');
+        const btnAccept = document.getElementById('btnAccept');
+        const buttonsContainer = document.getElementById('buttonsContainer');
+
+        let rejectHoverTimer = null;
+        let acceptScale = 1;
+        let isRejectHovered = false;
+        let isCoveringReject = false;
+
+        // 眼睛跟随鼠标
+        document.addEventListener('mousemove', (e) => {
+            const eyes = document.querySelectorAll('.eye');
+            
+            eyes.forEach((eye, index) => {
+                const eyeRect = eye.getBoundingClientRect();
+                const eyeCenterX = eyeRect.left + eyeRect.width / 2;
+                const eyeCenterY = eyeRect.top + eyeRect.height / 2;
+                
+                const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
+                const distance = Math.min(7, Math.hypot(e.clientX - eyeCenterX, e.clientY - eyeCenterY) / 20);
+                
+                const pupil = index === 0 ? pupilLeft : pupilRight;
+                const offsetX = Math.cos(angle) * distance;
+                const offsetY = Math.sin(angle) * distance;
+                
+                pupil.style.transform = `translate(calc(-50% + ${offsetX}px), calc(-50% + ${offsetY}px))`;
+            });
+
+            // 计算鼠标到按钮的距离，更新表情
+            updateFaceExpression(e);
+        });
+
+        function updateFaceExpression(e) {
+            const rejectRect = btnReject.getBoundingClientRect();
+            const acceptRect = btnAccept.getBoundingClientRect();
+            
+            const rejectCenter = {
+                x: rejectRect.left + rejectRect.width / 2,
+                y: rejectRect.top + rejectRect.height / 2
+            };
+            
+            const acceptCenter = {
+                x: acceptRect.left + acceptRect.width / 2,
+                y: acceptRect.top + acceptRect.height / 2
+            };
+            
+            const distToReject = Math.hypot(e.clientX - rejectCenter.x, e.clientY - rejectCenter.y);
+            const distToAccept = Math.hypot(e.clientX - acceptCenter.x, e.clientY - acceptCenter.y);
+            
+            // 根据距离计算情绪值 (-1 到 1，-1最生气，1最开心)
+            const maxDist = 400;
+            const rejectInfluence = Math.max(0, (maxDist - distToReject) / maxDist);
+            const acceptInfluence = Math.max(0, (maxDist - distToAccept) / maxDist);
+            
+            const emotion = acceptInfluence - rejectInfluence;
+            
+            // 更新嘴巴
+            if (emotion > 0.3) {
+                // 开心 - 笑脸
+                const curve = 10 + emotion * 20;
+                mouthPath.setAttribute('d', `M 10 ${30 - curve} Q 40 ${10 - curve} 70 ${30 - curve}`);
+            } else if (emotion < -0.3) {
+                // 生气 - 皱眉
+                const curve = 10 + Math.abs(emotion) * 20;
+                mouthPath.setAttribute('d', `M 10 ${10 + curve} Q 40 ${30 + curve} 70 ${10 + curve}`);
+            } else {
+                // 中性
+                mouthPath.setAttribute('d', 'M 10 20 Q 40 20 70 20');
+            }
+            
+            // 更新眉毛
+            if (emotion < -0.2) {
+                // 生气的眉毛
+                const angle = Math.abs(emotion) * 15;
+                eyebrowLeft.style.transform = `rotate(${angle}deg)`;
+                eyebrowRight.style.transform = `rotate(-${angle}deg)`;
+            } else if (emotion > 0.2) {
+                // 开心的眉毛
+                const angle = emotion * 10;
+                eyebrowLeft.style.transform = `rotate(-${angle}deg)`;
+                eyebrowRight.style.transform = `rotate(${angle}deg)`;
+            } else {
+                eyebrowLeft.style.transform = 'rotate(0deg)';
+                eyebrowRight.style.transform = 'rotate(0deg)';
+            }
+            
+            // 脸的颜色变化
+            if (emotion > 0.3) {
+                face.style.background = '#FFD700'; // 金黄色
+            } else if (emotion < -0.3) {
+                face.style.background = '#FFA500'; // 橙色（生气）
+            } else {
+                face.style.background = '#FFD700';
+            }
+        }
+
+        // 检测是否为移动设备
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
+                         ('ontouchstart' in window) || 
+                         (navigator.maxTouchPoints > 0);
+
+        // 移动端：点击拒绝按钮时，接受按钮覆盖上去
+        if (isMobile) {
+            btnReject.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                coverRejectWithAccept();
+            });
+            
+            btnReject.addEventListener('mousedown', (e) => {
+                if (!isCoveringReject) {
+                    e.preventDefault();
+                    coverRejectWithAccept();
+                }
+            });
+        } else {
+            // 桌面端：拒绝按钮悬停逻辑
+            btnReject.addEventListener('mouseenter', () => {
+                isRejectHovered = true;
+                rejectHoverTimer = setTimeout(() => {
+                    if (isRejectHovered) {
+                        moveRejectButton();
+                        enlargeAcceptButton();
+                    }
+                }, 100);
+            });
+
+            btnReject.addEventListener('mouseleave', () => {
+                isRejectHovered = false;
+                if (rejectHoverTimer) {
+                    clearTimeout(rejectHoverTimer);
+                    rejectHoverTimer = null;
+                }
+            });
+        }
+
+        function moveRejectButton() {
+            const containerRect = buttonsContainer.getBoundingClientRect();
+            const btnRect = btnReject.getBoundingClientRect();
+            
+            // 获取鼠标位置
+            let mouseX = 0;
+            let mouseY = 0;
+            
+            const mouseMoveHandler = (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            };
+            
+            document.addEventListener('mousemove', mouseMoveHandler);
+            
+            // 计算按钮可以移动的范围
+            const containerWidth = containerRect.width;
+            const btnWidth = btnRect.width;
+            const maxLeft = containerWidth - btnWidth;
+            
+            let newLeft, newTop;
+            let attempts = 0;
+            const maxAttempts = 50;
+            const minDistance = 100; // 与鼠标的最小距离
+            
+            do {
+                newLeft = Math.random() * maxLeft;
+                newTop = -20 + Math.random() * 40; // 上下随机移动一点
+                
+                // 计算新位置的中心点（相对于页面）
+                const newCenterX = containerRect.left + newLeft + btnWidth / 2;
+                const newCenterY = containerRect.top + newTop + btnRect.height / 2;
+                
+                // 计算与鼠标的距离
+                const distToMouse = Math.hypot(mouseX - newCenterX, mouseY - newCenterY);
+                
+                if (distToMouse > minDistance) {
+                    break;
+                }
+                
+                attempts++;
+            } while (attempts < maxAttempts);
+            
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            
+            btnReject.style.left = `${newLeft}px`;
+            btnReject.style.top = `${newTop}px`;
+            btnReject.classList.add('shake');
+            setTimeout(() => btnReject.classList.remove('shake'), 300);
+        }
+
+        function enlargeAcceptButton() {
+            acceptScale += 0.1;
+            btnAccept.style.transform = `scale(${acceptScale})`;
+        }
+
+        function coverRejectWithAccept() {
+            // 接受按钮已经覆盖整个区域，不需要移动
+            isCoveringReject = true;
+            
+            // 添加一个动画效果
+            btnAccept.classList.add('shake');
+            setTimeout(() => btnAccept.classList.remove('shake'), 300);
+        }
+
+        // 点击接受按钮
+        btnAccept.addEventListener('click', () => {
+            alert('✅ 请假申请已批准！');
+            // 重置
+            acceptScale = 1;
+            btnAccept.style.transform = 'scale(1)';
+            btnReject.style.left = '0';
+            btnReject.style.top = '0';
+            isCoveringReject = false;
+        });
+
+        // 拒绝按钮点击已禁用
+    </script>
+</body>
+</html>
