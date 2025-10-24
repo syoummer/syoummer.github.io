@@ -152,52 +152,45 @@
         }
 
         .guess-panel {
-            display: flex;
+            display: grid;
             gap: 12px;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
         }
 
-        .guess-panel input {
-            flex: 1 1 260px;
-            min-width: 200px;
-            padding: 12px 18px;
-            font-size: 16px;
-            border-radius: 999px;
-            border: 2px solid rgba(66, 99, 235, 0.35);
-            outline: none;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .guess-panel input:focus {
-            border-color: #4263eb;
-            box-shadow: 0 0 0 3px rgba(66, 99, 235, 0.2);
-        }
-
-        .guess-panel button {
+        .option-button {
             border: none;
             background: #182955;
             color: #fff;
-            padding: 12px 26px;
-            border-radius: 999px;
+            padding: 12px 18px;
+            border-radius: 18px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
-            box-shadow: 0 10px 24px rgba(24, 41, 85, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+            box-shadow: 0 12px 24px rgba(24, 41, 85, 0.3);
         }
 
-        .guess-panel button:disabled {
+        .option-button:disabled {
             cursor: not-allowed;
             opacity: 0.65;
             box-shadow: none;
         }
 
-        .guess-panel button:not(:disabled):hover {
-            transform: translateY(-1px);
-            box-shadow: 0 14px 28px rgba(24, 41, 85, 0.38);
+        .option-button:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 30px rgba(24, 41, 85, 0.4);
+        }
+
+        .option-button.correct {
+            background: linear-gradient(135deg, #2f9e44, #51cf66);
+            color: #fff;
+            box-shadow: 0 16px 32px rgba(47, 158, 68, 0.35);
+        }
+
+        .option-button.incorrect {
+            background: linear-gradient(135deg, #f03e3e, #ff8787);
+            color: #fff;
+            box-shadow: none;
         }
 
         .feedback {
@@ -229,8 +222,9 @@
                 gap: 20px;
             }
 
-            .guess-panel input {
-                min-width: 0;
+            .option-button {
+                font-size: 15px;
+                padding: 12px 14px;
             }
         }
     </style>
@@ -249,12 +243,9 @@
                 <div class="spinner" aria-hidden="true"></div>
             </div>
         </div>
-        <div class="guess-panel">
-            <input id="guessInput" type="text" placeholder="请输入姓名" autocomplete="off" disabled>
-            <button id="checkBtn" type="button" disabled>确定</button>
-        </div>
+        <div id="guessPanel" class="guess-panel" aria-label="候选明星名单"></div>
         <div id="feedback" class="feedback"></div>
-        <p id="hint" class="hint">当前仅支持输入中文或常见英文艺名，试试吧～</p>
+        <p id="hint" class="hint">从四个选项中选出你认为正确的名字吧！</p>
     </div>
 
     <script>
@@ -853,17 +844,21 @@ const CELEBRITIES = [
 
         (() => {
             const startBtn = document.getElementById('startBtn');
-            const checkBtn = document.getElementById('checkBtn');
-            const guessInput = document.getElementById('guessInput');
+            const optionsPanel = document.getElementById('guessPanel');
             const feedback = document.getElementById('feedback');
             const hint = document.getElementById('hint');
             const starImage = document.getElementById('starImage');
             const placeholder = document.getElementById('placeholder');
             const loadingOverlay = document.getElementById('loading');
 
+            const OPTION_COUNT = 4;
+            const maxFetchAttempts = 15;
+
+            let optionButtons = [];
             let currentCelebrity = null;
             let lastLoadedIndex = -1;
-            const maxFetchAttempts = 15;
+
+            initOptionButtons();
 
             startBtn.addEventListener('click', () => {
                 startBtn.disabled = true;
@@ -873,12 +868,10 @@ const CELEBRITIES = [
                 hint.textContent = '正在为你找照片，请稍候…';
                 placeholder.style.display = 'flex';
                 placeholder.textContent = '照片加载中…';
-                guessInput.value = '';
-                guessInput.disabled = true;
-                checkBtn.disabled = true;
                 starImage.classList.remove('visible');
                 starImage.removeAttribute('src');
                 loadingOverlay.classList.add('active');
+                disableOptionButtons();
 
                 loadRandomCelebrity()
                     .catch((error) => {
@@ -891,22 +884,9 @@ const CELEBRITIES = [
                     });
             });
 
-            checkBtn.addEventListener('click', () => {
-                validateGuess();
-            });
-
-            guessInput.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    event.preventDefault();
-                    if (!checkBtn.disabled) {
-                        validateGuess();
-                    }
-                }
-            });
-
             async function loadRandomCelebrity() {
-                if (!Array.isArray(CELEBRITIES) || CELEBRITIES.length === 0) {
-                    hint.textContent = '没有可用的明星数据，请稍后再试。';
+                if (!Array.isArray(CELEBRITIES) || CELEBRITIES.length < OPTION_COUNT) {
+                    hint.textContent = '明星数据不足，暂时无法进行游戏。';
                     placeholder.textContent = '数据缺失';
                     return;
                 }
@@ -921,15 +901,14 @@ const CELEBRITIES = [
                         lastLoadedIndex = index;
 
                         placeholder.style.display = 'none';
-                        guessInput.disabled = false;
-                        checkBtn.disabled = false;
+                        populateOptions(index);
+
                         hint.innerHTML = pageUrl
-                            ? `图片来源：<a href="${pageUrl}" target="_blank" rel="noopener">${celebrity.wiki.lang.toUpperCase()} Wikipedia</a>`
-                            : '图片已加载，快来猜猜看！';
+                            ? `图片来源：<a href="${pageUrl}" target="_blank" rel="noopener">${celebrity.wiki.lang.toUpperCase()} Wikipedia</a> · 请选择正确的名字！`
+                            : '图片已加载，快选出正确的名字吧！';
                         starImage.dataset.celebName = celebrity.displayName;
                         feedback.textContent = '';
                         feedback.className = 'feedback';
-                        guessInput.focus();
                         return;
                     } catch (error) {
                         console.warn('尝试失败，继续寻找其他明星', error);
@@ -938,10 +917,87 @@ const CELEBRITIES = [
 
                 currentCelebrity = null;
                 placeholder.style.display = 'flex';
-                placeholder.textContent = '暂时没获取到照片，再点“开始”试试吧～';
+                placeholder.textContent = '暂时没获取到照片，再点“换一个”试试吧～';
                 hint.textContent = '服务器可能繁忙，稍等片刻再试一次。';
-                guessInput.disabled = true;
-                checkBtn.disabled = true;
+                disableOptionButtons();
+            }
+
+            function initOptionButtons() {
+                optionButtons = [];
+                for (let i = 0; i < OPTION_COUNT; i += 1) {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'option-button';
+                    button.textContent = '等待照片…';
+                    button.disabled = true;
+                    button.dataset.correct = 'false';
+                    button.addEventListener('click', handleOptionClick);
+                    optionsPanel.appendChild(button);
+                    optionButtons.push(button);
+                }
+            }
+
+            function disableOptionButtons() {
+                optionButtons.forEach((button) => {
+                    button.disabled = true;
+                    button.dataset.correct = 'false';
+                    button.classList.remove('correct', 'incorrect');
+                });
+            }
+
+            function populateOptions(correctIndex) {
+                const choiceSet = buildOptionSet(correctIndex);
+                choiceSet.forEach((choice, idx) => {
+                    const button = optionButtons[idx];
+                    button.disabled = false;
+                    button.textContent = choice.celeb.displayName;
+                    button.dataset.correct = choice.index === correctIndex ? 'true' : 'false';
+                    button.classList.remove('correct', 'incorrect');
+                });
+            }
+
+            function buildOptionSet(correctIndex) {
+                const indices = new Set([correctIndex]);
+                while (indices.size < OPTION_COUNT) {
+                    const candidate = Math.floor(Math.random() * CELEBRITIES.length);
+                    if (candidate === correctIndex || indices.has(candidate)) {
+                        continue;
+                    }
+                    indices.add(candidate);
+                }
+                const choices = Array.from(indices).map((index) => ({
+                    celeb: CELEBRITIES[index],
+                    index,
+                }));
+                return shuffle(choices);
+            }
+
+            function handleOptionClick(event) {
+                if (!currentCelebrity) {
+                    feedback.textContent = '请先点击“开始”加载照片。';
+                    feedback.className = 'feedback error';
+                    return;
+                }
+
+                const selectedButton = event.currentTarget;
+                const isCorrect = selectedButton.dataset.correct === 'true';
+
+                optionButtons.forEach((button) => {
+                    button.disabled = true;
+                    if (button.dataset.correct === 'true') {
+                        button.classList.add('correct');
+                    } else if (button === selectedButton) {
+                        button.classList.add('incorrect');
+                    }
+                });
+
+                if (isCorrect) {
+                    feedback.textContent = `答对啦！这位是 ${currentCelebrity.displayName}！`;
+                    feedback.className = 'feedback success';
+                } else {
+                    feedback.textContent = '不太对哦，正确答案已经为你标出～';
+                    feedback.className = 'feedback error';
+                }
             }
 
             function pickRandomCelebrity() {
@@ -992,39 +1048,13 @@ const CELEBRITIES = [
                 });
             }
 
-            function validateGuess() {
-                if (!currentCelebrity) {
-                    feedback.textContent = '请先点击“开始”加载照片。';
-                    feedback.className = 'feedback error';
-                    return;
+            function shuffle(list) {
+                const result = [...list];
+                for (let i = result.length - 1; i > 0; i -= 1) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [result[i], result[j]] = [result[j], result[i]];
                 }
-
-                const rawGuess = guessInput.value;
-                if (!rawGuess.trim()) {
-                    feedback.textContent = '先输入一个名字，再点“确定”。';
-                    feedback.className = 'feedback error';
-                    guessInput.focus();
-                    return;
-                }
-
-                const normalizedGuess = normalizeAnswer(rawGuess);
-                const matched = currentCelebrity.answers.some((answer) => normalizeAnswer(answer) === normalizedGuess);
-
-                if (matched) {
-                    feedback.textContent = `答对啦！这位是 ${currentCelebrity.displayName}！`;
-                    feedback.className = 'feedback success';
-                } else {
-                    feedback.textContent = '不太对哦，再想想～';
-                    feedback.className = 'feedback error';
-                }
-            }
-
-            function normalizeAnswer(value) {
-                return value
-                    .trim()
-                    .replace(/\s+/g, '')
-                    .toLowerCase()
-                    .normalize('NFKC');
+                return result;
             }
         })();
     </script>
