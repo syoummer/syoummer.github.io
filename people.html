@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>流量男明星猜猜看</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #4c6ef5 0%, #d6336c 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+            color: #1c1c28;
+        }
+
+        .card {
+            width: min(680px, 100%);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 28px;
+            box-shadow: 0 32px 80px rgba(0, 0, 0, 0.2);
+            padding: 42px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 26px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            font-weight: 700;
+            text-align: center;
+            color: #212529;
+            letter-spacing: 2px;
+        }
+
+        p.description {
+            text-align: center;
+            color: #495057;
+            line-height: 1.68;
+            font-size: 16px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+        }
+
+        button.main-action {
+            border: none;
+            background: linear-gradient(135deg, #4263eb, #9775fa);
+            color: #fff;
+            padding: 14px 34px;
+            border-radius: 999px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+            box-shadow: 0 16px 32px rgba(66, 99, 235, 0.35);
+        }
+
+        button.main-action:disabled {
+            cursor: wait;
+            opacity: 0.7;
+            box-shadow: none;
+        }
+
+        button.main-action:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 20px 36px rgba(66, 99, 235, 0.45);
+        }
+
+        .photo-frame {
+            position: relative;
+            width: 100%;
+            padding-top: 66%;
+            border-radius: 22px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .photo-frame img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .photo-frame img.visible {
+            opacity: 1;
+        }
+
+        .photo-placeholder {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #868e96;
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 16px;
+            text-align: center;
+        }
+
+        .loading-overlay {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            border: 6px solid rgba(66, 99, 235, 0.2);
+            border-top-color: #4263eb;
+            animation: spin 0.9s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .guess-panel {
+            display: grid;
+            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        }
+
+        .option-button {
+            border: none;
+            background: #182955;
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 18px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease, background 0.2s ease;
+            box-shadow: 0 12px 24px rgba(24, 41, 85, 0.3);
+        }
+
+        .option-button:disabled {
+            cursor: not-allowed;
+            opacity: 0.65;
+            box-shadow: none;
+        }
+
+        .option-button:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 30px rgba(24, 41, 85, 0.4);
+        }
+
+        .option-button.correct {
+            background: linear-gradient(135deg, #2f9e44, #51cf66);
+            color: #fff;
+            box-shadow: 0 16px 32px rgba(47, 158, 68, 0.35);
+        }
+
+        .option-button.incorrect {
+            background: linear-gradient(135deg, #f03e3e, #ff8787);
+            color: #fff;
+            box-shadow: none;
+        }
+
+        .feedback {
+            min-height: 24px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .feedback.success {
+            color: #2b8a3e;
+        }
+
+        .feedback.error {
+            color: #c92a2a;
+        }
+
+        .hint {
+            text-align: center;
+            color: #868e96;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 520px) {
+            .card {
+                padding: 30px 20px;
+                border-radius: 22px;
+                gap: 20px;
+            }
+
+            .option-button {
+                font-size: 15px;
+                padding: 12px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>流量男明星猜猜看</h1>
+        <p class="description">点击“开始”后，我们会随机挑选一位流量男明星，实时抓取他的维基公开照片。猜猜他是谁吧！</p>
+        <div class="controls">
+            <button id="startBtn" class="main-action">开始</button>
+        </div>
+        <div class="photo-frame">
+            <div id="placeholder" class="photo-placeholder">还没有加载照片，点击“开始”试试运气～</div>
+            <img id="starImage" alt="流量男明星照片" loading="lazy">
+            <div id="loading" class="loading-overlay">
+                <div class="spinner" aria-hidden="true"></div>
+            </div>
+        </div>
+        <div id="guessPanel" class="guess-panel" aria-label="候选明星名单"></div>
+        <div id="feedback" class="feedback"></div>
+        <p id="hint" class="hint">从四个选项中选出你认为正确的名字吧！</p>
+    </div>
+
+    <script>
+const CELEBRITIES = [
+    {
+        "displayName": "易烊千玺",
+        "wiki": { "lang": "zh", "title": "易烊千玺" },
+        "answers": ["易烊千玺", "Jackson Yee", "Yiyang Qianxi"]
+    },
+    {
+        "displayName": "王俊凯",
+        "wiki": { "lang": "zh", "title": "王俊凯" },
+        "answers": ["王俊凯", "Karry Wang", "Wang Junkai"]
+    },
+    {
+        "displayName": "王源",
+        "wiki": { "lang": "zh", "title": "王源" },
+        "answers": ["王源", "Roy Wang", "Wang Yuan"]
+    },
+    {
+        "displayName": "王一博",
+        "wiki": { "lang": "zh", "title": "王一博" },
+        "answers": ["王一博", "Wang Yibo"]
+    },
+    {
+        "displayName": "肖战",
+        "wiki": { "lang": "zh", "title": "肖战" },
+        "answers": ["肖战", "Xiao Zhan", "Sean Xiao"]
+    },
+    {
+        "displayName": "蔡徐坤",
+        "wiki": { "lang": "zh", "title": "蔡徐坤" },
+        "answers": ["蔡徐坤", "Cai Xukun", "Kun"]
+    },
+    {
+        "displayName": "张艺兴",
+        "wiki": { "lang": "zh", "title": "张艺兴" },
+        "answers": ["张艺兴", "Lay Zhang", "Zhang Yixing", "Lay"]
+    },
+    {
+        "displayName": "黄子韬",
+        "wiki": { "lang": "zh", "title": "黄子韬" },
+        "answers": ["黄子韬", "Huang Zitao", "Z.Tao", "Tao"]
+    },
+    {
+        "displayName": "吴亦凡",
+        "wiki": { "lang": "zh", "title": "吴亦凡" },
+        "answers": ["吴亦凡", "Kris Wu", "Wu Yifan"]
+    },
+    {
+        "displayName": "鹿晗",
+        "wiki": { "lang": "zh", "title": "鹿晗" },
+        "answers": ["鹿晗", "Lu Han", "Luhan"]
+    },
+    {
+        "displayName": "陈伟霆",
+        "wiki": { "lang": "zh", "title": "陈伟霆" },
+        "answers": ["陈伟霆", "William Chan"]
+    },
+    {
+        "displayName": "邓伦",
+        "wiki": { "lang": "zh", "title": "邓伦" },
+        "answers": ["邓伦", "Deng Lun"]
+    },
+    {
+        "displayName": "李现",
+        "wiki": { "lang": "zh", "title": "李现" },
+        "answers": ["李现", "Li Xian"]
+    },
+    {
+        "displayName": "朱一龙",
+        "wiki": { "lang": "zh", "title": "朱一龙" },
+        "answers": ["朱一龙", "Zhu Yilong"]
+    },
+    {
+        "displayName": "罗云熙",
+        "wiki": { "lang": "zh", "title": "罗云熙" },
+        "answers": ["罗云熙", "Luo Yunxi", "Leo Luo"]
+    },
+    {
+        "displayName": "任嘉伦",
+        "wiki": { "lang": "zh", "title": "任嘉伦" },
+        "answers": ["任嘉伦", "Ren Jialun", "Allen Ren"]
+    },
+    {
+        "displayName": "杨洋",
+        "wiki": { "lang": "zh", "title": "杨洋" },
+        "answers": ["杨洋", "Yang Yang"]
+    },
+    {
+        "displayName": "白敬亭",
+        "wiki": { "lang": "zh", "title": "白敬亭" },
+        "answers": ["白敬亭", "Bai Jingting"]
+    },
+    {
+        "displayName": "宋威龙",
+        "wiki": { "lang": "zh", "title": "宋威龙" },
+        "answers": ["宋威龙", "Song Weilong"]
+    },
+    {
+        "displayName": "宋亚轩",
+        "wiki": { "lang": "zh", "title": "宋亚轩" },
+        "answers": ["宋亚轩", "Song Yaxuan"]
+    },
+    {
+        "displayName": "张真源",
+        "wiki": { "lang": "zh", "title": "张真源" },
+        "answers": ["张真源", "Zhang Zhenyuan"]
+    },
+    {
+        "displayName": "严浩翔",
+        "wiki": { "lang": "zh", "title": "严浩翔" },
+        "answers": ["严浩翔", "Yan Haoxiang"]
+    },
+    {
+        "displayName": "贺峻霖",
+        "wiki": { "lang": "zh", "title": "贺峻霖" },
+        "answers": ["贺峻霖", "He Junlin"]
+    },
+    {
+        "displayName": "刘耀文",
+        "wiki": { "lang": "zh", "title": "刘耀文" },
+        "answers": ["刘耀文", "Liu Yaowen"]
+    },
+    {
+        "displayName": "丁程鑫",
+        "wiki": { "lang": "zh", "title": "丁程鑫" },
+        "answers": ["丁程鑫", "Ding Chengxin"]
+    },
+    {
+        "displayName": "马嘉祺",
+        "wiki": { "lang": "zh", "title": "马嘉祺" },
+        "answers": ["马嘉祺", "Ma Jiaqi"]
+    },
+    {
+        "displayName": "张凌赫",
+        "wiki": { "lang": "zh", "title": "张凌赫" },
+        "answers": ["张凌赫", "Zhang Linghe"]
+    },
+    {
+        "displayName": "王鹤棣",
+        "wiki": { "lang": "zh", "title": "王鹤棣" },
+        "answers": ["王鹤棣", "Wang Hedi", "Dylan Wang"]
+    },
+    {
+        "displayName": "陈飞宇",
+        "wiki": { "lang": "zh", "title": "陈飞宇" },
+        "answers": ["陈飞宇", "Chen Feiyu", "Arthur Chen"]
+    },
+    {
+        "displayName": "胡一天",
+        "wiki": { "lang": "zh", "title": "胡一天" },
+        "answers": ["胡一天", "Hu Yitian"]
+    },
+    {
+        "displayName": "华晨宇",
+        "wiki": { "lang": "zh", "title": "华晨宇" },
+        "answers": ["华晨宇", "Hua Chenyu"]
+    },
+    {
+        "displayName": "张哲瀚",
+        "wiki": { "lang": "zh", "title": "张哲瀚" },
+        "answers": ["张哲瀚", "Zhang Zhehan"]
+    },
+    {
+        "displayName": "龚俊",
+        "wiki": { "lang": "zh", "title": "龚俊" },
+        "answers": ["龚俊", "Gong Jun", "Simon Gong"]
+    },
+    {
+        "displayName": "范丞丞",
+        "wiki": { "lang": "zh", "title": "范丞丞" },
+        "answers": ["范丞丞", "Fan Chengcheng"]
+    },
+    {
+        "displayName": "何洛洛",
+        "wiki": { "lang": "zh", "title": "何洛洛" },
+        "answers": ["何洛洛", "He Luoluo", "Luo Luo"]
+    },
+    {
+        "displayName": "夏之光",
+        "wiki": { "lang": "zh", "title": "夏之光" },
+        "answers": ["夏之光", "Xia Zhiguang"]
+    },
+    {
+        "displayName": "黄明昊",
+        "wiki": { "lang": "zh", "title": "黄明昊" },
+        "answers": ["黄明昊", "Justin Huang", "Huang Minghao"]
+    },
+    {
+        "displayName": "林彦俊",
+        "wiki": { "lang": "zh", "title": "林彦俊" },
+        "answers": ["林彦俊", "Lin Yanjun"]
+    },
+    {
+        "displayName": "卜凡",
+        "wiki": { "lang": "zh", "title": "卜凡" },
+        "answers": ["卜凡", "Bo Fan"]
+    },
+    {
+        "displayName": "朱正廷",
+        "wiki": { "lang": "zh", "title": "朱正廷" },
+        "answers": ["朱正廷", "Zhu Zhengting"]
+    },
+    {
+        "displayName": "李汶翰",
+        "wiki": { "lang": "zh", "title": "李汶翰" },
+        "answers": ["李汶翰", "Li Wenhan"]
+    },
+    {
+        "displayName": "毕雯珺",
+        "wiki": { "lang": "zh", "title": "毕雯珺" },
+        "answers": ["毕雯珺", "Bi Wenjun"]
+    },
+    {
+        "displayName": "郑锐彬",
+        "wiki": { "lang": "zh", "title": "郑锐彬" },
+        "answers": ["郑锐彬", "Zheng Ruibin"]
+    },
+    {
+        "displayName": "周震南",
+        "wiki": { "lang": "zh", "title": "周震南" },
+        "answers": ["周震南", "Zhou Zhennan"]
+    },
+    {
+        "displayName": "焉栩嘉",
+        "wiki": { "lang": "zh", "title": "焉栩嘉" },
+        "answers": ["焉栩嘉", "Yan Xujia"]
+    },
+    {
+        "displayName": "刘宇宁",
+        "wiki": { "lang": "zh", "title": "刘宇宁" },
+        "answers": ["刘宇宁", "Liu Yuning"]
+    },
+    {
+        "displayName": "周柯宇",
+        "wiki": { "lang": "zh", "title": "周柯宇" },
+        "answers": ["周柯宇", "Zhou Keyu"]
+    },
+    {
+        "displayName": "甘望星",
+        "wiki": { "lang": "zh", "title": "甘望星" },
+        "answers": ["甘望星", "Gan Wangxing"]
+    },
+    {
+        "displayName": "尹浩宇",
+        "wiki": { "lang": "zh", "title": "尹浩宇" },
+        "answers": ["尹浩宇", "Yin Haoyu", "Tony Yu"]
+    },
+    {
+        "displayName": "张嘉元",
+        "wiki": { "lang": "zh", "title": "张嘉元" },
+        "answers": ["张嘉元", "Zhang Jiayuan"]
+    },
+    {
+        "displayName": "高卿尘",
+        "wiki": { "lang": "zh", "title": "高卿尘" },
+        "answers": ["高卿尘", "Gao Qingchen", "Nine"]
+    },
+    {
+        "displayName": "陈哲远",
+        "wiki": { "lang": "zh", "title": "陈哲远" },
+        "answers": ["陈哲远", "Chen Zheyuan"]
+    },
+    {
+        "displayName": "陈立农",
+        "wiki": { "lang": "zh", "title": "陈立农" },
+        "answers": ["陈立农", "Chen Linong"]
+    },
+    {
+        "displayName": "王安宇",
+        "wiki": { "lang": "zh", "title": "王安宇" },
+        "answers": ["王安宇", "Wang Anyu"]
+    },
+    {
+        "displayName": "王大陆",
+        "wiki": { "lang": "zh", "title": "王大陆" },
+        "answers": ["王大陆", "Darren Wang", "Wang Talu"]
+    },
+    {
+        "displayName": "许凯",
+        "wiki": { "lang": "zh", "title": "许凯" },
+        "answers": ["许凯", "Xu Kai"]
+    },
+    {
+        "displayName": "陈星旭",
+        "wiki": { "lang": "zh", "title": "陈星旭" },
+        "answers": ["陈星旭", "Chen Xingxu"]
+    },
+    {
+        "displayName": "李易峰",
+        "wiki": { "lang": "zh", "title": "李易峰" },
+        "answers": ["李易峰", "Li Yifeng"]
+    },
+    {
+        "displayName": "霍建华",
+        "wiki": { "lang": "zh", "title": "霍建华" },
+        "answers": ["霍建华", "Wallace Huo"]
+    },
+    {
+        "displayName": "张翰",
+        "wiki": { "lang": "zh", "title": "张翰" },
+        "answers": ["张翰", "Zhang Han"]
+    },
+    {
+        "displayName": "张若昀",
+        "wiki": { "lang": "zh", "title": "张若昀" },
+        "answers": ["张若昀", "Zhang Ruoyun"]
+    },
+    {
+        "displayName": "井柏然",
+        "wiki": { "lang": "zh", "title": "井柏然" },
+        "answers": ["井柏然", "Jing Boran"]
+    },
+    {
+        "displayName": "彭昱畅",
+        "wiki": { "lang": "zh", "title": "彭昱畅" },
+        "answers": ["彭昱畅", "Peng Yuchang"]
+    },
+    {
+        "displayName": "吴磊",
+        "wiki": { "lang": "zh", "title": "吴磊_(演员)" },
+        "answers": ["吴磊", "Leo Wu", "Wu Lei"]
+    },
+    {
+        "displayName": "刘昊然",
+        "wiki": { "lang": "zh", "title": "刘昊然" },
+        "answers": ["刘昊然", "Liu Haoran", "Turbo Liu"]
+    },
+    {
+        "displayName": "王凯",
+        "wiki": { "lang": "en", "title": "Wang_Kai_(actor)" },
+        "answers": ["王凯", "Wang Kai"]
+    },
+    {
+        "displayName": "张新成",
+        "wiki": { "lang": "zh", "title": "张新成" },
+        "answers": ["张新成", "Steven Zhang", "Zhang Xincheng"]
+    },
+    {
+        "displayName": "白宇",
+        "wiki": { "lang": "zh", "title": "白宇_(演员)" },
+        "answers": ["白宇", "Bai Yu"]
+    },
+    {
+        "displayName": "许魏洲",
+        "wiki": { "lang": "zh", "title": "许魏洲" },
+        "answers": ["许魏洲", "Timmy Xu", "Xu Weizhou"]
+    },
+    {
+        "displayName": "吴尊",
+        "wiki": { "lang": "zh", "title": "吳尊" },
+        "answers": ["吴尊", "Wu Chun"]
+    },
+    {
+        "displayName": "炎亚纶",
+        "wiki": { "lang": "zh", "title": "炎亞綸" },
+        "answers": ["炎亚纶", "Aaron Yan"]
+    },
+    {
+        "displayName": "汪东城",
+        "wiki": { "lang": "zh", "title": "汪东城" },
+        "answers": ["汪东城", "Jiro Wang"]
+    },
+    {
+        "displayName": "丁禹兮",
+        "wiki": { "lang": "zh", "title": "丁禹兮" },
+        "answers": ["丁禹兮", "Ding Yuxi"]
+    },
+    {
+        "displayName": "侯明昊",
+        "wiki": { "lang": "zh", "title": "侯明昊" },
+        "answers": ["侯明昊", "Neo Hou"]
+    },
+    {
+        "displayName": "郭麒麟",
+        "wiki": { "lang": "zh", "title": "郭麒麟" },
+        "answers": ["郭麒麟", "Guo Qilin"]
+    },
+    {
+        "displayName": "郭俊辰",
+        "wiki": { "lang": "zh", "title": "郭俊辰" },
+        "answers": ["郭俊辰", "Guo Junchen"]
+    },
+    {
+        "displayName": "邢昭林",
+        "wiki": { "lang": "zh", "title": "邢昭林" },
+        "answers": ["邢昭林", "Xing Zhaolin"]
+    },
+    {
+        "displayName": "郑业成",
+        "wiki": { "lang": "zh", "title": "郑业成" },
+        "answers": ["郑业成", "Zheng Yecheng"]
+    },
+    {
+        "displayName": "李宏毅",
+        "wiki": { "lang": "zh", "title": "李宏毅" },
+        "answers": ["李宏毅", "Li Hongyi"]
+    },
+    {
+        "displayName": "韩东君",
+        "wiki": { "lang": "zh", "title": "韩东君" },
+        "answers": ["韩东君", "Elvis Han", "Han Dongjun"]
+    },
+    {
+        "displayName": "刘学义",
+        "wiki": { "lang": "zh", "title": "刘学义" },
+        "answers": ["刘学义", "Liu Xueyi"]
+    },
+    {
+        "displayName": "陈若轩",
+        "wiki": { "lang": "zh", "title": "陈若轩" },
+        "answers": ["陈若轩", "Chen Ruoxuan"]
+    },
+    {
+        "displayName": "盛一伦",
+        "wiki": { "lang": "zh", "title": "盛一伦" },
+        "answers": ["盛一伦", "Sheng Yilun", "Peter Sheng"]
+    },
+    {
+        "displayName": "王嘉尔",
+        "wiki": { "lang": "zh", "title": "王嘉尔" },
+        "answers": ["王嘉尔", "Jackson Wang"]
+    },
+    {
+        "displayName": "王子异",
+        "wiki": { "lang": "zh", "title": "王子异" },
+        "answers": ["王子异", "Wang Ziyi"]
+    },
+    {
+        "displayName": "魏大勋",
+        "wiki": { "lang": "zh", "title": "魏大勋" },
+        "answers": ["魏大勋", "Wei Daxun"]
+    },
+    {
+        "displayName": "张云龙",
+        "wiki": { "lang": "zh", "title": "张云龙" },
+        "answers": ["张云龙", "Zhang Yunlong", "Leon Zhang"]
+    },
+    {
+        "displayName": "魏哲鸣",
+        "wiki": { "lang": "zh", "title": "魏哲鸣" },
+        "answers": ["魏哲鸣", "Wei Zheming", "Miles Wei"]
+    },
+    {
+        "displayName": "胡先煦",
+        "wiki": { "lang": "zh", "title": "胡先煦" },
+        "answers": ["胡先煦", "Hu Xianxu"]
+    },
+    {
+        "displayName": "熊梓淇",
+        "wiki": { "lang": "zh", "title": "熊梓淇" },
+        "answers": ["熊梓淇", "Bear Shaw", "Xiong Ziqi"]
+    },
+    {
+        "displayName": "曾舜晞",
+        "wiki": { "lang": "zh", "title": "曾舜晞" },
+        "answers": ["曾舜晞", "Joseph Zeng", "Zeng Shunxi"]
+    },
+    {
+        "displayName": "宋继扬",
+        "wiki": { "lang": "zh", "title": "宋继扬" },
+        "answers": ["宋继扬", "Song Jiyang"]
+    },
+    {
+        "displayName": "张晚意",
+        "wiki": { "lang": "zh", "title": "张晚意" },
+        "answers": ["张晚意", "Zhang Wanyi"]
+    },
+    {
+        "displayName": "王彦霖",
+        "wiki": { "lang": "zh", "title": "王彦霖" },
+        "answers": ["王彦霖", "Wang Yanlin"]
+    },
+    {
+        "displayName": "张铭恩",
+        "wiki": { "lang": "zh", "title": "张铭恩" },
+        "answers": ["张铭恩", "Zhang Mingen"]
+    },
+    {
+        "displayName": "杨玏",
+        "wiki": { "lang": "zh", "title": "杨玏" },
+        "answers": ["杨玏", "Yang Le"]
+    },
+    {
+        "displayName": "俞灏明",
+        "wiki": { "lang": "zh", "title": "俞灏明" },
+        "answers": ["俞灏明", "Yu Haoming"]
+    },
+    {
+        "displayName": "梁靖康",
+        "wiki": { "lang": "zh", "title": "梁靖康" },
+        "answers": ["梁靖康", "Liang Jingkang", "Connor Leong"]
+    },
+    {
+        "displayName": "黄俊捷",
+        "wiki": { "lang": "zh", "title": "黄俊捷" },
+        "answers": ["黄俊捷", "Huang Junjie"]
+    },
+    {
+        "displayName": "张耀",
+        "wiki": { "lang": "zh", "title": "张耀_(演员)" },
+        "answers": ["张耀", "Zhang Yao"]
+    },
+    {
+        "displayName": "金泰亨",
+        "wiki": { "lang": "zh", "title": "金泰亨" },
+        "answers": ["金泰亨", "Kim Taehyung", "V"]
+    },
+    {
+        "displayName": "田柾国",
+        "wiki": { "lang": "zh", "title": "田柾國" },
+        "answers": ["田柾国", "Jeon Jungkook", "Jungkook"]
+    },
+    {
+        "displayName": "朴智旻",
+        "wiki": { "lang": "zh", "title": "朴智旻" },
+        "answers": ["朴智旻", "Park Jimin", "Jimin"]
+    },
+    {
+        "displayName": "朴灿烈",
+        "wiki": { "lang": "zh", "title": "朴燦烈" },
+        "answers": ["朴灿烈", "Park Chanyeol", "Chanyeol"]
+    },
+    {
+        "displayName": "吴世勋",
+        "wiki": { "lang": "zh", "title": "吳世勳" },
+        "answers": ["吴世勋", "Oh Sehun", "Sehun"]
+    },
+    {
+        "displayName": "黄旭熙",
+        "wiki": { "lang": "zh", "title": "黃旭熙" },
+        "answers": ["黄旭熙", "Huang Xuxi", "Lucas"]
+    },
+    {
+        "displayName": "董思成",
+        "wiki": { "lang": "zh", "title": "董思成" },
+        "answers": ["董思成", "Dong Sicheng", "Winwin"]
+    },
+    {
+        "displayName": "钱锟",
+        "wiki": { "lang": "zh", "title": "錢錕" },
+        "answers": ["钱锟", "Qian Kun", "Kun Qian"]
+    },
+    {
+        "displayName": "李永钦",
+        "wiki": { "lang": "zh", "title": "李永钦" },
+        "answers": ["李永钦", "Li Yongqin", "Ten"]
+    },
+    {
+        "displayName": "黄仁俊",
+        "wiki": { "lang": "zh", "title": "黃仁俊" },
+        "answers": ["黄仁俊", "Huang Renjun", "Renjun"]
+    },
+    {
+        "displayName": "李马克",
+        "wiki": { "lang": "zh", "title": "李馬克" },
+        "answers": ["李马克", "Mark Lee", "Lee Minhyung", "Mark"]
+    },
+    {
+        "displayName": "李泰容",
+        "wiki": { "lang": "zh", "title": "李泰容_(歌手)" },
+        "answers": ["李泰容", "Lee Taeyong", "Taeyong"]
+    },
+    {
+        "displayName": "车银优",
+        "wiki": { "lang": "zh", "title": "車銀優" },
+        "answers": ["车银优", "Cha Eunwoo", "Lee Dongmin"]
+    },
+    {
+        "displayName": "李在玟",
+        "wiki": { "lang": "zh", "title": "李在玟" },
+        "answers": ["李在玟", "Lee Jaemin", "Jaemin"]
+    },
+    {
+        "displayName": "金硕珍",
+        "wiki": { "lang": "zh", "title": "金碩珍" },
+        "answers": ["金硕珍", "Kim Seokjin", "Jin"]
+    },
+    {
+        "displayName": "闵玧其",
+        "wiki": { "lang": "zh", "title": "閔玧其" },
+        "answers": ["闵玧其", "Min Yoongi", "Suga"]
+    },
+    {
+        "displayName": "郑号锡",
+        "wiki": { "lang": "zh", "title": "鄭號錫" },
+        "answers": ["郑号锡", "Jung Hoseok", "J-Hope"]
+    },
+    {
+        "displayName": "金南俊",
+        "wiki": { "lang": "zh", "title": "金南俊" },
+        "answers": ["金南俊", "Kim Namjoon", "RM"]
+    },
+];
+
+        (() => {
+            const startBtn = document.getElementById('startBtn');
+            const optionsPanel = document.getElementById('guessPanel');
+            const feedback = document.getElementById('feedback');
+            const hint = document.getElementById('hint');
+            const starImage = document.getElementById('starImage');
+            const placeholder = document.getElementById('placeholder');
+            const loadingOverlay = document.getElementById('loading');
+
+            const OPTION_COUNT = 4;
+            const maxFetchAttempts = 15;
+
+            let optionButtons = [];
+            let currentCelebrity = null;
+            let lastLoadedIndex = -1;
+
+            initOptionButtons();
+
+            startBtn.addEventListener('click', () => {
+                startBtn.disabled = true;
+                startBtn.textContent = '加载中…';
+                feedback.textContent = '';
+                feedback.className = 'feedback';
+                hint.textContent = '正在为你找照片，请稍候…';
+                placeholder.style.display = 'flex';
+                placeholder.textContent = '照片加载中…';
+                starImage.classList.remove('visible');
+                starImage.removeAttribute('src');
+                loadingOverlay.classList.add('active');
+                disableOptionButtons();
+
+                loadRandomCelebrity()
+                    .catch((error) => {
+                        console.error('加载明星失败', error);
+                    })
+                    .finally(() => {
+                        loadingOverlay.classList.remove('active');
+                        startBtn.disabled = false;
+                        startBtn.textContent = '换一个';
+                    });
+            });
+
+            async function loadRandomCelebrity() {
+                if (!Array.isArray(CELEBRITIES) || CELEBRITIES.length < OPTION_COUNT) {
+                    hint.textContent = '明星数据不足，暂时无法进行游戏。';
+                    placeholder.textContent = '数据缺失';
+                    return;
+                }
+
+                for (let attempt = 0; attempt < maxFetchAttempts; attempt += 1) {
+                    const { celebrity, index } = pickRandomCelebrity();
+                    try {
+                        const { imageUrl, pageUrl } = await fetchCelebrityImage(celebrity);
+                        await showCelebrityImage(imageUrl);
+
+                        currentCelebrity = { ...celebrity, pageUrl };
+                        lastLoadedIndex = index;
+
+                        placeholder.style.display = 'none';
+                        populateOptions(index);
+
+                        hint.innerHTML = pageUrl
+                            ? `图片来源：<a href="${pageUrl}" target="_blank" rel="noopener">${celebrity.wiki.lang.toUpperCase()} Wikipedia</a> · 请选择正确的名字！`
+                            : '图片已加载，快选出正确的名字吧！';
+                        starImage.dataset.celebName = celebrity.displayName;
+                        feedback.textContent = '';
+                        feedback.className = 'feedback';
+                        return;
+                    } catch (error) {
+                        console.warn('尝试失败，继续寻找其他明星', error);
+                    }
+                }
+
+                currentCelebrity = null;
+                placeholder.style.display = 'flex';
+                placeholder.textContent = '暂时没获取到照片，再点“换一个”试试吧～';
+                hint.textContent = '服务器可能繁忙，稍等片刻再试一次。';
+                disableOptionButtons();
+            }
+
+            function initOptionButtons() {
+                optionButtons = [];
+                for (let i = 0; i < OPTION_COUNT; i += 1) {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'option-button';
+                    button.textContent = '等待照片…';
+                    button.disabled = true;
+                    button.dataset.correct = 'false';
+                    button.addEventListener('click', handleOptionClick);
+                    optionsPanel.appendChild(button);
+                    optionButtons.push(button);
+                }
+            }
+
+            function disableOptionButtons() {
+                optionButtons.forEach((button) => {
+                    button.disabled = true;
+                    button.dataset.correct = 'false';
+                    button.classList.remove('correct', 'incorrect');
+                });
+            }
+
+            function populateOptions(correctIndex) {
+                const choiceSet = buildOptionSet(correctIndex);
+                choiceSet.forEach((choice, idx) => {
+                    const button = optionButtons[idx];
+                    button.disabled = false;
+                    button.textContent = choice.celeb.displayName;
+                    button.dataset.correct = choice.index === correctIndex ? 'true' : 'false';
+                    button.classList.remove('correct', 'incorrect');
+                });
+            }
+
+            function buildOptionSet(correctIndex) {
+                const indices = new Set([correctIndex]);
+                while (indices.size < OPTION_COUNT) {
+                    const candidate = Math.floor(Math.random() * CELEBRITIES.length);
+                    if (candidate === correctIndex || indices.has(candidate)) {
+                        continue;
+                    }
+                    indices.add(candidate);
+                }
+                const choices = Array.from(indices).map((index) => ({
+                    celeb: CELEBRITIES[index],
+                    index,
+                }));
+                return shuffle(choices);
+            }
+
+            function handleOptionClick(event) {
+                if (!currentCelebrity) {
+                    feedback.textContent = '请先点击“开始”加载照片。';
+                    feedback.className = 'feedback error';
+                    return;
+                }
+
+                const selectedButton = event.currentTarget;
+                const isCorrect = selectedButton.dataset.correct === 'true';
+
+                optionButtons.forEach((button) => {
+                    button.disabled = true;
+                    if (button.dataset.correct === 'true') {
+                        button.classList.add('correct');
+                    } else if (button === selectedButton) {
+                        button.classList.add('incorrect');
+                    }
+                });
+
+                if (isCorrect) {
+                    feedback.textContent = `答对啦！这位是 ${currentCelebrity.displayName}！`;
+                    feedback.className = 'feedback success';
+                } else {
+                    feedback.textContent = '不太对哦，正确答案已经为你标出～';
+                    feedback.className = 'feedback error';
+                }
+            }
+
+            function pickRandomCelebrity() {
+                const total = CELEBRITIES.length;
+                let index;
+                do {
+                    index = Math.floor(Math.random() * total);
+                } while (total > 1 && index === lastLoadedIndex);
+                return { celebrity: CELEBRITIES[index], index };
+            }
+
+            async function fetchCelebrityImage(celebrity) {
+                const encodedTitle = encodeURIComponent(celebrity.wiki.title);
+                const endpoint = `https://${celebrity.wiki.lang}.wikipedia.org/api/rest_v1/page/summary/${encodedTitle}`;
+                const response = await fetch(endpoint, { headers: { Accept: 'application/json' } });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const payload = await response.json();
+                const rawImage = payload?.originalimage?.source || payload?.thumbnail?.source;
+
+                if (!rawImage) {
+                    throw new Error('缺少图片');
+                }
+
+                const imageUrl = rawImage.startsWith('http://') ? rawImage.replace('http://', 'https://') : rawImage;
+                const pageUrl =
+                    payload?.content_urls?.desktop?.page ||
+                    payload?.content_urls?.mobile?.page ||
+                    `https://${celebrity.wiki.lang}.wikipedia.org/wiki/${encodedTitle}`;
+
+                return { imageUrl, pageUrl };
+            }
+
+            function showCelebrityImage(url) {
+                return new Promise((resolve, reject) => {
+                    starImage.onload = () => {
+                        starImage.classList.add('visible');
+                        resolve();
+                    };
+                    starImage.onerror = () => {
+                        reject(new Error('图片加载失败'));
+                    };
+                    starImage.src = url;
+                    starImage.alt = '随机流量男明星照片';
+                });
+            }
+
+            function shuffle(list) {
+                const result = [...list];
+                for (let i = result.length - 1; i > 0; i -= 1) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [result[i], result[j]] = [result[j], result[i]];
+                }
+                return result;
+            }
+        })();
+    </script>
+</body>
+</html>
