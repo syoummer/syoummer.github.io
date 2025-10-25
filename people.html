@@ -126,38 +126,6 @@
             justify-content: center;
         }
 
-        .difficulty-switcher {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            font-size: 15px;
-            color: #495057;
-            flex-wrap: wrap;
-        }
-
-        .difficulty-switcher label {
-            font-weight: 600;
-        }
-
-        .difficulty-switcher select {
-            padding: 6px 16px;
-            border-radius: 999px;
-            border: 1px solid rgba(24, 41, 85, 0.2);
-            background: rgba(255, 255, 255, 0.92);
-            color: #212529;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
-        }
-
-        .difficulty-switcher select:focus {
-            outline: none;
-            border-color: #4263eb;
-            box-shadow: 0 0 0 3px rgba(66, 99, 235, 0.2);
-        }
-
         button.main-action {
             border: none;
             background: linear-gradient(135deg, #4263eb, #9775fa);
@@ -192,6 +160,18 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+
+        .photo-credit {
+            min-height: 20px;
+            text-align: center;
+            font-size: 13px;
+            color: #6c757d;
+        }
+
+        .photo-credit a {
+            color: inherit;
+            text-decoration: underline;
         }
 
         .photo-frame img {
@@ -342,14 +322,9 @@
 <body>
     <div class="card">
         <h1>流量男明星猜猜看</h1>
-        <p class="description" id="modeDescription">点击“开始”后，我们会随机挑选一位流量男明星，实时抓取他的维基公开照片。猜猜他是谁吧！</p>
-        <div class="difficulty-switcher" id="difficultySection">
-            <label for="difficultySelect">难度</label>
-            <select id="difficultySelect" aria-label="难度选择">
-                <option value="normal">普通</option>
-                <option value="hard">高难度</option>
-            </select>
-            <button id="ratingToggle" class="secondary-action mode-toggle" aria-pressed="false">评级模式：关</button>
+        <p class="description" id="modeDescription">仅供娱乐</p>
+        <div class="controls" aria-live="polite">
+            <button id="ratingToggle" class="secondary-action mode-toggle" aria-pressed="false">答题模式：关</button>
         </div>
         <div id="ratingHud" class="rating-hud hidden">
             <span class="rating-chip" id="ratingProgress">第 1 / 10 题</span>
@@ -360,7 +335,7 @@
         </div>
         <div class="rating-controls hidden" id="ratingControls">
             <button id="nextQuestionBtn" class="main-action">下一题</button>
-            <button id="exitRatingBtn" class="secondary-action">退出评级</button>
+            <button id="exitRatingBtn" class="secondary-action">退出答题</button>
         </div>
         <div class="photo-frame">
             <div id="placeholder" class="photo-placeholder">还没有加载照片，点击“开始”试试运气～</div>
@@ -369,12 +344,47 @@
                 <div class="spinner" aria-hidden="true"></div>
             </div>
         </div>
+        <div id="photoCredit" class="photo-credit" aria-live="polite">仅供娱乐</div>
         <div id="guessPanel" class="guess-panel" aria-label="候选明星名单"></div>
         <div id="feedback" class="feedback"></div>
         <p id="hint" class="hint">从四个选项中选出你认为正确的名字吧！</p>
     </div>
 
     <script>
+// 本地素材映射：在 assets/people 中新增图片后，把名字、路径和出处登记在这里。
+const CELEBRITY_ASSETS = {
+    '易烊千玺': {
+        path: 'assets/people/placeholder.svg',
+        sourceLabel: '示例素材：维基百科',
+        sourceUrl: 'https://zh.wikipedia.org/wiki/%E6%98%93%E7%83%8A%E5%8D%83%E7%93%BA',
+    },
+    '王俊凯': {
+        path: 'assets/people/placeholder.svg',
+        sourceLabel: '示例素材：维基百科',
+        sourceUrl: 'https://zh.wikipedia.org/wiki/%E7%8E%8B%E4%BF%8A%E5%87%AF',
+    },
+    '王源': {
+        path: 'assets/people/placeholder.svg',
+        sourceLabel: '示例素材：维基百科',
+        sourceUrl: 'https://zh.wikipedia.org/wiki/%E7%8E%8B%E6%BA%90',
+    },
+    '王一博': {
+        path: 'assets/people/placeholder.svg',
+        sourceLabel: '示例素材：维基百科',
+        sourceUrl: 'https://zh.wikipedia.org/wiki/%E7%8E%8B%E4%B8%80%E5%8D%9A',
+    },
+    '肖战': {
+        path: 'assets/people/placeholder.svg',
+        sourceLabel: '示例素材：维基百科',
+        sourceUrl: 'https://zh.wikipedia.org/wiki/%E8%82%96%E6%88%98',
+    },
+    '蔡徐坤': {
+        path: 'assets/people/placeholder.svg',
+        sourceLabel: '示例素材：维基百科',
+        sourceUrl: 'https://zh.wikipedia.org/wiki/%E8%94%A1%E5%BE%90%E5%9D%A4',
+    },
+};
+
 const CELEBRITY_POOLS = {
     normal: [
     {
@@ -899,7 +909,7 @@ const CELEBRITY_POOLS = {
     },
     {
         "displayName": "吴世勋",
-        "wiki": { "lang": "zh", "title": "吳世勳" },
+        "wiki": { "lang": "zh", "title": "Sehun" },
         "answers": ["吴世勋", "Oh Sehun", "Sehun"]
     },
     {
@@ -1901,6 +1911,18 @@ const CELEBRITY_POOLS = {
     ],
 };
 
+const CELEBRITY_LIST = (() => {
+    const unique = new Map();
+    Object.values(CELEBRITY_POOLS).forEach((pool) => {
+        pool.forEach((celeb) => {
+            if (!unique.has(celeb.displayName)) {
+                unique.set(celeb.displayName, celeb);
+            }
+        });
+    });
+    return Array.from(unique.values());
+})();
+
         (() => {
             const startBtn = document.getElementById('startBtn');
             const optionsPanel = document.getElementById('guessPanel');
@@ -1909,7 +1931,6 @@ const CELEBRITY_POOLS = {
             const starImage = document.getElementById('starImage');
             const placeholder = document.getElementById('placeholder');
             const loadingOverlay = document.getElementById('loading');
-            const difficultySelect = document.getElementById('difficultySelect');
             const ratingToggle = document.getElementById('ratingToggle');
             const ratingHud = document.getElementById('ratingHud');
             const ratingProgress = document.getElementById('ratingProgress');
@@ -1919,11 +1940,13 @@ const CELEBRITY_POOLS = {
             const exitRatingBtn = document.getElementById('exitRatingBtn');
             const modeDescription = document.getElementById('modeDescription');
             const mainControls = document.getElementById('mainControls');
+            const photoCredit = document.getElementById('photoCredit');
             const defaultDescriptionText = modeDescription ? modeDescription.textContent : '';
             const defaultPlaceholderText = placeholder ? placeholder.textContent : '';
             const defaultHintText = hint ? hint.textContent : '';
             const defaultToggleText = ratingToggle ? ratingToggle.textContent : '';
-            const activeToggleText = '评级模式：开';
+            const defaultCreditText = photoCredit ? photoCredit.textContent : '';
+            const activeToggleText = '答题模式：开';
 
             const OPTION_COUNT = 4;
             const maxFetchAttempts = 15;
@@ -1931,8 +1954,7 @@ const CELEBRITY_POOLS = {
             let optionButtons = [];
             let currentCelebrity = null;
             let lastLoadedIndex = -1;
-            let currentPoolKey = 'normal';
-            let activeCelebrities = CELEBRITY_POOLS.normal;
+            let activeCelebrities = CELEBRITY_LIST;
             let autoRetryCount = 0;
 
             const maxAutoRetries = 3;
@@ -1943,7 +1965,6 @@ const CELEBRITY_POOLS = {
             let ratingState = null;
 
             initOptionButtons();
-            setupDifficultySwitcher();
 
             if (ratingToggle) {
                 ratingToggle.addEventListener('click', () => {
@@ -1970,6 +1991,8 @@ const CELEBRITY_POOLS = {
                 feedback.className = 'feedback';
                 if (typeof hintText === 'string') {
                     hint.textContent = hintText;
+                } else if (defaultHintText) {
+                    hint.textContent = defaultHintText;
                 }
                 if (typeof placeholderText === 'string') {
                     placeholder.textContent = placeholderText;
@@ -1979,6 +2002,7 @@ const CELEBRITY_POOLS = {
                 starImage.removeAttribute('src');
                 delete starImage.dataset.celebName;
                 loadingOverlay.classList.add('active');
+                resetPhotoCredit('仅供娱乐');
                 disableOptionButtons();
             }
 
@@ -2012,6 +2036,7 @@ const CELEBRITY_POOLS = {
                     awaitingNext: false,
                     completed: false,
                     currentQuestion: 0,
+                    usedIndices: new Set(),
                 };
                 if (ratingToggle) {
                     ratingToggle.setAttribute('aria-pressed', 'true');
@@ -2027,17 +2052,14 @@ const CELEBRITY_POOLS = {
                 if (mainControls) {
                     mainControls.classList.add('hidden');
                 }
-                if (difficultySelect) {
-                    difficultySelect.disabled = true;
-                }
                 if (modeDescription) {
-                    modeDescription.textContent = '评级模式开启：连续完成 10 题，我们会根据你的成绩给出评分～';
+                    modeDescription.textContent = '答题模式开启：我们会连续出 10 题且不重复，同样可以随时返回随机模式。';
                 }
                 nextQuestionBtn.disabled = true;
                 nextQuestionBtn.textContent = '下一题';
                 feedback.textContent = '';
                 feedback.className = 'feedback';
-                hint.textContent = '评级模式启动中，正在准备第 1 题…';
+                hint.textContent = '答题模式启动中，正在准备第 1 题…';
                 placeholder.style.display = 'flex';
                 placeholder.textContent = '照片加载中…';
                 updateRatingHud();
@@ -2058,16 +2080,16 @@ const CELEBRITY_POOLS = {
                 ratingState.awaitingNext = false;
 
                 prepareCelebrityLoad({
-                    hintText: `评级模式：第 ${questionNumber} / ${RATING_TOTAL} 题加载中…`,
+                    hintText: `答题模式：第 ${questionNumber} / ${RATING_TOTAL} 题加载中…`,
                     placeholderText: '照片加载中…',
                 });
 
                 nextQuestionBtn.disabled = true;
                 nextQuestionBtn.textContent = '下一题';
                 try {
-                    await loadRandomCelebrity();
+                    await loadRandomCelebrity({ excludeIndices: ratingState.usedIndices });
                 } catch (error) {
-                    console.error('评级模式加载明星失败', error);
+                    console.error('答题模式加载明星失败', error);
                 } finally {
                     loadingOverlay.classList.remove('active');
                 }
@@ -2120,12 +2142,13 @@ const CELEBRITY_POOLS = {
                     awaitingNext: false,
                     completed: false,
                     currentQuestion: 0,
+                    usedIndices: new Set(),
                 };
                 nextQuestionBtn.disabled = true;
                 nextQuestionBtn.textContent = '下一题';
                 feedback.textContent = '';
                 feedback.className = 'feedback';
-                hint.textContent = '新一轮评级开始，正在准备第 1 题…';
+                hint.textContent = '新一轮答题模式开始，正在准备第 1 题…';
                 placeholder.style.display = 'flex';
                 placeholder.textContent = '照片加载中…';
                 updateRatingHud();
@@ -2143,7 +2166,7 @@ const CELEBRITY_POOLS = {
                 const score = Math.round((ratingState.correctCount / RATING_TOTAL) * 100);
                 const comment = computeRatingComment(score);
 
-                feedback.textContent = `评级完成：答对 ${ratingState.correctCount} / ${RATING_TOTAL} 题，得分 ${score} 分。`;
+                feedback.textContent = `答题模式完成：答对 ${ratingState.correctCount} / ${RATING_TOTAL} 题，得分 ${score} 分。`;
                 feedback.className = 'feedback';
                 hint.textContent = comment;
                 nextQuestionBtn.disabled = false;
@@ -2161,7 +2184,7 @@ const CELEBRITY_POOLS = {
 
                 if (ratingToggle) {
                     ratingToggle.setAttribute('aria-pressed', 'false');
-                    ratingToggle.textContent = defaultToggleText || '评级模式：关';
+                    ratingToggle.textContent = defaultToggleText || '答题模式：关';
                     ratingToggle.disabled = false;
                 }
                 if (ratingControls) {
@@ -2172,9 +2195,6 @@ const CELEBRITY_POOLS = {
                 }
                 if (mainControls) {
                     mainControls.classList.remove('hidden');
-                }
-                if (difficultySelect) {
-                    difficultySelect.disabled = false;
                 }
                 if (modeDescription) {
                     modeDescription.textContent = defaultDescriptionText;
@@ -2193,11 +2213,7 @@ const CELEBRITY_POOLS = {
 
                 feedback.textContent = '';
                 feedback.className = 'feedback';
-                if (typeof updateHintText === 'function') {
-                    updateHintText();
-                } else {
-                    hint.textContent = defaultHintText || '从四个选项中选出你认为正确的名字吧！';
-                }
+                hint.textContent = defaultHintText || '从四个选项中选出你认为正确的名字吧！';
 
                 disableOptionButtons();
                 updateRatingHud();
@@ -2245,7 +2261,7 @@ const CELEBRITY_POOLS = {
                 return '没关系，多挑战几次，很快就能记住他们的脸！';
             }
 
-            async function loadRandomCelebrity() {
+            async function loadRandomCelebrity({ excludeIndices } = {}) {
                 const pool = activeCelebrities;
 
                 if (!Array.isArray(pool) || pool.length < OPTION_COUNT) {
@@ -2254,30 +2270,49 @@ const CELEBRITY_POOLS = {
                     return;
                 }
 
+                const exclusionSet = excludeIndices instanceof Set ? excludeIndices : null;
+                const candidateIndices = pool
+                    .map((_, idx) => idx)
+                    .filter((idx) => !exclusionSet || !exclusionSet.has(idx));
+
+                if (!candidateIndices.length) {
+                    hint.textContent = '题库里的明星都出完啦，稍后再来试试吧～';
+                    placeholder.textContent = '没有更多题目';
+                    disableOptionButtons();
+                    return;
+                }
+
                 for (let attempt = 0; attempt < maxFetchAttempts; attempt += 1) {
-                    const { celebrity, index } = pickRandomCelebrity(pool);
+                    const { celebrity, index } = pickRandomCelebrity(pool, {
+                        allowedIndices: candidateIndices,
+                        avoidIndex: typeof lastLoadedIndex === 'number' ? lastLoadedIndex : null,
+                    });
                     try {
-                        const { imageUrl, pageUrl, providerLabel } = await fetchCelebrityImage(celebrity);
+                        const { imageUrl, pageUrl, providerLabel, isLocal } = await fetchCelebrityImage(celebrity);
                         await showCelebrityImage(imageUrl);
 
                         const safeProviderLabel = providerLabel || '来源';
 
-                        currentCelebrity = { ...celebrity, pageUrl, providerLabel: safeProviderLabel };
+                        currentCelebrity = {
+                            ...celebrity,
+                            pageUrl,
+                            providerLabel: safeProviderLabel,
+                            isLocalAsset: Boolean(isLocal),
+                        };
                         lastLoadedIndex = index;
                         autoRetryCount = 0;
 
                         placeholder.style.display = 'none';
                         populateOptions(index, pool);
+                        updatePhotoCredit({ pageUrl, providerLabel: safeProviderLabel });
+                        if (isRatingMode && ratingState) {
+                            ratingState.usedIndices.add(index);
+                        }
 
                         if (isRatingMode && ratingState) {
-                            const base = pageUrl
-                                ? `图片来源：<a href="${pageUrl}" target="_blank" rel="noopener">${safeProviderLabel}</a>`
-                                : '图片已加载';
-                            hint.innerHTML = `${base} · 评级模式第 ${ratingState.currentQuestion} / ${RATING_TOTAL} 题，请选择正确的名字！`;
+                            hint.innerHTML = `答题模式第 ${ratingState.currentQuestion} / ${RATING_TOTAL} 题，请选择正确的名字！`;
                         } else {
-                            hint.innerHTML = pageUrl
-                                ? `图片来源：<a href="${pageUrl}" target="_blank" rel="noopener">${safeProviderLabel}</a> · 请选择正确的名字！`
-                                : '图片已加载，快选出正确的名字吧！';
+                            hint.innerHTML = '图片已加载，快选出正确的名字吧！';
                         }
                         starImage.dataset.celebName = celebrity.displayName;
                         feedback.textContent = '';
@@ -2293,12 +2328,13 @@ const CELEBRITY_POOLS = {
                 placeholder.textContent = '暂时没获取到照片，再点“换一个”试试吧～';
                 hint.textContent = '服务器可能繁忙，稍等片刻再试一次。';
                 disableOptionButtons();
+                resetPhotoCredit('仅供娱乐');
 
                 autoRetryCount += 1;
 
                 if (autoRetryCount <= maxAutoRetries) {
                     if (isRatingMode) {
-                        hint.textContent = '评级模式：刚才没抓到照片，正在换一张新的…';
+                        hint.textContent = '答题模式：刚才没抓到照片，正在换一张新的…';
                         placeholder.textContent = '正在重新抓取照片…';
                     } else {
                         startBtn.textContent = '自动换一个…';
@@ -2308,30 +2344,12 @@ const CELEBRITY_POOLS = {
 
                     return new Promise((resolve, reject) => {
                         setTimeout(() => {
-                            loadRandomCelebrity().then(resolve).catch(reject);
+                            loadRandomCelebrity({ excludeIndices }).then(resolve).catch(reject);
                         }, autoRetryDelayMs);
                     });
                 }
 
                 autoRetryCount = 0;
-            }
-
-            function setupDifficultySwitcher() {
-                if (!difficultySelect) {
-                    activeCelebrities = CELEBRITY_POOLS.normal;
-                    updateHintText();
-                    return;
-                }
-
-                currentPoolKey = difficultySelect.value || 'normal';
-                activeCelebrities = CELEBRITY_POOLS[currentPoolKey] || CELEBRITY_POOLS.normal;
-                updateHintText();
-
-                difficultySelect.addEventListener('change', () => {
-                    currentPoolKey = difficultySelect.value || 'normal';
-                    activeCelebrities = CELEBRITY_POOLS[currentPoolKey] || CELEBRITY_POOLS.normal;
-                    resetAfterDifficultyChange();
-                });
             }
 
             function initOptionButtons() {
@@ -2360,32 +2378,20 @@ const CELEBRITY_POOLS = {
                 });
             }
 
-            function resetAfterDifficultyChange() {
-                currentCelebrity = null;
-                lastLoadedIndex = -1;
-                startBtn.disabled = false;
-                startBtn.textContent = '开始';
-                starImage.classList.remove('visible');
-                starImage.removeAttribute('src');
-                delete starImage.dataset.celebName;
-                loadingOverlay.classList.remove('active');
-                placeholder.style.display = 'flex';
-                placeholder.textContent =
-                    currentPoolKey === 'hard'
-                        ? '高难度开启啦，全部是95-05内娱男生，点击“开始”挑战一下！'
-                        : '难度调整完毕，点击“开始”试试运气～';
-                feedback.textContent = '';
-                feedback.className = 'feedback';
-                autoRetryCount = 0;
-                updateHintText();
-                disableOptionButtons();
+            function resetPhotoCredit(message) {
+                if (!photoCredit) {
+                    return;
+                }
+                photoCredit.textContent = message || defaultCreditText || '仅供娱乐';
             }
 
-            function updateHintText() {
-                hint.textContent =
-                    currentPoolKey === 'hard'
-                        ? '高难度对应95-05内娱男生，名字更小众，选项仍然只有四个。'
-                        : '从四个选项中选出你认为正确的名字吧！';
+            function updatePhotoCredit({ pageUrl, providerLabel } = {}) {
+                if (!photoCredit) {
+                    return;
+                }
+
+                // Always show "仅供娱乐" instead of image source
+                photoCredit.textContent = '仅供娱乐';
             }
 
             function populateOptions(correctIndex, pool) {
@@ -2450,11 +2456,7 @@ const CELEBRITY_POOLS = {
                     }
                     ratingState.awaitingNext = true;
 
-                    if (currentCelebrity?.pageUrl && currentCelebrity?.providerLabel) {
-                        hint.innerHTML = `图片来源：<a href="${currentCelebrity.pageUrl}" target="_blank" rel="noopener">${currentCelebrity.providerLabel}</a> · 点击“下一题”继续。`;
-                    } else {
-                        hint.textContent = '评级模式：点击“下一题”继续。';
-                    }
+                    hint.textContent = '答题模式：点击"下一题"继续。';
 
                     if (ratingState.answeredCount >= RATING_TOTAL) {
                         finishRatingMode();
@@ -2469,12 +2471,24 @@ const CELEBRITY_POOLS = {
                 }
             }
 
-            function pickRandomCelebrity(pool = activeCelebrities) {
-                const total = pool.length;
-                let index;
-                do {
-                    index = Math.floor(Math.random() * total);
-                } while (total > 1 && index === lastLoadedIndex);
+            function pickRandomCelebrity(pool = activeCelebrities, { allowedIndices, avoidIndex } = {}) {
+                const candidates = Array.isArray(allowedIndices) && allowedIndices.length
+                    ? allowedIndices
+                    : pool.map((_, idx) => idx);
+
+                if (!candidates.length) {
+                    throw new Error('缺少可用的明星');
+                }
+
+                let index = candidates[Math.floor(Math.random() * candidates.length)];
+                if (typeof avoidIndex === 'number' && candidates.length > 1) {
+                    let guard = 0;
+                    while (index === avoidIndex && guard < 10) {
+                        index = candidates[Math.floor(Math.random() * candidates.length)];
+                        guard += 1;
+                    }
+                }
+
                 return { celebrity: pool[index], index };
             }
 
@@ -2498,8 +2512,37 @@ const CELEBRITY_POOLS = {
                 throw lastError || new Error('未知错误');
             }
 
+            function getAssetKey(celebrity) {
+                return (celebrity?.displayName || '').trim();
+            }
+
+            function buildLocalAssetProvider(celebrity) {
+                const key = getAssetKey(celebrity);
+                if (!key) {
+                    return null;
+                }
+
+                const asset = CELEBRITY_ASSETS[key];
+                if (!asset || !asset.path) {
+                    return null;
+                }
+
+                return () =>
+                    Promise.resolve({
+                        imageUrl: asset.path,
+                        pageUrl: asset.sourceUrl || asset.path,
+                        providerLabel: asset.sourceLabel || '本地素材库',
+                        isLocal: true,
+                    });
+            }
+
             function buildImageProviders(celebrity) {
                 const providers = [];
+
+                const localProvider = buildLocalAssetProvider(celebrity);
+                if (localProvider) {
+                    providers.push(localProvider);
+                }
 
                 if (celebrity.wiki?.title && celebrity.wiki?.lang) {
                     providers.push(() => fetchFromWikipedia(celebrity));
