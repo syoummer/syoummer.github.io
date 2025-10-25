@@ -354,33 +354,33 @@
 // 本地素材映射：在 assets/people 中新增图片后，把名字、路径和出处登记在这里。
 const CELEBRITY_ASSETS = {
     '易烊千玺': {
-        path: 'assets/people/placeholder.svg',
-        sourceLabel: '示例素材：维基百科',
+        path: 'assets/people/易烊千玺.jpg',
+        sourceLabel: '本地素材库',
         sourceUrl: 'https://zh.wikipedia.org/wiki/%E6%98%93%E7%83%8A%E5%8D%83%E7%93%BA',
     },
     '王俊凯': {
-        path: 'assets/people/placeholder.svg',
-        sourceLabel: '示例素材：维基百科',
+        path: 'assets/people/王俊凯.jpg',
+        sourceLabel: '本地素材库',
         sourceUrl: 'https://zh.wikipedia.org/wiki/%E7%8E%8B%E4%BF%8A%E5%87%AF',
     },
     '王源': {
-        path: 'assets/people/placeholder.svg',
-        sourceLabel: '示例素材：维基百科',
+        path: 'assets/people/王源.jpg',
+        sourceLabel: '本地素材库',
         sourceUrl: 'https://zh.wikipedia.org/wiki/%E7%8E%8B%E6%BA%90',
     },
     '王一博': {
-        path: 'assets/people/placeholder.svg',
-        sourceLabel: '示例素材：维基百科',
+        path: 'assets/people/王一博.jpg',
+        sourceLabel: '本地素材库',
         sourceUrl: 'https://zh.wikipedia.org/wiki/%E7%8E%8B%E4%B8%80%E5%8D%9A',
     },
     '肖战': {
-        path: 'assets/people/placeholder.svg',
-        sourceLabel: '示例素材：维基百科',
+        path: 'assets/people/肖战.jpg',
+        sourceLabel: '本地素材库',
         sourceUrl: 'https://zh.wikipedia.org/wiki/%E8%82%96%E6%88%98',
     },
     '蔡徐坤': {
-        path: 'assets/people/placeholder.svg',
-        sourceLabel: '示例素材：维基百科',
+        path: 'assets/people/蔡徐坤.jpg',
+        sourceLabel: '本地素材库',
         sourceUrl: 'https://zh.wikipedia.org/wiki/%E8%94%A1%E5%BE%90%E5%9D%A4',
     },
 };
@@ -1956,6 +1956,7 @@ const CELEBRITY_LIST = (() => {
             let lastLoadedIndex = -1;
             let activeCelebrities = CELEBRITY_LIST;
             let autoRetryCount = 0;
+            let usedCelebrityIndices = new Set(); // 记录已使用的明星索引
 
             const maxAutoRetries = 3;
             const autoRetryDelayMs = 800;
@@ -2270,22 +2271,38 @@ const CELEBRITY_LIST = (() => {
                     return;
                 }
 
-                const exclusionSet = excludeIndices instanceof Set ? excludeIndices : null;
+                // 合并所有需要排除的索引
+                const allExcludedIndices = new Set();
+                if (excludeIndices instanceof Set) {
+                    excludeIndices.forEach(idx => allExcludedIndices.add(idx));
+                }
+                if (!isRatingMode) {
+                    // 普通模式也排除已使用的明星
+                    usedCelebrityIndices.forEach(idx => allExcludedIndices.add(idx));
+                }
+                
                 const candidateIndices = pool
                     .map((_, idx) => idx)
-                    .filter((idx) => !exclusionSet || !exclusionSet.has(idx));
+                    .filter((idx) => !allExcludedIndices.has(idx));
 
                 if (!candidateIndices.length) {
-                    hint.textContent = '题库里的明星都出完啦，稍后再来试试吧～';
-                    placeholder.textContent = '没有更多题目';
-                    disableOptionButtons();
-                    return;
+                    if (!isRatingMode) {
+                        // 普通模式：重置已使用记录，重新开始
+                        usedCelebrityIndices.clear();
+                        hint.textContent = '所有明星都展示过了，重新开始～';
+                        placeholder.textContent = '重新开始';
+                        return loadRandomCelebrity({ excludeIndices });
+                    } else {
+                        hint.textContent = '题库里的明星都出完啦，稍后再来试试吧～';
+                        placeholder.textContent = '没有更多题目';
+                        disableOptionButtons();
+                        return;
+                    }
                 }
 
                 for (let attempt = 0; attempt < maxFetchAttempts; attempt += 1) {
                     const { celebrity, index } = pickRandomCelebrity(pool, {
                         allowedIndices: candidateIndices,
-                        avoidIndex: typeof lastLoadedIndex === 'number' ? lastLoadedIndex : null,
                     });
                     try {
                         const { imageUrl, pageUrl, providerLabel, isLocal } = await fetchCelebrityImage(celebrity);
@@ -2301,6 +2318,11 @@ const CELEBRITY_LIST = (() => {
                         };
                         lastLoadedIndex = index;
                         autoRetryCount = 0;
+
+                        // 记录已使用的明星索引
+                        if (!isRatingMode) {
+                            usedCelebrityIndices.add(index);
+                        }
 
                         placeholder.style.display = 'none';
                         populateOptions(index, pool);
@@ -2471,7 +2493,7 @@ const CELEBRITY_LIST = (() => {
                 }
             }
 
-            function pickRandomCelebrity(pool = activeCelebrities, { allowedIndices, avoidIndex } = {}) {
+            function pickRandomCelebrity(pool = activeCelebrities, { allowedIndices } = {}) {
                 const candidates = Array.isArray(allowedIndices) && allowedIndices.length
                     ? allowedIndices
                     : pool.map((_, idx) => idx);
@@ -2480,15 +2502,7 @@ const CELEBRITY_LIST = (() => {
                     throw new Error('缺少可用的明星');
                 }
 
-                let index = candidates[Math.floor(Math.random() * candidates.length)];
-                if (typeof avoidIndex === 'number' && candidates.length > 1) {
-                    let guard = 0;
-                    while (index === avoidIndex && guard < 10) {
-                        index = candidates[Math.floor(Math.random() * candidates.length)];
-                        guard += 1;
-                    }
-                }
-
+                const index = candidates[Math.floor(Math.random() * candidates.length)];
                 return { celebrity: pool[index], index };
             }
 
