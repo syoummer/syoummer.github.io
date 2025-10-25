@@ -342,14 +342,14 @@
 <body>
     <div class="card">
         <h1>流量男明星猜猜看</h1>
-        <p class="description" id="modeDescription">点击“开始”后，我们会随机挑选一位流量男明星，实时抓取他的维基公开照片。猜猜他是谁吧！</p>
+        <p class="description" id="modeDescription">仅供娱乐</p>
         <div class="difficulty-switcher" id="difficultySection">
             <label for="difficultySelect">难度</label>
             <select id="difficultySelect" aria-label="难度选择">
                 <option value="normal">普通</option>
                 <option value="hard">高难度</option>
             </select>
-            <button id="ratingToggle" class="secondary-action mode-toggle" aria-pressed="false">评级模式：关</button>
+            <button id="ratingToggle" class="secondary-action mode-toggle" aria-pressed="false">答题模式：关</button>
         </div>
         <div id="ratingHud" class="rating-hud hidden">
             <span class="rating-chip" id="ratingProgress">第 1 / 10 题</span>
@@ -1923,7 +1923,7 @@ const CELEBRITY_POOLS = {
             const defaultPlaceholderText = placeholder ? placeholder.textContent : '';
             const defaultHintText = hint ? hint.textContent : '';
             const defaultToggleText = ratingToggle ? ratingToggle.textContent : '';
-            const activeToggleText = '评级模式：开';
+            const activeToggleText = '答题模式：开';
 
             const OPTION_COUNT = 4;
             const maxFetchAttempts = 15;
