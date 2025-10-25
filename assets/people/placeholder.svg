@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4c6ef5" />
+      <stop offset="100%" stop-color="#d6336c" />
+    </linearGradient>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)" rx="32" />
+  <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="42" fill="#ffffff" font-family="'Helvetica Neue', Arial, sans-serif" letter-spacing="4">
+    TBD
+  </text>
+  <text x="50%" y="72%" dominant-baseline="middle" text-anchor="middle" font-size="18" fill="#f8f9fa" font-family="'Helvetica Neue', Arial, sans-serif" opacity="0.8">
+    Replace with real photo
+  </text>
+</svg>
