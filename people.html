@@ -4164,7 +4164,7 @@ const CELEBRITY_POOL = [
                     Promise.resolve({
                         imageUrl: celebrity.localImage.path,
                         pageUrl: celebrity.localImage.sourceUrl || celebrity.localImage.path,
-                        providerLabel: celebrity.localImage.sourceLabel || '本地素材库',
+                        providerLabel: celebrity.localImage.provider || '本地素材库',
                         isLocal: true,
                     });
             }
