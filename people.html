@@ -4032,8 +4032,12 @@ const CELEBRITY_POOL = [
                     return;
                 }
 
-                // Always show "仅供娱乐" instead of image source
-                photoCredit.textContent = '仅供娱乐';
+                // Show image source information
+                if (providerLabel) {
+                    photoCredit.textContent = `图片来源: ${providerLabel}`;
+                } else {
+                    photoCredit.textContent = '仅供娱乐';
+                }
             }
 
             function populateOptions(correctIndex, pool) {
