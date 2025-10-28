@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>项目导航</title>
+    <title>Simin You</title>
     <style>
         * {
             margin: 0;
@@ -13,171 +13,136 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
             min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: 24px;
-            padding: 48px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-            max-width: 600px;
-            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        header {
             text-align: center;
+            margin-bottom: 80px;
         }
 
         h1 {
-            font-size: 36px;
-            font-weight: 700;
-            color: #1d1d1f;
-            margin-bottom: 16px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #2c3e50;
+            margin-bottom: 10px;
         }
 
         .subtitle {
-            color: #86868b;
-            font-size: 18px;
-            margin-bottom: 40px;
-            line-height: 1.5;
+            font-size: 1.1rem;
+            color: #7f8c8d;
+            font-weight: 400;
         }
 
-        .nav-grid {
-            display: flex;
-            gap: 24px;
-            justify-content: center;
+        section {
+            margin-bottom: 60px;
         }
 
-        .nav-card {
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 16px;
-            padding: 32px 24px;
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #34495e;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+            padding-bottom: 10px;
+        }
+
+        .about-content {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .projects-list {
+            list-style: none;
+        }
+
+        .projects-list li {
+            margin-bottom: 15px;
+        }
+
+        .project-link {
+            display: inline-block;
+            color: #3498db;
             text-decoration: none;
-            color: inherit;
+            font-size: 1.1rem;
+            padding: 8px 0;
+            border-bottom: 1px solid transparent;
             transition: all 0.3s ease;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-            max-width: 400px;
-            width: 100%;
         }
 
-        .nav-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 1;
+        .project-link:hover {
+            color: #2980b9;
+            border-bottom-color: #3498db;
         }
 
-        .nav-card:hover::before {
-            opacity: 0.1;
+        footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 40px;
+            border-top: 1px solid #ecf0f1;
+            color: #95a5a6;
+            font-size: 0.9rem;
         }
 
-        .nav-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.3);
-            border-color: #667eea;
-        }
-
-        .nav-card-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .nav-icon {
-            font-size: 48px;
-            margin-bottom: 16px;
-            display: block;
-        }
-
-        .nav-title {
-            font-size: 20px;
-            font-weight: 600;
-            color: #1d1d1f;
-            margin-bottom: 8px;
-        }
-
-        .nav-description {
-            font-size: 14px;
-            color: #86868b;
-            line-height: 1.4;
-        }
-
-        .people-card {
-            background: linear-gradient(135deg, #4ecdc4, #44a08d);
-        }
-
-        .people-card .nav-icon {
-            color: #fff;
-        }
-
-        .people-card .nav-title {
-            color: #fff;
-        }
-
-        .people-card .nav-description {
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        @media (max-width: 640px) {
+        @media (max-width: 768px) {
             .container {
-                padding: 32px 24px;
+                padding: 40px 20px;
             }
 
             h1 {
-                font-size: 28px;
+                font-size: 2rem;
             }
 
-            .subtitle {
-                font-size: 16px;
+            h2 {
+                font-size: 1.5rem;
             }
 
-            .nav-grid {
-                gap: 16px;
+            .about-content {
+                font-size: 1rem;
             }
 
-            .nav-card {
-                padding: 24px 20px;
-            }
-
-            .nav-icon {
-                font-size: 40px;
-            }
-
-            .nav-title {
-                font-size: 18px;
+            .project-link {
+                font-size: 1rem;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>项目导航</h1>
-        <p class="subtitle">选择你想要体验的功能</p>
-        
-        <div class="nav-grid">
-            <a href="people.html" class="nav-card people-card">
-                <div class="nav-card-content">
-                    <span class="nav-icon">👥</span>
-                    <div class="nav-title">明星猜猜看</div>
-                    <div class="nav-description">流量男明星识别游戏，测试你的追星知识</div>
-                </div>
-            </a>
-        </div>
+        <header>
+            <h1>Simin You</h1>
+            <p class="subtitle">Personal Portfolio</p>
+        </header>
+
+        <section class="about">
+            <h2>About Me</h2>
+            <div class="about-content">
+                这个家伙很懒，什么都没留下
+            </div>
+        </section>
+
+        <section class="projects">
+            <h2>Projects</h2>
+            <ul class="projects-list">
+                <li>
+                    <a href="people.html" class="project-link">明星猜猜看</a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Simin You. All rights reserved.</p>
+        </footer>
     </div>
 </body>
 </html>
