@@ -51,9 +51,9 @@
         }
 
         .nav-grid {
-            display: grid;
+            display: flex;
             gap: 24px;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            justify-content: center;
         }
 
         .nav-card {
@@ -66,6 +66,8 @@
             border: 2px solid transparent;
             position: relative;
             overflow: hidden;
+            max-width: 400px;
+            width: 100%;
         }
 
         .nav-card::before {
@@ -115,46 +117,20 @@
             line-height: 1.4;
         }
 
-        .fun-card {
-            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
-        }
-
         .people-card {
             background: linear-gradient(135deg, #4ecdc4, #44a08d);
-        }
-
-        .qr-card {
-            background: linear-gradient(135deg, #a8edea, #fed6e3);
-        }
-
-        .fun-card .nav-icon {
-            color: #fff;
         }
 
         .people-card .nav-icon {
             color: #fff;
         }
 
-        .qr-card .nav-icon {
-            color: #333;
-        }
-
-        .fun-card .nav-title,
         .people-card .nav-title {
             color: #fff;
         }
 
-        .fun-card .nav-description,
         .people-card .nav-description {
             color: rgba(255, 255, 255, 0.8);
-        }
-
-        .qr-card .nav-title {
-            color: #333;
-        }
-
-        .qr-card .nav-description {
-            color: #666;
         }
 
         @media (max-width: 640px) {
@@ -171,7 +147,6 @@
             }
 
             .nav-grid {
-                grid-template-columns: 1fr;
                 gap: 16px;
             }
 
@@ -195,27 +170,11 @@
         <p class="subtitle">选择你想要体验的功能</p>
         
         <div class="nav-grid">
-            <a href="fun.html" class="nav-card fun-card">
-                <div class="nav-card-content">
-                    <span class="nav-icon">🎭</span>
-                    <div class="nav-title">请假申请</div>
-                    <div class="nav-description">一个有趣的请假申请界面，带有动态表情和交互效果</div>
-                </div>
-            </a>
-            
             <a href="people.html" class="nav-card people-card">
                 <div class="nav-card-content">
                     <span class="nav-icon">👥</span>
                     <div class="nav-title">明星猜猜看</div>
                     <div class="nav-description">流量男明星识别游戏，测试你的追星知识</div>
-                </div>
-            </a>
-            
-            <a href="qr_demo.html" class="nav-card qr-card">
-                <div class="nav-card-content">
-                    <span class="nav-icon">📱</span>
-                    <div class="nav-title">QR 扫描器</div>
-                    <div class="nav-description">二维码扫描工具，支持相机扫描和手动输入</div>
                 </div>
             </a>
         </div>
