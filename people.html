@@ -106,6 +106,124 @@
             display: none !important;
         }
 
+        body.modal-open {
+            overflow: hidden;
+        }
+
+        .result-modal {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            z-index: 1000;
+        }
+
+        .result-modal__backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(24, 41, 85, 0.45);
+            backdrop-filter: blur(6px);
+        }
+
+        .result-modal__container {
+            position: relative;
+            width: min(420px, 100%);
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 32px 28px 28px;
+            box-shadow: 0 32px 60px rgba(24, 41, 85, 0.3);
+            color: #1c1c28;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .result-modal__badge {
+            align-self: center;
+            padding: 8px 18px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 16px;
+            letter-spacing: 1px;
+            background: linear-gradient(135deg, #4263eb, #9775fa);
+            color: #fff;
+            box-shadow: 0 16px 32px rgba(66, 99, 235, 0.45);
+        }
+
+        .result-modal__subtitle {
+            color: #495057;
+            font-size: 15px;
+        }
+
+        .result-modal__stats {
+            margin: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 12px;
+        }
+
+        .result-modal__stat {
+            padding: 14px 16px;
+            border-radius: 18px;
+            background: rgba(66, 99, 235, 0.08);
+        }
+
+        .result-modal__stat dt {
+            font-size: 13px;
+            color: #6c757d;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .result-modal__stat dd {
+            margin-top: 6px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1c1c28;
+        }
+
+        .result-modal__comment {
+            color: #495057;
+            line-height: 1.6;
+        }
+
+        .result-modal__close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            border: none;
+            background: transparent;
+            font-size: 24px;
+            line-height: 1;
+            color: #868e96;
+            cursor: pointer;
+        }
+
+        .result-modal__close:hover {
+            color: #495057;
+        }
+
+        .result-modal__actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        @media (min-width: 520px) {
+            .result-modal__actions {
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .result-modal__actions button {
+                flex: 1;
+            }
+        }
+
         h1 {
             font-size: clamp(28px, 4vw, 38px);
             font-weight: 700;
@@ -348,6 +466,31 @@
         <div id="guessPanel" class="guess-panel" aria-label="候选明星名单"></div>
         <div id="feedback" class="feedback"></div>
         <p id="hint" class="hint">从四个选项中选出你认为正确的名字吧！</p>
+    </div>
+
+    <div id="resultModal" class="result-modal hidden" role="dialog" aria-modal="true" aria-labelledby="resultModalTitle" aria-hidden="true">
+        <div class="result-modal__backdrop" data-modal-dismiss="true"></div>
+        <div class="result-modal__container">
+            <button type="button" class="result-modal__close" id="resultModalClose" aria-label="关闭结算弹窗">&times;</button>
+            <div class="result-modal__badge" id="resultModalBadge">SSR</div>
+            <h2 id="resultModalTitle">内娱行走百科</h2>
+            <p class="result-modal__subtitle" id="resultModalSubtitle">评分：100 分</p>
+            <dl class="result-modal__stats">
+                <div class="result-modal__stat">
+                    <dt>答对题数</dt>
+                    <dd id="resultModalCorrect">10 / 10</dd>
+                </div>
+                <div class="result-modal__stat">
+                    <dt>命中率</dt>
+                    <dd id="resultModalAccuracy">100%</dd>
+                </div>
+            </dl>
+            <p class="result-modal__comment" id="resultModalComment">满分表现！你就是行走的明星百科～</p>
+            <div class="result-modal__actions">
+                <button type="button" id="resultReplayBtn" class="main-action">再战十题</button>
+                <button type="button" id="resultExitBtn" class="secondary-action">先休息一下</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -3561,6 +3704,16 @@ const CELEBRITY_POOL = [
             const modeDescription = document.getElementById('modeDescription');
             const mainControls = document.getElementById('mainControls');
             const photoCredit = document.getElementById('photoCredit');
+            const resultModal = document.getElementById('resultModal');
+            const resultModalBadge = document.getElementById('resultModalBadge');
+            const resultModalTitle = document.getElementById('resultModalTitle');
+            const resultModalSubtitle = document.getElementById('resultModalSubtitle');
+            const resultModalCorrect = document.getElementById('resultModalCorrect');
+            const resultModalAccuracy = document.getElementById('resultModalAccuracy');
+            const resultModalComment = document.getElementById('resultModalComment');
+            const resultModalReplayBtn = document.getElementById('resultReplayBtn');
+            const resultModalExitBtn = document.getElementById('resultExitBtn');
+            const resultModalCloseBtn = document.getElementById('resultModalClose');
             const defaultDescriptionText = modeDescription ? modeDescription.textContent : '';
             const defaultPlaceholderText = placeholder ? placeholder.textContent : '';
             const defaultHintText = hint ? hint.textContent : '';
@@ -3581,6 +3734,57 @@ const CELEBRITY_POOL = [
             const maxAutoRetries = 3;
             const autoRetryDelayMs = 800;
             const RATING_TOTAL = 10;
+            const ratingTiers = [
+                {
+                    min: 100,
+                    badge: 'SSR',
+                    title: '满分鉴星师',
+                    subtitle: '现场识别率 100%，粉丝心头宝躲不过你的眼睛。',
+                    comment: '满分表现！你就是行走的明星百科～',
+                },
+                {
+                    min: 90,
+                    badge: 'S+',
+                    title: '内娱行走百科',
+                    subtitle: '九成命中率，站姐都欠你一张返图。',
+                    comment: '很棒的成绩，追星达人认证成功！',
+                },
+                {
+                    min: 75,
+                    badge: 'S',
+                    title: '应援团团长',
+                    subtitle: '脸盲是什么？再刷几场舞台就能闭眼锁人。',
+                    comment: '再多刷刷图就能稳稳拿下满分～',
+                },
+                {
+                    min: 60,
+                    badge: 'A',
+                    title: '潜力股追星手',
+                    subtitle: '及格线稳稳守住，再看几条 cut 就能升级。',
+                    comment: '已经及格啦，再接再厉冲击更高段位！',
+                },
+                {
+                    min: 40,
+                    badge: 'B',
+                    title: '吃瓜路人王',
+                    subtitle: '有点眼熟但还差临门一脚，今晚就补课！',
+                    comment: '差一点就及格了，再加把劲～',
+                },
+                {
+                    min: 20,
+                    badge: 'C',
+                    title: '盲猜小勇士',
+                    subtitle: '全靠直觉闯关，建议开启循环刷脸模式。',
+                    comment: '没关系，多挑战几次，很快就能记住他们的脸！',
+                },
+                {
+                    min: 0,
+                    badge: 'D',
+                    title: '快乐围观群众',
+                    subtitle: '先欣赏颜值，再慢慢熟起来也不迟。',
+                    comment: '没关系，多挑战几次，很快就能记住他们的脸！',
+                },
+            ];
 
             let isRatingMode = false;
             let ratingState = null;
@@ -3604,6 +3808,38 @@ const CELEBRITY_POOL = [
             if (nextQuestionBtn) {
                 nextQuestionBtn.addEventListener('click', handleNextQuestionClick);
             }
+
+            if (resultModalReplayBtn) {
+                resultModalReplayBtn.addEventListener('click', () => {
+                    hideResultModal();
+                    startNewRatingAttempt();
+                });
+            }
+
+            if (resultModalExitBtn) {
+                resultModalExitBtn.addEventListener('click', () => {
+                    hideResultModal();
+                    exitRatingMode();
+                });
+            }
+
+            if (resultModalCloseBtn) {
+                resultModalCloseBtn.addEventListener('click', hideResultModal);
+            }
+
+            if (resultModal) {
+                resultModal.addEventListener('click', (event) => {
+                    if (event.target && event.target.dataset && event.target.dataset.modalDismiss === 'true') {
+                        hideResultModal();
+                    }
+                });
+            }
+
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape' && resultModal && !resultModal.classList.contains('hidden')) {
+                    hideResultModal();
+                }
+            });
 
             function prepareCelebrityLoad({ hintText, placeholderText } = {}) {
                 autoRetryCount = 0;
@@ -3650,6 +3886,7 @@ const CELEBRITY_POOL = [
                 if (isRatingMode) {
                     return;
                 }
+                hideResultModal();
                 isRatingMode = true;
                 ratingState = {
                     answeredCount: 0,
@@ -3752,11 +3989,68 @@ const CELEBRITY_POOL = [
                 startRatingRound();
             }
 
+            function getRatingOutcome(score) {
+                const normalized = Number.isFinite(score) ? Math.max(0, Math.min(100, score)) : 0;
+                const tier = ratingTiers.find((item) => normalized >= item.min);
+                return tier || ratingTiers[ratingTiers.length - 1];
+            }
+
+            function showResultModal({ score, correctCount, total, outcome }) {
+                if (!resultModal) {
+                    return;
+                }
+                const ratingOutcome = outcome || getRatingOutcome(score);
+                if (resultModalBadge) {
+                    resultModalBadge.textContent = ratingOutcome.badge;
+                }
+                if (resultModalTitle) {
+                    resultModalTitle.textContent = ratingOutcome.title;
+                }
+                if (resultModalSubtitle) {
+                    resultModalSubtitle.textContent = `评分：${score} 分 | ${ratingOutcome.subtitle}`;
+                }
+                if (resultModalCorrect) {
+                    resultModalCorrect.textContent = `${correctCount} / ${total} 题`;
+                }
+                if (resultModalAccuracy) {
+                    resultModalAccuracy.textContent = `${score}%`;
+                }
+                if (resultModalComment) {
+                    resultModalComment.textContent = ratingOutcome.comment;
+                }
+                resultModal.classList.remove('hidden');
+                resultModal.setAttribute('aria-hidden', 'false');
+                if (document && document.body) {
+                    document.body.classList.add('modal-open');
+                }
+                if (resultModalReplayBtn) {
+                    try {
+                        resultModalReplayBtn.focus({ preventScroll: true });
+                    } catch (error) {
+                        resultModalReplayBtn.focus();
+                    }
+                }
+            }
+
+            function hideResultModal() {
+                if (!resultModal) {
+                    return;
+                }
+                if (!resultModal.classList.contains('hidden')) {
+                    resultModal.classList.add('hidden');
+                    resultModal.setAttribute('aria-hidden', 'true');
+                    if (document && document.body) {
+                        document.body.classList.remove('modal-open');
+                    }
+                }
+            }
+
             function startNewRatingAttempt() {
                 if (!isRatingMode) {
                     return;
                 }
 
+                hideResultModal();
                 ratingState = {
                     answeredCount: 0,
                     correctCount: 0,
@@ -3785,14 +4079,21 @@ const CELEBRITY_POOL = [
                 ratingState.currentQuestion = RATING_TOTAL;
 
                 const score = Math.round((ratingState.correctCount / RATING_TOTAL) * 100);
-                const comment = computeRatingComment(score);
+                const outcome = getRatingOutcome(score);
+                const comment = outcome.comment;
 
-                feedback.textContent = `答题模式完成：答对 ${ratingState.correctCount} / ${RATING_TOTAL} 题，得分 ${score} 分。`;
+                feedback.textContent = `答题模式完成：${outcome.title}！答对 ${ratingState.correctCount} / ${RATING_TOTAL} 题，得分 ${score} 分。`;
                 feedback.className = 'feedback';
                 hint.textContent = comment;
                 nextQuestionBtn.disabled = false;
                 nextQuestionBtn.textContent = '再来一次';
                 updateRatingHud();
+                showResultModal({
+                    score,
+                    correctCount: ratingState.correctCount,
+                    total: RATING_TOTAL,
+                    outcome,
+                });
             }
 
             function exitRatingMode() {
@@ -3800,6 +4101,7 @@ const CELEBRITY_POOL = [
                     return;
                 }
 
+                hideResultModal();
                 isRatingMode = false;
                 ratingState = null;
 
@@ -3865,23 +4167,6 @@ const CELEBRITY_POOL = [
 
                 ratingScore.textContent = `正确 ${ratingState.correctCount} 题`;
             }
-
-            function computeRatingComment(score) {
-                if (score >= 100) {
-                    return '满分表现！你就是行走的明星百科～';
-                }
-                if (score >= 80) {
-                    return '很棒的成绩，追星达人认证成功！';
-                }
-                if (score >= 60) {
-                    return '不错哦，再多刷刷图就能更稳啦。';
-                }
-                if (score >= 40) {
-                    return '差一点就及格了，再加把劲～';
-                }
-                return '没关系，多挑战几次，很快就能记住他们的脸！';
-            }
-
             async function loadRandomCelebrity({ excludeIndices } = {}) {
                 const pool = activeCelebrities;
 
