@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>的 / 得 / 地 十题小测</title>
+    <style>
+        :root {
+            color-scheme: light dark;
+            --gradient-start: #845ef7;
+            --gradient-end: #f783ac;
+            --card: rgba(255, 255, 255, 0.94);
+            --text-primary: #1f1f2b;
+            --text-secondary: #52525b;
+            --accent: #7048e8;
+            --accent-strong: #ae3ec9;
+            --border: rgba(15, 23, 42, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Helvetica Neue", "PingFang SC", "Microsoft YaHei", sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(130deg, var(--gradient-start), var(--gradient-end));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 16px;
+            color: var(--text-primary);
+        }
+
+        .page {
+            width: min(920px, 100%);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 15px;
+            text-decoration: none;
+            color: #fff;
+            margin-bottom: 18px;
+            opacity: 0.8;
+            transition: opacity 0.2s ease;
+        }
+
+        .back-link:hover {
+            opacity: 1;
+        }
+
+        .quiz-card {
+            background: var(--card);
+            border-radius: 28px;
+            padding: 36px clamp(20px, 4vw, 48px);
+            box-shadow: 0 30px 80px rgba(15, 23, 42, 0.25);
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .hero {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .eyebrow {
+            font-size: 14px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        h1 {
+            font-size: clamp(28px, 4vw, 38px);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .intro {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .highlights {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .highlights li {
+            background: rgba(112, 72, 232, 0.1);
+            padding: 6px 14px;
+            border-radius: 999px;
+        }
+
+        .quiz-form {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .question-card {
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .question-header {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .question-number {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: rgba(112, 72, 232, 0.1);
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .question-text {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+
+        .option {
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.7);
+            transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        .option:hover {
+            border-color: rgba(112, 72, 232, 0.5);
+            box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .option input {
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(112, 72, 232, 0.4);
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+        }
+
+        .option input:checked {
+            border-color: var(--accent);
+        }
+
+        .option input:checked::after {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .option-letter {
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 12px;
+        }
+
+        button {
+            border: none;
+            border-radius: 999px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        #submitBtn {
+            background: linear-gradient(130deg, var(--accent), var(--accent-strong));
+            color: #fff;
+            box-shadow: 0 20px 40px rgba(112, 72, 232, 0.35);
+        }
+
+        #submitBtn:hover {
+            transform: translateY(-2px);
+        }
+
+        #resetBtn {
+            background: rgba(112, 72, 232, 0.12);
+            color: var(--accent);
+        }
+
+        .helper-text {
+            text-align: center;
+            min-height: 24px;
+            font-size: 15px;
+            color: var(--text-secondary);
+        }
+
+        .helper-text.error {
+            color: #f03e3e;
+            font-weight: 600;
+        }
+
+        .report {
+            border-radius: 22px;
+            border: 1px solid var(--border);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .report.hidden {
+            display: none;
+        }
+
+        .scoreboard {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .score-label {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .score-value {
+            font-size: 40px;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .score-comment {
+            color: var(--text-secondary);
+        }
+
+        .report-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            counter-reset: quiz;
+        }
+
+        .report-item {
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .report-item.correct {
+            border-color: rgba(47, 158, 68, 0.4);
+        }
+
+        .report-item.incorrect {
+            border-color: rgba(240, 62, 62, 0.4);
+        }
+
+        .report-title {
+            display: flex;
+            justify-content: space-between;
+            font-weight: 600;
+        }
+
+        .report-question {
+            font-weight: 600;
+        }
+
+        .report-answer,
+        .report-reason,
+        .report-your {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .report-your.is-correct {
+            color: #2f9e44;
+            font-weight: 600;
+        }
+
+        .report-your.is-incorrect {
+            color: #f03e3e;
+            font-weight: 600;
+        }
+
+        @media (max-width: 640px) {
+            .question-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .options {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+
+            .quiz-card {
+                padding: 28px 18px;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <a class="back-link" href="index.html" aria-label="返回首页">
+            <span aria-hidden="true">←</span>
+            返回主页
+        </a>
+        <div class="quiz-card">
+            <header class="hero">
+                <p class="eyebrow">语法快问快答</p>
+                <h1>的 / 得 / 地 十题小测</h1>
+                <p class="intro">10 道关于“的、得、地”的精选题目，检验你对三者用法的掌握程度。全部答完后将自动生成解析报告，帮助你迅速复盘薄弱点。</p>
+                <ul class="highlights">
+                    <li>语感即时反馈</li>
+                    <li>逐题解析</li>
+                    <li>支持一键重做</li>
+                </ul>
+            </header>
+
+            <form id="quizForm" class="quiz-form">
+                <div id="quizQuestions" aria-live="polite"></div>
+            </form>
+
+            <div class="actions">
+                <button type="button" id="submitBtn">提交答案</button>
+                <button type="button" id="resetBtn">重做一遍</button>
+            </div>
+            <p id="helperText" class="helper-text"></p>
+
+            <section id="report" class="report hidden" aria-live="polite">
+                <div class="scoreboard">
+                    <p class="score-label">本次得分</p>
+                    <p class="score-value"><span id="scoreCount">0</span> / 10</p>
+                    <p class="score-comment" id="scoreComment"></p>
+                </div>
+                <ol id="reportList" class="report-list"></ol>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        const quizData = [
+            {
+                sentence: "他高兴____跑了过来。",
+                correct: "B",
+                explanation: "“高兴”用来修饰后面的动词“跑”，应使用副词标记“地”表示动作方式。"
+            },
+            {
+                sentence: "她做事总是慢慢____。",
+                correct: "B",
+                explanation: "“慢慢”说明做事的状态，修饰动词要用“地”。"
+            },
+            {
+                sentence: "他把房间收拾____干干净净。",
+                correct: "C",
+                explanation: "“收拾得干干净净”属于动词 + 得 + 程度补语的结构，应选“得”。"
+            },
+            {
+                sentence: "那是我最喜欢____书。",
+                correct: "A",
+                explanation: "定语“我最喜欢”修饰名词“书”，须用结构助词“的”。"
+            },
+            {
+                sentence: "他唱歌唱____很好听。",
+                correct: "C",
+                explanation: "形容唱歌的程度用“得”连接动词与补语“很好听”。"
+            },
+            {
+                sentence: "她静静____坐着，看书。",
+                correct: "B",
+                explanation: "“静静”修饰动作“坐着”，表示状态，应用“地”。"
+            },
+            {
+                sentence: "他用最快____速度赶到了。",
+                correct: "A",
+                explanation: "“最快”作定语修饰名词“速度”，需要“的”。"
+            },
+            {
+                sentence: "孩子们开心____玩耍着。",
+                correct: "B",
+                explanation: "“开心地玩耍”是形容词修饰动词的典型搭配，选“地”。"
+            },
+            {
+                sentence: "他把事情解释____很清楚。",
+                correct: "C",
+                explanation: "“解释得很清楚”属于程度补语结构，正确写法是“得”。"
+            },
+            {
+                sentence: "他是一个勇敢____人。",
+                correct: "A",
+                explanation: "“勇敢”做定语修饰“人”，需要结构助词“的”。"
+            }
+        ];
+
+        const options = [
+            { letter: "A", text: "的" },
+            { letter: "B", text: "地" },
+            { letter: "C", text: "得" }
+        ];
+
+        const optionMap = options.reduce((acc, option) => {
+            acc[option.letter] = option.text;
+            return acc;
+        }, {});
+
+        const quizQuestionsEl = document.getElementById("quizQuestions");
+        const quizForm = document.getElementById("quizForm");
+        const submitBtn = document.getElementById("submitBtn");
+        const resetBtn = document.getElementById("resetBtn");
+        const helperText = document.getElementById("helperText");
+        const reportEl = document.getElementById("report");
+        const reportListEl = document.getElementById("reportList");
+        const scoreCountEl = document.getElementById("scoreCount");
+        const scoreCommentEl = document.getElementById("scoreComment");
+
+        const createQuestionBlock = (question, index) => {
+            const container = document.createElement("section");
+            container.className = "question-card";
+            const optionsMarkup = options.map((option) => {
+                const inputId = `q${index}-${option.letter}`;
+                return `
+                    <label class="option" for="${inputId}">
+                        <input type="radio" id="${inputId}" name="q${index}" value="${option.letter}">
+                        <span class="option-letter">${option.letter}</span>
+                        <span class="option-text">${option.text}</span>
+                    </label>
+                `;
+            }).join("");
+
+            container.innerHTML = `
+                <div class="question-header">
+                    <span class="question-number">${index + 1}</span>
+                    <p class="question-text">${question.sentence}</p>
+                </div>
+                <div class="options" role="radiogroup" aria-label="第 ${index + 1} 题选项">
+                    ${optionsMarkup}
+                </div>
+            `;
+            return container;
+        };
+
+        const renderQuestions = () => {
+            quizData.forEach((question, index) => {
+                quizQuestionsEl.appendChild(createQuestionBlock(question, index));
+            });
+        };
+
+        const getCommentForScore = (score) => {
+            if (score === 10) return "完美！你的语感堪比语文老师。";
+            if (score >= 8) return "很棒，偶尔混淆的点再复习一下就行。";
+            if (score >= 6) return "中等水平，建议重点记住成分与句式搭配。";
+            return "建议系统复习“的/得/地”的用法，再试一次吧！";
+        };
+
+        const buildReport = (resultList, correctCount) => {
+            scoreCountEl.textContent = correctCount.toString();
+            scoreCommentEl.textContent = getCommentForScore(correctCount);
+            reportListEl.innerHTML = resultList.map((item, index) => {
+                const userAnswerText = `${item.userAnswer}. ${optionMap[item.userAnswer]}`;
+                const indicator = item.isCorrect ? "✅" : "❌";
+                return `
+                    <li class="report-item ${item.isCorrect ? "correct" : "incorrect"}">
+                        <div class="report-title">
+                            <span>第 ${index + 1} 题</span>
+                            <span>${item.isCorrect ? "答对啦" : "答错了"}</span>
+                        </div>
+                        <p class="report-question">${item.question}</p>
+                        <p class="report-answer">正确答案：${item.correct}. ${optionMap[item.correct]}</p>
+                        <p class="report-reason">原因：${item.explanation}</p>
+                        <p class="report-your ${item.isCorrect ? "is-correct" : "is-incorrect"}">你的选择：${userAnswerText} ${indicator}</p>
+                    </li>
+                `;
+            }).join("");
+
+            reportEl.classList.remove("hidden");
+            reportEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        };
+
+        const handleSubmit = () => {
+            helperText.textContent = "";
+            helperText.classList.remove("error");
+            const formData = new FormData(quizForm);
+            let answeredAll = true;
+            const resultList = quizData.map((question, index) => {
+                const userAnswer = formData.get(`q${index}`);
+                if (!userAnswer) {
+                    answeredAll = false;
+                }
+                return {
+                    question: question.sentence,
+                    userAnswer: userAnswer || "",
+                    correct: question.correct,
+                    isCorrect: userAnswer === question.correct,
+                    explanation: question.explanation
+                };
+            });
+
+            if (!answeredAll) {
+                helperText.textContent = "请先完成全部 10 道题，再提交答案。";
+                helperText.classList.add("error");
+                reportEl.classList.add("hidden");
+                return;
+            }
+
+            const correctCount = resultList.filter((item) => item.isCorrect).length;
+            buildReport(resultList, correctCount);
+        };
+
+        const handleReset = () => {
+            quizForm.reset();
+            helperText.textContent = "";
+            helperText.classList.remove("error");
+            reportEl.classList.add("hidden");
+            reportListEl.innerHTML = "";
+            scoreCountEl.textContent = "0";
+            scoreCommentEl.textContent = "";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        };
+
+        renderQuestions();
+        submitBtn.addEventListener("click", handleSubmit);
+        resetBtn.addEventListener("click", handleReset);
+    </script>
+</body>
+</html>
