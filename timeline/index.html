@@ -488,6 +488,37 @@
         const exportGoogleButton = document.getElementById('exportGoogleButton');
         const tagsInput = document.getElementById('tagsInput');
 
+        // 自动将中文逗号替换为英文逗号
+        function normalizeTagsInput(input) {
+            return input.replace(/，/g, ',');
+        }
+
+        // 监听输入框变化，实时替换中文逗号
+        tagsInput.addEventListener('input', (e) => {
+            const cursorPosition = e.target.selectionStart;
+            const originalValue = e.target.value;
+            const normalizedValue = normalizeTagsInput(originalValue);
+            
+            if (originalValue !== normalizedValue) {
+                // 计算光标位置偏移（每个中文逗号替换为英文逗号，位置不变）
+                const beforeCursor = originalValue.substring(0, cursorPosition);
+                const normalizedBeforeCursor = normalizeTagsInput(beforeCursor);
+                const newCursorPosition = normalizedBeforeCursor.length;
+                
+                e.target.value = normalizedValue;
+                // 恢复光标位置
+                e.target.setSelectionRange(newCursorPosition, newCursorPosition);
+            }
+        });
+
+        // 在失去焦点时也确保替换（双重保险）
+        tagsInput.addEventListener('blur', (e) => {
+            const normalizedValue = normalizeTagsInput(e.target.value);
+            if (e.target.value !== normalizedValue) {
+                e.target.value = normalizedValue;
+            }
+        });
+
         let currentEvents = [];
 
         let mediaRecorder = null;
@@ -721,7 +752,8 @@
                 analyzeFormData.append('current_time', new Date().toISOString());
                 
                 // 添加 tags 参数（如果有值）
-                const tagsValue = tagsInput.value.trim();
+                // 确保使用英文逗号（双重保险）
+                let tagsValue = normalizeTagsInput(tagsInput.value.trim());
                 if (tagsValue) {
                     analyzeFormData.append('tags', tagsValue);
                 }
