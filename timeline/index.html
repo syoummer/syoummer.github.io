@@ -3,14 +3,1050 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=https://timeline.ai-builders.space/">
-    <title>Redirecting...</title>
-    <script>
-        // 立即重定向
-        window.location.replace("https://timeline.ai-builders.space/");
-    </script>
+    <title>Timeline - 语音日程记录</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #f5f7fa;
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            max-width: 600px;
+            width: 100%;
+            padding: 48px 32px;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .recording-section {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .record-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #e5e7eb;
+            background: white;
+            color: #3b82f6;
+            font-size: 32px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+
+        .record-button:hover:not(:disabled) {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            transform: scale(1.05);
+        }
+
+        .record-button.recording {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .record-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+            }
+            50% {
+                box-shadow: 0 0 0 8px rgba(239, 68, 68, 0);
+            }
+        }
+
+        .status-text {
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .status-text.recording {
+            color: #ef4444;
+        }
+
+        .time-text {
+            color: #9ca3af;
+            font-size: 12px;
+        }
+
+        .info-section {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .info-label {
+            color: #6b7280;
+        }
+
+        .info-value {
+            color: #1a1a1a;
+            font-weight: 500;
+        }
+
+        .tags-input-section {
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .tags-label {
+            color: #6b7280;
+            font-size: 13px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .tags-input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            color: #374151;
+            font-family: inherit;
+            background: white;
+        }
+
+        .tags-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #e5e7eb;
+            border-top-color: #3b82f6;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        .results {
+            display: none;
+            margin-top: 32px;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 12px;
+        }
+
+        .transcription-box {
+            background: #f9fafb;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            border-left: 3px solid #3b82f6;
+        }
+
+        .transcription-text {
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .transcription-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            font-size: 14px;
+            line-height: 1.6;
+            color: #374151;
+            font-family: inherit;
+            resize: vertical;
+            background: white;
+        }
+
+        .transcription-textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .analyze-button {
+            margin-top: 12px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            background: #3b82f6;
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .analyze-button:hover:not(:disabled) {
+            background: #2563eb;
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.2);
+        }
+
+        .analyze-button:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .analyze-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .event-item {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.2s;
+        }
+
+        .event-item:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .event-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .event-time {
+            font-size: 13px;
+            color: #3b82f6;
+            margin-bottom: 6px;
+        }
+
+        .event-description {
+            font-size: 13px;
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .event-tag {
+            display: inline-block;
+            font-size: 12px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: #eff6ff;
+            color: #3b82f6;
+            margin-top: 6px;
+            font-weight: 500;
+        }
+
+        .error {
+            display: none;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 24px;
+            color: #dc2626;
+            font-size: 14px;
+        }
+
+        .error.active {
+            display: block;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 32px;
+            color: #9ca3af;
+            font-size: 14px;
+        }
+
+        .export-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .export-buttons {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .export-button {
+            flex: 1;
+            min-width: 140px;
+            padding: 12px 20px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            color: #374151;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .export-button:hover {
+            border-color: #3b82f6;
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .export-button:active {
+            transform: scale(0.98);
+        }
+
+        .export-button.apple {
+            border-color: #007aff;
+            color: #007aff;
+        }
+
+        .export-button.apple:hover {
+            background: #e3f2fd;
+        }
+
+        .export-button.google {
+            border-color: #ea4335;
+            color: #ea4335;
+        }
+
+        .export-button.google:hover {
+            background: #fce8e6;
+        }
+    </style>
 </head>
 <body>
-    <p>正在跳转到 <a href="https://timeline.ai-builders.space/">https://timeline.ai-builders.space/</a>...</p>
+    <div class="container">
+        <h1>Timeline</h1>
+        <p class="subtitle">语音记录你的日程安排</p>
+
+        <div class="recording-section">
+            <button class="record-button" id="recordButton">🎤</button>
+            <div class="status-text" id="statusText">点击按钮开始录音</div>
+            <div class="time-text" id="timeText"></div>
+        </div>
+
+        <div class="info-section">
+            <div class="info-row">
+                <span class="info-label">时区</span>
+                <span class="info-value" id="timezone"></span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">当前时间</span>
+                <span class="info-value" id="currentTime"></span>
+            </div>
+            <div class="tags-input-section">
+                <label class="tags-label" for="tagsInput">标签列表（逗号分隔，用于事件分类）</label>
+                <input type="text" class="tags-input" id="tagsInput" placeholder="工作，生活，学习" value="工作，生活，学习">
+            </div>
+        </div>
+
+        <div class="transcription-box">
+            <div class="section-title">输入文本（可手动输入或录音后自动填入）</div>
+            <textarea class="transcription-textarea" id="transcriptionTextarea" placeholder="手动输入文字，或录音后文本会自动填入这里..."></textarea>
+            <button class="analyze-button" id="analyzeButton">
+                <span>📝</span>
+                <span>分析</span>
+            </button>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <div class="loading-text">正在处理音频...</div>
+        </div>
+
+        <div class="error" id="error"></div>
+
+        <div class="results" id="results">
+            <div>
+                <div class="section-title">提取的事件</div>
+                <div class="events-list" id="eventsList"></div>
+            </div>
+
+            <div class="export-section" id="exportSection" style="display: none;">
+                <div class="section-title">导出到日历</div>
+                <div class="export-buttons">
+                    <button class="export-button apple" id="exportAppleButton">
+                        <span>📅</span>
+                        <span>Apple Calendar</span>
+                    </button>
+                    <button class="export-button google" id="exportGoogleButton">
+                        <span>📅</span>
+                        <span>Google Calendar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const currentTime = new Date().toISOString();
+
+        document.getElementById('timezone').textContent = timezone;
+        document.getElementById('currentTime').textContent = new Date().toLocaleString('zh-CN');
+
+        const recordButton = document.getElementById('recordButton');
+        const statusText = document.getElementById('statusText');
+        const timeText = document.getElementById('timeText');
+        const loading = document.getElementById('loading');
+        const error = document.getElementById('error');
+        const results = document.getElementById('results');
+        const transcriptionTextarea = document.getElementById('transcriptionTextarea');
+        const analyzeButton = document.getElementById('analyzeButton');
+        const eventsList = document.getElementById('eventsList');
+        const exportSection = document.getElementById('exportSection');
+        const exportAppleButton = document.getElementById('exportAppleButton');
+        const exportGoogleButton = document.getElementById('exportGoogleButton');
+        const tagsInput = document.getElementById('tagsInput');
+
+        let currentEvents = [];
+
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recordingStartTime = null;
+        let recordingTimer = null;
+        let isRecording = false;
+
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            recordButton.disabled = true;
+            statusText.textContent = '浏览器不支持录音功能';
+            statusText.style.color = '#dc2626';
+        }
+
+        recordButton.addEventListener('click', async () => {
+            if (isRecording) {
+                stopRecording();
+            } else {
+                await startRecording();
+            }
+        });
+
+        async function startRecording() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                
+                // 尝试使用支持的格式，优先使用 WAV
+                let mimeType = 'audio/webm;codecs=opus';
+                if (MediaRecorder.isTypeSupported('audio/wav')) {
+                    mimeType = 'audio/wav';
+                } else if (MediaRecorder.isTypeSupported('audio/webm')) {
+                    mimeType = 'audio/webm';
+                } else if (MediaRecorder.isTypeSupported('audio/mp4')) {
+                    mimeType = 'audio/mp4';
+                }
+                
+                mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: mimeType
+                });
+
+                audioChunks = [];
+                isRecording = true;
+
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = async () => {
+                    stream.getTracks().forEach(track => track.stop());
+                    const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType });
+                    await processRecording(audioBlob, mediaRecorder.mimeType);
+                };
+
+                mediaRecorder.start();
+                recordingStartTime = Date.now();
+                
+                recordButton.classList.add('recording');
+                recordButton.textContent = '⏹';
+                statusText.textContent = '正在录音...';
+                statusText.classList.add('recording');
+                recordButton.disabled = false;
+                
+                startTimer();
+                error.classList.remove('active');
+                results.classList.remove('active');
+                
+            } catch (err) {
+                console.error('录音失败:', err);
+                showError('无法访问麦克风，请检查权限设置');
+                recordButton.disabled = false;
+            }
+        }
+
+        function stopRecording() {
+            if (mediaRecorder && isRecording) {
+                mediaRecorder.stop();
+                isRecording = false;
+                
+                recordButton.classList.remove('recording');
+                recordButton.textContent = '🎤';
+                statusText.textContent = '录音完成，正在处理...';
+                statusText.classList.remove('recording');
+                recordButton.disabled = true;
+                
+                stopTimer();
+            }
+        }
+
+        function startTimer() {
+            recordingTimer = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - recordingStartTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                timeText.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (recordingTimer) {
+                clearInterval(recordingTimer);
+                recordingTimer = null;
+            }
+        }
+
+        async function processRecording(audioBlob, mimeType) {
+            loading.classList.add('active');
+            error.classList.remove('active');
+            results.classList.remove('active');
+            analyzeButton.disabled = true;
+
+            try {
+                // 步骤1: 先进行转录
+                statusText.textContent = '正在转录音频...';
+                
+                // 根据 MIME 类型确定文件扩展名
+                let extension = 'webm';
+                let filename = 'recording.webm';
+                if (mimeType.includes('wav')) {
+                    extension = 'wav';
+                    filename = 'recording.wav';
+                } else if (mimeType.includes('mp4')) {
+                    extension = 'm4a';
+                    filename = 'recording.m4a';
+                } else if (mimeType.includes('webm')) {
+                    extension = 'webm';
+                    filename = 'recording.webm';
+                }
+                
+                const transcribeFormData = new FormData();
+                transcribeFormData.append('audio', audioBlob, filename);
+
+                const transcribeResponse = await fetch('https://timeline.ai-builders.space/api/v1/transcribe', {
+                    method: 'POST',
+                    body: transcribeFormData
+                });
+
+                let transcribeData;
+                try {
+                    transcribeData = await transcribeResponse.json();
+                } catch (e) {
+                    const text = await transcribeResponse.text();
+                    console.error('转录非 JSON 响应:', text);
+                    throw new Error(`转录服务返回错误 (${transcribeResponse.status}): ${text.substring(0, 200)}`);
+                }
+
+                if (!transcribeResponse.ok) {
+                    let errorMsg = '转录失败';
+                    let errorDetails = '';
+                    
+                    if (transcribeData.error && transcribeData.error.message) {
+                        errorMsg = transcribeData.error.message;
+                        errorDetails = transcribeData.error.details || transcribeData.error.code || '';
+                    } else if (transcribeData.detail) {
+                        if (typeof transcribeData.detail === 'string') {
+                            errorMsg = transcribeData.detail;
+                        } else if (transcribeData.detail.error) {
+                            errorMsg = transcribeData.detail.error.message || '转录失败';
+                            errorDetails = transcribeData.detail.error.details || transcribeData.detail.error.code || '';
+                        } else if (transcribeData.detail.message) {
+                            errorMsg = transcribeData.detail.message;
+                            errorDetails = transcribeData.detail.details || transcribeData.detail.code || '';
+                        }
+                    } else if (transcribeData.message) {
+                        errorMsg = transcribeData.message;
+                    }
+                    
+                    const fullError = errorDetails ? `${errorMsg} (${errorDetails})` : errorMsg;
+                    throw new Error(fullError);
+                }
+
+                // 将转录文本写入输入框
+                const transcript = transcribeData.transcription || '';
+                transcriptionTextarea.value = transcript;
+                
+                // 步骤2: 自动进行事件提取
+                if (transcript.trim()) {
+                    statusText.textContent = '正在分析文本...';
+                    await analyzeText(transcript);
+                } else {
+                    results.classList.add('active');
+                    statusText.textContent = '转录完成（无内容）';
+                    statusText.classList.remove('recording');
+                    timeText.textContent = '';
+                }
+                
+            } catch (err) {
+                console.error('处理失败:', err);
+                console.error('错误详情:', {
+                    message: err.message,
+                    stack: err.stack,
+                    name: err.name
+                });
+                
+                let errorMessage = err.message || '处理失败，请重试';
+                
+                if (err.name === 'TypeError' && err.message.includes('fetch')) {
+                    errorMessage = '网络连接失败，请检查网络或服务是否正常运行';
+                }
+                
+                if (err.message.includes('JSON')) {
+                    errorMessage = '服务器响应格式错误，请稍后重试';
+                }
+                
+                showError(errorMessage);
+                statusText.textContent = '处理失败，请重试';
+                statusText.style.color = '#dc2626';
+            } finally {
+                loading.classList.remove('active');
+                recordButton.disabled = false;
+                analyzeButton.disabled = false;
+            }
+        }
+
+        async function analyzeText(transcript) {
+            if (!transcript || !transcript.trim()) {
+                showError('转录文本为空，无法分析');
+                return;
+            }
+
+            loading.classList.add('active');
+            error.classList.remove('active');
+            analyzeButton.disabled = true;
+            statusText.textContent = '正在分析文本...';
+
+            try {
+                const analyzeFormData = new FormData();
+                analyzeFormData.append('transcript', transcript);
+                analyzeFormData.append('timezone', timezone);
+                analyzeFormData.append('current_time', new Date().toISOString());
+                
+                // 添加 tags 参数（如果有值）
+                const tagsValue = tagsInput.value.trim();
+                if (tagsValue) {
+                    analyzeFormData.append('tags', tagsValue);
+                }
+
+                const analyzeResponse = await fetch('https://timeline.ai-builders.space/api/v1/analyze', {
+                    method: 'POST',
+                    body: analyzeFormData
+                });
+
+                let analyzeData;
+                try {
+                    analyzeData = await analyzeResponse.json();
+                } catch (e) {
+                    const text = await analyzeResponse.text();
+                    console.error('分析非 JSON 响应:', text);
+                    throw new Error(`分析服务返回错误 (${analyzeResponse.status}): ${text.substring(0, 200)}`);
+                }
+
+                if (!analyzeResponse.ok) {
+                    let errorMsg = '分析失败';
+                    let errorDetails = '';
+                    
+                    if (analyzeData.error && analyzeData.error.message) {
+                        errorMsg = analyzeData.error.message;
+                        errorDetails = analyzeData.error.details || analyzeData.error.code || '';
+                    } else if (analyzeData.detail) {
+                        if (typeof analyzeData.detail === 'string') {
+                            errorMsg = analyzeData.detail;
+                        } else if (analyzeData.detail.error) {
+                            errorMsg = analyzeData.detail.error.message || '分析失败';
+                            errorDetails = analyzeData.detail.error.details || analyzeData.detail.error.code || '';
+                        } else if (analyzeData.detail.message) {
+                            errorMsg = analyzeData.detail.message;
+                            errorDetails = analyzeData.detail.details || analyzeData.detail.code || '';
+                        }
+                    } else if (analyzeData.message) {
+                        errorMsg = analyzeData.message;
+                    }
+                    
+                    const fullError = errorDetails ? `${errorMsg} (${errorDetails})` : errorMsg;
+                    throw new Error(fullError);
+                }
+
+                // 保存事件数据用于导出
+                currentEvents = analyzeData.events || [];
+                
+                if (currentEvents.length > 0) {
+                    eventsList.innerHTML = currentEvents.map(event => {
+                        // 如果 tag 为 null 或 undefined，显示"默认"
+                        const displayTag = event.tag || '默认';
+                        return `
+                        <div class="event-item">
+                            <div class="event-title">${escapeHtml(event.title)}</div>
+                            <div class="event-time">${formatTimeRange(event.start_time, event.end_time)}</div>
+                            ${event.description ? `<div class="event-description">${escapeHtml(event.description)}</div>` : ''}
+                            <div class="event-tag">${escapeHtml(displayTag)}</div>
+                        </div>
+                    `;
+                    }).join('');
+                    exportSection.style.display = 'block';
+                } else {
+                    eventsList.innerHTML = '<div class="empty-state">未提取到事件</div>';
+                    exportSection.style.display = 'none';
+                }
+
+                results.classList.add('active');
+                statusText.textContent = '处理完成';
+                statusText.classList.remove('recording');
+                timeText.textContent = '';
+                
+            } catch (err) {
+                console.error('分析失败:', err);
+                
+                let errorMessage = err.message || '分析失败，请重试';
+                
+                if (err.name === 'TypeError' && err.message.includes('fetch')) {
+                    errorMessage = '网络连接失败，请检查网络或服务是否正常运行';
+                }
+                
+                if (err.message.includes('JSON')) {
+                    errorMessage = '服务器响应格式错误，请稍后重试';
+                }
+                
+                showError(errorMessage);
+                statusText.textContent = '分析失败，请重试';
+                statusText.style.color = '#dc2626';
+            } finally {
+                loading.classList.remove('active');
+                analyzeButton.disabled = false;
+            }
+        }
+
+        // 分析按钮点击事件
+        analyzeButton.addEventListener('click', () => {
+            const transcript = transcriptionTextarea.value.trim();
+            if (!transcript) {
+                showError('请输入或转录文本');
+                return;
+            }
+            // 显示结果区域
+            results.classList.add('active');
+            analyzeText(transcript);
+        });
+
+        function showError(message) {
+            error.textContent = message;
+            error.classList.add('active');
+        }
+
+        function formatTimeRange(start, end) {
+            const startDate = new Date(start);
+            const endDate = new Date(end);
+            
+            const formatTime = (date) => {
+                return date.toLocaleString('zh-CN', {
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false
+                });
+            };
+
+            return `${formatTime(startDate)} - ${formatTime(endDate)}`;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // 导出到 Apple Calendar (.ics 文件)
+        exportAppleButton.addEventListener('click', () => {
+            if (currentEvents.length === 0) {
+                showError('没有可导出的事件');
+                return;
+            }
+            exportToICS(currentEvents, 'apple');
+        });
+
+        // 导出到 Google Calendar
+        exportGoogleButton.addEventListener('click', () => {
+            if (currentEvents.length === 0) {
+                showError('没有可导出的事件');
+                return;
+            }
+            exportToGoogleCalendar(currentEvents);
+        });
+
+        /**
+         * 导出为 .ics 文件（Apple Calendar 和其他日历应用）
+         */
+        function exportToICS(events, type = 'apple') {
+            const icsContent = generateICS(events);
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `timeline-events-${new Date().toISOString().split('T')[0]}.ics`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        /**
+         * 生成 .ics 文件内容
+         */
+        function generateICS(events) {
+            const now = new Date();
+            const timestamp = formatICSDate(now);
+            
+            let ics = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//Timeline//Timeline Calendar//EN',
+                'CALSCALE:GREGORIAN',
+                'METHOD:PUBLISH',
+                `X-WR-CALNAME:Timeline Events`,
+                `X-WR-TIMEZONE:${Intl.DateTimeFormat().resolvedOptions().timeZone}`,
+                ''
+            ];
+
+            events.forEach((event, index) => {
+                const startDate = new Date(event.start_time);
+                const endDate = new Date(event.end_time);
+                
+                ics.push('BEGIN:VEVENT');
+                ics.push(`UID:timeline-${Date.now()}-${index}@timeline.ai`);
+                ics.push(`DTSTAMP:${formatICSDate(now)}`);
+                ics.push(`DTSTART:${formatICSDate(startDate)}`);
+                ics.push(`DTEND:${formatICSDate(endDate)}`);
+                ics.push(`SUMMARY:${escapeICS(event.title)}`);
+                
+                if (event.description) {
+                    ics.push(`DESCRIPTION:${escapeICS(event.description)}`);
+                }
+                
+                ics.push(`CREATED:${formatICSDate(now)}`);
+                ics.push(`LAST-MODIFIED:${formatICSDate(now)}`);
+                ics.push('STATUS:CONFIRMED');
+                ics.push('SEQUENCE:0');
+                ics.push('END:VEVENT');
+                ics.push('');
+            });
+
+            ics.push('END:VCALENDAR');
+            return ics.join('\r\n');
+        }
+
+        /**
+         * 格式化日期为 ICS 格式
+         * ICS 格式：YYYYMMDDTHHmmssZ (UTC) 或 YYYYMMDDTHHmmss+HHMM (带时区)
+         * 从原始 ISO 8601 字符串中提取日期和时区信息，避免时区转换问题
+         */
+        function formatICSDate(dateInput) {
+            let dateStr;
+            
+            if (dateInput instanceof Date) {
+                // 如果是 Date 对象，转换为 ISO 字符串
+                dateStr = dateInput.toISOString();
+            } else {
+                // 使用原始字符串
+                dateStr = dateInput;
+            }
+            
+            // 解析 ISO 8601 格式：2024-01-15T14:00:00+08:00 或 2024-01-15T14:00:00Z
+            const isoMatch = dateStr.match(/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.\d+)?(Z|([+-])(\d{2}):(\d{2}))?$/);
+            
+            if (!isoMatch) {
+                // 如果无法解析，使用 Date 对象（fallback）
+                const dateObj = dateInput instanceof Date ? dateInput : new Date(dateInput);
+                const year = dateObj.getUTCFullYear();
+                const month = String(dateObj.getUTCMonth() + 1).padStart(2, '0');
+                const day = String(dateObj.getUTCDate()).padStart(2, '0');
+                const hours = String(dateObj.getUTCHours()).padStart(2, '0');
+                const minutes = String(dateObj.getUTCMinutes()).padStart(2, '0');
+                const seconds = String(dateObj.getUTCSeconds()).padStart(2, '0');
+                return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
+            }
+            
+            // 提取日期时间部分
+            const year = isoMatch[1];
+            const month = isoMatch[2];
+            const day = isoMatch[3];
+            const hours = isoMatch[4];
+            const minutes = isoMatch[5];
+            const seconds = isoMatch[6];
+            const tzIndicator = isoMatch[7]; // 'Z' 或 '+08:00' 格式
+            
+            if (tzIndicator === 'Z') {
+                // UTC 时间
+                return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
+            } else if (tzIndicator && isoMatch[8]) {
+                // 带时区偏移的时间（移除冒号）
+                const sign = isoMatch[8];
+                const tzHours = isoMatch[9];
+                const tzMinutes = isoMatch[10];
+                return `${year}${month}${day}T${hours}${minutes}${seconds}${sign}${tzHours}${tzMinutes}`;
+            } else {
+                // 没有时区信息，假设为 UTC
+                return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
+            }
+        }
+
+        /**
+         * 转义 ICS 文件中的特殊字符
+         */
+        function escapeICS(text) {
+            if (!text) return '';
+            return text
+                .replace(/\\/g, '\\\\')
+                .replace(/;/g, '\\;')
+                .replace(/,/g, '\\,')
+                .replace(/\n/g, '\\n')
+                .replace(/\r/g, '');
+        }
+
+        /**
+         * 导出到 Google Calendar（通过 URL）
+         */
+        function exportToGoogleCalendar(events) {
+            if (events.length === 0) return;
+
+            // Google Calendar 一次只能添加一个事件，所以我们添加第一个事件
+            // 或者可以打开多个标签页
+            const event = events[0];
+            const startDate = new Date(event.start_time);
+            const endDate = new Date(event.end_time);
+            
+            // 格式化日期为 Google Calendar 需要的格式 (YYYYMMDDTHHmmssZ)
+            const formatGoogleDate = (date) => {
+                const year = date.getUTCFullYear();
+                const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+                const day = String(date.getUTCDate()).padStart(2, '0');
+                const hours = String(date.getUTCHours()).padStart(2, '0');
+                const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+                const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+                return `${year}${month}${day}T${hours}${minutes}${seconds}Z`;
+            };
+
+            const params = new URLSearchParams({
+                action: 'TEMPLATE',
+                text: event.title,
+                dates: `${formatGoogleDate(startDate)}/${formatGoogleDate(endDate)}`,
+                details: event.description || '',
+                sf: 'true',
+                output: 'xml'
+            });
+
+            const url = `https://calendar.google.com/calendar/render?${params.toString()}`;
+            
+            // 打开新窗口
+            window.open(url, '_blank');
+            
+            // 如果有多个事件，提示用户
+            if (events.length > 1) {
+                setTimeout(() => {
+                    if (confirm(`已打开第一个事件。还有 ${events.length - 1} 个事件，是否下载 .ics 文件以导入所有事件？`)) {
+                        exportToICS(events, 'google');
+                    }
+                }, 500);
+            }
+        }
+    </script>
 </body>
 </html>
