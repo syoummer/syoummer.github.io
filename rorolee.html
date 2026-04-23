@@ -795,6 +795,62 @@
     font-size: 9px;
     margin-top: 2px;
   }
+
+  /* ── MOBILE ──────────────────────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    /* Nav: hide text links, keep logo + CTA pill */
+    nav { padding: 14px 20px; }
+    .nav-links { gap: 0; }
+    .nav-links a:not(.nav-cta) { display: none; }
+
+    /* Hero: single column, gallery on top */
+    .hero {
+      grid-template-columns: 1fr;
+      padding: 88px 20px 56px;
+      min-height: auto;
+      gap: 32px;
+    }
+    .hero-right { order: -1; }
+    .hero-body { max-width: 100%; }
+
+    /* Rounded cards: tighter margin */
+    .section-white { margin: 0 12px 16px; border-radius: 20px; }
+
+    /* Teammate: stack image above content */
+    .teammate-grid { grid-template-columns: 1fr; min-height: auto; }
+    .teammate-img { height: 240px; }
+    .teammate-content { padding: 32px 24px 40px; }
+    .feature-trio { grid-template-columns: 1fr; gap: 16px; }
+
+    /* Works For You: 2-col grid */
+    .section-pad { padding: 56px 20px; }
+    .work-cards { grid-template-columns: 1fr 1fr; }
+
+    /* How It Works: stack layers vertically, rotate arrows */
+    .how-section { margin: 0 12px 16px; padding: 48px 20px; border-radius: 20px; }
+    .layers-flow { grid-template-columns: 1fr; margin-top: 28px; }
+    .layer-arrow { transform: rotate(90deg); height: 40px; }
+
+    /* Specs: single column, device lineup first */
+    .specs-section { padding: 56px 20px; }
+    .specs-layout { grid-template-columns: 1fr; margin-top: 28px; gap: 0; }
+    .spec-device-col { order: -1; margin-bottom: 24px; border-radius: 16px; padding: 28px 16px; }
+
+    /* CTA: stack device image above copy */
+    .cta-section {
+      flex-direction: column;
+      padding: 48px 24px;
+      margin: 0 12px 32px;
+      border-radius: 20px;
+      text-align: center;
+      gap: 24px;
+    }
+    .cta-device { width: 200px; height: 180px; }
+    .cta-content h2 { font-size: 40px; }
+    .cta-content p { max-width: 100%; }
+
+    footer { padding: 24px 20px; }
+  }
 </style>
 </head>
 <body>
@@ -967,8 +1023,8 @@ function App() {
       </nav>
 
       {/* HERO */}
-      <section style={{maxWidth:1200, margin:'0 auto', padding:'0 48px'}}>
-        <div className="hero" style={{padding:'120px 0 80px', display:'grid', gridTemplateColumns:'1fr 1fr', alignItems:'center', gap:40}}>
+      <section>
+        <div className="hero">
           <div>
             <div className="hero-badge reveal"><span></span>LAUNCHING SOON</div>
             <h1 className="reveal reveal-delay-1">Rorolee<br/>SuperClaw<sup>™</sup></h1>
@@ -1018,7 +1074,7 @@ function App() {
       </div>
 
       {/* WORKS FOR YOU */}
-      <div className="section-pad" style={{paddingTop:80, paddingBottom:80, maxWidth:1200, margin:'0 auto', padding:'80px 48px'}}>
+      <div className="section-pad">
         <div className="section-header reveal">
           <p className="section-label">WORKS FOR YOU, ANYTIME ANYWHERE</p>
         </div>
@@ -1075,7 +1131,7 @@ function App() {
       </div>
 
       {/* SPECS */}
-      <div id="specs" style={{padding:'80px 48px', maxWidth:1200, margin:'0 auto'}}>
+      <div id="specs" className="specs-section">
         <div className="section-header reveal">
           <p className="section-label">CORE PRODUCT SPECIFICATIONS</p>
         </div>
