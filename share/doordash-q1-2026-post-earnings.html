@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>DoorDash 财报后复盘：为什么先涨后回落？</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>DoorDash 财报后复盘：为什么先涨后回落？</h1>
+<p>日期：2026-05-07<br />
+对象：DoorDash, Inc. (<code>DASH</code>)<br />
+性质：研究记录，不构成投资建议</p>
+<h2>一句话结论</h2>
+<p>DoorDash 这次不是“坏财报导致下跌”，而是“mixed quarter 先被乐观解读，随后市场重新审视估值、收入 miss、订单 miss 和利润率压力”。昨天盘后上涨有基本面支撑，今天开盘/盘中回落也有逻辑：它更像财报后分歧扩大，而不是基本面突然反转。</p>
+<h2>发生了什么</h2>
+<p>DoorDash Q1 2026 财报发布后，盘后和盘前一度明显上涨，市场最初奖励的是 EPS 超预期、Marketplace GOV 强劲、会员增长和 Q2 GOV 指引好于预期。但到 5 月 7 日开盘后，股价从盘前高位回落。StockAnalysis 实时页显示，5 月 7 日 11:57 AM EDT，<code>DASH</code> 报约 <code>$166.41</code>，日内下跌约 <code>0.93%</code>；同页显示分析师平均目标价仍在 <code>$259.97</code>，但市场短线并没有完全买账。</p>
+<p>这说明市场正在从“看 headline beat”切换到“拆解质量”。DoorDash 的核心需求仍强，但这份财报不是无瑕疵的 beat-and-raise。</p>
+<h2>财报里的利好</h2>
+<p>第一，需求端仍然强。官方披露显示，Q1 total orders 达 <code>9.33 亿</code>，同比 <code>+27%</code>；Marketplace GOV 达 <code>$316.04 亿</code>，同比 <code>+37%</code>；收入 <code>$40.36 亿</code>，同比 <code>+33%</code>。公司还强调会员注册创纪录、MAU 创新高、消费者互动强。</p>
+<p>第二，盈利指标好于市场担忧。GAAP diluted EPS 为 <code>$0.42</code>，高于市场预期约 <code>$0.36-$0.37</code>。Adjusted EBITDA 为 <code>$7.54 亿</code>，高于部分市场预期约 <code>$7.41 亿</code>。这解释了为什么昨晚盘后最初会涨。</p>
+<p>第三，Q2 GOV 指引支撑增长叙事。公司预计 Q2 Marketplace GOV 为 <code>$324 亿-$334 亿</code>，中点约 <code>$329 亿</code>，高于或接近市场预期。对于 DoorDash 这种高估值增长股，市场首先看的是需求和交易额韧性。</p>
+<p>第四，管理层试图稳住全年利润率预期。官方继续预计 2026 年 Adjusted EBITDA / Marketplace GOV 较 2025 年小幅提升，且 Deliveroo 预计为 2026 年贡献约 <code>$2 亿</code> Adjusted EBITDA。</p>
+<h2>财报里的问题</h2>
+<p>第一，收入 miss。Q1 收入 <code>$40.36 亿</code>，虽然同比增长 <code>33%</code>，但低于市场预期约 <code>$41.4-$41.5 亿</code>。对于高估值公司，收入 miss 很容易压制估值扩张。</p>
+<p>第二，订单也低于部分预期。CNBC 提到总订单 <code>9.33 亿</code>，低于约 <code>9.54 亿</code> 的市场预期。虽然同比仍强，但边际增速放缓会让投资者担心核心业务是否开始降速。</p>
+<p>第三，利润率没有干净扩张。官方披露，Adjusted EBITDA / Marketplace GOV 从 Q1 2025 和 Q4 2025 的 <code>2.6%</code> 降到 Q1 2026 的 <code>2.4%</code>。Net revenue margin 也从去年同期 <code>13.1%</code> 降到 <code>12.8%</code>。这意味着规模增长还没有完全转化为经营杠杆。</p>
+<p>第四，现金流质量不算强。Q1 operating cash flow 从去年同期 <code>$6.35 亿</code> 降到 <code>$5.94 亿</code>；free cash flow 从 <code>$4.94 亿</code> 降到 <code>$4.20 亿</code>。收入和 GOV 增长很漂亮，但 FCF 同比下降使财报质量打折。</p>
+<p>第五，油价补贴和重投入压制短期利润。公司预计 Q2 Dasher gas relief program 成本超过 <code>$5,000 万</code>。管理层表示会通过推迟或调整其他投资来 offset，但这也意味着 2026 年仍是投资-heavy 的一年。</p>
+<p>第六，headline 增长受 Deliveroo 并购影响。官方披露，Q1 Marketplace GOV headline 同比 <code>+37%</code>，但剔除 Deliveroo 后为 <code>+24%</code>；收入 headline 同比 <code>+33%</code>，剔除 Deliveroo 后为 <code>+21%</code>。这并不差，但要避免把并购带来的增长全部当成 organic growth。</p>
+<h2>为什么昨天涨、今天开盘回落</h2>
+<p>昨天盘后上涨，核心是“预期低 + 需求强 + EPS beat + GOV 指引好”。DASH 今年此前跌幅较大，市场对消费者需求、油价、海外整合和 AI/技术投入都比较担心，所以财报只要证明需求没坏，就足以触发 relief rally。</p>
+<p>今天回落，核心是“涨幅兑现 + 质量被重新拆解”。投资者盘后先看 headline，开盘后开始看收入 miss、订单 miss、Q2 EBITDA 中点略低于部分预期、油价补贴、FCF 下滑和高估值。也就是说，昨晚买的是“增长仍在”，今天卖的是“增长质量和估值还没完全过关”。</p>
+<h2>多空分歧</h2>
+<p>多头会说：</p>
+<ul>
+<li>DoorDash 仍在抢份额，GOV 和订单规模很强。</li>
+<li>会员、MAU、频次、国际业务和新垂类都有增长信号。</li>
+<li>Q2 GOV 指引稳，全年 EBITDA margin 预期未下调。</li>
+<li>分析师整体仍偏正面，StockAnalysis 显示 32 位分析师共识评级为 Buy，平均目标价约 <code>$259.97</code>。</li>
+</ul>
+<p>空头会说：</p>
+<ul>
+<li>收入和订单低于部分预期，核心增长边际放缓。</li>
+<li>Adjusted EBITDA/GOV 下滑，经营杠杆不够干净。</li>
+<li>FCF 同比下降，现金流质量没有跟上 headline growth。</li>
+<li>股价即使回落，估值仍不便宜；MarketBeat 引用的口径显示 DoorDash P/E 约 <code>79x</code>。</li>
+<li>Deliveroo、国际扩张、grocery、AI/平台重构都需要持续投入，短期 margin 可能反复。</li>
+</ul>
+<h2>我的判断</h2>
+<p>这份财报的正确读法是：业务韧性强，但估值重估还需要更多证据。</p>
+<p>如果只看基本面，DoorDash 并没有因为财报变差。需求、会员、GOV、新垂类和国际业务都还在增长，管理层也没有下调全年利润率框架。但如果看股票，DASH 仍是一个高预期、高估值、高波动标的。市场会要求它同时交出三个东西：organic growth 不降速、margin 扩张重新出现、FCF 跟上利润增长。</p>
+<p>所以，昨天的报告结论仍然成立：财报后上涨是合理的 relief rally，但不是无风险重估。今天回落补充了一个更清楚的市场信号：投资者愿意奖励 DoorDash 的增长，但不愿意无条件忽略 revenue miss、订单 miss 和 margin 压力。</p>
+<h2>后续跟踪清单</h2>
+<ol>
+<li>Q2 GOV 是否落在 <code>$324 亿-$334 亿</code> 区间上半段。</li>
+<li>Q2 Adjusted EBITDA 是否高于 <code>$820M</code> 中点，并验证油价补贴是否被真正 offset。</li>
+<li>Ex-Deliveroo organic growth 是否维持在 <code>20%+</code> 附近。</li>
+<li>Adjusted EBITDA/GOV 是否回到 <code>2.6%</code> 或更高。</li>
+<li>Free cash flow 是否恢复同比增长。</li>
+<li>Grocery/new verticals 是否继续改善 unit economics。</li>
+<li>Deliveroo 整合是否带来协同，而不是持续拖累 take rate 和 margin。</li>
+</ol>
+<h2>主要来源</h2>
+<ul>
+<li>DoorDash Q1 2026 官方 IR 财报：https://ir.doordash.com/news/news-details/2026/DoorDash-Releases-First-Quarter-2026-Financial-Results/default.aspx</li>
+<li>DoorDash Q1 2026 SEC 8-K / Exhibit 99.1：https://www.sec.gov/Archives/edgar/data/1792789/000179278926000036/proddashex991-pressrelease.htm</li>
+<li>CNBC 财报报道：https://www.cnbc.com/2026/05/06/doordash-dash-earnings-q1-2026.html</li>
+<li>Motley Fool 电话会纪要：https://www.fool.com/earnings/call-transcripts/2026/05/06/doordash-dash-q1-2026-earnings-transcript/</li>
+<li>StockAnalysis 评级与价格数据：https://stockanalysis.com/stocks/dash/ratings/</li>
+<li>StockStory 财报复盘：https://stockstory.org/us/stocks/nasdaq/dash/news/earnings-call/dash-q1-deep-dive-market-cheers-margin-upside-amid-revenue-miss-focus-shifts-to-platform-investments</li>
+<li>MarketBeat 分析师评级汇总：https://www.marketbeat.com/instant-alerts/needham-company-llc-reiterates-buy-rating-for-doordash-nasdaqdash-2026-05-07/</li>
+</ul>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>DoorDash Post-Earnings Review: Why Did It Rally First, Then Fade?</h1>
+<p>Date: 2026-05-07<br />
+Company: DoorDash, Inc. (<code>DASH</code>)<br />
+Type: Research note, not investment advice</p>
+<h2>Bottom Line</h2>
+<p>DoorDash did not fall because the quarter was bad. It pulled back because the quarter was mixed: the market initially rewarded EPS upside, strong GOV growth, membership momentum, and solid Q2 GOV guidance, then started to re-price the revenue miss, order miss, margin pressure, and valuation risk after the open.</p>
+<p>In other words, last night’s rally made sense as a relief rally. Today’s fade also makes sense as a quality-and-valuation check.</p>
+<h2>What Happened</h2>
+<p>After DoorDash reported Q1 2026 results, the stock initially rallied sharply in after-hours and premarket trading. Investors focused on stronger-than-feared demand, an EPS beat, record membership signups, and Q2 Marketplace GOV guidance of <code>$32.4B-$33.4B</code>.</p>
+<p>By the May 7 open and early trading session, the stock gave back much of that enthusiasm. StockAnalysis showed <code>DASH</code> around <code>$166.41</code> at 11:57 AM EDT, down about <code>0.93%</code> on the day, despite a consensus Buy rating and an average analyst price target around <code>$259.97</code>.</p>
+<p>The market moved from reading the headline to underwriting the quality of the quarter.</p>
+<h2>The Bullish Read</h2>
+<p>Demand remains healthy. Q1 total orders reached <code>933M</code>, up <code>27%</code> year over year. Marketplace GOV reached <code>$31.604B</code>, up <code>37%</code>. Revenue was <code>$4.036B</code>, up <code>33%</code>. DoorDash also cited record membership signups, a new high in monthly active users, and strong engagement across marketplaces.</p>
+<p>Profitability was better than feared. GAAP diluted EPS was <code>$0.42</code>, above expectations around <code>$0.36-$0.37</code>. Adjusted EBITDA was <code>$754M</code>, also ahead of some consensus estimates.</p>
+<p>Guidance supports the growth story. Q2 Marketplace GOV guidance of <code>$32.4B-$33.4B</code> was above or near Street expectations, and management maintained its full-year framework for slightly higher Adjusted EBITDA as a percentage of GOV versus 2025, excluding Deliveroo.</p>
+<h2>The Bearish Read</h2>
+<p>Revenue missed. Q1 revenue of <code>$4.036B</code> was below consensus around <code>$4.14B-$4.15B</code>. For a high-multiple growth stock, even a modest revenue miss matters.</p>
+<p>Orders were below some expectations. CNBC cited Q1 orders of <code>933M</code> versus an estimate around <code>954M</code>. Growth is still strong, but investors are sensitive to deceleration.</p>
+<p>Margins did not expand cleanly. Adjusted EBITDA as a percentage of Marketplace GOV declined to <code>2.4%</code>, down from <code>2.6%</code> in both Q1 2025 and Q4 2025. Net revenue margin also declined from <code>13.1%</code> to <code>12.8%</code> year over year.</p>
+<p>Cash flow quality was mixed. Operating cash flow fell from <code>$635M</code> to <code>$594M</code>, and free cash flow fell from <code>$494M</code> to <code>$420M</code> year over year.</p>
+<p>Costs remain a near-term headwind. DoorDash expects the Dasher gas relief program to cost more than <code>$50M</code> in Q2. Management plans to offset this by delaying or reprioritizing other investments, but that also reinforces the point that 2026 remains investment-heavy.</p>
+<p>Headline growth is acquisition-boosted. Marketplace GOV grew <code>37%</code> headline, but <code>24%</code> excluding Deliveroo. Revenue grew <code>33%</code> headline, but <code>21%</code> excluding Deliveroo. The organic business remains strong, but investors should not treat the full headline growth rate as organic.</p>
+<h2>Why It Rose First, Then Faded</h2>
+<p>The initial rally was driven by low expectations, strong demand signals, EPS upside, and better-than-feared GOV guidance. The stock had already been under pressure year-to-date, so the bar for a relief rally was not high.</p>
+<p>The fade happened because investors then focused on the unresolved issues: revenue miss, order miss, slightly softer Q2 EBITDA midpoint versus some estimates, gas relief costs, free cash flow decline, and valuation. The market bought “growth is intact” last night, then sold “the growth quality is not yet perfect” today.</p>
+<h2>My Take</h2>
+<p>The business is resilient, but the stock still needs cleaner proof for a durable re-rating.</p>
+<p>DoorDash did not report a broken quarter. It reported a strong-growth, mixed-quality quarter. The long case still rests on durable GOV growth, membership frequency, grocery/new verticals, international scale, and eventual margin expansion. The short case rests on slower organic growth, weaker take rate, heavy investment, fuel-related cost pressure, and high valuation.</p>
+<p>The next phase is simple: DoorDash needs to show that organic growth can stay strong while Adjusted EBITDA/GOV and free cash flow improve. Until then, sharp post-earnings moves in both directions are understandable.</p>
+<h2>Watch List</h2>
+<ol>
+<li>Q2 GOV landing point within the <code>$32.4B-$33.4B</code> guide.</li>
+<li>Q2 Adjusted EBITDA versus the <code>$820M</code> midpoint.</li>
+<li>Ex-Deliveroo organic growth staying near or above the low-20s percentage range.</li>
+<li>Adjusted EBITDA/GOV returning to <code>2.6%</code> or better.</li>
+<li>Free cash flow returning to year-over-year growth.</li>
+<li>Unit economics in grocery and new verticals.</li>
+<li>Deliveroo integration creating synergies rather than sustained take-rate or margin drag.</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li>DoorDash Q1 2026 IR release: https://ir.doordash.com/news/news-details/2026/DoorDash-Releases-First-Quarter-2026-Financial-Results/default.aspx</li>
+<li>DoorDash Q1 2026 SEC 8-K / Exhibit 99.1: https://www.sec.gov/Archives/edgar/data/1792789/000179278926000036/proddashex991-pressrelease.htm</li>
+<li>CNBC earnings coverage: https://www.cnbc.com/2026/05/06/doordash-dash-earnings-q1-2026.html</li>
+<li>Motley Fool earnings call transcript: https://www.fool.com/earnings/call-transcripts/2026/05/06/doordash-dash-q1-2026-earnings-transcript/</li>
+<li>StockAnalysis analyst ratings and price data: https://stockanalysis.com/stocks/dash/ratings/</li>
+<li>StockStory Q1 review: https://stockstory.org/us/stocks/nasdaq/dash/news/earnings-call/dash-q1-deep-dive-market-cheers-margin-upside-amid-revenue-miss-focus-shifts-to-platform-investments</li>
+<li>MarketBeat analyst roundup: https://www.marketbeat.com/instant-alerts/needham-company-llc-reiterates-buy-rating-for-doordash-nasdaqdash-2026-05-07/</li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
