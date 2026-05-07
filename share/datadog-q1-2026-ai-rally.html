@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
   <title>Datadog Q1 2026：为什么暴涨、AI 到底有没有关系、以及真正风险是什么</title>
@@ -13,6 +13,11 @@
   --code-bg: #f5f5f5;
   --blockquote-border: #ccc;
   --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -24,6 +29,11 @@
     --code-bg: #2d2d2d;
     --blockquote-border: #555;
     --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
   }
 }
 
@@ -38,6 +48,57 @@ body {
   max-width: 820px;
   margin: 0 auto;
   padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
 }
 
 h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
@@ -103,6 +164,8 @@ img { max-width: 100%; height: auto; }
 
 @media (max-width: 600px) {
   body { font-size: 15px; padding: 16px 14px 60px; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
   h1 { font-size: 1.5em; }
   h2 { font-size: 1.25em; }
   table { font-size: 0.85em; }
@@ -111,6 +174,16 @@ img { max-width: 100%; height: auto; }
 }</style>
 </head>
 <body>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
 <h1>Datadog Q1 2026：为什么暴涨、AI 到底有没有关系、以及真正风险是什么</h1>
 <p>日期：2026-05-07<br />
 定位：在前两份 Datadog 深度调研基础上的整合判断版</p>
@@ -336,5 +409,278 @@ img { max-width: 100%; height: auto; }
 <li>Datadog Investor Day 2026 event page: https://investors.datadoghq.com/events/event-details/investor-day-2026/</li>
 <li>Datadog Investor Day 2026 presentation: https://datadog.gcs-web.com/static-files/986ca4cd-9507-4c9d-b56f-4bae59d3dd47</li>
 </ul>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Datadog Q1 2026: Why It Surged, Whether AI Really Matters, and What the Real Risk Is</h1>
+<p>Date: 2026-05-07<br />
+Positioning: An integrated judgment based on the two earlier deep research reports on Datadog</p>
+<h2>One-Sentence Conclusion</h2>
+<p>Datadog's surge this time was not because the market suddenly discovered that it "also has AI." It was because the Q1 2026 earnings report proved one thing: <strong>AI and cloud-native complexity are reaccelerating Datadog's usage growth, and Datadog happens to be a company that monetizes complexity.</strong></p>
+<p>But the opposite is also true: <strong>the more successful Datadog becomes, the more easily its bills become a customer pain point. The long-term risk is not that customers leave immediately, but that they start diverting low-value, high-volume telemetry, which would pressure Datadog's usage expansion.</strong></p>
+<h2>Core Judgment</h2>
+<p>My judgment can be compressed into four layers:</p>
+<ol>
+<li>
+<p><strong>The near-term rise is driven by results and guidance, not just AI hype.</strong><br />
+   Q1 revenue was <code>$1.006B</code>, YoY <code>+32%</code>; non-GAAP EPS was <code>$0.60</code>; FCF was <code>$289M</code>. More importantly, the FY2026 revenue guide was raised from about <code>$4.06B-$4.10B</code> after Q4 to about <code>$4.30B-$4.34B</code>.</p>
+</li>
+<li>
+<p><strong>AI is an explanatory variable for the rally, but not the only one.</strong><br />
+   AI makes investors believe this is not an ordinary cloud usage rebound, but a new workload cycle: LLMs, GPUs, agents, AI security, and AI app debugging all create more telemetry.</p>
+</li>
+<li>
+<p><strong>Datadog's moat is not "more features," but "unified context + low-friction adoption + usage-based expansion."</strong><br />
+   Metrics, logs, traces, RUM, security, ownership, and incident workflows become stronger when they sit together. That is where Datadog is stronger than point tools.</p>
+</li>
+<li>
+<p><strong>The biggest risk is not that customers stop using it, but that customers use it more intelligently and therefore use less.</strong><br />
+   Large customers may keep Datadog as their core observability/control plane, while diverting low-value, high-volume, archivable data to cheaper options.</p>
+</li>
+</ol>
+<h2>1. What Was Strong About This Earnings Report</h2>
+<p>Datadog's official Q1 2026 8-K disclosed:</p>
+<blockquote>
+<p>"First quarter revenue grew 32% year-over-year to $1,006 million"<br />
+"$335 million in operating cash flow, and $289 million in free cash flow"<br />
+Source: <a href="https://www.sec.gov/Archives/edgar/data/1561550/000162828026031677/ex-991x20260331x8k.htm">Datadog Q1 2026 results, SEC 8-K Exhibit 99.1</a></p>
+</blockquote>
+<p>Key numbers:</p>
+<ul>
+<li>Revenue: <code>$1.006B</code>, YoY <code>+32%</code></li>
+<li>Non-GAAP operating income: <code>$223M</code>, margin <code>22%</code></li>
+<li>Non-GAAP EPS: <code>$0.60</code></li>
+<li>Operating cash flow: <code>$335M</code></li>
+<li>Free cash flow: <code>$289M</code></li>
+<li><code>$100K+ ARR customers</code>: about <code>4,550</code>, YoY <code>+21%</code></li>
+</ul>
+<p>The MarketBeat / Quartr page shows Q1 actual EPS of <code>$0.60</code> versus consensus of <code>$0.50</code>, and revenue of <code>$1.01B</code> versus an expected <code>$960.12M</code>. Source: <a href="https://www.marketbeat.com/earnings/reports/2026-5-7-datadog-inc-stock/">MarketBeat Q1 2026 earnings page</a>.</p>
+<p>Those numbers are strong on their own, but what really caused the market to reprice the company was the full-year guidance.</p>
+<p>At Q4/FY2025, Datadog's FY2026 revenue guide was:</p>
+<blockquote>
+<p>"Revenue between $4.06 billion and $4.10 billion."<br />
+Source: <a href="https://www.sec.gov/Archives/edgar/data/1561550/000162828026006645/ex-991x20251231x8k.htm">Datadog Q4/FY2025 results, SEC 8-K Exhibit 99.1</a></p>
+</blockquote>
+<p>After Q1, the MarketBeat / Quartr transcript summary showed FY2026 guidance of about <code>$4.30B-$4.34B</code>, corresponding to <code>25%-27% YoY</code>. Source: <a href="https://www.marketbeat.com/earnings/reports/2026-5-7-datadog-inc-stock/">MarketBeat Q1 2026 earnings page</a>.</p>
+<p>In other words, the midpoint of full-year revenue guidance moved from about <code>$4.08B</code> to about <code>$4.32B</code>, an increase of about <code>$240M</code>. This was not a normal beat. It was a repricing of the growth curve.</p>
+<h2>2. Why the Stock Price Reacted So Strongly</h2>
+<p>MarketBeat showed Datadog trading intraday at <code>$189.51</code> after Q1 earnings, up <code>+31.87%</code>. Source: <a href="https://www.marketbeat.com/earnings/reports/2026-5-7-datadog-inc-stock/">MarketBeat</a>.</p>
+<p>The Yahoo Finance chart API showed a May 6 close of about <code>$143.71</code>, an intraday May 7 price of about <code>$188.77</code>, and an intraday high of <code>$198.60</code>. Source: <a href="https://query1.finance.yahoo.com/v8/finance/chart/DDOG?range=5d&amp;interval=1d">Yahoo Finance chart API</a>.</p>
+<p>That kind of move shows the market was correcting three prior concerns:</p>
+<ol>
+<li>
+<p><strong>Concern that Datadog was moving from high growth into ordinary 20% SaaS.</strong><br />
+   Q1's <code>+32%</code> growth and the raised full-year guide broke that concern.</p>
+</li>
+<li>
+<p><strong>Concern that cloud optimization would keep pressuring usage.</strong><br />
+   Q1 showed customer usage growth and large-customer expansion recovering.</p>
+</li>
+<li>
+<p><strong>Concern that AI would cannibalize software companies.</strong><br />
+   Datadog proved it looks more like a beneficiary of AI infrastructure and complexity, not an application software company being replaced by AI.</p>
+</li>
+</ol>
+<h2>3. Does AI Really Matter</h2>
+<p>Yes, it matters a lot. But it needs to be separated into three layers instead of talked about all at once.</p>
+<h3>First Layer: AI-Heavy Customers Themselves Drive Usage Growth</h3>
+<p>This layer is closest to revenue.</p>
+<p>AI companies and AI-heavy enterprises bring more:</p>
+<ul>
+<li>cloud infrastructure;</li>
+<li>GPU fleets;</li>
+<li>logs;</li>
+<li>traces;</li>
+<li>RUM sessions;</li>
+<li>LLM spans;</li>
+<li>security signals;</li>
+<li>incident response needs.</li>
+</ul>
+<p>Datadog is a usage-based business, so workload growth naturally flows into revenue.</p>
+<p>The Q1 2025 transcript previously disclosed that AI-native customers represented about <code>8.5% of Q1 ARR</code> and contributed about <code>6 points</code> of YoY revenue growth. Source: <a href="https://investors.datadoghq.com/static-files/6019d4df-ff62-494e-be8e-d1821ec56b6f">Datadog Q1 2025 call transcript / IR static file</a>.</p>
+<p>By Q1 2026, the MarketBeat / Quartr page mentioned about <code>6,500</code> customers using AI integrations, representing about <code>80% of ARR</code>. Source: <a href="https://www.marketbeat.com/earnings/reports/2026-5-7-datadog-inc-stock/">MarketBeat Q1 2026 earnings page</a>.</p>
+<p>The most important interpretation here is: <strong>this does not mean AI products contribute 80% of ARR. It means Datadog's large customer base is already deeply involved in AI workloads.</strong> That makes the market believe AI will keep pulling usage higher.</p>
+<h3>Second Layer: Datadog-for-AI Products Are Starting to Show Adoption Evidence</h3>
+<p>Datadog's Q1 release mentioned:</p>
+<blockquote>
+<p>"Launched MCP Server, Bits AI Security Agent, GPU Monitoring, and Experiments for general availability"<br />
+Source: <a href="https://www.sec.gov/Archives/edgar/data/1561550/000162828026031677/ex-991x20260331x8k.htm">Datadog Q1 2026 results</a></p>
+</blockquote>
+<p>In the Q4 2025 transcript, the company said:</p>
+<blockquote>
+<p>"Over 1,000 customers are using [LLM Observability]"<br />
+"the number of spans ... increased 10x over the last 6 months"<br />
+"about 5,500 customers use one or more Datadog AI integrations"<br />
+Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/02/10/datadog-ddog-q4-2025-earnings-transcript/">Motley Fool Q4 2025 transcript</a></p>
+</blockquote>
+<p>The Q1 2026 summary further mentioned that LLM Observability spans nearly tripled QoQ, GPU Monitoring reached GA, and AI integrations customers were about 6,500. Source: <a href="https://www.marketbeat.com/earnings/reports/2026-5-7-datadog-inc-stock/">MarketBeat Q1 2026 earnings page</a>.</p>
+<p>This shows fast product adoption. The issue is that Datadog has not yet fully disclosed ARR for LLM Observability / GPU Monitoring, so this layer is a "strong adoption signal," not complete revenue proof.</p>
+<h3>Third Layer: Bits AI / MCP Are a Valuation Narrative and Future Entry Point</h3>
+<p>The Q4 2025 transcript said:</p>
+<blockquote>
+<p>"Over 2,000 trial and paying customers have run investigations in the past month"<br />
+"The Datadog MCP server is being used by thousands of customers in preview"<br />
+Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/02/10/datadog-ddog-q4-2025-earnings-transcript/">Motley Fool Q4 2025 transcript</a></p>
+</blockquote>
+<p>The strategic meaning of Bits AI / MCP is that they:</p>
+<ul>
+<li>make Datadog not just a dashboard, but a production context provider for AI agents;</li>
+<li>let SRE, SOC, and developer agents directly access real-time telemetry;</li>
+<li>move Datadog from an "observation system" toward a "diagnosis and remediation system."</li>
+</ul>
+<p>But it is still worth being conservative here: Bits AI and MCP currently look more like platform stickiness and future monetization entry points. They cannot yet be directly equated with large-scale revenue.</p>
+<h2>4. What Datadog's Real Advantage Is</h2>
+<p>Your summary, "complete product set, simple setup, AI support," is right, but I would add two more important words: <strong>context</strong> and <strong>workflow</strong>.</p>
+<p>Datadog's advantage is not simply that it has many SKUs. It is that it can put these things in the same context:</p>
+<ul>
+<li>infra metrics;</li>
+<li>APM traces;</li>
+<li>logs;</li>
+<li>RUM / synthetics;</li>
+<li>network;</li>
+<li>security / SIEM;</li>
+<li>ownership / service catalog;</li>
+<li>incidents / on-call;</li>
+<li>LLM / GPU / AI agent traces.</li>
+</ul>
+<p>When troubleshooting, engineers do not want ten tools. They want to jump from "user error" all the way to "which service, which trace, which deployment, which owner, which security signal, which LLM call, which GPU bottleneck."</p>
+<p>This is also what AI agents need. Without unified context, an agent can only give generic suggestions. With real-time telemetry and organizational context, an agent can plausibly perform root cause analysis and remediation.</p>
+<h2>5. Why Being Expensive Is Not Immediately Fatal</h2>
+<p>Datadog is expensive. That is a fact. The official billing docs show that its billing dimensions include host, container, custom metric, APM host, RUM session, and others, and that it has a high watermark plan:</p>
+<blockquote>
+<p>"On a high watermark plan (HWMP), the billable count of hosts is calculated ... using the maximum count (high-water mark) of the lower 99 percent of usage..."<br />
+"A custom metric is a single, unique combination of a metric name, host ID and any tags."<br />
+Source: <a href="https://docs.datadoghq.com/account_management/billing/pricing">Datadog billing docs</a></p>
+</blockquote>
+<p>But being expensive does not necessarily cause customers to leave immediately, because customers compare two kinds of cost:</p>
+<ol>
+<li>the Datadog bill;</li>
+<li>the cost of outages, engineer debugging time, self-built platform maintenance, security incidents, and slower deployment speed.</li>
+</ol>
+<p>For small teams, the Datadog bill can be very painful. For large enterprises and AI-native companies, the truly expensive things are production incidents and engineering time. So for complex customers, Datadog looks more like an insurance premium than just a software subscription.</p>
+<h2>6. The Real Risk Is Not "Leaving," but "Diversion"</h2>
+<p>The judgment that "users will leave once they use too much" points in the right direction, but the mechanism can be more precise.</p>
+<p>Mature customers are more likely to do this:</p>
+<ul>
+<li>keep Datadog for core observability / alerting / incident / high-value dashboards;</li>
+<li>move low-value, high-volume logs to cheaper storage;</li>
+<li>apply sampling to traces;</li>
+<li>use OpenTelemetry for routing;</li>
+<li>use Grafana / Prometheus / ClickHouse / Elastic / cloud-native tools to handle part of the data;</li>
+<li>control cardinality for custom metrics and tags.</li>
+</ul>
+<p>So the risk is not logo churn, but:</p>
+<ul>
+<li>NRR declines;</li>
+<li>usage expansion slows;</li>
+<li>large customers push for lower pricing at renewal;</li>
+<li>Datadog is forced to launch more cost-control SKUs, sacrificing some high-margin usage.</li>
+</ul>
+<p>This is also why products such as Flex Logs, Archive Search, and Storage Management matter. Datadog must proactively help customers reduce cost. Otherwise customers will find ways to route around it themselves.</p>
+<h2>7. A Few Points You May Have Missed</h2>
+<h3>7.1 FedRAMP / Government Is a Non-AI Growth Surface</h3>
+<p>The Q1 release mentioned that Datadog for Government received FedRAMP High certification. Source: <a href="https://www.sec.gov/Archives/edgar/data/1561550/000162828026031677/ex-991x20260331x8k.htm">Datadog Q1 2026 results</a>.</p>
+<p>This means it can enter U.S. government and contractor environments with higher security requirements. This is not an AI thesis, but it can expand enterprise TAM.</p>
+<h3>7.2 Multi-Product Adoption Makes Replacement Costs Rise Nonlinearly</h3>
+<p>If a customer only uses Datadog logs, replacement is not hard. If a customer uses infra, APM, RUM, security, incident, LLM Observability, MCP, and Bits AI together, replacement becomes difficult.</p>
+<p>The Q4 2025 transcript disclosed that <code>84%</code> of customers use 2+ products, <code>55%</code> use 4+, <code>33%</code> use 6+, <code>18%</code> use 8+, and <code>9%</code> use 10+. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/02/10/datadog-ddog-q4-2025-earnings-transcript/">Motley Fool Q4 2025 transcript</a>.</p>
+<p>That is Datadog's consolidation moat.</p>
+<h3>7.3 AI-Native Customers May Bring Concentration and Volatility Risk</h3>
+<p>AI companies grow quickly, but they may also have:</p>
+<ul>
+<li>volatile usage;</li>
+<li>strong bargaining power;</li>
+<li>strong engineering teams, making self-building or optimization easier;</li>
+<li>excessive growth contribution from a single large customer.</li>
+</ul>
+<p>So AI is a tailwind, but it may also increase earnings volatility.</p>
+<h3>7.4 Valuation Now Requires Repeated Proof</h3>
+<p>After the rally, the market has already priced in part of the expected benefit from AI/cloud complexity. If LLM Observability, GPU Monitoring, Bits AI, and MCP continue to show only adoption metrics, without ARR / retention / expansion metrics, the valuation may give back some of the move.</p>
+<h2>8. Final Framework</h2>
+<p>I would understand Datadog through this framework:</p>
+<p><strong>Datadog is a complexity tax company.</strong></p>
+<ul>
+<li>Cloud migration increases complexity, and Datadog benefits;</li>
+<li>microservices increase complexity, and Datadog benefits;</li>
+<li>Kubernetes / serverless increases complexity, and Datadog benefits;</li>
+<li>security and compliance increase complexity, and Datadog benefits;</li>
+<li>AI production increases complexity, and Datadog benefits.</li>
+</ul>
+<p>But its customers are not foolish either:</p>
+<ul>
+<li>the higher the complexity, the more valuable Datadog becomes;</li>
+<li>the higher the bill, the more motivated customers become to optimize;</li>
+<li>Datadog's long-term task is to prove that the engineering cost, incident cost, and security risk it reduces are greater than the billing pain it creates.</li>
+</ul>
+<p>So the most balanced judgment is:</p>
+<p><strong>In the short to medium term, AI truly strengthens Datadog's growth logic, because AI workloads create more observability/security/debugging demand. In the long term, Datadog's ceiling depends on whether it can evolve from "expensive but easy to use" into "expensive, but cheaper than self-building and diversion."</strong></p>
+<h2>9. Metrics to Track Next</h2>
+<ol>
+<li>Whether the FY2026 guide continues to be raised.</li>
+<li>Whether Datadog continues to disclose AI-native customers' percentage-point contribution to revenue growth.</li>
+<li>Whether LLM Observability / GPU Monitoring / Bits AI start disclosing ARR.</li>
+<li>Growth in <code>$100K+</code>, <code>$1M+</code>, and <code>$10M+</code> ARR customers.</li>
+<li>Multi-product adoption: the share of customers using 4+, 6+, 8+, and 10+ products.</li>
+<li>Whether FCF margin stays around 25%-30%.</li>
+<li>Whether customers intensify telemetry cost optimization.</li>
+<li>Whether cost-control products such as Flex Logs / Archive Search protect Datadog's retention.</li>
+</ol>
+<h2>Sources</h2>
+<ul>
+<li>Datadog Q1 2026 results, SEC 8-K Exhibit 99.1: https://www.sec.gov/Archives/edgar/data/1561550/000162828026031677/ex-991x20260331x8k.htm</li>
+<li>Datadog Q4/FY2025 results, SEC 8-K Exhibit 99.1: https://www.sec.gov/Archives/edgar/data/1561550/000162828026006645/ex-991x20251231x8k.htm</li>
+<li>MarketBeat / Quartr Q1 2026 earnings page and transcript summary: https://www.marketbeat.com/earnings/reports/2026-5-7-datadog-inc-stock/</li>
+<li>Yahoo Finance chart API for DDOG 5-day price data: https://query1.finance.yahoo.com/v8/finance/chart/DDOG?range=5d&amp;interval=1d</li>
+<li>Motley Fool Q4 2025 earnings transcript: https://www.fool.com/earnings/call-transcripts/2026/02/10/datadog-ddog-q4-2025-earnings-transcript/</li>
+<li>Datadog Q1 2025 call transcript static file: https://investors.datadoghq.com/static-files/6019d4df-ff62-494e-be8e-d1821ec56b6f</li>
+<li>Datadog billing docs: https://docs.datadoghq.com/account_management/billing/pricing</li>
+<li>Datadog Investor Day 2026 event page: https://investors.datadoghq.com/events/event-details/investor-day-2026/</li>
+<li>Datadog Investor Day 2026 presentation: https://datadog.gcs-web.com/static-files/986ca4cd-9507-4c9d-b56f-4bae59d3dd47</li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
 </body>
 </html>
