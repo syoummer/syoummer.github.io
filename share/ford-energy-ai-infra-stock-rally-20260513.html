@@ -176,16 +176,8 @@ img { max-width: 100%; height: auto; }
 <body>
 <article class="report-content" lang="zh-CN">
 <h1>Ford Energy / AI Infrastructure 叙事导致 Ford 股价大涨调研</h1>
-<p>日期：2026-05-13<br />
-Workflow：<code>workflow_deep_research_survey.md</code>  </p>
-<p>初扫：按老鸭汤 <code>workflow_deep_research_survey.md</code> 标准使用 Tavily 做 2-3 次以上搜索，覆盖基本信息、市场评价、争议/风险。实际执行包括：</p>
-<ul>
-<li><code>uv run --directory tools workspace-tavily "Ford stock rally Ford Energy AI infrastructure battery energy storage Morgan Stanley hyperscalers May 2026" --max-results 6 --topic finance</code></li>
-<li><code>uv run --directory tools workspace-tavily "Ford Energy DC block 20 GWh 5.45 MWh LFP data centers utilities" --max-results 10</code></li>
-<li><code>uv run --directory tools workspace-tavily "\"Ford Energy\" \"Morgan Stanley\" \"hyperscalers\" \"energy storage\" Ford stock" --max-results 10 --topic finance</code></li>
-<li><code>uv run --directory tools workspace-tavily "Ford Energy risks criticism competition Tesla Megapack Fluence pricing late 2027 deliveries BESS" --max-results 6 --topic finance</code></li>
-</ul>
-<p>备注：最初两条较宽补搜 query 返回了明显不相关结果，已用更精确 query 替换；最终证据仍以官方页面、原文报道和行业媒体交叉验证为准。</p>
+<p>日期：2026-05-13</p>
+<p>调研方法：多源检索、官方资料核验、行业媒体交叉验证，并对正反两方叙事进行分轨分析。</p>
 <h2>核心结论</h2>
 <p>这次 Ford 的“AI infra”叙事，严格说不是 Ford 要做模型、GPU、云服务或数据中心，而是市场把 Ford Energy 的电池储能系统（BESS）理解成 AI 数据中心电力瓶颈的上游基础设施。</p>
 <p>股价大涨的直接催化剂是 Morgan Stanley 对 Ford Energy 的重新框架化：Ford 可能凭借 CATL 相关 LFP 技术、美国本土组装能力、现成电池工厂和 20 GWh 年产能目标，成为美国公用事业、数据中心和 hyperscaler 的合规储能供应商。多家市场报道显示 Ford 盘中涨幅口径从约 8.5%、13% 到最高约 15% 不等，差异主要来自报道时间点不同。</p>
