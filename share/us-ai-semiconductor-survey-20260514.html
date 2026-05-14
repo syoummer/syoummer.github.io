@@ -238,45 +238,200 @@ img { max-width: 100%; height: auto; }
 <h3>6. 中国限制、台湾风险和供应链集中仍是不可忽视的尾部风险</h3>
 <p>Nvidia 在 Q4 FY2026 公告中提到，其中国 H200 产品虽有少量获批，但尚未产生收入，公司也不确定相关产品是否能被允许进口到中国。来源：<a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm">Nvidia SEC 8-K / Q4 FY2026 release</a>。</p>
 <p>与此同时，TSMC 在领先制程和先进封装上的集中地位让整个 AI 半导体链暴露于台湾地缘风险。美国出口管制可能限制中国收入，但也可能促使中国自研替代加速。这个风险平时难以定价，一旦爆发会迅速重估整条链。</p>
-<h2>四、分方向判断：哪些方向更像结构性机会，哪些更像周期交易</h2>
-<h3>GPU/AI accelerator：高质量但估值最敏感</h3>
-<p>代表：NVDA、AMD。</p>
-<p>Nvidia 仍是质量最高、生态最强的 AI compute 公司，但也最被充分研究和定价。继续上涨需要其证明 Blackwell/Rubin、networking、推理和企业 agent adoption 共同支撑，而不是只靠训练需求。AMD 的弹性在于份额提升和客户多元化，但需要证明软件生态、供应和毛利能同步改善。</p>
-<h3>Custom ASIC / networking：从训练转向推理的受益方向</h3>
-<p>代表：AVGO、MRVL、ANET。</p>
-<p>如果未来 AI 进入推理规模化阶段，custom ASIC、以太网/互连、光模块和网络交换会更重要。这条链的优点是受益于 AI workload 多样化；风险是客户集中、项目制收入波动，以及 hyperscaler 自研能力增强。</p>
-<h3>HBM/内存：最强瓶颈，也最强周期</h3>
-<p>代表：MU，以及海外 SK hynix、Samsung。</p>
-<p>Micron 的故事很清晰：HBM、数据中心 DRAM/NAND、供给约束和美国本土供应链地位。但内存股的风险也最经典：高 capex、高价格、高利润最终会吸引供给，周期拐点来时估值看起来往往仍便宜。</p>
-<h3>Foundry/advanced packaging：产业链核心收费站</h3>
-<p>代表：TSM，间接受益设备/封装链。</p>
-<p>TSMC 的强项是领先制程、CoWoS、客户结构和执行力。它可能是 AI 半导体中最接近“基础设施收费站”的资产之一。风险是台湾地缘、capex 强度、以及客户议价。</p>
-<h3>Equipment / EDA / process control：滞后但更稳定的卖铲人</h3>
-<p>代表：ASML、AMAT、LRCX、KLAC、SNPS、CDNS。</p>
-<p>设备和 EDA 不一定有 GPU 那样的爆发弹性，但如果 AI capex 扩散到新 fab、advanced packaging、HBM 和 leading-edge process，它们会受益。ASML 的 EUV 垄断、KLA 的良率控制、EDA 的设计复杂度提升都是结构性逻辑。风险是订单周期滞后、China exposure、以及客户 capex 一旦转弱会先砍设备订单。</p>
-<h3>Power/thermal/data-center infrastructure：半导体外溢机会</h3>
-<p>代表：VRT、MPWR 等。</p>
-<p>AI 数据中心的瓶颈正在从芯片扩散到电力、散热和供电架构。这个方向不完全是半导体，但和 AI 半导体 capex 高度相关。风险是估值补涨过快，以及 backlog 中 AI 真实占比需要核实。</p>
-<h2>五、交叉验证后的结论</h2>
+<h2>四、未来板块方向地图：机会不只在 GPU，而在瓶颈迁移</h2>
+<p>更系统地看，AI 半导体未来的主线不是一个方向，而是“瓶颈迁移”：先是 GPU 不够，随后 HBM 不够、CoWoS/先进封装不够、N3/N2 先进制程不够、网络带宽不够、电力和散热不够。资金往往会追逐当前最卡脖子的环节，而不是固定停留在某一类公司。</p>
+<p>Omdia 的 2026 semiconductor trends 把数据中心服务器列为半导体收入的主导驱动，明确提到 GPU、logic ASSP/ASIC、HBM、power management IC 都受 AI 数据中心拉动；同时指出 2026 年主题包括更大规模训练、CSP 继续扩容、老服务器升级、电力/冷却改善和 edge AI 增长。来源：<a href="https://omdia.tech.informa.com/-/media/tech/omdia/assetfamily/2025/12/04/2026-trends-to-watch-semiconductors/2026-trends-to-watch-semiconductors-pdf.pdf">Omdia 摘要</a>。</p>
+<p>TrendForce 的 AI server outlook 也把 2026 年重点放在 hyperscaler capex、NVIDIA rack-scale 平台、US CSP 自研 ASIC、HBM/CoWoS 紧张、液冷主流化和中美限制带来的本土化。来源：<a href="https://www.trendforce.com/research/download/RP260505CE3">TrendForce</a>。</p>
+<h3>方向 1：训练 GPU / 通用 AI 加速平台</h3>
+<ul>
+<li><strong>代表公司</strong>：NVDA、AMD。</li>
+<li><strong>为什么重要</strong>： frontier model 训练、后训练、强化学习、长上下文和 agentic AI 仍需要高端 GPU 集群。Nvidia 当前不只是 GPU，而是 GPU + NVLink/NVSwitch + networking + rack-scale system + CUDA 的平台。</li>
+<li><strong>继续上涨的条件</strong>：Blackwell/Rubin 出货继续超预期；推理并未削弱 GPU 需求，反而因 token consumption 增长扩大总算力；数据中心毛利维持高位；networking 与系统收入占比提升。</li>
+<li><strong>重点观察</strong>：Nvidia data center revenue/gross margin；Blackwell/Rubin 交期；云 GPU 租赁价格和利用率；AMD MI 系列客户数量、收入和毛利；CUDA/ROCm 软件生态进展。</li>
+<li><strong>主要风险</strong>：估值最充分；毛利率对供给释放和客户压价敏感；ASIC 在可预测推理 workload 中替代部分 GPU；出口管制影响中国收入。</li>
+</ul>
+<h3>方向 2：推理加速器与 custom ASIC</h3>
+<ul>
+<li><strong>代表公司</strong>：AVGO、MRVL、AMD，间接受益 TSM；云厂商自研包括 Google TPU、Amazon Trainium/Inferentia、Microsoft Maia、Meta MTIA。</li>
+<li><strong>为什么重要</strong>：AI 从训练进入大规模推理后，关键指标从“绝对性能”转向“每 token 成本、每瓦性能、可部署规模”。Creative Strategies 把 2026 框架拆成 capex 可持续性、compute 到 energy 的约束迁移、推理经济性、自研硅扩张、memory/packaging 物理瓶颈。来源：<a href="https://creativestrategies.com/research/the-ai-infrastructure-gigacycle-a-primer-for-2026/">Creative Strategies</a>。</li>
+<li><strong>继续上涨的条件</strong>：Broadcom/Marvell custom silicon backlog 上修；云厂商 TPU/Trainium/Maia/MTIA 从内部实验进入大规模部署；ASIC 与 GPU 是增量扩容而非零和替代。</li>
+<li><strong>重点观察</strong>：AVGO/MRVL AI revenue 或 custom silicon backlog；云厂商自研芯片代际发布与部署规模；ASIC 使用的 HBM/CoWoS allocation；推理 API 成本下降后调用量是否更快增长。</li>
+<li><strong>主要风险</strong>：项目制收入集中在少数 hyperscaler；自研芯片可能把利润留给云厂商；如果 ASIC 替代 GPU 而不是扩大市场，会压缩 NVDA 估值。</li>
+</ul>
+<h3>方向 3：HBM、DRAM、NAND 与 AI 存储层</h3>
+<ul>
+<li><strong>代表公司</strong>：MU；海外对应 SK hynix、Samsung。</li>
+<li><strong>为什么重要</strong>：HBM 是训练和高端推理的硬瓶颈，长上下文、agentic workflow、checkpoint、RAG 和多模态数据还会拉动 DRAM/NAND/enterprise SSD。IDC 预计 2026 年 DRAM 收入因 HBM 与 DDR 需求大幅增长，并称 HBM 容量已大多预订到 2026、部分延伸到 2027。来源：<a href="https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/">IDC</a>。</li>
+<li><strong>继续上涨的条件</strong>：HBM4/HBM4E qualification 顺利；长期供货协议、预付款、价格地板增多；HBM 挤占标准 DRAM wafer capacity，带动普通 DRAM/NAND 也紧。</li>
+<li><strong>重点观察</strong>：Micron HBM revenue/share、HBM4 量产与 Nvidia/AMD qualification；HBM ASP 与合约期限；DRAM/NAND 现货与合约价；enterprise SSD 价格和供给；capex 是否从“纪律扩产”变成“抢产能”。</li>
+<li><strong>主要风险</strong>：内存仍是强周期行业；Samsung 放量或客户库存累积可能导致价格回落；高 capex 在 2027 后制造过剩。</li>
+</ul>
+<h3>方向 4：先进封装、CoWoS、chiplets 与 2.5D/3D integration</h3>
+<ul>
+<li><strong>代表公司</strong>：TSM；间接受益 AMAT、KLAC、LRCX、ASML、AMKR、ASE，以及 hybrid bonding/先进封装设备链。</li>
+<li><strong>为什么重要</strong>：没有 CoWoS/2.5D 封装，GPU die 和 HBM 不能变成可交付 AI accelerator。Nextwaves 指出 AI chip 瓶颈从 wafer supply 转向 CoWoS advanced packaging，TSMC CoWoS 2026 仍紧，并提到 custom ASIC 占 CoWoS accelerator shipments 的比例上升。来源：<a href="https://nextwavesinsight.com/ai-semiconductor-supply-chain-tsmc-capacity-2026/">Nextwaves</a>。</li>
+<li><strong>继续上涨的条件</strong>：TSMC CoWoS-L/CoWoS-S 维持高利用率；Nvidia、AMD、Broadcom、Marvell 与云厂商提前锁定 2026/2027 封装产能；chiplet 和 HBM 更深度集成提高封装价值量。</li>
+<li><strong>重点观察</strong>：TSMC capex 中 advanced packaging 比重；CoWoS 月产能、利用率和交期；OSAT 外包扩产；KLA/AMAT/LRCX 先进封装、process control、test 相关订单；良率改善速度。</li>
+<li><strong>主要风险</strong>：若先进制程 wafer 反而成为新瓶颈，CoWoS 扩产可能短期过剩；TSMC 垂直整合挤压 OSAT 利润；台湾地缘风险。</li>
+</ul>
+<h3>方向 5：foundry 与先进制程 N3/N2</h3>
+<ul>
+<li><strong>代表公司</strong>：TSM，潜在观察 INTC foundry 进展。</li>
+<li><strong>为什么重要</strong>：Nvidia、AMD、Broadcom、Marvell、Apple 和多数 hyperscaler ASIC 都依赖 TSMC leading-edge。SemiAnalysis 近期讨论认为，随着 N3/N2 需求集中到 AI accelerator，前端 advanced logic capacity 也可能成为新瓶颈。来源：<a href="https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage">SemiAnalysis</a>。</li>
+<li><strong>继续上涨的条件</strong>：N3/N2 产能持续满载；AI/HPC revenue mix 提升；客户愿意为 hot lot、先进封装和领先节点支付溢价；海外 fab 不显著稀释毛利。</li>
+<li><strong>重点观察</strong>：TSMC HPC revenue 占比；N3/N2 utilization 和 lead time；2nm 良率/量产节奏；capex guidance；gross margin 是否能抵消海外 fab 成本。</li>
+<li><strong>主要风险</strong>：客户集中度上升；capex air pocket；台湾风险；Intel/Samsung foundry 若恢复竞争会压低溢价。</li>
+</ul>
+<h3>方向 6：AI networking、以太网 fabric 与光互连</h3>
+<ul>
+<li><strong>代表公司</strong>：ANET、AVGO、MRVL、COHR、LITE、CRDO，NVDA networking 也是核心。</li>
+<li><strong>为什么重要</strong>：AI cluster 规模扩大后，瓶颈从单卡算力转向 east-west traffic、scale-up/scale-out bandwidth 和延迟。Deloitte 预计 CPO、LPO 等光互连在 2026 年更重要，并称 AI network fabric spending 2024-2029 CAGR 预计达 38%。来源：<a href="https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html">Deloitte</a>。</li>
+<li><strong>继续上涨的条件</strong>：800G 进入主流，1.6T 开始放量；CPO/silicon photonics 从展示走向生产；以太网 AI fabric 获得更多 hyperscaler 采用；NVLink 与以太网双路线都扩大。</li>
+<li><strong>重点观察</strong>：Arista AI networking revenue、客户集中度和 800G/1.6T 节奏；Broadcom Tomahawk/Jericho、Marvell DSP/optical interconnect 订单；光模块价格和交期；CPO/LPO 标准化进展。</li>
+<li><strong>主要风险</strong>：客户建设节奏波动；光模块价格竞争；技术路线不确定；若电力或封装限制 GPU 部署，网络订单也会延后。</li>
+</ul>
+<h3>方向 7：电源管理、供电链、液冷与数据中心基础设施</h3>
+<ul>
+<li><strong>代表公司</strong>：VRT、ETN、GEV、MPWR，部分服务器/ODM 链如 SMCI 需单独评估。</li>
+<li><strong>为什么重要</strong>：AI 机柜功率密度上升后，约束从“有没有芯片”转向“有没有电、能不能散热、机房能不能按时交付”。Creative Strategies 明确提出约束正从 compute 迁移到 energy。来源：<a href="https://creativestrategies.com/research/the-ai-infrastructure-gigacycle-a-primer-for-2026/">Creative Strategies</a>。</li>
+<li><strong>继续上涨的条件</strong>：液冷 CDU、UPS、switchgear、变压器、高压直流供电和电网接入 backlog 持续上修；AI data center 项目从预订进入交付。</li>
+<li><strong>重点观察</strong>：Vertiv/Eaton/GE Vernova backlog 与 book-to-bill；数据中心 interconnection queue；PPA/电力采购协议；液冷渗透率；单 rack 功率密度。</li>
+<li><strong>主要风险</strong>：不是纯半导体，估值可能已反映 AI 外溢；项目审批、电网、环保和社区阻力会拉长交付；客户延迟建设会造成订单递延。</li>
+</ul>
+<h3>方向 8：半导体设备、测试、process control 与 EDA/IP</h3>
+<ul>
+<li><strong>代表公司</strong>：ASML、AMAT、LRCX、KLAC、TER、SNPS、CDNS。</li>
+<li><strong>为什么重要</strong>：这是 AI capex 的“卖铲人”层。设备受益于先进逻辑、HBM、先进封装、测试复杂度提升；EDA/IP 受益于 chiplet、custom ASIC、多 die system 和先进节点设计复杂度。</li>
+<li><strong>继续上涨的条件</strong>：WFE 上修；先进封装/test/process control 订单快于传统前端；EDA backlog 与 AI/custom silicon 项目同步增加；客户不削减 2027 capex。</li>
+<li><strong>重点观察</strong>：ASML backlog、EUV/High-NA 订单；AMAT/LRCX/KLAC 先进封装、HBM、process control 收入；TER 测试需求；SNPS/CDNS revenue backlog、design starts、AI/ASIC 相关 IP demand。</li>
+<li><strong>主要风险</strong>：设备订单是 capex 周期的放大器，转弱时跌得早；China exposure 受出口管制影响；EDA 估值高、增长较平滑但弹性不如芯片。</li>
+</ul>
+<h3>方向 9：edge/on-device AI、PC/手机/汽车/工业 AI</h3>
+<ul>
+<li><strong>代表公司</strong>：QCOM、AMD、INTC、NVDA、ON、ADI、TXN，部分汽车芯片和 MCU/模拟链。</li>
+<li><strong>为什么重要</strong>：长期看，AI 不会只在云端。IDC 提到 AI 正扩散到 edge deployments 和 client devices；Deloitte 也认为推理负载扩大后，端侧与高带宽 flash/存储会更重要。来源：<a href="https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/">IDC</a>、<a href="https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html">Deloitte</a>。</li>
+<li><strong>继续上涨的条件</strong>：AI PC/AI phone 从营销卖点变成换机驱动；端侧模型需要更高内存、更强 NPU 和更好功耗；汽车/工业 AI 恢复增长。</li>
+<li><strong>重点观察</strong>：AI PC 渗透率、32GB+ memory attach rate、手机端侧 AI 使用率、Qualcomm/AMD/Intel NPU 平台采用、汽车半导体库存消化。</li>
+<li><strong>主要风险</strong>：目前端侧 AI 货币化弱于云端；PC/手机周期仍偏消费电子；汽车/工业芯片有库存和宏观周期压力。</li>
+</ul>
+<h2>五、监测框架：未来该盯哪些点</h2>
+<p>下面这些指标比单看股价更有用。它们可以分为三类：高领先指标用于判断未来订单，中领先指标用于判断扩散质量，滞后指标用于确认市场是否已经反映。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>观察位置</th>
+<th>正面变化</th>
+<th>负面变化</th>
+<th>信号属性</th>
+<th>置信度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hyperscaler capex</td>
+<td>MSFT、AMZN、GOOGL、META、ORCL 财报、10-Q、电话会、finance lease</td>
+<td>AI 服务器、数据中心、网络、电力支出继续上修</td>
+<td>capex 指引下修、交付延后、从供给受限变成消化库存</td>
+<td>高领先</td>
+<td>高</td>
+</tr>
+<tr>
+<td>AI 收入货币化</td>
+<td>Azure AI、AWS Bedrock/Trainium、Google Cloud AI、Copilot、Meta 广告 AI 工具</td>
+<td>AI 带来云收入、广告转化、订阅 ARPU 或 margin 改善</td>
+<td>只有 capex 上修，收入披露模糊</td>
+<td>中领先</td>
+<td>中</td>
+</tr>
+<tr>
+<td>GPU 利用率/租赁价格</td>
+<td>Lambda、CoreWeave、RunPod、Vast、云厂商 spot/on-demand</td>
+<td>H100/H200/B200 价格稳定或上涨，可用性紧</td>
+<td>spot 折扣扩大、租赁价快速下跌</td>
+<td>高领先</td>
+<td>中</td>
+</tr>
+<tr>
+<td>HBM 价格与合约</td>
+<td>Micron/SK hynix/Samsung 财报，TrendForce/DigiTimes/韩媒</td>
+<td>HBM4 溢价、长期 LTA、预付款、价格地板</td>
+<td>HBM3E 降价、LTA 缩短、三星放量压价</td>
+<td>高领先</td>
+<td>高</td>
+</tr>
+<tr>
+<td>CoWoS/先进封装</td>
+<td>TSMC 财报、capex、月营收、OSAT 订单</td>
+<td>产能预订到 2027、利用率高、交期长</td>
+<td>封装交期缩短、利用率下降</td>
+<td>高领先</td>
+<td>高</td>
+</tr>
+<tr>
+<td>ASIC 采用</td>
+<td>AVGO/MRVL backlog，Google TPU、AWS Trainium、Microsoft Maia、Meta MTIA</td>
+<td>自研芯片放量带来增量 silicon demand</td>
+<td>ASIC 主要替代 GPU，压缩通用 GPU 增速</td>
+<td>中领先</td>
+<td>中</td>
+</tr>
+<tr>
+<td>AI 网络/光互连</td>
+<td>ANET、AVGO、MRVL、COHR、LITE、CRDO，800G/1.6T 出货</td>
+<td>800G/1.6T、CPO/LPO、AI fabric 订单上修</td>
+<td>网络订单弱于 GPU，说明部署被其他瓶颈卡住</td>
+<td>中领先</td>
+<td>中高</td>
+</tr>
+<tr>
+<td>电力/液冷/数据中心</td>
+<td>VRT、ETN、GEV、MPWR，interconnection queue，PPA</td>
+<td>UPS、switchgear、液冷、变压器 backlog 强</td>
+<td>电网/审批/冷却延迟导致 GPU 订单转收入变慢</td>
+<td>高领先</td>
+<td>中高</td>
+</tr>
+<tr>
+<td>半导体设备订单</td>
+<td>ASML、AMAT、LRCX、KLAC、TER、SEMI WFE</td>
+<td>HBM、先进逻辑、封装、测试订单上升</td>
+<td>设备订单下滑，预示 12-24 个月后扩产放缓</td>
+<td>中领先</td>
+<td>中高</td>
+</tr>
+<tr>
+<td>EDA/IP backlog</td>
+<td>SNPS、CDNS、ARM 生态、design starts</td>
+<td>custom ASIC/chiplet 项目增加，backlog 稳定扩张</td>
+<td>design starts 降温，说明客户削减新项目</td>
+<td>中领先</td>
+<td>中</td>
+</tr>
+<tr>
+<td>出口管制和地缘</td>
+<td>BIS 规则、公司 10-K 风险因素、中国替代进展</td>
+<td>限制稳定、供应链可规划</td>
+<td>新禁令影响 HBM/GPU/设备收入，或台海风险升温</td>
+<td>事件驱动</td>
+<td>中</td>
+</tr>
+<tr>
+<td>估值与盈利修正</td>
+<td>SOX、个股 forward P/E、EPS revision、毛利指引</td>
+<td>盈利上修消化估值，股价不只靠倍数扩张</td>
+<td>EPS 下修 + 高估值 = 双杀风险</td>
+<td>滞后确认</td>
+<td>中</td>
+</tr>
+</tbody>
+</table>
+<p>一个实用判断：如果 capex、HBM、CoWoS、GPU 租赁、AI networking、电力 backlog 同时走强，说明 AI 半导体仍处在“多瓶颈共振”阶段；如果 Nvidia 收入还强，但 HBM/CoWoS/租赁价格/云 capex 已经转弱，那通常是风险开始前移的信号。</p>
+<h2>六、交叉验证后的结论</h2>
 <p>高置信度结论：AI capex、HBM、先进封装和数据中心网络确实是 2026 年半导体行业的核心变量。IDC、Deloitte、Nvidia、AMD、Micron、TSMC 相关资料在方向上相互印证。</p>
 <p>中等置信度结论：AI 半导体受益面会从 Nvidia 扩散到 ASIC、networking、memory、equipment、EDA、power/thermal。但不同公司的弹性和风险不一样，不能把“AI 受益”当成统一标签。</p>
 <p>低置信度或争议结论：2026 年后的需求能否持续、云厂商 AI ROI 是否足够高、HBM 是否结构性摆脱周期、GPU 折旧是否合理。这些问题目前没有单一数据能证明，只能靠未来几个季度的 capex、云收入、毛利、价格和利用率共同验证。</p>
 <p>我的最终判断是：美股半导体 AI 方向仍有继续上涨的基本面信号，但已经过了“只要有 AI 标签就涨”的阶段。下一阶段更可能是分化：真正卡住瓶颈、订单可见度强、能把 capex 转化为利润的公司继续受益；只靠叙事、估值提前透支、或暴露于供给反转的公司会被市场惩罚。</p>
-<h2>六、最值得持续跟踪的 12 个信号</h2>
-<ol>
-<li>Microsoft、Amazon、Alphabet、Meta、Oracle 是否继续上修或维持 AI capex。</li>
-<li>Nvidia 数据中心收入增速和 gross margin 是否仍维持高位。</li>
-<li>Nvidia networking 收入是否继续成为独立增长引擎。</li>
-<li>AMD MI 系列收入、毛利和客户数是否超预期。</li>
-<li>Broadcom/Marvell custom silicon backlog 是否继续扩大。</li>
-<li>Micron HBM4 qualification、HBM 份额和长期合约是否兑现。</li>
-<li>DRAM/NAND 价格是否因 HBM 挤出效应继续坚挺。</li>
-<li>TSMC CoWoS / advanced packaging 是否仍供不应求。</li>
-<li>ASML/AMAT/LRCX/KLAC 订单是否从前端扩散到 packaging/test/yield。</li>
-<li>云厂商是否开始披露更清晰的 AI 收入、利用率和 ROI。</li>
-<li>中国出口限制是否影响实际收入或刺激本土替代。</li>
-<li>电力、散热、数据中心建设周期是否成为新的 capex 瓶颈。</li>
-</ol>
 <h2>主要来源</h2>
 <ul>
 <li>IDC, “Semiconductor Market Forecast 2026: The AI Supercycle Arrives”: https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/</li>
@@ -289,6 +444,11 @@ img { max-width: 100%; height: auto; }
 <li>TechCrunch, Nvidia earnings coverage: https://techcrunch.com/2026/02/25/nvidia-earnings-record-capex-spend-ai/</li>
 <li>Bloomberg summary on TSMC 2026 outlook: https://www.bloomberg.com/news/articles/2026-01-15/tsmc-profit-beats-estimates-in-fresh-sign-of-ai-demand-strength</li>
 <li>Yahoo Finance / KLA earnings summary: https://finance.yahoo.com/markets/stocks/articles/kla-corporation-q3-2026-earnings-123000392.html</li>
+<li>Omdia, “2026 Trends to Watch: Semiconductors”: https://omdia.tech.informa.com/-/media/tech/omdia/assetfamily/2025/12/04/2026-trends-to-watch-semiconductors/2026-trends-to-watch-semiconductors-pdf.pdf</li>
+<li>TrendForce, “Global AI Server &amp; Supply Chain Outlook 2026”: https://www.trendforce.com/research/download/RP260505CE3</li>
+<li>Creative Strategies, “The AI Infrastructure Gigacycle: A Primer for 2026”: https://creativestrategies.com/research/the-ai-infrastructure-gigacycle-a-primer-for-2026/</li>
+<li>Nextwaves Insight, “AI Semiconductor Supply Chain: The Bottleneck Has Shifted”: https://nextwavesinsight.com/ai-semiconductor-supply-chain-tsmc-capacity-2026/</li>
+<li>SemiAnalysis, “The Great AI Silicon Shortage”: https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage</li>
 </ul>
 </article>
 </body>
