@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>美股半导体 AI 方向深度 Survey</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<article class="report-content" lang="zh-CN">
+<h1>美股半导体 AI 方向深度 Survey：继续上涨的信号与反方论证</h1>
+<p>日期：2026-05-14</p>
+<blockquote>
+<p>说明：本文是产业与市场研究，不构成投资建议。由于部分 PDF/IR 页面在当前环境中只能抓到二进制或 JS 页面，本文优先采用可直接访问的公司公告、产业研究页面、Tavily/Web 检索摘要与并行研究代理交叉验证；对单一来源或争议性估算会明确标注。</p>
+</blockquote>
+<h2>核心结论</h2>
+<p>美股半导体的 AI 交易已经从“买 GPU”变成“买 AI 基础设施瓶颈”。如果未来继续上涨，最强的信号大概率不只来自 Nvidia 单家公司，而会来自一组可验证的链条：hyperscaler 继续上调 capex，GPU/ASIC 订单仍被先进制程和封装约束，HBM 与 DRAM/NAND 价格维持强势，网络互连、电力/散热、测试/良率控制成为新的短板。</p>
+<p>但反方也变得更具体：它不是简单说“AI 是泡沫”，而是问四个问题：云厂商是否赚得回这轮资本开支？GPU 的真实经济寿命是否短于账面折旧？HBM/封装扩产在 2027 年后是否会反噬价格？市场是否已经把高增长、高毛利、高份额和低利率环境一次性都定价进去了？</p>
+<p>因此，当前更像一个“基本面仍强，但容错率下降”的阶段。最值得跟踪的不是单日股价，而是订单、capex、价格、良率、毛利率和云端 AI 收入披露之间是否继续互相印证。</p>
+<h2>一、为什么 AI 半导体仍有继续上涨的产业信号</h2>
+<h3>1. AI capex 仍是整条链的源头变量</h3>
+<p>IDC 在 2026 年 4 月的半导体展望中预计，全球半导体收入将在 2026 年达到 1.29 万亿美元，同比增 52.8%，并称 AI infrastructure 已经成为结构性主导需求；其摘要还提到 hyperscale capex 在 2025 年 Q3 首次超过 1000 亿美元，2026 年 i4 capex 预计同比增长约 70%，接近 6000 亿美元。来源：<a href="https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/">IDC</a>。</p>
+<p>MUFG 的 AI financing 周报也给出类似方向，称 2026 年 Big Five hyperscaler capex 预计超过 6000 亿美元，其中约 75%、即 4500 亿美元直接与 AI infrastructure 有关。来源：<a href="https://www.mufgamericas.com/sites/default/files/document/2025-12/AI_Chart_Weekly_12_19_Financing_the_AI_Supercycle.pdf">MUFG PDF</a>。</p>
+<p>这条信号的意义在于：半导体收入是云厂商资本开支的上游镜像。只要 Amazon、Microsoft、Google、Meta、Oracle 等继续扩 AI 数据中心，GPU、custom ASIC、HBM、先进封装、交换机、光互连、电力设备和测试设备就都还有需求支撑。反过来，如果这些公司的 capex guidance 出现连续下修，AI 半导体的估值基础会迅速动摇。</p>
+<h3>2. Nvidia 仍在用收入和毛利证明需求没有明显降温</h3>
+<p>Nvidia 2026 财年 Q4 公告显示，季度收入 681 亿美元，同比增 73%；数据中心收入 623 亿美元，同比增 75%；全年收入 2159 亿美元，同比增 65%。公司同时披露 Q4 GAAP gross margin 为 75.0%。来源：<a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm">Nvidia SEC 8-K / Q4 FY2026 release</a>。</p>
+<p>Jensen Huang 在同一公告中称：</p>
+<blockquote>
+<p>“Computing demand is growing exponentially — the agentic AI inflection point has arrived.”</p>
+</blockquote>
+<p>这类管理层表述当然带有销售属性，但收入、数据中心增速和高毛利共同说明：至少到 2026 年初，市场还没有看到典型半导体下行周期中“价格先松、毛利先掉、订单能见度下降”的组合。</p>
+<p>继续上涨的正面信号是：Nvidia 的网络收入、系统级收入和下一代 Rubin 平台可见度继续增强，而不是只靠单一 GPU ASP。反方则要盯毛利率是否从 70%+ 区间明显回落，以及供应链扩张后客户是否开始压价。</p>
+<h3>3. AI 不是只有 Nvidia：custom ASIC 与推理经济性可能扩大受益面</h3>
+<p>AMD 2026 Q1 公告称，公司一季度表现由 AI infrastructure 需求加速驱动，Data Center 已成为收入和盈利增长的主要驱动；公司给出 2026 Q2 收入中值 112 亿美元，同比增约 46%，non-GAAP gross margin 约 56%。Lisa Su 还提到 inferencing 和 agentic AI 正推动 CPU 与 accelerator 需求，MI450 Series 和 Helios 客户预测超过初始预期。来源：<a href="https://www.amd.com/en/newsroom/press-releases/2026-5-5-amd-reports-first-quarter-2026-financial-results.html">AMD Q1 2026 results</a>。</p>
+<p>这意味着 AI 半导体的第二阶段可能从“训练 GPU 短缺”转向“训练 + 推理 + agentic workload + 定制芯片”。Broadcom、Marvell 一类 custom silicon / networking 供应商的逻辑也在这里：当推理成本成为核心变量，云厂商会更愿意用 ASIC 优化特定 workload。</p>
+<p>这对行业是双刃剑：对 Broadcom、Marvell、TSMC、EDA/IP 是扩散利好；对 Nvidia 则是长期份额和毛利率的潜在压力。最好的多头信号是 ASIC 放量并没有压垮 GPU，而是共同扩大 AI compute TAM。</p>
+<h3>4. HBM 和内存可能是 2026 年最硬的瓶颈之一</h3>
+<p>IDC 把 memory 描述为本轮变化的核心，预计 2026 年 DRAM 收入达到 4186 亿美元，受 HBM 与 AI infrastructure 拉动显著增长，并称 HBM 已成为 AI accelerator supply chain 的主要约束之一。来源：<a href="https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/">IDC</a>。</p>
+<p>Deloitte 的 2026 semiconductor outlook 也强调，AI 训练和推理对 HBM3、HBM4、DDR7 的需求造成其他消费内存短缺，部分 DDR4/DDR5 价格在 2025 年 9 月至 11 月间上涨约 4 倍，并提示 2026 年上半年仍可能继续涨价。来源：<a href="https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html">Deloitte 2026 Semiconductor Industry Outlook</a>。</p>
+<p>Micron 的投资者材料也给出更直接的公司层面信号：AI demand 推动 DRAM 和 NAND data center bit TAM 在 2026 年首次超过行业 TAM 的 50%；公司称 AI 与传统 server 需求都受 DRAM/NAND 供应不足约束，并预计 2026 财年 capex 超过 250 亿美元。来源：<a href="https://investors.micron.com/static-files/9c0becf5-df56-4eec-bd67-453dda68b273?lidx=0&amp;referring_guid=98df71f1-176a-4659-8d3c-49ee4bd68271">Micron investor material</a>。</p>
+<p>HBM 的特殊之处在于，它不是普通内存周期的简单涨价版。它需要高良率堆叠、先进封装、长期客户 qualification，并且会挤占标准 DRAM wafer capacity。多头如果成立，Micron 这类公司可能被重新定价为“AI 关键瓶颈供应商”，而不是传统强周期内存股。</p>
+<h3>5. 先进封装、测试、良率控制从后端配角变成主线</h3>
+<p>Tavily 初扫与多条外部检索都指向同一件事：AI 芯片的限制不只在晶圆前端，也在 CoWoS、先进封装、HBM stacking、测试和良率控制。KLA 相关 earnings 摘要显示，公司 advanced wafer-level packaging 市场份额提升，并预计 advanced packaging process-control revenue 从 2025 年约 6.35 亿美元增至 2026 年约 10 亿美元。来源：<a href="https://finance.yahoo.com/markets/stocks/articles/kla-corporation-q3-2026-earnings-123000392.html">Yahoo Finance / KLA Q3 2026 earnings summary</a>。</p>
+<p>TSMC 的 2026 资本开支计划也提供间接验证。Bloomberg 报道 TSMC 计划 2026 年 capex 达 520-560 亿美元，并预计 2026 年收入增长接近 30%，这被市场解读为 AI 需求持续强劲。来源：<a href="https://www.bloomberg.com/news/articles/2026-01-15/tsmc-profit-beats-estimates-in-fresh-sign-of-ai-demand-strength">Bloomberg 摘要页</a>。</p>
+<p>这条链上值得关注的公司包括 TSM、ASML、AMAT、LRCX、KLAC、Teradyne，以及先进封装 OSAT/材料/测试相关公司。继续上涨的信号不是一句“AI 很热”，而是先进封装产能仍被预订、设备订单 backlog 延长、良率工具收入加速。</p>
+<h3>6. 网络、光互连、电力和散热成为 AI 数据中心的新约束</h3>
+<p>Nvidia Q4 FY2026 公告把数据中心收入拆分为 compute 与 networking，TechCrunch 对其财报的报道提到季度数据中心收入中有约 110 亿美元来自 NVLink 等 networking 产品。来源：<a href="https://techcrunch.com/2026/02/25/nvidia-earnings-record-capex-spend-ai/">TechCrunch</a>。</p>
+<p>这说明 AI cluster 不只是“买更多 GPU”。大规模推理和训练需要低延迟网络、交换机、光模块、功率管理、液冷、机房电力和数据中心建设。若未来市场从 chip picker 转向 infrastructure basket，ANET、MRVL、AVGO、MPWR、VRT 等可能继续受益。</p>
+<p>要验证这条链，需看两个信号：第一，networking revenue 是否快于传统企业网络周期；第二，电力/散热公司 backlog 是否来自 AI data center，而不是普通工业周期。</p>
+<h2>二、未来继续涨的观察清单</h2>
+<p>如果要判断美股半导体 AI 方向是否还有上行空间，我会把信号按强弱分为三层。</p>
+<p>第一层是需求硬信号：hyperscaler capex guidance 上修或不下修；Nvidia/AMD/Broadcom/Marvell 订单能见度延长；Micron/SK hynix/Samsung 的 HBM 供给被提前锁定；TSMC advanced node 与 CoWoS 产能仍供不应求。</p>
+<p>第二层是价格与利润信号：Nvidia 数据中心毛利率维持高位；Micron HBM 与 DRAM/NAND pricing 继续改善；设备公司订单和服务收入同步增强；网络和电力设备公司 backlog 含金量提升。</p>
+<p>第三层是扩散信号：AI 收入不再只集中于 Nvidia，而是扩散到 ASIC、EDA、封装、测试、内存、网络、功率和散热。扩散越健康，板块越不像单一龙头交易；扩散如果只是低质量补涨，风险反而上升。</p>
+<h2>三、反方论证：为什么这轮上涨可能会出问题</h2>
+<h3>1. 估值容错率已经下降</h3>
+<p>AI 半导体核心公司的股价已经不只是反映“今年增长好”，而是反映未来多年高增长、高份额和高毛利率维持。熊方最强的点在于：即便基本面没有崩，只要增长从极高速度回落到“仍然很好但低于预期”，估值倍数也可能压缩。</p>
+<p>这类风险在 Nvidia 最典型，也扩散到 Broadcom、AMD、Micron、TSMC、ASML 等。多头可以说盈利增长会消化估值；反方则会问，当前价格是否已经把 2027-2028 的乐观情景提前买完。</p>
+<h3>2. 云厂商 ROI 仍不透明</h3>
+<p>J.P. Morgan Asset Management 在 2026 outlook 中把 hyperscaler AI 投资的“metaverse moment”列为重要风险：四大 hyperscaler 自 2022 年 Q4 以来在 capex 与 R&amp;D 上投入约 1.3 万亿美元，但 AI 投资是否能带来相称利润仍需要验证；报告还提到 free cash flow margin 下滑和现金余额下降使 2026 年更需要清晰盈利路径。来源：<a href="https://am.jpmorgan.com/content/dam/jpm-am-aem/global/en/insights/eye-on-the-market/smothering-heights-amv.pdf">J.P. Morgan Asset Management PDF</a>。</p>
+<p>这是真正的关键反方：半导体厂商今天确认收入，云厂商未来承担折旧、电力和利用率风险。如果 AI 应用收入不能覆盖资本成本，芯片订单会从“越多越好”切换到“先消化库存和产能”。</p>
+<h3>3. 折旧与 GPU 经济寿命可能成为利润压力</h3>
+<p>部分怀疑派认为 AI GPU 技术迭代太快，真实经济寿命可能短于云厂商账面折旧年限。若 5-6 年折旧假设过于乐观，云厂商的当前利润可能低估了未来设备更新、减值和闲置风险。</p>
+<p>多头的反证是：旧 GPU 在推理、内部 workload、低端模型和云租赁市场仍有高利用率，且 token demand 足够大，能够让不同代际设备分层使用。如果未来二手 GPU 价格、云 GPU 租赁价格和利用率都保持坚挺，折旧熊方会被削弱。</p>
+<h3>4. HBM 与内存仍逃不开供给周期</h3>
+<p>HBM 今天稀缺，不代表永远稀缺。Micron、SK hynix、Samsung 都在扩大 HBM 和 cleanroom 投资。Deloitte 也提醒，DRAM/NAND capex 若因价格上涨而进一步增加，可能再次制造过剩。来源：<a href="https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html">Deloitte</a>。</p>
+<p>Micron 的低 forward P/E 看似便宜，但内存股在周期高点常常看起来最便宜，因为市场预期峰值盈利不可持续。反方要看的不是 2026 年 EPS 有多高，而是 2027 年以后 HBM4 竞争、Samsung qualification、普通 DRAM/NAND 供给恢复后，价格是否还能维持。</p>
+<h3>5. Custom ASIC 是扩散机会，也是 Nvidia 的长期替代风险</h3>
+<p>ASIC 的兴起可以扩大 AI 半导体受益面，但也可能改变利润分配。Google TPU、Amazon Trainium、自研 inference ASIC、Broadcom 定制芯片、Marvell 定制互连方案，都会把一部分价值从通用 GPU 转向客户和定制硅供应链。</p>
+<p>短期内，这未必冲击 Nvidia，因为 GPU 生态、CUDA、NVLink、系统集成和 time-to-market 仍强。但长期如果推理 workload 标准化、模型架构稳定、客户更重视每 token 成本，ASIC 对 GPU 毛利率和份额的压力会变大。</p>
+<h3>6. 中国限制、台湾风险和供应链集中仍是不可忽视的尾部风险</h3>
+<p>Nvidia 在 Q4 FY2026 公告中提到，其中国 H200 产品虽有少量获批，但尚未产生收入，公司也不确定相关产品是否能被允许进口到中国。来源：<a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm">Nvidia SEC 8-K / Q4 FY2026 release</a>。</p>
+<p>与此同时，TSMC 在领先制程和先进封装上的集中地位让整个 AI 半导体链暴露于台湾地缘风险。美国出口管制可能限制中国收入，但也可能促使中国自研替代加速。这个风险平时难以定价，一旦爆发会迅速重估整条链。</p>
+<h2>四、分方向判断：哪些方向更像结构性机会，哪些更像周期交易</h2>
+<h3>GPU/AI accelerator：高质量但估值最敏感</h3>
+<p>代表：NVDA、AMD。</p>
+<p>Nvidia 仍是质量最高、生态最强的 AI compute 公司，但也最被充分研究和定价。继续上涨需要其证明 Blackwell/Rubin、networking、推理和企业 agent adoption 共同支撑，而不是只靠训练需求。AMD 的弹性在于份额提升和客户多元化，但需要证明软件生态、供应和毛利能同步改善。</p>
+<h3>Custom ASIC / networking：从训练转向推理的受益方向</h3>
+<p>代表：AVGO、MRVL、ANET。</p>
+<p>如果未来 AI 进入推理规模化阶段，custom ASIC、以太网/互连、光模块和网络交换会更重要。这条链的优点是受益于 AI workload 多样化；风险是客户集中、项目制收入波动，以及 hyperscaler 自研能力增强。</p>
+<h3>HBM/内存：最强瓶颈，也最强周期</h3>
+<p>代表：MU，以及海外 SK hynix、Samsung。</p>
+<p>Micron 的故事很清晰：HBM、数据中心 DRAM/NAND、供给约束和美国本土供应链地位。但内存股的风险也最经典：高 capex、高价格、高利润最终会吸引供给，周期拐点来时估值看起来往往仍便宜。</p>
+<h3>Foundry/advanced packaging：产业链核心收费站</h3>
+<p>代表：TSM，间接受益设备/封装链。</p>
+<p>TSMC 的强项是领先制程、CoWoS、客户结构和执行力。它可能是 AI 半导体中最接近“基础设施收费站”的资产之一。风险是台湾地缘、capex 强度、以及客户议价。</p>
+<h3>Equipment / EDA / process control：滞后但更稳定的卖铲人</h3>
+<p>代表：ASML、AMAT、LRCX、KLAC、SNPS、CDNS。</p>
+<p>设备和 EDA 不一定有 GPU 那样的爆发弹性，但如果 AI capex 扩散到新 fab、advanced packaging、HBM 和 leading-edge process，它们会受益。ASML 的 EUV 垄断、KLA 的良率控制、EDA 的设计复杂度提升都是结构性逻辑。风险是订单周期滞后、China exposure、以及客户 capex 一旦转弱会先砍设备订单。</p>
+<h3>Power/thermal/data-center infrastructure：半导体外溢机会</h3>
+<p>代表：VRT、MPWR 等。</p>
+<p>AI 数据中心的瓶颈正在从芯片扩散到电力、散热和供电架构。这个方向不完全是半导体，但和 AI 半导体 capex 高度相关。风险是估值补涨过快，以及 backlog 中 AI 真实占比需要核实。</p>
+<h2>五、交叉验证后的结论</h2>
+<p>高置信度结论：AI capex、HBM、先进封装和数据中心网络确实是 2026 年半导体行业的核心变量。IDC、Deloitte、Nvidia、AMD、Micron、TSMC 相关资料在方向上相互印证。</p>
+<p>中等置信度结论：AI 半导体受益面会从 Nvidia 扩散到 ASIC、networking、memory、equipment、EDA、power/thermal。但不同公司的弹性和风险不一样，不能把“AI 受益”当成统一标签。</p>
+<p>低置信度或争议结论：2026 年后的需求能否持续、云厂商 AI ROI 是否足够高、HBM 是否结构性摆脱周期、GPU 折旧是否合理。这些问题目前没有单一数据能证明，只能靠未来几个季度的 capex、云收入、毛利、价格和利用率共同验证。</p>
+<p>我的最终判断是：美股半导体 AI 方向仍有继续上涨的基本面信号，但已经过了“只要有 AI 标签就涨”的阶段。下一阶段更可能是分化：真正卡住瓶颈、订单可见度强、能把 capex 转化为利润的公司继续受益；只靠叙事、估值提前透支、或暴露于供给反转的公司会被市场惩罚。</p>
+<h2>六、最值得持续跟踪的 12 个信号</h2>
+<ol>
+<li>Microsoft、Amazon、Alphabet、Meta、Oracle 是否继续上修或维持 AI capex。</li>
+<li>Nvidia 数据中心收入增速和 gross margin 是否仍维持高位。</li>
+<li>Nvidia networking 收入是否继续成为独立增长引擎。</li>
+<li>AMD MI 系列收入、毛利和客户数是否超预期。</li>
+<li>Broadcom/Marvell custom silicon backlog 是否继续扩大。</li>
+<li>Micron HBM4 qualification、HBM 份额和长期合约是否兑现。</li>
+<li>DRAM/NAND 价格是否因 HBM 挤出效应继续坚挺。</li>
+<li>TSMC CoWoS / advanced packaging 是否仍供不应求。</li>
+<li>ASML/AMAT/LRCX/KLAC 订单是否从前端扩散到 packaging/test/yield。</li>
+<li>云厂商是否开始披露更清晰的 AI 收入、利用率和 ROI。</li>
+<li>中国出口限制是否影响实际收入或刺激本土替代。</li>
+<li>电力、散热、数据中心建设周期是否成为新的 capex 瓶颈。</li>
+</ol>
+<h2>主要来源</h2>
+<ul>
+<li>IDC, “Semiconductor Market Forecast 2026: The AI Supercycle Arrives”: https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/</li>
+<li>Deloitte, “2026 Semiconductor Industry Outlook”: https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html</li>
+<li>Nvidia Q4 FY2026 results / SEC filing: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm</li>
+<li>AMD Q1 2026 results: https://www.amd.com/en/newsroom/press-releases/2026-5-5-amd-reports-first-quarter-2026-financial-results.html</li>
+<li>Micron investor material: https://investors.micron.com/static-files/9c0becf5-df56-4eec-bd67-453dda68b273?lidx=0&amp;referring_guid=98df71f1-176a-4659-8d3c-49ee4bd68271</li>
+<li>MUFG, “Financing the AI Supercycle”: https://www.mufgamericas.com/sites/default/files/document/2025-12/AI_Chart_Weekly_12_19_Financing_the_AI_Supercycle.pdf</li>
+<li>J.P. Morgan Asset Management, “Smothering Heights”: https://am.jpmorgan.com/content/dam/jpm-am-aem/global/en/insights/eye-on-the-market/smothering-heights-amv.pdf</li>
+<li>TechCrunch, Nvidia earnings coverage: https://techcrunch.com/2026/02/25/nvidia-earnings-record-capex-spend-ai/</li>
+<li>Bloomberg summary on TSMC 2026 outlook: https://www.bloomberg.com/news/articles/2026-01-15/tsmc-profit-beats-estimates-in-fresh-sign-of-ai-demand-strength</li>
+<li>Yahoo Finance / KLA earnings summary: https://finance.yahoo.com/markets/stocks/articles/kla-corporation-q3-2026-earnings-123000392.html</li>
+</ul>
+</article>
+</body>
+</html>
