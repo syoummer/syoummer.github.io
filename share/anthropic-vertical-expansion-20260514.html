@@ -191,12 +191,8 @@ img { max-width: 100%; height: auto; }
 <li><strong>SMB operational agents</strong>：Claude for Small Business 刚发布，覆盖 QuickBooks、PayPal、HubSpot、Canva、Docusign、Google Workspace、Microsoft 365，更像把 vertical workflow 方法下沉到小企业操作系统。</li>
 </ol>
 <h2>方法说明</h2>
-<p>按 workspace 的 <code>workflow_deep_research_survey.md</code> 执行。初始 Tavily 扫描尝试了 2 个 query，但当前环境不可用：</p>
-<blockquote>
-<p><code>Timed out reading Tavily API key from 1Password after 8s. Unlock 1Password or set TAVILY_API_KEY.</code></p>
-</blockquote>
-<p>原因是当前 <code>/Users/bot/workspace/.env</code> 只有 <code>OP_SERVICE_ACCOUNT_TOKEN</code>，没有 <code>TAVILY_API_KEY</code>；<code>op</code> CLI 在本环境中读取 service account 时会超时。已顺手修复 <code>workspace-tavily</code> 的读取顺序：现在会先读 shell 环境，再读 workspace <code>.env</code> 的 <code>TAVILY_API_KEY</code>，最后才尝试 1Password。实际检索仍改用 web search、官方网页读取、GitHub repo、招聘页和可信二级来源交叉验证。</p>
-<p>主要依据：Anthropic/Claude 官方产品页、官方新闻页、官方 Greenhouse 招聘页、Anthropic GitHub repo，以及 AP、TechCrunch 等二级来源。</p>
+<p>本次重新核验以公开、可追溯资料为主，优先使用 Anthropic/Claude 官方产品页、官方新闻页、官方 Greenhouse 招聘页和 Anthropic GitHub repo，再用 AP、TechCrunch 等二级来源交叉验证争议或外部事件。</p>
+<p>判断标准不是单个新闻点，而是多类信号是否相互印证：是否已有正式产品页或发布稿、是否有可安装的 plugins/templates/connectors、是否出现专门产品/销售/行业岗位、是否绑定行业 incumbent，以及是否明确强调合规、审计、权限和 human approval。</p>
 <h2>关键证据</h2>
 <h3>1. 招聘页已经明确出现 “Vertical AI Products”</h3>
 <p>Anthropic 的 <code>Engineering Manager, Vertical AI Products</code> 岗位直接说明 Verticals team 在做 “financial services, life sciences, healthcare, and legal”，且多数团队是 0→1：</p>
