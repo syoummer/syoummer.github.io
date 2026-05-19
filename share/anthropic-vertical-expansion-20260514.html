@@ -205,7 +205,16 @@ img { max-width: 100%; height: auto; }
 <nav class="share-index-nav" aria-label="Share index">
   <a href="index.html">← 返回</a>
 </nav>
-<article class="report-content" lang="zh-CN">
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
 <h1>Anthropic 垂直行业扩张信号调研</h1>
 <p>日期：2026-05-14</p>
 <h2>核心结论</h2>
@@ -369,5 +378,214 @@ img { max-width: 100%; height: auto; }
 </ol>
 <p>目前最强判断：<strong>Anthropic 正在从模型/API 公司转向行业 agent infrastructure 公司。Finance/insurance 是最强商业化样板；legal 是最完整的行业工作站样板；healthcare payer 和 life sciences 是最明确的下一批 0→1；security 已经成为产品线；SMB 是低端市场的 workflow packaging 实验；government 会继续，但 defense/national security 路径受政策边界影响。</strong></p>
 </article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Survey of Anthropic's Vertical Industry Expansion Signals</h1>
+<p>Date: 2026-05-14</p>
+<h2>Core Conclusion</h2>
+<p>Anthropic's most likely next expansion path is not a single "legal AI" product, but turning legal and finance into a repeatable template: for high-value knowledge work, build <strong>industry-specific agent templates + MCP connectors + embedded Office/business-system workflows + enterprise compliance + human approval</strong>.</p>
+<p>After re-checking the evidence, the conclusion is clearer than in the previous version: <strong>finance/insurance is the strongest commercialization template, legal is the most complete industry workstation template, healthcare payer and life sciences are the clearest next 0→1 areas, security has moved from research/capability signals into a product line, government is strong but the defense path has policy friction, and SMB is an experiment in horizontal workflow packaging.</strong></p>
+<p>Ranked by strength of evidence:</p>
+<ol>
+<li><strong>Financial services / insurance</strong>: Anthropic has already released finance agent templates, Microsoft 365 add-ins, financial data connectors, and a GitHub marketplace. Insurance has dedicated Industry Principal / AE signals. Highest probability.</li>
+<li><strong>Legal</strong>: 20+ MCP connectors and 12 practice-area plugins show that Anthropic has already worked through an industry workstation playbook.</li>
+<li><strong>Healthcare payer operations</strong>: Hiring signals are highly specific, centered on claims, prior authorization, utilization management, member communications, and provider network.</li>
+<li><strong>Life sciences / pharma / biotech / scientific research workflows</strong>: Product pages, customer references, research roles, and partner workflows are dense. The direction is research agents, bioinformatics, regulatory review, and clinical documentation.</li>
+<li><strong>Cybersecurity / security operations</strong>: Claude Security already has a product entry point and public beta / preview signals. Its positioning is vulnerability discovery, validation, patch review, SOC/SIEM, and incident response.</li>
+<li><strong>Public sector / government</strong>: The official government page, FedRAMP High, IL5, and Claude Gov models are strong signals. But DoD controversy makes the national security/defense revenue path less certain than civilian government.</li>
+<li><strong>SMB operational agents</strong>: Claude for Small Business was just released. It covers QuickBooks, PayPal, HubSpot, Canva, Docusign, Google Workspace, and Microsoft 365. This looks more like bringing the vertical workflow method down into a small-business operating system.</li>
+</ol>
+<h2>Method Note</h2>
+<p>This re-check focused on public, traceable sources. I prioritized official Anthropic/Claude product pages, official news pages, official Greenhouse job pages, and Anthropic GitHub repos, then used secondary sources such as AP and TechCrunch to cross-check controversies or external events.</p>
+<p>The standard for judgment was not any single news item, but whether multiple signal types confirmed one another: whether there is already an official product page or launch post, whether installable plugins/templates/connectors exist, whether dedicated product/sales/industry roles appear, whether the effort is tied to industry incumbents, and whether it clearly emphasizes compliance, audit, permissions, and human approval.</p>
+<h2>Key Evidence</h2>
+<h3>1. The jobs page already explicitly mentions "Vertical AI Products"</h3>
+<p>Anthropic's <code>Engineering Manager, Vertical AI Products</code> role directly states that the Verticals team is building for "financial services, life sciences, healthcare, and legal", and that most of these teams are being built 0→1:</p>
+<blockquote>
+<p>"Anthropic's Verticals team builds AI products purpose-built for specific industries, financial services, life sciences, healthcare, and legal. Most of these teams are being built 0→1 right now..."<br />
+Source: <a href="https://job-boards.greenhouse.io/anthropic/jobs/5140492008">Engineering Manager, Vertical AI Products</a></p>
+</blockquote>
+<p>The same role breaks the four verticals down in concrete terms:</p>
+<ul>
+<li>Financial Services: investment banking, asset management, insurance, corporate finance, and near-term deep integrations inside Excel/PowerPoint.</li>
+<li>Life Sciences: an agentic research platform that orchestrates specialist agents for computational biology, literature review, and regulatory review.</li>
+<li>Healthcare: earlier stage, starting with payer workflows including claims, prior authorization, utilization management, and member communications.</li>
+<li>Legal: in-house legal teams and law firms, covering contract review/drafting, legal research, due diligence, and document-heavy work.</li>
+</ul>
+<p>Judgment: this is not ordinary sales vertical coverage. It is a product organization building "Claude for <industry>".</p>
+<h3>2. Finance is the strongest second template, and it has already been productized</h3>
+<p>On 2026-05-05, Anthropic released <code>Agents for financial services</code>:</p>
+<blockquote>
+<p>"We're releasing ten ready-to-run agent templates for the most time-consuming work in financial services: building pitchbooks, screening KYC files, and closing the books at month-end."<br />
+Source: <a href="https://www.anthropic.com/news/finance-agents">Agents for financial services</a></p>
+</blockquote>
+<p>The same launch also says each agent can be used as a Claude Cowork / Claude Code plugin or as a Claude Managed Agents cookbook, and that Claude now works across Microsoft Excel, PowerPoint, Word, with Outlook coming soon.</p>
+<p>The official GitHub repo looks more like a marketplace / reference architecture than a single marketing post:</p>
+<blockquote>
+<p>"Reference agents, skills, and data connectors for the financial-services workflows we see most, investment banking, equity research, private equity, and wealth management."<br />
+Source: <a href="https://github.com/anthropics/financial-services">anthropics/financial-services</a></p>
+</blockquote>
+<p>Agents in the repo include Pitch Agent, Meeting Prep Agent, Market Researcher, Earnings Reviewer, Model Builder, Valuation Reviewer, GL Reconciler, Month-End Closer, and others. It also states clearly that all outputs require human sign-off, and that the agents do not execute trades or approve onboarding.</p>
+<p>The official financial services product page also has strong customer evidence: an FIS CEO quote says Anthropic and FIS are building an AML investigations agent, and mentions credit decisioning, fraud prevention, and deposit retention agents to follow. Source: <a href="https://claude.com/solutions/financial-services">Claude financial services</a></p>
+<p>Judgment: finance has moved from a "possible direction" into a public product line. Insurance is pointed to by financial services, healthcare payer, and dedicated Insurance roles at the same time, making it the adjacent sub-direction most worth tracking separately.</p>
+<h3>3. Insurance has a high probability of becoming independent</h3>
+<p>Anthropic is hiring for an <code>Industry Principal, Insurance</code>, with very specific language:</p>
+<blockquote>
+<p>"help customers envision, architect, and realize transformational AI solutions, from underwriting automation and claims processing to fraud detection and customer experience."<br />
+Source: <a href="https://job-boards.greenhouse.io/anthropic/jobs/5133070008">Industry Principal, Insurance</a></p>
+</blockquote>
+<p>The same role emphasizes feeding customer requirements back into Product and Research, and developing insurance-specific capabilities including model governance, explainability, audit logging, and regulatory compliance. There are also <code>Strategic Account Executive, Insurance</code> and mid-market industries sales roles that list Financial Services, Insurance, Healthcare, and Life Sciences side by side.</p>
+<p>Judgment: insurance may appear first as a cross-over scenario between finance and healthcare, but it is likely to become independent GTM/solution packaging. Near-term scenarios: underwriting, claims, fraud, risk, actuarial review, customer service, and regulatory audit.</p>
+<h3>4. Legal is a repeatable template, not just a point product</h3>
+<p>On 2026-05-12, Anthropic released Claude for Legal: 20+ MCP connectors and 12 practice-area plugins.</p>
+<blockquote>
+<p>"We're releasing 20+ new MCP connectors that link Claude to the software that the legal industry runs on and 12 new plugins tailored to specific legal work and practice areas."<br />
+Source: <a href="https://claude.com/blog/claude-for-the-legal-industry">Claude for the legal industry</a></p>
+</blockquote>
+<p>These plugins cover commercial, corporate, employment, privacy, product, regulatory, AI governance, IP, litigation, law student, legal clinic, and legal builder hub. Connectors cover Docusign, Ironclad, Box, iManage, NetDocuments, Relativity, Everlaw, Consilio, Thomson Reuters, Harvey, and others.</p>
+<p>Judgment: Legal's strategic meaning is not just "Anthropic is also doing legal AI". It proves Anthropic's industry packaging method: connectors plug into incumbent systems, plugins package practice workflows, and human expert review preserves compliance and accountability boundaries.</p>
+<h3>5. Healthcare's near-term focus is payer/admin, not diagnosis</h3>
+<p>The <code>Manager, Healthcare Enterprise Sales</code> role is very direct:</p>
+<blockquote>
+<p>"define and execute our AI transformation strategy for health insurance companies and health plans"<br />
+"from claims processing and utilization management to member engagement and provider network optimization."<br />
+Source: <a href="https://job-boards.greenhouse.io/anthropic/jobs/5138289008">Manager, Healthcare Enterprise Sales</a></p>
+</blockquote>
+<p>The responsibilities further list claims adjudication, prior authorization, care management, member services, provider contracting, Medicare Advantage operations, risk adjustment, and regulatory knowledge of CMS/HIPAA/state insurance departments.</p>
+<p>The hero demo on the official healthcare product page is also prior authorization: verifying provider NPI, CPT/ICD-10, coverage policy, missing documentation, and generating a recommendation. Source: <a href="https://claude.com/solutions/healthcare">Claude healthcare</a></p>
+<p>Judgment: the near-term path is not direct clinical diagnosis, but more controllable and ROI-clear <strong>payer admin automation</strong>: prior auth, claims appeal, utilization management, member/provider comms, risk adjustment, revenue cycle, and care management.</p>
+<h3>6. Life sciences is research workflow + regulated documentation</h3>
+<p>The <code>Applied AI Engineer, Life Sciences</code> role has an ambitious goal:</p>
+<blockquote>
+<p>"accelerate scientific progress from R&amp;D through translation by an order of magnitude."<br />
+Source: <a href="https://job-boards.greenhouse.io/anthropic/jobs/5111942008">Applied AI Engineer, Life Sciences</a></p>
+</blockquote>
+<p>The role also says the team will work with flagship research partners such as Howard Hughes Medical Institute and The Allen Institute to build agents, MCP servers, benchmarks, and reusable agent skills, covering genomics platforms, literature databases, experimental repositories, and instruments.</p>
+<p>The official life sciences product page shows Anthropic already telling the story across an ecosystem including AstraZeneca, Genmab, Veeva, Broad Institute/Manifold, and 10x Genomics. Use cases include protocols, synthesis, bioinformatics, and compliance. Source: <a href="https://claude.com/solutions/life-sciences">Claude life sciences</a></p>
+<p>Judgment: life sciences will expand along two lines:</p>
+<ul>
+<li>Research toolchain: literature review, bioinformatics, computational biology, scientific figures, and experimental data analysis.</li>
+<li>Regulated pharma workflow: clinical protocol, regulatory review, clinical documentation, and commercial pharma intelligence.</li>
+</ul>
+<h3>7. Security is already a clear product line</h3>
+<p>The Claude Security product page is very clear in its positioning:</p>
+<blockquote>
+<p>"Claude Security reasons about your code like a security researcher: scanning for vulnerabilities, validating findings, and proposing targeted patches."<br />
+Source: <a href="https://www.anthropic.com/product/security">Claude Security by Anthropic</a></p>
+</blockquote>
+<p>The official security solution page emphasizes that Claude traces data flows across files and catches logic flaws that rule-based scanners miss. It also says "Your team decides, every time": Claude scans/validates/triages/drafts, and the team decides whether to merge, escalate, or act. Source: <a href="https://claude.com/solutions/security">Claude for Security</a></p>
+<p>The 2026-02-20 research/product announcement also says Claude Code Security is a limited research preview for Enterprise and Team customers, with expedited access for open-source maintainers. Source: <a href="https://www.anthropic.com/research/claude-code-security">Making frontier cybersecurity capabilities available to defenders</a></p>
+<p>Judgment: security is not a traditional industry vertical. It is a high-value department/function vertical. It will intersect with government, financial services, critical infrastructure, and developer tooling. The near-term commercialization path is vulnerability discovery, secure code review, patch workflow, SOC/SIEM analysis, and incident response.</p>
+<h3>8. Government is strong, but defense/national security has conflicting signals</h3>
+<p>The official government page emphasizes:</p>
+<blockquote>
+<p>"Available with authorizations up to FedRAMP High and IL5 using established procurement channels."<br />
+Source: <a href="https://claude.com/solutions/government">Claude government</a></p>
+</blockquote>
+<p>The same page lists API, Claude Gov models for classified environments on AWS, and the Claude for Government application at FedRAMP High. It describes government workflows as document analysis, regulatory review, and complex task automation.</p>
+<p>But there was public controversy around DoD use restrictions in February and March 2026. AP reported that Anthropic said it could not accept the Pentagon's terms because of concerns about mass surveillance and fully autonomous weapons. TechCrunch reported that Anthropic later sued DoD over its supply-chain risk designation. Sources: <a href="https://apnews.com/article/9b28dda41bdb52b6a378fa9fc80b8fda">AP</a>, <a href="https://techcrunch.com/2026/03/09/anthropic-sues-defense-department-over-supply-chain-risk-designation/">TechCrunch</a></p>
+<p>Judgment: government expansion will continue, but the near-term path is more likely to lean toward <strong>federal civilian, state/local, public science, archives/document analysis, regulatory workflows, and procurement/document analysis</strong>. National security/defense has product and model signals, but policy boundaries, procurement eligibility, and use restrictions make it less certain than finance, healthcare, and life sciences.</p>
+<h3>9. SMB is a horizontal workflow packaging experiment</h3>
+<p>On 2026-05-13, Anthropic released Claude for Small Business:</p>
+<blockquote>
+<p>"Claude for Small Business is a toggle install that puts Claude to work inside the tools small business owners already use: Intuit Quickbooks, PayPal, HubSpot, Canva, Docusign, Google Workspace, and Microsoft 365."<br />
+Source: <a href="https://www.anthropic.com/news/claude-for-small-business">Introducing Claude for Small Business</a></p>
+</blockquote>
+<p>It includes 15 ready-to-run agentic workflows covering finance, operations, sales, marketing, HR, and customer service. Workflows include payroll planning, month close, cash forecasts, invoice chasing, campaign, contract review, CRM hygiene, and others.</p>
+<p>Judgment: SMB is not a single industry. It is Anthropic bringing the vertical workflow method down into the small-business operating system. It may help Anthropic learn a lower-CAC, more self-serve, lighter-trust/approval form of agent product.</p>
+<h2>Horizontal Pattern</h2>
+<p>Across legal, finance, healthcare, life sciences, security, government, and SMB, Anthropic's expansion pattern is consistent:</p>
+<ol>
+<li><strong>Start with high-value, document-heavy, audit-sensitive knowledge work</strong>: legal, finance, healthcare payment, research, government, and security all fit.</li>
+<li><strong>Connect systems and data first, then build agents</strong>: MCP connectors are a core asset, not an add-on feature.</li>
+<li><strong>Productize workflows into plugins/templates/skills/managed agents</strong>: move from chat to installable, auditable, repeatable agent packages.</li>
+<li><strong>Keep professionals in review/approval roles</strong>: in high-risk industries, people still sign off. Claude gathers, checks, drafts, cross-references, and generates structured outputs.</li>
+<li><strong>Tie into incumbent vendors</strong>: TR, Docusign, Intuit, HubSpot, Canva, PayPal, FactSet, Morningstar, Veeva, Microsoft 365, and others reduce enterprise procurement friction.</li>
+<li><strong>Use compliance/audit/permissions as the enterprise moat</strong>: finance, healthcare, government, and security especially emphasize audit log, permissions, human approval, and regulated deployment.</li>
+</ol>
+<h2>Possible Next Expansion Areas</h2>
+<h3>High Probability</h3>
+<ul>
+<li><strong>Insurance</strong>: Both financial services and healthcare payer point toward insurance. Near-term scenarios: underwriting, claims, fraud, risk, actuarial review, prior auth, appeals, and regulatory compliance.</li>
+<li><strong>Regulated enterprise operations</strong>: KYC/AML, compliance monitoring, audit prep, policy mapping, regulatory watch, and SOX workpapers.</li>
+<li><strong>Pharma / biotech R&amp;D ops</strong>: scientific literature, clinical protocol, bioinformatics, regulatory submissions, and lab/research platform connectors.</li>
+<li><strong>Security operations / secure SDLC</strong>: vulnerability discovery, validated findings, patch workflow, SOC/SIEM, and incident response.</li>
+</ul>
+<h3>Medium-High Probability</h3>
+<ul>
+<li><strong>Government civilian workflows</strong>: regulatory review, public records/archive search, grant/program administration, and procurement/document analysis.</li>
+<li><strong>SMB finance/GTM ops</strong>: bookkeeping, invoice chasing, campaign ops, contract workflows, and lead triage.</li>
+<li><strong>Academic medical centers / health systems</strong>: clinical documentation, operational efficiency, care coordination, and EHR-adjacent integrations. Evidence mainly comes from sales hiring, with productization lower than payer admin.</li>
+</ul>
+<h3>Medium Probability, But Weaker Evidence</h3>
+<ul>
+<li><strong>Education / higher ed</strong>: There is a solution entry point and customer success / education labs hiring, but no finance/legal-level evidence of agent packaging.</li>
+<li><strong>Manufacturing/automotive/retail/telecom/transportation/utilities</strong>: These industries appear in sales hiring, especially in regional markets, but currently look more like GTM coverage than formed vertical products.</li>
+<li><strong>Critical infrastructure security</strong>: Both security and government point to it, but the current public packaging is more like Claude Security/Project Glasswing-style collaboration. It may not immediately become an independent <code>Claude for Critical Infrastructure</code>.</li>
+</ul>
+<h2>Counterevidence And Uncertainty</h2>
+<ul>
+<li>Job pages are intent signals, not proof that products will definitely launch. But the <code>Vertical AI Products</code> role and already released finance/legal products validate each other, so signal strength is high.</li>
+<li>Legal has high news visibility, which may lead people to overstate its uniqueness. The more important point is that legal proves the playbook for industry-specific agent packaging.</li>
+<li>Healthcare's near-term focus appears to be payer/admin, not clinical diagnosis. Simply calling it "healthcare AI" would be misleading.</li>
+<li>Public sector hiring and product pages are strong, but the DoD controversy shows that Anthropic's safety/use boundaries may limit some government revenue paths.</li>
+<li>Security is a clear product line, but it looks more like a department/function vertical than an expansion named by traditional industry.</li>
+<li>SMB's public launch is very new. It may be a public benefit / training / ecosystem experiment, and not necessarily an immediate core source of high-ARPU enterprise revenue.</li>
+</ul>
+<h2>Takeaway For Simin</h2>
+<p>If you want to judge Anthropic's next expansion directions worth watching most closely, I would track these signals:</p>
+<ol>
+<li>Whether there are new <code>Claude for &lt;industry&gt;</code> pages, GitHub repos, plugin marketplaces, or Managed Agents cookbooks.</li>
+<li>Whether <code>Vertical AI Products</code> on the jobs page expands from finance/legal/healthcare/life sciences into more specific industries.</li>
+<li>Whether new anchor partners appear, especially incumbents in industry data/workflow systems.</li>
+<li>Whether launches happen across Microsoft 365, Claude Cowork, Claude Managed Agents, and Claude Code at the same time.</li>
+<li>Whether they explicitly mention audit log, permissions, compliance, and human approval, which usually means Anthropic is preparing to enter high-value enterprise workflows.</li>
+</ol>
+<p>Current strongest judgment: <strong>Anthropic is moving from a model/API company toward an industry agent infrastructure company. Finance/insurance is the strongest commercialization template; legal is the most complete industry workstation template; healthcare payer and life sciences are the clearest next 0→1 areas; security has already become a product line; SMB is a workflow packaging experiment for the lower end of the market; government will continue, but the defense/national security path is affected by policy boundaries.</strong></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
 </body>
 </html>

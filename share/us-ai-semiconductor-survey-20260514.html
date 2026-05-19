@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>美股半导体 AI 方向深度 Survey</title>
+  <title>美股半导体 AI 方向深度 Survey：继续上涨的信号与反方论证</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>:root {
   color-scheme: light dark;
@@ -205,7 +205,16 @@ img { max-width: 100%; height: auto; }
 <nav class="share-index-nav" aria-label="Share index">
   <a href="index.html">← 返回</a>
 </nav>
-<article class="report-content" lang="zh-CN">
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
 <h1>美股半导体 AI 方向深度 Survey：继续上涨的信号与反方论证</h1>
 <p>日期：2026-05-14</p>
 <blockquote>
@@ -482,5 +491,327 @@ img { max-width: 100%; height: auto; }
 <li>SemiAnalysis, “The Great AI Silicon Shortage”: https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage</li>
 </ul>
 </article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Deep Survey of the US AI Semiconductor Theme: Signals For Further Upside And The Bear Case</h1>
+<p>Date: 2026-05-14</p>
+<blockquote>
+<p>Note: This article is industry and market research, not investment advice. Because some PDF/IR pages can only be fetched as binary or JS pages in the current environment, this article prioritizes directly accessible company announcements, industry research pages, Tavily/Web search summaries, and cross-validation from parallel research agents. Single-source or disputed estimates are explicitly marked.</p>
+</blockquote>
+<h2>Core Conclusion</h2>
+<p>The US semiconductor AI trade has moved from "buy GPUs" to "buy AI infrastructure bottlenecks". If the theme continues to rise, the strongest signals will probably not come only from Nvidia, but from a verifiable chain: hyperscalers keep raising capex, GPU/ASIC orders remain constrained by advanced process and packaging, HBM and DRAM/NAND prices stay strong, and networking interconnect, power/cooling, testing, and yield control become the next shortages.</p>
+<p>But the bear case has also become more specific. It is not simply saying "AI is a bubble". It asks four questions: can cloud providers earn back this round of capital spending? Is the true economic life of GPUs shorter than accounting depreciation? Will HBM/packaging expansion come back to pressure prices after 2027? Has the market already priced in high growth, high margins, high share, and a low-rate environment all at once?</p>
+<p>So the current stage looks more like "fundamentals are still strong, but the margin for error has fallen". The most important things to track are not one-day stock moves, but whether orders, capex, prices, yields, gross margin, and cloud AI revenue disclosures continue to confirm one another.</p>
+<h2>I. Why AI Semiconductors Still Have Industry Signals For Further Upside</h2>
+<h3>1. AI capex remains the source variable for the entire chain</h3>
+<p>In its April 2026 semiconductor outlook, IDC forecast that global semiconductor revenue will reach $1.29 trillion in 2026, up 52.8% year over year, and said AI infrastructure has become the structurally dominant source of demand. Its summary also said hyperscale capex surpassed $100 billion for the first time in 2025 Q3, and that 2026 i4 capex is expected to grow about 70% year over year, approaching $600 billion. Source: <a href="https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/">IDC</a>.</p>
+<p>MUFG's AI financing weekly gives a similar direction, saying 2026 Big Five hyperscaler capex is expected to exceed $600 billion, of which about 75%, or $450 billion, is directly related to AI infrastructure. Source: <a href="https://www.mufgamericas.com/sites/default/files/document/2025-12/AI_Chart_Weekly_12_19_Financing_the_AI_Supercycle.pdf">MUFG PDF</a>.</p>
+<p>The significance of this signal is that semiconductor revenue is the upstream mirror of cloud-provider capital spending. As long as Amazon, Microsoft, Google, Meta, Oracle, and others keep expanding AI data centers, GPU, custom ASIC, HBM, advanced packaging, switches, optical interconnect, power equipment, and test equipment all still have demand support. Conversely, if these companies' capex guidance is revised down repeatedly, the valuation foundation for AI semiconductors will shake quickly.</p>
+<h3>2. Nvidia is still proving through revenue and gross margin that demand has not cooled clearly</h3>
+<p>Nvidia's FY2026 Q4 announcement showed quarterly revenue of $68.1 billion, up 73% year over year; data center revenue of $62.3 billion, up 75% year over year; and full-year revenue of $215.9 billion, up 65%. The company also disclosed Q4 GAAP gross margin of 75.0%. Source: <a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm">Nvidia SEC 8-K / Q4 FY2026 release</a>.</p>
+<p>Jensen Huang said in the same announcement:</p>
+<blockquote>
+<p>"Computing demand is growing exponentially, the agentic AI inflection point has arrived."</p>
+</blockquote>
+<p>This type of management statement is naturally sales-oriented. But revenue, data center growth, and high gross margin together show that, at least through early 2026, the market had not yet seen the typical semiconductor downcycle combination of prices loosening first, gross margin falling first, and order visibility declining.</p>
+<p>The positive signal for further upside is that Nvidia's networking revenue, system-level revenue, and next-generation Rubin platform visibility continue to strengthen, rather than the story depending only on a single GPU ASP. The bear side should watch whether gross margin falls meaningfully from the 70%+ range, and whether customers start pushing for price cuts after supply-chain expansion.</p>
+<h3>3. AI is not only Nvidia: custom ASIC and inference economics may broaden the beneficiary base</h3>
+<p>AMD's 2026 Q1 announcement said first-quarter performance was driven by accelerating AI infrastructure demand, and that Data Center has become the main driver of revenue and profit growth. The company guided 2026 Q2 revenue to a midpoint of $11.2 billion, up about 46% year over year, with non-GAAP gross margin around 56%. Lisa Su also mentioned that inferencing and agentic AI are driving CPU and accelerator demand, and that customer forecasts for the MI450 Series and Helios exceeded initial expectations. Source: <a href="https://www.amd.com/en/newsroom/press-releases/2026-5-5-amd-reports-first-quarter-2026-financial-results.html">AMD Q1 2026 results</a>.</p>
+<p>This means the second stage of AI semiconductors may move from "training GPU shortage" to "training + inference + agentic workload + custom chips". This is also the logic for custom silicon / networking suppliers such as Broadcom and Marvell: when inference cost becomes the core variable, cloud providers are more willing to use ASICs to optimize specific workloads.</p>
+<p>This is a double-edged sword for the industry. It is a broadening tailwind for Broadcom, Marvell, TSMC, and EDA/IP. For Nvidia, it is a potential long-term pressure on share and gross margin. The best bull signal would be ASIC ramping without crushing GPUs, and instead expanding the AI compute TAM together.</p>
+<h3>4. HBM and memory may be among the hardest bottlenecks in 2026</h3>
+<p>IDC describes memory as central to this cycle. It expects 2026 DRAM revenue to reach $418.6 billion, with significant growth driven by HBM and AI infrastructure, and says HBM has become one of the main constraints in the AI accelerator supply chain. Source: <a href="https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/">IDC</a>.</p>
+<p>Deloitte's 2026 semiconductor outlook also emphasizes that AI training and inference demand for HBM3, HBM4, and DDR7 has caused shortages in other consumer memory. Some DDR4/DDR5 prices rose about fourfold between September and November 2025, and Deloitte warns that prices may continue to rise in the first half of 2026. Source: <a href="https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html">Deloitte 2026 Semiconductor Industry Outlook</a>.</p>
+<p>Micron's investor materials give more direct company-level signals: AI demand is driving DRAM and NAND data center bit TAM above 50% of industry TAM for the first time in 2026. The company says both AI and traditional server demand are constrained by insufficient DRAM/NAND supply, and expects FY2026 capex to exceed $25 billion. Source: <a href="https://investors.micron.com/static-files/9c0becf5-df56-4eec-bd67-453dda68b273?lidx=0&amp;referring_guid=98df71f1-176a-4659-8d3c-49ee4bd68271">Micron investor material</a>.</p>
+<p>HBM is special because it is not simply a price-up version of a normal memory cycle. It requires high-yield stacking, advanced packaging, long customer qualification, and it crowds out standard DRAM wafer capacity. If the bull case holds, companies like Micron may be re-rated as "critical AI bottleneck suppliers", not traditional highly cyclical memory stocks.</p>
+<h3>5. Advanced packaging, testing, and yield control have moved from backend supporting roles into the main story</h3>
+<p>The first Tavily pass and multiple external searches point to the same issue: AI chip limits are not only in wafer front-end supply, but also in CoWoS, advanced packaging, HBM stacking, testing, and yield control. KLA-related earnings summaries show that the company gained share in advanced wafer-level packaging and expects advanced packaging process-control revenue to rise from about $635 million in 2025 to about $1 billion in 2026. Source: <a href="https://finance.yahoo.com/markets/stocks/articles/kla-corporation-q3-2026-earnings-123000392.html">Yahoo Finance / KLA Q3 2026 earnings summary</a>.</p>
+<p>TSMC's 2026 capex plan also provides indirect validation. Bloomberg reported that TSMC plans 2026 capex of $52 billion to $56 billion, and expects 2026 revenue growth of nearly 30%, which the market interpreted as evidence of sustained strong AI demand. Source: <a href="https://www.bloomberg.com/news/articles/2026-01-15/tsmc-profit-beats-estimates-in-fresh-sign-of-ai-demand-strength">Bloomberg summary page</a>.</p>
+<p>Companies worth watching on this chain include TSM, ASML, AMAT, LRCX, KLAC, Teradyne, and advanced packaging OSAT/materials/testing companies. The signal for further upside is not a line like "AI is hot", but whether advanced packaging capacity remains booked, equipment order backlogs lengthen, and yield-tool revenue accelerates.</p>
+<h3>6. Networking, optical interconnect, power, and cooling have become the new AI data center constraints</h3>
+<p>Nvidia's Q4 FY2026 announcement split data center revenue into compute and networking. TechCrunch's coverage of its earnings said roughly $11 billion of quarterly data center revenue came from networking products such as NVLink. Source: <a href="https://techcrunch.com/2026/02/25/nvidia-earnings-record-capex-spend-ai/">TechCrunch</a>.</p>
+<p>This shows that an AI cluster is not just "buy more GPUs". Large-scale inference and training require low-latency networks, switches, optical modules, power management, liquid cooling, data center power, and data center construction. If the market shifts from chip picker to infrastructure basket, ANET, MRVL, AVGO, MPWR, VRT, and others may continue to benefit.</p>
+<p>Two signals are needed to verify this chain: first, whether networking revenue grows faster than the traditional enterprise networking cycle; second, whether power/cooling company backlogs come from AI data centers rather than a normal industrial cycle.</p>
+<h2>II. Watchlist For Future Upside</h2>
+<p>To judge whether the US semiconductor AI theme has further upside, I would split the signals into three layers by strength.</p>
+<p>The first layer is hard demand signals: hyperscaler capex guidance revised up or not revised down; Nvidia/AMD/Broadcom/Marvell order visibility lengthening; HBM supply from Micron/SK hynix/Samsung locked in ahead of time; TSMC advanced node and CoWoS capacity still in shortage.</p>
+<p>The second layer is pricing and profit signals: Nvidia data center gross margin staying high; Micron HBM and DRAM/NAND pricing continuing to improve; equipment company orders and service revenue strengthening together; networking and power equipment company backlogs becoming higher quality.</p>
+<p>The third layer is diffusion signals: AI revenue no longer concentrated only in Nvidia, but diffusing into ASIC, EDA, packaging, testing, memory, networking, power, and cooling. The healthier the diffusion, the less the sector looks like a single-leader trade. If diffusion is only low-quality catch-up buying, risk rises instead.</p>
+<h2>III. The Bear Case: Why This Rally Could Go Wrong</h2>
+<h3>1. Valuation's margin for error has fallen</h3>
+<p>The stock prices of core AI semiconductor companies no longer reflect only "good growth this year". They reflect the maintenance of high growth, high share, and high gross margin for many future years. The bear side's strongest point is that even if fundamentals do not collapse, if growth falls from extremely fast to "still very good but below expectations", valuation multiples can compress.</p>
+<p>This risk is most typical in Nvidia, but it also spreads to Broadcom, AMD, Micron, TSMC, ASML, and others. Bulls can argue that earnings growth will digest valuation. Bears will ask whether current prices have already bought the optimistic 2027-2028 scenario in advance.</p>
+<h3>2. Cloud-provider ROI remains opaque</h3>
+<p>J.P. Morgan Asset Management's 2026 outlook lists the hyperscaler AI investment "metaverse moment" as an important risk: the four major hyperscalers have spent about $1.3 trillion on capex and R&amp;D since 2022 Q4, but whether AI investment can produce commensurate profits still needs verification. The report also mentions that declining free cash flow margins and lower cash balances make a clearer profitability path more necessary in 2026. Source: <a href="https://am.jpmorgan.com/content/dam/jpm-am-aem/global/en/insights/eye-on-the-market/smothering-heights-amv.pdf">J.P. Morgan Asset Management PDF</a>.</p>
+<p>This is the real key bear case: semiconductor companies recognize revenue today, while cloud providers bear future depreciation, power, and utilization risk. If AI application revenue cannot cover the cost of capital, chip orders may switch from "the more the better" to "digest inventory and capacity first".</p>
+<h3>3. Depreciation and GPU economic life may pressure profits</h3>
+<p>Some skeptics argue that AI GPU technology iterates too quickly, so true economic life may be shorter than cloud providers' accounting depreciation periods. If 5-6 year depreciation assumptions are too optimistic, cloud providers' current profits may understate future replacement, impairment, and idle-capacity risk.</p>
+<p>The bull rebuttal is that older GPUs still have high utilization in inference, internal workloads, lower-end models, and the cloud rental market, and that token demand is large enough to allow different generations of equipment to be used in tiers. If future used GPU prices, cloud GPU rental prices, and utilization all stay firm, the depreciation bear case will weaken.</p>
+<h3>4. HBM and memory still cannot escape the supply cycle</h3>
+<p>HBM is scarce today, but that does not mean it will be scarce forever. Micron, SK hynix, and Samsung are all expanding HBM and cleanroom investment. Deloitte also warns that if DRAM/NAND capex rises further because of higher prices, it may create oversupply again. Source: <a href="https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html">Deloitte</a>.</p>
+<p>Micron's low forward P/E looks cheap, but memory stocks often look cheapest near cycle peaks because the market expects peak earnings to be unsustainable. What the bear side should watch is not how high 2026 EPS is, but whether prices can hold after 2027, once HBM4 competition, Samsung qualification, and standard DRAM/NAND supply recovery arrive.</p>
+<h3>5. Custom ASIC is a diffusion opportunity, and also Nvidia's long-term substitution risk</h3>
+<p>The rise of ASIC can broaden the AI semiconductor beneficiary base, but it may also change profit distribution. Google TPU, Amazon Trainium, in-house inference ASICs, Broadcom custom chips, and Marvell custom interconnect solutions all shift some value from general-purpose GPUs toward customers and the custom silicon supply chain.</p>
+<p>In the short term, this may not hurt Nvidia because the GPU ecosystem, CUDA, NVLink, system integration, and time-to-market remain strong. But over the long term, if inference workloads standardize, model architectures stabilize, and customers put more weight on cost per token, ASIC pressure on GPU gross margin and share will grow.</p>
+<h3>6. China restrictions, Taiwan risk, and supply-chain concentration remain meaningful tail risks</h3>
+<p>In its Q4 FY2026 announcement, Nvidia noted that although a small number of its China H200 products had been approved, they had not yet generated revenue, and the company was uncertain whether the related products would be allowed to be imported into China. Source: <a href="https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm">Nvidia SEC 8-K / Q4 FY2026 release</a>.</p>
+<p>At the same time, TSMC's concentrated position in leading-edge processes and advanced packaging exposes the entire AI semiconductor chain to Taiwan geopolitical risk. US export controls may limit China revenue, but they may also push China to accelerate domestic substitution. This risk is hard to price in normal times, but if it erupts, the whole chain would be re-rated quickly.</p>
+<h2>IV. Future Sector Map: The Opportunity Is Not Only In GPUs, But In Bottleneck Migration</h2>
+<p>More systematically, the future main line for AI semiconductors is not one direction, but "bottleneck migration": first not enough GPUs, then not enough HBM, not enough CoWoS/advanced packaging, not enough N3/N2 advanced process, not enough network bandwidth, not enough power and cooling. Capital often chases the most constrained link at the time, instead of staying fixed in one type of company.</p>
+<p>Omdia's 2026 semiconductor trends list data center servers as the dominant driver of semiconductor revenue, explicitly mentioning that GPU, logic ASSP/ASIC, HBM, and power management IC are all driven by AI data centers. It also says 2026 themes include larger-scale training, continued CSP expansion, old server upgrades, power/cooling improvements, and edge AI growth. Source: <a href="https://omdia.tech.informa.com/-/media/tech/omdia/assetfamily/2025/12/04/2026-trends-to-watch-semiconductors/2026-trends-to-watch-semiconductors-pdf.pdf">Omdia summary</a>.</p>
+<p>TrendForce's AI server outlook also focuses 2026 on hyperscaler capex, NVIDIA rack-scale platforms, US CSP in-house ASICs, tight HBM/CoWoS, liquid cooling going mainstream, and localization caused by US-China restrictions. Source: <a href="https://www.trendforce.com/research/download/RP260505CE3">TrendForce</a>.</p>
+<h3>Direction 1: Training GPUs / general-purpose AI acceleration platforms</h3>
+<ul>
+<li><strong>Representative companies</strong>: NVDA, AMD.</li>
+<li><strong>Why it matters</strong>: frontier model training, post-training, reinforcement learning, long context, and agentic AI still require high-end GPU clusters. Nvidia today is not only GPUs, but a platform of GPU + NVLink/NVSwitch + networking + rack-scale system + CUDA.</li>
+<li><strong>Conditions for further upside</strong>: Blackwell/Rubin shipments continue to beat expectations; inference does not weaken GPU demand, and instead expands total compute through token consumption growth; data center gross margin stays high; networking and system revenue mix rises.</li>
+<li><strong>Key things to watch</strong>: Nvidia data center revenue/gross margin; Blackwell/Rubin lead times; cloud GPU rental prices and utilization; AMD MI series customer count, revenue, and gross margin; CUDA/ROCm software ecosystem progress.</li>
+<li><strong>Main risks</strong>: valuation is the most fully priced; gross margin is sensitive to supply release and customer price pressure; ASIC replaces some GPU demand in predictable inference workloads; export controls affect China revenue.</li>
+</ul>
+<h3>Direction 2: Inference accelerators and custom ASIC</h3>
+<ul>
+<li><strong>Representative companies</strong>: AVGO, MRVL, AMD, with indirect benefit to TSM. Cloud in-house chips include Google TPU, Amazon Trainium/Inferentia, Microsoft Maia, and Meta MTIA.</li>
+<li><strong>Why it matters</strong>: as AI moves from training to large-scale inference, the key metric shifts from "absolute performance" to "cost per token, performance per watt, deployable scale". Creative Strategies breaks the 2026 framework into capex sustainability, constraint migration from compute to energy, inference economics, in-house silicon expansion, and memory/packaging physical bottlenecks. Source: <a href="https://creativestrategies.com/research/the-ai-infrastructure-gigacycle-a-primer-for-2026/">Creative Strategies</a>.</li>
+<li><strong>Conditions for further upside</strong>: Broadcom/Marvell custom silicon backlog revised up; cloud-provider TPU/Trainium/Maia/MTIA move from internal experiments to large-scale deployment; ASIC and GPU are incremental capacity expansion rather than zero-sum substitution.</li>
+<li><strong>Key things to watch</strong>: AVGO/MRVL AI revenue or custom silicon backlog; cloud-provider in-house chip generation launches and deployment scale; HBM/CoWoS allocation used by ASIC; whether API call volume grows faster after inference API costs fall.</li>
+<li><strong>Main risks</strong>: project-based revenue is concentrated among a few hyperscalers; in-house chips may let cloud providers keep the profits; if ASIC mainly replaces GPU instead of expanding the market, it will compress NVDA valuation.</li>
+</ul>
+<h3>Direction 3: HBM, DRAM, NAND, and the AI storage layer</h3>
+<ul>
+<li><strong>Representative companies</strong>: MU; overseas counterparts SK hynix and Samsung.</li>
+<li><strong>Why it matters</strong>: HBM is a hard bottleneck for training and high-end inference. Long context, agentic workflow, checkpointing, RAG, and multimodal data will also drive DRAM/NAND/enterprise SSD. IDC expects 2026 DRAM revenue to rise sharply because of HBM and DDR demand, and says HBM capacity is mostly booked through 2026, with some extending into 2027. Source: <a href="https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/">IDC</a>.</li>
+<li><strong>Conditions for further upside</strong>: HBM4/HBM4E qualification goes smoothly; long-term supply agreements, prepayments, and price floors increase; HBM crowds out standard DRAM wafer capacity, also tightening ordinary DRAM/NAND.</li>
+<li><strong>Key things to watch</strong>: Micron HBM revenue/share, HBM4 mass production and Nvidia/AMD qualification; HBM ASP and contract duration; DRAM/NAND spot and contract prices; enterprise SSD prices and supply; whether capex moves from "disciplined expansion" to "capacity scramble".</li>
+<li><strong>Main risks</strong>: memory remains a highly cyclical industry; Samsung ramp or customer inventory buildup may cause prices to fall; high capex creates oversupply after 2027.</li>
+</ul>
+<h3>Direction 4: Advanced packaging, CoWoS, chiplets, and 2.5D/3D integration</h3>
+<ul>
+<li><strong>Representative companies</strong>: TSM; indirect beneficiaries AMAT, KLAC, LRCX, ASML, AMKR, ASE, and the hybrid bonding/advanced packaging equipment chain.</li>
+<li><strong>Why it matters</strong>: without CoWoS/2.5D packaging, GPU die and HBM cannot become deliverable AI accelerators. Nextwaves says the AI chip bottleneck has shifted from wafer supply to CoWoS advanced packaging, that TSMC CoWoS remains tight in 2026, and that custom ASIC's share of CoWoS accelerator shipments is rising. Source: <a href="https://nextwavesinsight.com/ai-semiconductor-supply-chain-tsmc-capacity-2026/">Nextwaves</a>.</li>
+<li><strong>Conditions for further upside</strong>: TSMC CoWoS-L/CoWoS-S maintain high utilization; Nvidia, AMD, Broadcom, Marvell, and cloud providers lock in 2026/2027 packaging capacity early; deeper chiplet and HBM integration raises packaging content value.</li>
+<li><strong>Key things to watch</strong>: advanced packaging share of TSMC capex; CoWoS monthly capacity, utilization, and lead times; OSAT outsourced expansion; advanced packaging, process control, and test-related orders at KLA/AMAT/LRCX; pace of yield improvement.</li>
+<li><strong>Main risks</strong>: if advanced process wafers instead become the new bottleneck, CoWoS expansion may briefly overshoot; TSMC vertical integration squeezes OSAT margins; Taiwan geopolitical risk.</li>
+</ul>
+<h3>Direction 5: Foundry and advanced process N3/N2</h3>
+<ul>
+<li><strong>Representative companies</strong>: TSM, with INTC foundry progress worth monitoring.</li>
+<li><strong>Why it matters</strong>: Nvidia, AMD, Broadcom, Marvell, Apple, and most hyperscaler ASICs all depend on TSMC leading-edge. Recent SemiAnalysis discussion argues that as N3/N2 demand concentrates in AI accelerators, front-end advanced logic capacity may also become a new bottleneck. Source: <a href="https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage">SemiAnalysis</a>.</li>
+<li><strong>Conditions for further upside</strong>: N3/N2 capacity remains fully loaded; AI/HPC revenue mix rises; customers are willing to pay premiums for hot lots, advanced packaging, and leading nodes; overseas fabs do not materially dilute gross margin.</li>
+<li><strong>Key things to watch</strong>: TSMC HPC revenue share; N3/N2 utilization and lead time; 2nm yield/mass production pace; capex guidance; whether gross margin can offset overseas fab costs.</li>
+<li><strong>Main risks</strong>: rising customer concentration; capex air pocket; Taiwan risk; Intel/Samsung foundry recovering competitiveness would reduce premiums.</li>
+</ul>
+<h3>Direction 6: AI networking, Ethernet fabric, and optical interconnect</h3>
+<ul>
+<li><strong>Representative companies</strong>: ANET, AVGO, MRVL, COHR, LITE, CRDO. NVDA networking is also core.</li>
+<li><strong>Why it matters</strong>: after AI clusters scale, the bottleneck shifts from single-card compute to east-west traffic, scale-up/scale-out bandwidth, and latency. Deloitte expects optical interconnect such as CPO and LPO to become more important in 2026, and says AI network fabric spending is expected to grow at a 38% CAGR from 2024 to 2029. Source: <a href="https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html">Deloitte</a>.</li>
+<li><strong>Conditions for further upside</strong>: 800G enters the mainstream and 1.6T starts ramping; CPO/silicon photonics move from demos to production; Ethernet AI fabric gains more hyperscaler adoption; both NVLink and Ethernet routes expand.</li>
+<li><strong>Key things to watch</strong>: Arista AI networking revenue, customer concentration, and 800G/1.6T cadence; Broadcom Tomahawk/Jericho and Marvell DSP/optical interconnect orders; optical module prices and lead times; CPO/LPO standardization progress.</li>
+<li><strong>Main risks</strong>: customer buildout cadence fluctuates; optical module price competition; uncertain technical route; if power or packaging limits GPU deployment, networking orders will also be delayed.</li>
+</ul>
+<h3>Direction 7: Power management, power delivery chain, liquid cooling, and data center infrastructure</h3>
+<ul>
+<li><strong>Representative companies</strong>: VRT, ETN, GEV, MPWR. Some server/ODM chain companies such as SMCI need separate evaluation.</li>
+<li><strong>Why it matters</strong>: after AI rack power density rises, the constraint shifts from "are there chips" to "is there power, can it be cooled, can the data center be delivered on time". Creative Strategies explicitly says the constraint is migrating from compute to energy. Source: <a href="https://creativestrategies.com/research/the-ai-infrastructure-gigacycle-a-primer-for-2026/">Creative Strategies</a>.</li>
+<li><strong>Conditions for further upside</strong>: liquid cooling CDU, UPS, switchgear, transformers, high-voltage DC power delivery, and grid interconnection backlogs continue to be revised up; AI data center projects move from reservations into delivery.</li>
+<li><strong>Key things to watch</strong>: Vertiv/Eaton/GE Vernova backlog and book-to-bill; data center interconnection queue; PPAs/power purchase agreements; liquid cooling penetration; power density per rack.</li>
+<li><strong>Main risks</strong>: these are not pure semiconductors, and valuations may already reflect AI spillover; project approval, grid, environmental, and community resistance can lengthen delivery; customer construction delays can defer orders.</li>
+</ul>
+<h3>Direction 8: Semiconductor equipment, testing, process control, and EDA/IP</h3>
+<ul>
+<li><strong>Representative companies</strong>: ASML, AMAT, LRCX, KLAC, TER, SNPS, CDNS.</li>
+<li><strong>Why it matters</strong>: this is the "picks and shovels" layer of AI capex. Equipment benefits from advanced logic, HBM, advanced packaging, and higher test complexity; EDA/IP benefits from chiplets, custom ASIC, multi-die systems, and higher design complexity at advanced nodes.</li>
+<li><strong>Conditions for further upside</strong>: WFE is revised up; advanced packaging/test/process-control orders grow faster than traditional front-end; EDA backlog increases together with AI/custom silicon projects; customers do not cut 2027 capex.</li>
+<li><strong>Key things to watch</strong>: ASML backlog and EUV/High-NA orders; AMAT/LRCX/KLAC advanced packaging, HBM, and process-control revenue; TER test demand; SNPS/CDNS revenue backlog, design starts, and AI/ASIC-related IP demand.</li>
+<li><strong>Main risks</strong>: equipment orders amplify the capex cycle and fall early when the cycle weakens; China exposure is affected by export controls; EDA valuations are high, growth is smoother but less elastic than chips.</li>
+</ul>
+<h3>Direction 9: Edge/on-device AI, PC/phone/auto/industrial AI</h3>
+<ul>
+<li><strong>Representative companies</strong>: QCOM, AMD, INTC, NVDA, ON, ADI, TXN, and parts of the auto chip and MCU/analog chain.</li>
+<li><strong>Why it matters</strong>: over the long term, AI will not stay only in the cloud. IDC mentions AI spreading into edge deployments and client devices. Deloitte also believes that after inference workloads expand, on-device and high-bandwidth flash/storage will become more important. Sources: <a href="https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/">IDC</a>, <a href="https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html">Deloitte</a>.</li>
+<li><strong>Conditions for further upside</strong>: AI PC/AI phone move from marketing points into replacement-cycle drivers; on-device models require more memory, stronger NPUs, and better power consumption; auto/industrial AI returns to growth.</li>
+<li><strong>Key things to watch</strong>: AI PC penetration, 32GB+ memory attach rate, on-phone AI usage, Qualcomm/AMD/Intel NPU platform adoption, auto semiconductor inventory digestion.</li>
+<li><strong>Main risks</strong>: on-device AI monetization is currently weaker than cloud; PC/phone cycles still lean consumer electronics; auto/industrial chips face inventory and macro-cycle pressure.</li>
+</ul>
+<h2>V. Monitoring Framework: What To Watch Next</h2>
+<p>The following indicators are more useful than looking only at stock prices. They can be divided into three categories: high-leading indicators for future orders, medium-leading indicators for diffusion quality, and lagging indicators for confirming whether the market has already reflected the change.</p>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>Where To Watch</th>
+<th>Positive Change</th>
+<th>Negative Change</th>
+<th>Signal Type</th>
+<th>Confidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Hyperscaler capex</td>
+<td>MSFT, AMZN, GOOGL, META, ORCL earnings, 10-Qs, calls, finance lease</td>
+<td>AI server, data center, networking, and power spend keep being revised up</td>
+<td>Capex guidance revised down, deliveries delayed, shift from supply-constrained to inventory digestion</td>
+<td>High-leading</td>
+<td>High</td>
+</tr>
+<tr>
+<td>AI revenue monetization</td>
+<td>Azure AI, AWS Bedrock/Trainium, Google Cloud AI, Copilot, Meta ad AI tools</td>
+<td>AI drives cloud revenue, ad conversion, subscription ARPU, or margin improvement</td>
+<td>Capex keeps rising, but revenue disclosures remain vague</td>
+<td>Medium-leading</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>GPU utilization/rental price</td>
+<td>Lambda, CoreWeave, RunPod, Vast, cloud provider spot/on-demand</td>
+<td>H100/H200/B200 prices stable or rising, availability tight</td>
+<td>Spot discounts expand, rental prices fall quickly</td>
+<td>High-leading</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>HBM prices and contracts</td>
+<td>Micron/SK hynix/Samsung earnings, TrendForce/DigiTimes/Korean media</td>
+<td>HBM4 premium, long-term LTAs, prepayments, price floors</td>
+<td>HBM3E price cuts, shorter LTAs, Samsung ramp pressures prices</td>
+<td>High-leading</td>
+<td>High</td>
+</tr>
+<tr>
+<td>CoWoS/advanced packaging</td>
+<td>TSMC earnings, capex, monthly revenue, OSAT orders</td>
+<td>Capacity booked into 2027, high utilization, long lead times</td>
+<td>Packaging lead times shorten, utilization falls</td>
+<td>High-leading</td>
+<td>High</td>
+</tr>
+<tr>
+<td>ASIC adoption</td>
+<td>AVGO/MRVL backlog, Google TPU, AWS Trainium, Microsoft Maia, Meta MTIA</td>
+<td>In-house chips ramp and create incremental silicon demand</td>
+<td>ASIC mainly replaces GPU and compresses general-purpose GPU growth</td>
+<td>Medium-leading</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>AI networking/optical interconnect</td>
+<td>ANET, AVGO, MRVL, COHR, LITE, CRDO, 800G/1.6T shipments</td>
+<td>800G/1.6T, CPO/LPO, AI fabric orders revised up</td>
+<td>Networking orders weaker than GPU, showing deployments are stuck on other bottlenecks</td>
+<td>Medium-leading</td>
+<td>Medium-high</td>
+</tr>
+<tr>
+<td>Power/liquid cooling/data center</td>
+<td>VRT, ETN, GEV, MPWR, interconnection queue, PPA</td>
+<td>UPS, switchgear, liquid cooling, transformer backlog strong</td>
+<td>Grid/approval/cooling delays slow GPU-order revenue conversion</td>
+<td>High-leading</td>
+<td>Medium-high</td>
+</tr>
+<tr>
+<td>Semiconductor equipment orders</td>
+<td>ASML, AMAT, LRCX, KLAC, TER, SEMI WFE</td>
+<td>HBM, advanced logic, packaging, and test orders rise</td>
+<td>Equipment orders fall, signaling slower expansion 12-24 months later</td>
+<td>Medium-leading</td>
+<td>Medium-high</td>
+</tr>
+<tr>
+<td>EDA/IP backlog</td>
+<td>SNPS, CDNS, ARM ecosystem, design starts</td>
+<td>custom ASIC/chiplet projects increase, backlog expands steadily</td>
+<td>design starts cool, showing customers are cutting new projects</td>
+<td>Medium-leading</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Export controls and geopolitics</td>
+<td>BIS rules, company 10-K risk factors, China substitution progress</td>
+<td>Restrictions stable, supply chain plannable</td>
+<td>New bans affect HBM/GPU/equipment revenue, or Taiwan Strait risk rises</td>
+<td>Event-driven</td>
+<td>Medium</td>
+</tr>
+<tr>
+<td>Valuation and earnings revisions</td>
+<td>SOX, individual stock forward P/E, EPS revision, gross margin guidance</td>
+<td>Earnings revisions digest valuation, stocks do not rely only on multiple expansion</td>
+<td>EPS cuts + high valuation = double-hit risk</td>
+<td>Lagging confirmation</td>
+<td>Medium</td>
+</tr>
+</tbody>
+</table>
+<p>A practical judgment: if capex, HBM, CoWoS, GPU rental, AI networking, and power backlog all strengthen at the same time, AI semiconductors are still in a "multi-bottleneck resonance" phase. If Nvidia revenue is still strong, but HBM/CoWoS/rental prices/cloud capex have already weakened, that is usually a signal that risk is moving forward.</p>
+<h2>VI. Cross-Validated Conclusion</h2>
+<p>High-confidence conclusion: AI capex, HBM, advanced packaging, and data center networking are indeed the core variables for the semiconductor industry in 2026. IDC, Deloitte, Nvidia, AMD, Micron, and TSMC-related materials confirm one another directionally.</p>
+<p>Medium-confidence conclusion: AI semiconductor beneficiaries will broaden from Nvidia into ASIC, networking, memory, equipment, EDA, power/thermal. But different companies have different elasticity and risk, so "AI beneficiary" should not be treated as one uniform label.</p>
+<p>Low-confidence or disputed conclusions: whether demand can persist after 2026, whether cloud-provider AI ROI is high enough, whether HBM has structurally escaped cyclicality, and whether GPU depreciation assumptions are reasonable. No single data point can prove these questions right now. They can only be validated through capex, cloud revenue, margins, prices, and utilization over the next several quarters.</p>
+<p>My final judgment is: the US semiconductor AI theme still has fundamental signals for further upside, but it has moved past the stage where anything with an AI label goes up. The next stage is more likely to be divergent: companies that truly sit on bottlenecks, have strong order visibility, and can turn capex into profit will keep benefiting; companies relying only on narrative, already overdrawn valuation, or exposure to supply reversal will be punished by the market.</p>
+<h2>Main Sources</h2>
+<ul>
+<li>IDC, "Semiconductor Market Forecast 2026: The AI Supercycle Arrives": https://www.idc.com/resource-center/blog/semiconductor-market-to-surge-past-the-trillion-dollar-threshold-ai-infrastructure-drives-market-growth/</li>
+<li>Deloitte, "2026 Semiconductor Industry Outlook": https://www.deloitte.com/us/en/insights/industry/technology/technology-media-telecom-outlooks/semiconductor-industry-outlook.html</li>
+<li>Nvidia Q4 FY2026 results / SEC filing: https://www.sec.gov/Archives/edgar/data/1045810/000104581026000019/q4fy26pr.htm</li>
+<li>AMD Q1 2026 results: https://www.amd.com/en/newsroom/press-releases/2026-5-5-amd-reports-first-quarter-2026-financial-results.html</li>
+<li>Micron investor material: https://investors.micron.com/static-files/9c0becf5-df56-4eec-bd67-453dda68b273?lidx=0&amp;referring_guid=98df71f1-176a-4659-8d3c-49ee4bd68271</li>
+<li>MUFG, "Financing the AI Supercycle": https://www.mufgamericas.com/sites/default/files/document/2025-12/AI_Chart_Weekly_12_19_Financing_the_AI_Supercycle.pdf</li>
+<li>J.P. Morgan Asset Management, "Smothering Heights": https://am.jpmorgan.com/content/dam/jpm-am-aem/global/en/insights/eye-on-the-market/smothering-heights-amv.pdf</li>
+<li>TechCrunch, Nvidia earnings coverage: https://techcrunch.com/2026/02/25/nvidia-earnings-record-capex-spend-ai/</li>
+<li>Bloomberg summary on TSMC 2026 outlook: https://www.bloomberg.com/news/articles/2026-01-15/tsmc-profit-beats-estimates-in-fresh-sign-of-ai-demand-strength</li>
+<li>Yahoo Finance / KLA earnings summary: https://finance.yahoo.com/markets/stocks/articles/kla-corporation-q3-2026-earnings-123000392.html</li>
+<li>Omdia, "2026 Trends to Watch: Semiconductors": https://omdia.tech.informa.com/-/media/tech/omdia/assetfamily/2025/12/04/2026-trends-to-watch-semiconductors/2026-trends-to-watch-semiconductors-pdf.pdf</li>
+<li>TrendForce, "Global AI Server &amp; Supply Chain Outlook 2026": https://www.trendforce.com/research/download/RP260505CE3</li>
+<li>Creative Strategies, "The AI Infrastructure Gigacycle: A Primer for 2026": https://creativestrategies.com/research/the-ai-infrastructure-gigacycle-a-primer-for-2026/</li>
+<li>Nextwaves Insight, "AI Semiconductor Supply Chain: The Bottleneck Has Shifted": https://nextwavesinsight.com/ai-semiconductor-supply-chain-tsmc-capacity-2026/</li>
+<li>SemiAnalysis, "The Great AI Silicon Shortage": https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage</li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
 </body>
 </html>
