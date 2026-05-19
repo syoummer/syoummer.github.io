@@ -205,7 +205,16 @@ img { max-width: 100%; height: auto; }
 <nav class="share-index-nav" aria-label="Share index">
   <a href="index.html">← 返回</a>
 </nav>
-<article class="report-content" lang="zh-CN">
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
 <h1>日本 naphtha 冲击后续推演：从黑白零食包装到跨行业材料瓶颈</h1>
 <p>日期：2026-05-19<br />
 对象：日本 naphtha / 石化衍生材料供应冲击、食品包装黑白化、食品外行业扩散<br />
@@ -473,5 +482,318 @@ img { max-width: 100%; height: auto; }
 <li>TV Asahi, Calbee packages become black and white: https://news.tv-asahi.co.jp/news_economy/articles/000504344.html</li>
 </ul>
 </article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Japan's Naphtha Shock: From Black-and-White Snack Packages to Cross-Sector Materials Bottlenecks</h1>
+<p>Date: 2026-05-19<br />
+Subject: Japan's naphtha / petrochemical-derived materials shock, food packaging simplification, and spillovers beyond food<br />
+Question: After Calbee's black-and-white packaging move, what could happen next? Could similar effects appear outside the food industry?<br />
+Type: Deep research report; public-source research note; not investment advice</p>
+<h2>Core Conclusions</h2>
+<p>Calbee's black-and-white packaging is not merely a "potato chip package" story. It is a visible signal that Japan's downstream manufacturing system is exposing a materials bottleneck. The more accurate frame is not simply "the Iran war caused an ink shortage." It is this: naphtha, as an upstream petrochemical feedstock, is transmitting stress through resins, films, inks, solvents, adhesives, coatings, synthetic rubber, and packaging conversion capacity into food, daily necessities, construction materials, logistics, healthcare, automobiles, and electronics.</p>
+<p>The most important part of this shock is the gap between government-level messaging and firm-level behavior. The government can say that aggregate national supply is secured, while companies still face a different reality: whether a specific white ink, food-grade film, adhesive, printing slot, container mold, or delivery window is actually available. Macro-level volume sufficiency does not equal downstream sufficiency in specifications, certification, lead times, and conversion capacity.</p>
+<p>The food industry is the first place where this becomes visible because food packaging is both high-volume and directly tied to shipment. Potato chips, ketchup, natto, lactic acid beverages, and pasta bundling tape are early cases. The larger follow-on direction is likely to be clustered summer/autumn price increases, SKU pruning, packaging shifting from a "marketing asset" into a "constrained production input," and fewer limited-edition designs or small-batch products.</p>
+<p>Similar effects are also likely outside food, but the symptoms will differ. Construction materials and bathroom fixtures will show up as suspended orders or longer lead times. Daily necessities will show up as higher prices or purchase limits for diapers, sanitary products, paper goods, and garbage bags. Logistics will show up as higher prices for stretch film, OPP tape, and PP strapping. Paint, printing, and automotive repair will show up as shortages of solvents and thinners. Healthcare materials are less about package appearance and more about infrastructure continuity.</p>
+<h2>Research Method and Source Discovery</h2>
+<p>This round followed the workspace's deep research survey workflow. The initial broad source-discovery pass used Tavily with three queries:</p>
+<ul>
+<li><code>Japan naphtha shortage packaging supply chain food non-food industries 2026</code></li>
+<li><code>日本 ナフサ不足 包装 食品以外 影響 業界 2026</code></li>
+<li><code>ナフサ不足 食品包装以外 トイレ バス 建材 医療 日用品 2026</code></li>
+</ul>
+<p>The report then cross-checked and supplemented the findings with sources from Teikoku Databank, Jiji Press, NHK WORLD, Nissin Foods Group, Nippon TV, Mainichi, Inbound Logistics, Reuters, MAFF, and others. Media reports, company announcements, industry surveys, and forward-looking analysis are separated where possible.</p>
+<h2>Factual Base</h2>
+<h3>1. The impact is no longer isolated</h3>
+<p>A Seidanren survey of member companies found that, among 102 responding firms, 44.1% had already been affected by naphtha supply uncertainty. If current conditions persist, 31.4% expect an impact within three months and 14.7% expect an impact within three months to one year. As potential responses, 72.5% cited product price increases, 47.1% cited supply restrictions for some products, 42.2% cited revisions to volume or specifications, 35.3% cited possible discontinuation or temporary suspension, and 57.8% said alternative materials were insufficient or unavailable (Jiji: https://www.jiji.com/jc/article?g=eco&amp;k=2026042700686).</p>
+<p>Those numbers matter more than Calbee's individual case. They show that black-and-white packaging is not a single-company story. It is a downstream operating problem already spreading across food, retail, and consumer goods.</p>
+<h3>2. Manufacturing exposure is broad</h3>
+<p>Teikoku Databank analyzed the direct and indirect transaction networks of 52 major petrochemical product manufacturers. It found that roughly 46,741 manufacturing firms may face procurement risk related to naphtha-linked products, about 30% of its countable manufacturing sample. TDB emphasizes that naphtha sits upstream of basic chemicals such as ethylene and propylene, and of intermediate materials such as synthetic resins; restrictions or high prices can pressure small and midsize manufacturers and eventually affect daily life through product prices (TDB: https://www.tdb.co.jp/report/industry/20260417-naphtha26fy/).</p>
+<p>This means food packaging is only the most visible early piece. The real exposure sits in the manufacturing middle layer.</p>
+<h3>3. Food price impact is lagged</h3>
+<p>TDB's May 2026 price revision survey of 195 major food companies showed only 70 food price increases in May, which looks mild on the surface. But "packaging/materials" already accounted for 69.9% of cited reasons for price increases, one of the highest paces since 2023. TDB expects that if naphtha supply tightness continues, higher costs for food packaging film and label ink will emerge with a lag, potentially reigniting a broader food price-hike wave as early as summer or by autumn (TDB: https://www.tdb.co.jp/report/economic/20260430-neage26y05/).</p>
+<p>The implication is that the next phase is not immediate across-the-board shortages. It begins with price hikes in packaging and intermediate materials, then passes through contracts, inventories, and retail negotiations before reaching consumer prices.</p>
+<h2>Food Industry: What Is More Likely Next</h2>
+<h3>Direction A: Low-ink packaging becomes a menu of options, not a one-off</h3>
+<p>Calbee's black-and-white packaging is the most visible version. Kagome is taking a different route: reducing tomato illustrations and enlarging the transparent area to reduce ink use. NHK WORLD reported that the new packaging will appear from around late May and stay in place until ink supply stabilizes (NHK WORLD: https://www3.nhk.or.jp/nhkworld/en/news/20260515_B1/).</p>
+<p>Nisshin Seifun Welna is not changing a main package. Instead, it will stop printing cooking time on the tape used to bundle spaghetti (same NHK WORLD report). This suggests companies will cut printing in order of importance: auxiliary information, decorative graphics, secondary packaging, tape, outer bags, and then main packaging.</p>
+<p>Likely low-ink tactics include:</p>
+<ul>
+<li>black-and-white or two-color packaging;</li>
+<li>larger transparent windows;</li>
+<li>fewer food photos, characters, background colors, and gradients;</li>
+<li>removing nonessential printing from tape, outer bags, and bundling bands;</li>
+<li>pausing seasonal or regional package designs;</li>
+<li>using generic packaging plus minimal stickers.</li>
+</ul>
+<h3>Direction B: SKU pruning matters more than black-and-white shelves</h3>
+<p>Food companies will not distribute scarce packaging materials evenly. They will prioritize high-volume, high-margin, strategic core SKUs. The most vulnerable products are:</p>
+<ul>
+<li>limited-edition flavors and seasonal products;</li>
+<li>region-specific packaging;</li>
+<li>low-margin products with complex packaging;</li>
+<li>small-run promotional packs;</li>
+<li>new product launches;</li>
+<li>multiple small-size formats.</li>
+</ul>
+<p>These changes may not be explicitly labeled as "naphtha shortage" effects. They may instead show up as slower new-product cadence, fewer limited editions, and more standardized product formats within the same brand.</p>
+<h3>Direction C: Price hikes, shrinkflation, and temporary suspensions happen together</h3>
+<p>Mizkan has already moved to raise prices by 6%-20% on some natto products from June because of higher packaging material costs, while suspending four natto products (NHK WORLD backstory: https://www3.nhk.or.jp/nhkworld/en/news/backstories/4799/). Nissin York, part of the Nissin Foods Group, announced that some lactic acid beverage products will see shipment prices rise by 3%-8% from July 1, 2026, citing packaging material cost increases driven by the international situation and costs exceeding what internal efforts can absorb (Nissin: https://www.nissin.com/jp/news/13755/).</p>
+<p>Food companies are likely to use three paths in parallel:</p>
+<ul>
+<li>explicit price increases: higher shipment prices or suggested retail prices;</li>
+<li>implicit price increases: smaller volumes, fewer extras, or specification changes;</li>
+<li>cutting the tail: suspending low-volume SKUs and concentrating packaging inputs on core products.</li>
+</ul>
+<h2>Beyond Food: Where Similar Effects Could Appear</h2>
+<h3>1. Construction materials and bathroom fixtures: from packaging problems to order problems</h3>
+<p>TOTO is one of the clearest non-food cases. Nippon TV and Mainichi reported that in April 2026, TOTO suspended new orders for prefabricated bathroom units because the naphtha shortage affected adhesives used to attach film to bathroom walls and ceilings, as well as coating materials for some artificial marble bathtubs. TOTO said flagship products such as toilets were not yet affected, but the timing for order resumption was unclear (Nippon TV: https://www.ntv.co.jp/englishnews/articles/2021z0we6iqm15ez9a07.html, Mainichi: https://mainichi.jp/english/articles/20260414/p2g/00m/0bu/004000c). Mainichi also reported that procurement difficulties for petrochemical materials have already halted some construction and large-scale building repair work in Japan; one condominium repair project in Saitama was interrupted due to shortages of materials such as waterproof sheets (Mainichi: https://mainichi.jp/english/articles/20260424/p2a/00m/0bu/016000c).</p>
+<p>This differs from food packaging. In food, the symptoms are package downgrades, price increases, and SKU changes. In bathroom fixtures and construction materials, one missing adhesive or coating can stop a whole assembled product or construction process. Similar risk areas include:</p>
+<ul>
+<li>housing equipment: bathrooms, kitchens, vanities, flooring, wall materials;</li>
+<li>construction materials: PVC pipes, insulation, adhesives, sealants, coatings;</li>
+<li>renovation work: shorter quote validity periods because solvent, adhesive, and coating prices are volatile.</li>
+</ul>
+<h3>2. Logistics packaging: invisible, but used by almost every industry</h3>
+<p>Inbound Logistics frames the naphtha shock as a risk to "the plastic wrapped around everything they move." It explains that higher crude oil raises naphtha prices, which then transmit to ethylene, propylene, PE, PP, PET, and PVC resins before reaching the packaging sector. It also notes that prices for pallet-securing stretch film have risen sharply and that companies are looking for more efficient wrapping methods (Inbound Logistics: https://www.inboundlogistics.com/articles/the-invisible-shortage-how-petrochemical-shortages-could-impact-packaging).</p>
+<p>Logistics packaging is a classic second-order transmission channel. It is not the final product, but it enters the transport cost of almost every product. Likely effects include:</p>
+<ul>
+<li>higher prices for stretch film, PP strapping, OPP tape, bubble wrap, and cushioning materials;</li>
+<li>warehouses changing packing standards and reducing wrapping layers;</li>
+<li>higher breakage rates and insurance/claims risk;</li>
+<li>more pressure on small e-commerce sellers and small manufacturers that cannot easily absorb costs.</li>
+</ul>
+<h3>3. Daily necessities, paper goods, and sanitary products: not the paper itself, but resins, packaging, ink, and fuel</h3>
+<p>NHK WORLD reported that Daio Paper plans to raise prices by 15% or more for household and commercial products delivered from August, including tissue paper, toilet paper, kitchen paper, diapers, and sanitary products. The company cited rising costs for fuel, logistics, packaging materials, and ink (NHK WORLD: https://www3.nhk.or.jp/nhkworld/en/news/backstories/4799/). The same report notes that the Japanese government warned people not to panic-buy garbage bags because garbage bags also contain naphtha-derived materials.</p>
+<p>In these categories, the most likely symptoms are not black-and-white packaging, but:</p>
+<ul>
+<li>higher prices for tissue, toilet paper, kitchen paper, diapers, and sanitary products;</li>
+<li>thinner outer packaging film or specification changes;</li>
+<li>more promotion of large packs and refill formats;</li>
+<li>panic-buying narratives or purchase limits for low-cost essentials such as garbage bags.</li>
+</ul>
+<h3>4. Paint, printing, and solvents: higher risk of volatile pricing and order restrictions</h3>
+<p>The "ink" in the food packaging story is only one corner of the broader ink and solvent system. Naphtha derivatives enter solvents, resins, coatings, thinners, adhesives, and printing inks. Tavily source discovery and multiple industry reports point to paint thinners, ink resins/solvents, and printing converter lead times and costs as potential bottlenecks.</p>
+<p>Likely symptoms include:</p>
+<ul>
+<li>printers restricting new orders or extending lead times;</li>
+<li>shorter quote validity periods;</li>
+<li>price increases in commercial printing, labels, and industrial markings beyond food packaging;</li>
+<li>delays in automotive repair, building painting, and manufacturing coating work because solvent supply and prices are unstable.</li>
+</ul>
+<h3>5. Automobiles, electronics, and machinery: not a whole-car naphtha shortage, but small-part disruption risk</h3>
+<p>TDB's supply-chain analysis emphasizes that naphtha-derived products flow through basic chemicals and synthetic resins into final products such as electrical goods, automotive parts, clothing, and pharmaceuticals (TDB: https://www.tdb.co.jp/report/industry/20260417-naphtha26fy/).</p>
+<p>For automobiles and electronics, the consumer will not usually see discolored packaging. The risk is more likely to be:</p>
+<ul>
+<li>higher costs for wire coatings, connectors, seals, interior resin parts, and rubber parts;</li>
+<li>a low-value small component slowing an entire machine or vehicle assembly process;</li>
+<li>suppliers demanding price revisions, with automakers or electronics manufacturers pushing pressure downstream or reassigning suppliers;</li>
+<li>slow substitution because alternative materials require certification cycles.</li>
+</ul>
+<p>The logic resembles the auto chip shortage during the pandemic: not every chip was expensive, but a few critical components could halt the line. Under a naphtha shock, similar risks may appear in adhesives, seals, resins, films, insulation, and packaging components.</p>
+<h3>6. Healthcare materials: highest priority, hardest to substitute</h3>
+<p>Healthcare materials use large amounts of PP, PE, PVC, EVA, synthetic rubber, and sterile packaging materials. Disposable gloves, syringes, IV bags, tubes, dialysis circuits, pharmaceutical blister packs, and sterile packaging can all involve naphtha-derived materials.</p>
+<p>There is now a clearer warning in healthcare. Reuters reported that if naphtha supply shortages worsen, some high-urgency medical devices related to dialysis and surgery could face shipment difficulties from around mid-April through August; Prime Minister Sanae Takaichi is believed to be aware of the risk, making the government response a key focus (Reuters: https://jp.reuters.com/markets/commodities/HJNOEZOE4RPQXNDYBVOA3CXZMA-2026-03-27/). Mechanically, healthcare materials have three high-risk features:</p>
+<ul>
+<li>large volumes and high reliance on disposable items;</li>
+<li>certification requirements for food/medical contact materials, making substitution slow;</li>
+<li>the issue cannot be solved simply by "printing less," because the core problem is the material itself and sterile packaging.</li>
+</ul>
+<p>Healthcare is therefore more likely to receive priority protection from the government than to be left to pure price pass-through. Future signals to watch include explicit priority allocation policies or hospital consumables price revision notices.</p>
+<h2>Why Companies Downgrade or Suspend Orders Even When Aggregate Supply Is "Enough"</h2>
+<p>The key distinction in this research is that upstream aggregate supply, downstream usability, and consumer-facing availability are three different things.</p>
+<p>The government cares whether naphtha or naphtha-derived chemical products can support the overall national economy. Companies care whether a specific material can be delivered on a specific date, in a specific specification. There are multiple bottleneck layers in between:</p>
+<ol>
+<li>feedstock: whether naphtha, crude oil, or alternative sources arrive;</li>
+<li>cracker: whether ethylene/propylene and other basic chemical capacity operates normally;</li>
+<li>resin/solvent: whether PE, PP, PVC, PET, solvents, and resins are available;</li>
+<li>converter: whether film, containers, adhesives, inks, and coating processes have capacity;</li>
+<li>compliance: whether food-contact, medical, and construction certifications allow substitution;</li>
+<li>user: whether food, daily goods, and construction-material manufacturers can use new materials on existing lines.</li>
+</ol>
+<p>If any of layers 3-6 become blocked, firms will simplify packaging, raise prices, restrict supply, or suspend orders even if aggregate national volume looks adequate.</p>
+<h2>Policy Response: From Macro Supply Assurance to Downstream Triage</h2>
+<p>Policy developments also support this interpretation. Japan's Ministry of Agriculture, Forestry and Fisheries has set up a Middle East situation response portal, publishing information and requests related to stable supply of petroleum-derived food containers, packaging materials, agricultural plastics, lubricants, and related goods (MAFF: https://www.maff.go.jp/chuto_josei.html). Asahi reported that MAFF is investigating distribution conditions for 57 items, including food trays, bento containers, egg cartons, vegetable packaging films, agricultural materials, and fishing gear. Of those, six items such as rice bags, expanded polystyrene, and agricultural mulch sheets were described as having secured supply prospects (Asahi: https://www.asahi.com/articles/ASV4X21WPV4XUTIL00MM.html).</p>
+<p>This suggests the government response is shifting from "can naphtha volume be maintained?" to "which downstream essential goods and agriculture/food materials need priority clearing?" If medical consumables, food containers, garbage bags, agricultural films, and construction repair materials compete for constrained inputs, policy will likely create a de facto priority order: healthcare and daily necessities above promotional packaging, decorative printing, and lower-priority consumer goods.</p>
+<p>Market structure will likely split in three ways:</p>
+<ul>
+<li>large companies will find it easier to secure materials and converter capacity, while smaller firms are more likely to be squeezed out;</li>
+<li>standardized packaging and fewer-SKU companies will be more resilient, while companies dependent on small-batch multi-design packaging will be more fragile;</li>
+<li>upstream packaging, ink, film, and adhesive suppliers will gain short-term pricing power, but may also be asked by the government to cooperate on essential-goods supply.</li>
+</ul>
+<h2>Scenario Outlook</h2>
+<h3>Base Case: Summer/autumn price hikes plus normalized packaging simplification</h3>
+<p>This is the most likely scenario. Naphtha imports and alternative sourcing gradually improve, but downstream inventories, contracts, and conversion capacity lag. Food and daily-goods prices continue rising in summer/autumn; simplified packaging lasts for months; companies protect core SKUs and reduce nonessential designs.</p>
+<p>Leading indicators:</p>
+<ul>
+<li>more food and daily-goods price revision announcements after July;</li>
+<li>continued price hikes from packaging material, ink, and film suppliers;</li>
+<li>more packaging carrying "resource-saving" or "simplified packaging" explanations;</li>
+<li>fewer limited-edition and promotional packages.</li>
+</ul>
+<h3>Stress Case: Downstream specification bottlenecks cause broader suspensions</h3>
+<p>If Middle East tensions persist, alternative imports arrive slowly, or converter capacity is insufficient, the shock will move from price transmission to supply transmission. Some small and midsize food companies, daily-goods companies, and construction-material suppliers may face temporary suspensions, stopped orders, or longer lead times.</p>
+<p>Leading indicators:</p>
+<ul>
+<li>more company notices using terms such as <code>休売</code> (sales suspension), <code>受注停止</code> (order suspension), or <code>出荷制限</code> (shipment restriction);</li>
+<li>retail purchase limits for garbage bags, diapers, or packaged foods;</li>
+<li>packaging suppliers refusing new orders;</li>
+<li>public government coordination of priority supply for essential packaging materials.</li>
+</ul>
+<h3>Transformation Case: Low-ink, transparent, generic packaging becomes long-term</h3>
+<p>If consumers accept simplified packaging, companies may reframe crisis measures as environmental or resource-saving moves and keep some of the designs. Over the long term, packaging may move toward standardized, low-color, low-graphic, generic base designs.</p>
+<p>Leading indicators:</p>
+<ul>
+<li>companies rebrand "temporary packaging" as environmental or resource-saving packaging;</li>
+<li>new products launch directly with lower-print designs;</li>
+<li>retailers accept more generic packaging and sticker-based labeling;</li>
+<li>packaging design KPIs shift from shelf impact to material resilience and supply stability.</li>
+</ul>
+<h3>Reversal Case: Upstream supply recovers, but prices stay high</h3>
+<p>Even if Hormuz shipping improves, companies may use the event to renegotiate contracts, raise safety stocks, and embed previously hard-to-pass-through packaging and logistics costs into prices. Consumers may see color packaging return, but prices may not fall.</p>
+<p>Leading indicators:</p>
+<ul>
+<li>packaging returns to color, but retail prices do not decline;</li>
+<li>earnings reports mention structurally higher materials costs;</li>
+<li>packaging suppliers' margins improve;</li>
+<li>private labels and large-pack formats accelerate.</li>
+</ul>
+<h2>Implications by Participant</h2>
+<h3>Large food brands</h3>
+<p>They have stronger procurement power and are more likely to secure packaging materials first, but they will sacrifice new products and limited editions. The likely playbook is: protect core SKUs, simplify packaging, and raise prices in phases.</p>
+<h3>Small and midsize food manufacturers</h3>
+<p>They face the highest risk. They lack negotiating power and may struggle to absorb packaging cost increases. If a specific container or film becomes unavailable, they may have to suspend sales directly.</p>
+<h3>Packaging, ink, and film suppliers</h3>
+<p>Their short-term bargaining power rises, but they also face raw material procurement pressure. Suppliers able to provide alternative materials, low-ink designs, rapid redesign support, and certification assistance will benefit.</p>
+<h3>Retailers and convenience stores</h3>
+<p>They are squeezed by both shortages and price increases in the short term. In the medium term, they may allocate more shelf space to suppliers with stable delivery. Whether private labels benefit depends on whether their packaging supply chains are more standardized.</p>
+<h3>Consumers</h3>
+<p>Consumers will first see packaging become uglier or simpler, then see price increases, smaller sizes, and fewer low-price products. Natto, paper goods, garbage bags, lactic acid beverages, bread, and processed foods are likely to be more noticeable everyday categories.</p>
+<h2>Sectors to Track</h2>
+<table>
+<thead>
+<tr>
+<th>Sector</th>
+<th>Likely symptoms</th>
+<th>Key materials / bottlenecks</th>
+<th>Existing signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Food packaging</td>
+<td>Black-and-white, transparent, lower-print packaging; price hikes; suspensions</td>
+<td>Ink, white ink, film, PP/PE containers, adhesives</td>
+<td>Calbee, Kagome, Mizkan, Nisshin, Nissin York</td>
+</tr>
+<tr>
+<td>Daily goods / paper products</td>
+<td>Price hikes, specification changes, outer packaging simplification</td>
+<td>Packaging film, ink, fuel, logistics</td>
+<td>Daio Paper planning 15%+ price increases</td>
+</tr>
+<tr>
+<td>Bathroom fixtures / construction materials</td>
+<td>Order suspensions, longer lead times, volatile construction quotes</td>
+<td>Adhesives, coatings, PVC, insulation</td>
+<td>TOTO suspended prefabricated bathroom orders</td>
+</tr>
+<tr>
+<td>Logistics packaging</td>
+<td>Higher prices for stretch film, tape, and strapping</td>
+<td>PE/PP/OPP, resin conversion capacity</td>
+<td>Inbound Logistics reports packaging pressure</td>
+</tr>
+<tr>
+<td>Paint / printing / solvents</td>
+<td>Shorter quotes, order restrictions, construction delays</td>
+<td>Solvents, resins, inks, thinners</td>
+<td>Industry reports point to pricing and order pressure</td>
+</tr>
+<tr>
+<td>Automotive / electronics</td>
+<td>Higher costs or shortages in small components</td>
+<td>Resin parts, seals, wire coatings, connectors</td>
+<td>TDB's supply-chain exposure points to broad manufacturing</td>
+</tr>
+<tr>
+<td>Healthcare consumables</td>
+<td>Shipment difficulties, policy prioritization, supply continuity concerns</td>
+<td>PP/PE/PVC/EVA, sterile packaging, gloves/tubing</td>
+<td>Reuters reports possible dialysis/surgery-related shipment issues from April-August</td>
+</tr>
+</tbody>
+</table>
+<h2>Conclusion: A Stress Test of Materials Infrastructure</h2>
+<p>The significance of Calbee's black-and-white packaging is not that potato chip bags look worse. It is that the incident makes the materials infrastructure behind modern consumer goods visible. For many products, the bottleneck is not whether the contents can be produced. It is whether the producer can secure compliant packaging, adhesives, inks, films, coatings, containers, and transport packaging.</p>
+<p>The next phase should be judged by three questions:</p>
+<ol>
+<li>How many firms move from "price increases" to "supply restrictions or sales suspensions"?</li>
+<li>How many temporary simplified packages become permanent?</li>
+<li>Do more non-food cases appear like TOTO, where one missing material stops order intake?</li>
+</ol>
+<p>If the answer keeps rising, this is not a curious episode in the Japanese snack aisle. It is a system-level reveal of naphtha's role as a petrochemical infrastructure layer in consumer life.</p>
+<h2>Sources</h2>
+<ul>
+<li>Jiji, Seidanren survey: https://www.jiji.com/jc/article?g=eco&amp;k=2026042700686</li>
+<li>Teikoku Databank, naphtha-related supply-chain analysis: https://www.tdb.co.jp/report/industry/20260417-naphtha26fy/</li>
+<li>Teikoku Databank, food price revisions May 2026: https://www.tdb.co.jp/report/economic/20260430-neage26y05/</li>
+<li>NHK WORLD, Middle East shipping hassles pose naphtha headache for Japan: https://www3.nhk.or.jp/nhkworld/en/news/backstories/4799/</li>
+<li>NHK WORLD, Kagome to rework ketchup packages: https://www3.nhk.or.jp/nhkworld/en/news/20260515_B1/</li>
+<li>Nissin Foods Group, Nissin York price revision: https://www.nissin.com/jp/news/13755/</li>
+<li>Nippon TV NEWS 24 JAPAN, TOTO suspends prefabricated bathroom orders: https://www.ntv.co.jp/englishnews/articles/2021z0we6iqm15ez9a07.html</li>
+<li>Mainichi/Kyodo, Toto halts some orders due to naphtha shortage: https://mainichi.jp/english/articles/20260414/p2g/00m/0bu/004000c</li>
+<li>Mainichi, material shortages halt construction and building repair work: https://mainichi.jp/english/articles/20260424/p2a/00m/0bu/016000c</li>
+<li>Reuters Japan, naphtha shortage may affect dialysis/surgical medical device shipments: https://jp.reuters.com/markets/commodities/HJNOEZOE4RPQXNDYBVOA3CXZMA-2026-03-27/</li>
+<li>MAFF, Middle East situation response portal: https://www.maff.go.jp/chuto_josei.html</li>
+<li>Asahi, MAFF surveys 57 petroleum-derived agriculture/food material items: https://www.asahi.com/articles/ASV4X21WPV4XUTIL00MM.html</li>
+<li>Inbound Logistics, How Naphtha Disruptions Impact Packaging: https://www.inboundlogistics.com/articles/the-invisible-shortage-how-petrochemical-shortages-could-impact-packaging</li>
+<li>NPR/AP, Japanese snack packages turning black-and-white: https://www.npr.org/2026/05/13/nx-s1-5820671/japanese-snack-packages-black-and-white</li>
+<li>TV Asahi, Calbee packages become black and white: https://news.tv-asahi.co.jp/news_economy/articles/000504344.html</li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
 </body>
 </html>
