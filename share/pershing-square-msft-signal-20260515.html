@@ -205,7 +205,16 @@ img { max-width: 100%; height: auto; }
 <nav class="share-index-nav" aria-label="Share index">
   <a href="index.html">← 返回</a>
 </nav>
-<article class="report-content" lang="zh-CN">
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
 <h1>Pershing Square 新建 Microsoft 仓位信号深度调研</h1>
 <p>日期：2026-05-15<br />
 对象：Pershing Square / Bill Ackman 新建 Microsoft (<code>MSFT</code>) 仓位<br />
@@ -435,5 +444,280 @@ Workflow：<code>workflow_deep_research_survey.md</code><br />
 <p>它的反向约束是：微软正在经历一次从轻资本软件平台向重资本 AI 基建 + 应用平台的再定价。只要市场看不到 capex 回报率、Copilot 真实使用强度和 OpenAI 非排他后的 Azure 防守能力，MSFT 就很难无条件恢复过去的估值溢价。</p>
 <p>所以，这个信号最准确的读法是：<strong>Ackman 在买 MSFT 的“高质量平台被 AI 投资周期错杀”这一中期修复机会，而不是在买一个已经被完全证明的 AI monetization 故事。</strong></p>
 </article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Deep Research on the Signal From Pershing Square's New Microsoft Position</h1>
+<p>Date: 2026-05-15<br />
+Subject: Pershing Square / Bill Ackman's new Microsoft (<code>MSFT</code>) position<br />
+Workflow: <code>workflow_deep_research_survey.md</code><br />
+Nature: Public-source research record, not personalized investment advice</p>
+<h2>Research Method</h2>
+<p>Carried out according to the workspace's <code>workflow_deep_research_survey.md</code>:</p>
+<ol>
+<li>Used Tavily for 3 initial scans covering: Ackman / Pershing Square position disclosure, Microsoft FY26 Q3 fundamentals, and the bear case risks for MSFT.</li>
+<li>Ran deeper research across 3 overlapping tracks:
+   - The Pershing / Ackman signal itself: disclosure chain, 13F/WhaleWisdom/SEC status, PSUS background, and similarities with past GOOG/AMZN/META trades.
+   - Microsoft fundamentals: FY26 Q3, Azure, Microsoft Cloud, AI ARR, Copilot, RPO, capex, and supply constraints.
+   - Bear narratives: AI capex ROI, weaker OpenAI exclusivity, Copilot shelfware, cloud competition, gross margin/FCF, and regulatory risk.</li>
+<li>Cross-checked with Microsoft IR, official Microsoft/OpenAI announcements, CNBC, Reuters/MarketScreener, SEC/13F databases, and third-party earnings coverage.</li>
+</ol>
+<h2>One-Sentence Conclusion</h2>
+<p>The core signal from Ackman's new MSFT position isn't "another famous investor bought Microsoft." It is this: a class of concentrated, long-term, quality-oriented investors is reclassifying MSFT from the market's negative narrative of "AI capex is too heavy and AI will eat software" into "a mispriced enterprise AI platform asset."</p>
+<p>The signal leans bullish, but it isn't unconditionally bullish. The key question isn't whether Microsoft is a good company. It is whether <code>around $190 billion</code> of 2026 AI capex can be turned by Azure, Copilot, GitHub, Foundry, and enterprise agents into verifiable revenue, profit, and free cash flow.</p>
+<h2>Fact Check: What Did Pershing Actually Disclose?</h2>
+<p><strong>CNBC reported Ackman's MSFT position</strong> (<a href="https://www.cnbc.com/2026/05/15/ackmans-pershing-square-takes-stake-in-microsoft.html">link</a>):</p>
+<blockquote>
+<p>“Bill Ackman's Pershing Square has built a position in Microsoft..."</p>
+<p>“Pershing Square began accumulating shares in February after Microsoft's stock declined following its fiscal second-quarter earnings report.”</p>
+<p>“We were able to establish our position at a valuation of 21 times forward earnings...”</p>
+<p>“he called it a ‘core holding.’”</p>
+</blockquote>
+<p><strong>Reuters relayed Ackman's own words</strong>, carried by MarketScreener (<a href="https://in.marketscreener.com/news/ackman-s-pershing-square-takes-stake-in-microsoft-citing-compelling-valuation-ce7f5bd2dc8ef424">link</a>):</p>
+<blockquote>
+<p>“In our 13F which we will file later today, we will disclose a new position in Microsoft, a company we have followed for many years now offered at a highly compelling valuation.”</p>
+</blockquote>
+<p><strong>Important uncertainty: the position size still needs confirmation from the official 13F and database updates.</strong> During the research, WhaleWisdom and some 13F databases were still showing Q4 2025 or older data. 13F.info's Pershing Square manager page still listed Q4 2025: <code>11</code> holdings, <code>$15,526,737</code> thousand, filing date <code>2026-02-17</code> (<a href="https://13f.info/manager/0001336528-pershing-square-capital-management-l-p">link</a>). The WhaleWisdom page also did not show the latest MSFT details in the captured results (<a href="https://whalewisdom.com/filer/pershing-square-capital-management-l-p">link</a>).</p>
+<p>So this report treats "position established / core holding / around 21x forward earnings" as high-confidence facts, and treats "specific position percentage and whether it is already a top holding" as facts still to be confirmed.</p>
+<h2>What Ackman Is Betting On</h2>
+<p>Ackman's framing is not a generic AI bet. It is a more precise contrarian trade: the market has priced MSFT's AI spending, changes in the OpenAI partnership, and early doubts about Copilot adoption as structural risks. He appears to see them more as transitional controversies that created a window to buy one of the world's strongest enterprise software platforms at close to a market-average valuation.</p>
+<p>CNBC summarized Ackman's core judgment (<a href="https://www.cnbc.com/2026/05/15/ackmans-pershing-square-takes-stake-in-microsoft.html">link</a>):</p>
+<blockquote>
+<p>“investors have become overly concerned about Microsoft's competitive positioning in AI and the durability of growth at its Azure cloud business.”</p>
+<p>“M365 remains deeply embedded across enterprises and difficult to replicate because of Microsoft's security, compliance and identity infrastructure.”</p>
+</blockquote>
+<p>This maps to three layers of signal:</p>
+<ol>
+<li><strong>Valuation signal</strong>: <code>21x forward earnings</code> is low relative to MSFT's historical valuation and close to the overall market multiple. Ackman sees this as buying a high-quality platform asset at an ordinary market price.</li>
+<li><strong>Narrative reversal signal</strong>: the market moved quickly from "MSFT is one of the biggest AI winners" to "AI capex will consume software profits." Ackman is betting the market has overextended the negative narrative.</li>
+<li><strong>Portfolio signal</strong>: Pershing Square portfolios are usually concentrated, and Ackman called MSFT a <code>core holding</code>. That carries more information than a small trial position.</li>
+</ol>
+<h2>Microsoft Fundamentals: Why Bulls Think the Market Is Too Pessimistic</h2>
+<p>Microsoft's FY26 Q3 numbers were still strong. The issue isn't business stagnation. The market is questioning growth quality and capital efficiency.</p>
+<p><strong>Microsoft FY26 Q3 press release</strong> (<a href="https://www.microsoft.com/en-us/Investor/earnings/FY-2026-Q3/press-release-webcast">link</a>):</p>
+<blockquote>
+<p>“Revenue was $82.9 billion and increased 18%”</p>
+<p>“Operating income was $38.4 billion and increased 20%”</p>
+<p>“Diluted earnings per share was $4.27 and increased 23%”</p>
+<p>“Our AI business surpassed an annual revenue run rate of $37 billion, up 123% year-over-year.”</p>
+<p>“Microsoft Cloud revenue was $54.5 billion and increased 29%”</p>
+<p>“commercial remaining performance obligation increased 99% to $627 billion.”</p>
+<p>“Azure and other cloud services revenue increased 40%”</p>
+</blockquote>
+<p>Where these numbers support the bull case:</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th style="text-align: right;">Evidence</th>
+<th>Bullish Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Total revenue</td>
+<td style="text-align: right;">FY26 Q3 revenue <code>$82.9B</code>, YoY <code>+18%</code></td>
+<td>Still growing at high double digits despite its scale</td>
+</tr>
+<tr>
+<td>Azure</td>
+<td style="text-align: right;">Azure and other cloud services <code>+40%</code></td>
+<td>Cloud and AI infrastructure demand remains strong, not stalled</td>
+</tr>
+<tr>
+<td>AI commercialization</td>
+<td style="text-align: right;">AI annual revenue run rate <code>&gt;$37B</code>, YoY <code>+123%</code></td>
+<td>AI is not just a concept, it already has measurable revenue</td>
+</tr>
+<tr>
+<td>Microsoft Cloud</td>
+<td style="text-align: right;"><code>$54.5B</code>, YoY <code>+29%</code></td>
+<td>Cloud revenue has both scale and growth</td>
+</tr>
+<tr>
+<td>RPO</td>
+<td style="text-align: right;">Commercial RPO <code>$627B</code>, YoY <code>+99%</code></td>
+<td>Very strong visibility into future revenue</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Copilot and GitHub Copilot adoption signals</strong> mainly come from earnings-call transcripts and third-party earnings coverage. CNBC's Q3 earnings report noted (<a href="https://www.cnbc.com/2026/04/29/microsoft-msft-q3-earnings-report-2026.html">link</a>):</p>
+<blockquote>
+<p>“The company now has over 20 million seats for the 365 Copilot artificial intelligence add-on for commercial Office subscriptions, up from 15 million in January.”</p>
+<p>“Weekly engagement is now at the same level as Outlook, as more and more users make Copilot a habit,” CEO Satya Nadella said.</p>
+</blockquote>
+<p>The Globe and Mail / Motley Fool transcript also recorded (<a href="https://www.theglobeandmail.com/investing/markets/markets-news/motley/1604210/microsoft-msft-q3-2026-earnings-transcript/">link</a>):</p>
+<blockquote>
+<p>“we continue to see acceleration and now have over 20 million Microsoft 365 Copilot paid seats.”</p>
+<p>“Accenture now has over 740,000 seats, our largest Copilot win to date.”</p>
+</blockquote>
+<p>The key to the bull narrative is here: if Copilot moves from "selling seats" to "high-frequency usage + usage-based pricing + agent workflow," Microsoft is not merely selling software subscriptions. It is adding a new AI billing layer inside enterprise workflows.</p>
+<h2>Positive Narrative: What This Could Mean</h2>
+<h3>1. MSFT Has Moved From Crowded AI Long to Quality Value Stock</h3>
+<p>In 2024-2025, MSFT looked more like a core holding in the AI winners basket. By 2026, the market focus had shifted to capex, OpenAI, Copilot adoption, and software being replaced by AI. Ackman's entry suggests at least some long-term capital is beginning to study MSFT as "a quality asset under valuation compression," not just as high-valuation AI beta.</p>
+<h3>2. The Market May Be Underestimating Enterprise Distribution and the Identity/Security/Compliance Moat</h3>
+<p>Ackman specifically emphasized how embedded M365 is. The essence of this logic is that enterprise AI is not only a model capability contest. It also involves identity permissions, data boundaries, auditability, compliance, and workflow integration. Microsoft's combination of Entra ID, Office, Teams, SharePoint, Windows, GitHub, and Azure gives Copilot and agents a natural distribution field.</p>
+<h3>3. AI Capex May Be Demand Investment Under Supply Constraints, Not Blind Cash Burn</h3>
+<p>Microsoft has said Azure growth is driven by demand across the platform, and AI business ARR has already exceeded <code>$37B</code>. If capex corresponds to existing or visible demand rather than purely speculative buildout, the market's punishment for capex may be excessive.</p>
+<h3>4. It Resembles Ackman's Past Large-Cap Technology Trades</h3>
+<p>CNBC noted that Ackman compared MSFT with Pershing Square's earlier purchases of Alphabet, Amazon, and Meta, where he bought during periods when the market doubted AI competition, spending, or strategic transformation (<a href="https://www.cnbc.com/2026/05/15/ackmans-pershing-square-takes-stake-in-microsoft.html">link</a>).</p>
+<p>These trades are not about buying "cheap small caps." They are about buying "high-quality platforms with damaged short-term narratives." If the narrative repairs, returns can come from both earnings growth and valuation recovery.</p>
+<h2>Bear Narrative: Why This Signal Shouldn't Be Followed Blindly</h2>
+<h3>1. AI Capex ROI Is the Hardest Risk</h3>
+<p>Microsoft itself acknowledges that AI/cloud infrastructure will increase costs and may pressure operating margins. Microsoft's FY26 Q3 performance page states (<a href="https://www.microsoft.com/en-us/investor/earnings/fy-2026-q3/performance">link</a>):</p>
+<blockquote>
+<p>“Gross margin percentage decreased driven by continued investments in AI infrastructure and growing AI product usage, offset in part by efficiency gains across the Microsoft Cloud.”</p>
+<p>“Microsoft Cloud gross margin percentage decreased to 66% driven by continued investments in AI infrastructure and growing AI product usage..."</p>
+</blockquote>
+<p>CNBC's Q3 earnings report gave the market's pressure point more directly (<a href="https://www.cnbc.com/2026/04/29/microsoft-msft-q3-earnings-report-2026.html">link</a>):</p>
+<blockquote>
+<p>“Microsoft reported better-than-expected quarterly results on Wednesday and told investors that capital expenditures for the year will reach $190 billion due to soaring memory costs.”</p>
+<p>“Microsoft reported $31.9 billion in fiscal third-quarter capital expenditures and finance leases...”</p>
+</blockquote>
+<p>The core bear case: even if revenue growth is strong, if depreciation, GPU refresh cycles, data centers, power, and finance leases continue to consume cash flow, MSFT cannot return to the multiples of its past as a light-capital software company.</p>
+<h3>2. OpenAI Exclusivity Is Weaker, Reducing MSFT's AI Scarcity</h3>
+<p>In April 2026, Microsoft/OpenAI revised their partnership agreement. Microsoft's official blog stated (<a href="https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/">link</a>):</p>
+<blockquote>
+<p>“Microsoft remains OpenAI’s primary cloud partner, and OpenAI products will ship first on Azure, unless Microsoft cannot and chooses not to support the necessary capabilities. OpenAI can now serve all its products to customers across any cloud provider.”</p>
+<p>“Microsoft will continue to have a license to OpenAI IP for models and products through 2032. Microsoft’s license will now be non-exclusive.”</p>
+<p>“Microsoft will no longer pay a revenue share to OpenAI.”</p>
+<p>“Revenue share payments from OpenAI to Microsoft continue through 2030... subject to a total cap.”</p>
+</blockquote>
+<p>This is not one-way bad news. Microsoft no longer pays revenue share to OpenAI, while still keeping an IP license and OpenAI economics. But in competitive narrative terms, Azure no longer has the same degree of exclusive OpenAI scarcity. AWS, Google Cloud, and enterprise self-built platforms can all compete more easily for model distribution.</p>
+<h3>3. Copilot Still Needs to Prove It Isn't Shelfware</h3>
+<p><code>20 million</code> paid seats is progress, but bears will ask:</p>
+<ul>
+<li>What are the real DAU/WAU levels?</li>
+<li>Are renewals and expansion sustainable?</li>
+<li>Are organizations willing to move from seat-based payment to usage-based payment?</li>
+<li>Does Copilot truly improve productivity, or is it just one round of CIO budget experimentation?</li>
+</ul>
+<p>This risk is not currently "disproven." It is "not yet fully evidenced." Nadella's statement that weekly engagement has reached Outlook levels is strong, but the market still needs more quantifiable data on retention, usage, ARPU, and gross margin.</p>
+<h3>4. Cloud Competition and Model Diversity Could Weaken Azure AI Pricing Power</h3>
+<p>OpenAI becoming non-exclusive, the maturity of Anthropic/Google Gemini/open-source models, and AWS and Google's progress with in-house chips all mean enterprise AI no longer has only one Azure/OpenAI path. Microsoft still has enterprise distribution advantages, but the AI infrastructure layer may look more like capital-intensive hyperscaler competition than a traditional software monopoly.</p>
+<h3>5. Regulatory Risk Is Not the Main Story, but It Can Suppress Valuation</h3>
+<p>Microsoft's cloud licensing, bundling, OpenAI partnership, and enterprise software market power may all become regulatory focus areas. In this research, regulatory risk mostly came from third-party reporting and risk disclosures, so confidence is lower than for capex and the OpenAI agreement changes. Still, during a valuation recovery phase, regulatory headlines can be enough to suppress multiples.</p>
+<h2>Cross-Check: Which Facts Are Hardest, and Which Require Skepticism</h2>
+<h3>High-Confidence Facts</h3>
+<ul>
+<li>Ackman / Pershing has established an MSFT position and called MSFT a core holding. Sources include CNBC and Reuters relay coverage.</li>
+<li>The position began around the decline after the February 2026 earnings report, at a valuation of around <code>21x forward earnings</code>.</li>
+<li>Microsoft FY26 Q3 fundamentals were strong: revenue <code>$82.9B</code>, Azure <code>+40%</code>, Microsoft Cloud <code>$54.5B</code>, AI ARR <code>&gt;$37B</code>, commercial RPO <code>$627B</code>.</li>
+<li>AI capex and gross-margin pressure are real: Microsoft Cloud gross margin fell to <code>66%</code>, Q3 capex/finance leases were <code>$31.9B</code>, and expected 2026 capex is around <code>$190B</code>.</li>
+<li>The OpenAI partnership moved from a more exclusive structure to a non-exclusive license, with OpenAI able to serve customers across clouds.</li>
+</ul>
+<h3>Medium-Confidence Facts</h3>
+<ul>
+<li>Copilot adoption is accelerating, and <code>20M+</code> paid seats is a strong signal. But usage intensity and renewal economics still need proof in future quarters.</li>
+<li>Ackman's MSFT trade resembles his earlier "buy platform assets during periods of market doubt" trades in GOOG/AMZN/META. But every trade has a different competitive structure and valuation backdrop, so the analogy should not be applied mechanically.</li>
+<li>The PSUS/PS listing background may strengthen Ackman's incentive to tell a public core-holding story, but that does not invalidate the trade itself.</li>
+</ul>
+<h3>Low-Confidence or Still-Unconfirmed Facts</h3>
+<ul>
+<li>The exact MSFT position size in the latest 13F, portfolio percentage, and whether it entered the top few holdings. Public databases still had synchronization delays or inconsistent treatment during the research.</li>
+<li>The specific percentage of Copilot shelfware. The market is concerned, but high-quality, verifiable primary data is limited.</li>
+<li>Actual Azure share loss caused by OpenAI's non-exclusivity. The logic is plausible, but it needs later market-share, customer-migration, and pricing data.</li>
+</ul>
+<h2>Follow-Up Verification Framework: Metrics to Watch Over the Next 2-4 Quarters</h2>
+<p>This table is not a fact table copied from one source. It compresses the key disclosures, management guidance, and bull/bear narratives from this research into a follow-up dashboard: the left column lists the most important variables for Ackman's MSFT trade; the middle column shows the state the bull thesis needs to keep seeing; the right column shows signals that would confirm the bear case.</p>
+<p>Azure, Microsoft Cloud gross margin, capex/FCF, Copilot paid seats, and the OpenAI/Azure relationship respectively come from Microsoft's FY26 Q3 earnings/call, CNBC earnings coverage, official Microsoft/OpenAI announcements, and Ackman's public comments about the trade logic. Usage-based monetization comes from earnings-call discussion of GitHub Copilot usage-based pricing and Microsoft's move from per-user toward per-user + usage / agents business models. These are not precise forecasts. They are indicators for whether the trade develops into "a high-quality platform mispriced by the market" or "a good company entering a bad capital cycle."</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>What Bulls Want to See</th>
+<th>Bear Confirmation Signal</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Azure growth</td>
+<td>Stays in the high 30% range to around 40%, and accelerates in H2 CY26</td>
+<td>Growth materially below management guidance or keeps stepping down</td>
+</tr>
+<tr>
+<td>Microsoft Cloud gross margin</td>
+<td>AI investment pressure stays manageable, with efficiency gains offsetting part of the cost</td>
+<td>Gross margin keeps falling materially, with explanations centered on AI usage cost</td>
+</tr>
+<tr>
+<td>Capex / FCF</td>
+<td>Capex corresponds to revenue-ready capacity, and FCF pressure is explainable</td>
+<td>Capex keeps being revised upward without clear revenue acceleration</td>
+</tr>
+<tr>
+<td>Copilot paid seats</td>
+<td>Continues expanding from 20M, with customer expansion and higher engagement</td>
+<td>Paid-seat growth slows, or usage/renewal quality is questioned</td>
+</tr>
+<tr>
+<td>Usage-based monetization</td>
+<td>GitHub/Copilot usage pricing begins contributing ARPU</td>
+<td>Usage cost rises but paid pass-through is insufficient</td>
+</tr>
+<tr>
+<td>OpenAI/Azure relationship</td>
+<td>Azure still benefits from primary cloud status and the IP license</td>
+<td>Large volumes of OpenAI demand flow to AWS/GCP, weakening Azure AI scarcity</td>
+</tr>
+</tbody>
+</table>
+<h2>Practical Signal Interpretation</h2>
+<p>If the question is simply "what does capturing this signal mean," my conclusion is:</p>
+<ol>
+<li><strong>This is an endorsement by quality capital of MSFT's valuation compression.</strong> Ackman is not chasing the AI theme. He is buying when the market is worried about AI ROI.</li>
+<li><strong>It strengthens a contrarian framework: MSFT is not a software company being eaten by AI, but may be the tax layer for enterprise AI workflows.</strong></li>
+<li><strong>It also reminds the market that MSFT's key variable has shifted from pure revenue growth to capital efficiency.</strong> Azure <code>+40%</code> is not enough by itself. The market wants to see capex conversion.</li>
+<li><strong>It should not be treated as a short-term buy signal.</strong> The 13F itself lags, and Ackman's holding period differs from that of ordinary investors. If capex, margin, and Copilot data do not cooperate later, the stock could still trade sideways or continue suffering valuation pressure.</li>
+</ol>
+<h2>Final Judgment</h2>
+<p>Pershing Square's new MSFT position is a bullish, but highly conditional, signal.</p>
+<p>Its positive meaning is that MSFT has moved in the market narrative from "perfect AI winner" to "AI capex/software replacement controversy asset," and Ackman believes this skepticism has compressed valuation to a level attractive enough to buy. Microsoft's enterprise distribution, M365 stickiness, Azure growth, AI ARR, and RPO scale all provide fundamental support for that judgment.</p>
+<p>Its negative constraint is that Microsoft is undergoing a repricing from a light-capital software platform into a heavy-capital AI infrastructure + application platform. As long as the market cannot see capex returns, true Copilot usage intensity, and Azure's ability to defend itself after OpenAI's non-exclusivity, it will be hard for MSFT to regain its old valuation premium unconditionally.</p>
+<p>So the most accurate reading of this signal is: <strong>Ackman is buying MSFT's medium-term recovery opportunity as "a high-quality platform mispriced by the AI investment cycle," not buying an already fully proven AI monetization story.</strong></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
 </body>
 </html>

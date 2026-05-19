@@ -205,7 +205,16 @@ img { max-width: 100%; height: auto; }
 <nav class="share-index-nav" aria-label="Share index">
   <a href="index.html">← 返回</a>
 </nav>
-<article class="report-content" lang="zh-CN">
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
 <h1>渣打 CEO 称 AI 将替代“低价值人力资本”：事件核查与银行业 AI 裁员趋势调研</h1>
 <p>日期：2026-05-19<br />
 对象：Standard Chartered PLC / Bill Winters / 银行业 AI 自动化与岗位替代<br />
@@ -371,6 +380,8 @@ img { max-width: 100%; height: auto; }
 <p>后续跟踪渣打这件事，最有用的不是看 PR，而是看 2026-2030 的每员工收入、support headcount、cost-to-income ratio、restructuring charges、operational risk incidents，以及公司是否披露 reskilling 和 redeployment 的量化指标。</p>
 </li>
 </ol>
+<h2>检索说明</h2>
+<p>本报告按 <code>workflow_deep_research_survey</code> 执行。初始 source discovery 使用 Tavily CLI 完成 3 组 broad scan：新闻标题源头、Reuters/Bloomberg 交叉报道、银行业 AI 裁员背景。后续使用 Exa、webfetch、Tavily 和并行研究分轨补充官方页面、媒体报道、行业报告与监管资料。Exa 后续检索触达免费 MCP rate limit，因此后续检索层主要改用 Tavily、直接 URL fetch 和分轨 subagent 结果。</p>
 <h2>主要来源</h2>
 <ul>
 <li>Bloomberg: https://www.bloomberg.com/news/articles/2026-05-19/stanchart-ceo-says-ai-to-replace-lower-value-human-capital</li>
@@ -390,5 +401,237 @@ img { max-width: 100%; height: auto; }
 <li>Banking Dive on Goldman Sachs AI/efficiency cuts: https://www.bankingdive.com/news/goldman-sachs-limited-cuts-ai-acquisition-industry-ventures-965-million-solomon-q3-earnings/802869/</li>
 </ul>
 </article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Standard Chartered CEO Says AI Will Replace “Lower-Value Human Capital”: Event Check and Research on AI Layoff Trends in Banking</h1>
+<p>Date: 2026-05-19<br />
+Subject: Standard Chartered PLC / Bill Winters / banking AI automation and job replacement<br />
+Question: How should we understand the phrase “AI to Replace ‘Lower-Value Human Capital’” in Bloomberg/Reuters reporting, and what does it mean for the industry?<br />
+Nature: Public-source research record, not investment advice or employment advice</p>
+<h2>Core Conclusion</h2>
+<p>This news is not an isolated "AI panic headline." It is part of Standard Chartered's medium-term strategy presented at its 2026 investor event: by 2030, the bank plans to cut more than 15% of corporate functions / support / back-office roles, which media calculated as about 7,800 jobs based on a related role base of around 52,000. At the same time, it aims to improve efficiency, raise income per employee, and lift RoTE through automation, advanced analytics, and AI.</p>
+<p>The shock in “lower-value human capital” comes from the language itself. It moves AI replacement from the more cautious phrasing of the past, such as “efficiency improvement, process simplification, and job transformation,” into a more direct capital-allocation narrative: using financial capital and investment capital to replace part of human capital. This is easier for investors to map onto operating efficiency and profit upside, but it also sharply increases employee-relations, brand-reputation, and regulatory-governance risks.</p>
+<p>In terms of industry trends, Standard Chartered is not the only case, but it is one of the few large banks that has clearly put AI, job-reduction percentage, timeline, and productivity targets into the same strategic update. The near-term battleground for AI in finance is not fully replacing front-office experts. It is replacing or reorganizing “processable, auditable, measurable” knowledge work in back-office, risk, compliance, HR, operations, customer service, document processing, reporting, and internal workflows.</p>
+<p>The most important judgment: this is not an abstract debate about “whether AI will cause layoffs.” Banks are beginning to treat AI as a productivity lever inside medium-term financial models. The indicators worth tracking in the future are not AI demos, but three hard metrics: income per employee, cost-to-income ratio, and the share of corporate/support headcount.</p>
+<h2>Event Check</h2>
+<h3>1. Reporting Origin and Official Background</h3>
+<p>Bloomberg's headline was “StanChart CEO Says AI to Replace ‘Lower-Value Human Capital’,” reporting that Standard Chartered CEO Bill Winters said AI adoption would eliminate thousands of jobs and that the bank would use technology to replace “lower-value human capital” (<a href="https://www.bloomberg.com/news/articles/2026-05-19/stanchart-ceo-says-ai-to-replace-lower-value-human-capital">Bloomberg</a>). The Bloomberg page is paywalled, so this report only uses it as the headline and source lead. The specific facts are cross-checked using accessible Reuters, BBC, CNBC, Straits Times, and Standard Chartered official pages.</p>
+<p>Standard Chartered's official investor event page shows that the company was presenting strategic initiatives and a medium-term financial framework in Hong Kong on May 19 and 21, 2026, with Group Chief Executive Bill Winters and the management team attending (<a href="https://www.sc.com/en/investors/events-and-presentations/2026-investor-event/">Standard Chartered Investor Event 2026</a>):</p>
+<blockquote>
+<p>“We will set out our strategic initiatives and medium-term financial framework on May 19 and 21 in Hong Kong.”</p>
+</blockquote>
+<p>BBC reported that Standard Chartered announced job cuts as AI adoption increases, citing the company's statement (<a href="https://www.bbc.co.uk/news/articles/crep3v8vzglo">BBC</a>):</p>
+<blockquote>
+<p>“We are scaling practical uses of automation, advanced analytics and artificial intelligence to streamline processes, improve decision‑making and enhance both client service and internal efficiency.”</p>
+</blockquote>
+<p>Reuters reports syndicated through Yahoo/MarketScreener summarized the event as Standard Chartered cutting more than 7,000 jobs over the next four years as it replaces “lower-value human capital” with technology (<a href="https://uk.finance.yahoo.com/news/stanchart-cut-over-7-000-060928867.html">Yahoo Finance/Reuters</a>, <a href="https://in.marketscreener.com/news/stanchart-to-cut-more-than-7-000-jobs-as-bank-steps-up-ai-adoption-ce7f5adbdb8ff22d">MarketScreener/Reuters</a>).</p>
+<h3>2. Job Scale, Timeline, and Financial Targets</h3>
+<p>Multiple media outlets are broadly consistent on the core numbers:</p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th style="text-align: right;">Cross-Checked Conclusion</th>
+<th>Main Sources</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Reduction percentage</td>
+<td style="text-align: right;">More than 15% of corporate functions / support / back-office roles</td>
+<td><a href="https://www.bbc.co.uk/news/articles/crep3v8vzglo">BBC</a>, <a href="https://www.cnbc.com/2026/05/19/standard-chartered-job-cuts-corporate-roles-profit-targets.html">CNBC</a>, <a href="https://www.straitstimes.com/business/stanchart-to-slash-back-office-roles-to-boost-returns">Straits Times</a></td>
+</tr>
+<tr>
+<td>Implied jobs</td>
+<td style="text-align: right;">About 7,800, or more than 7,000 in Reuters wording</td>
+<td><a href="https://www.bbc.co.uk/news/articles/crep3v8vzglo">BBC</a>, <a href="https://www.straitstimes.com/business/stanchart-to-slash-back-office-roles-to-boost-returns">Straits Times</a>, <a href="https://in.marketscreener.com/news/stanchart-to-cut-more-than-7-000-jobs-as-bank-steps-up-ai-adoption-ce7f5adbdb8ff22d">Reuters/MarketScreener</a></td>
+</tr>
+<tr>
+<td>Relevant role base</td>
+<td style="text-align: right;">About 52,000 support/corporate function roles; total employees about 82,000</td>
+<td><a href="https://www.cnbc.com/2026/05/19/standard-chartered-job-cuts-corporate-roles-profit-targets.html">CNBC</a>, <a href="https://www.straitstimes.com/business/stanchart-to-slash-back-office-roles-to-boost-returns">Straits Times</a></td>
+</tr>
+<tr>
+<td>Completion date</td>
+<td style="text-align: right;">By 2030</td>
+<td><a href="https://www.bbc.co.uk/news/articles/crep3v8vzglo">BBC</a>, <a href="https://www.cnbc.com/2026/05/19/standard-chartered-job-cuts-corporate-roles-profit-targets.html">CNBC</a></td>
+</tr>
+<tr>
+<td>Productivity target</td>
+<td style="text-align: right;">Raise income per employee by about 20% by 2028</td>
+<td><a href="https://www.cnbc.com/2026/05/19/standard-chartered-job-cuts-corporate-roles-profit-targets.html">CNBC</a>, <a href="https://www.straitstimes.com/business/stanchart-to-slash-back-office-roles-to-boost-returns">Straits Times</a></td>
+</tr>
+<tr>
+<td>Profitability target</td>
+<td style="text-align: right;">RoTE above 15% in 2028, around 18% in 2030</td>
+<td><a href="https://www.cnbc.com/2026/05/19/standard-chartered-job-cuts-corporate-roles-profit-targets.html">CNBC</a>, <a href="https://www.privatebankerinternational.com/news/standard-chartered-cut-15-roles/">Private Banker International</a></td>
+</tr>
+</tbody>
+</table>
+<p>CNBC explicitly connected the job-reduction plan with productivity and return targets (<a href="https://www.cnbc.com/2026/05/19/standard-chartered-job-cuts-corporate-roles-profit-targets.html">CNBC</a>):</p>
+<blockquote>
+<p>“The workforce reduction is part of the lender's efforts to raise income per employee by around 20% by 2028.”</p>
+</blockquote>
+<p>Straits Times provided the most complete on-site quote (<a href="https://www.straitstimes.com/business/stanchart-to-slash-back-office-roles-to-boost-returns">Straits Times</a>):</p>
+<blockquote>
+<p>“It’s not cost-cutting; it’s replacing, in some cases, lower-value human capital with the financial capital and the investment capital we’re putting in,” Standard Chartered chief executive Bill Winters said at a briefing in Hong Kong on May 19, adding that affected staff would receive “good, clear notice” ahead of time.</p>
+<p>“We don’t have job losses, but we do have job role reductions in favour of the machines, and that will accelerate as we go forward into AI,” he said.</p>
+</blockquote>
+<p>There is a linguistic tension here: the company/CEO is trying to distinguish “job losses” from “job role reductions,” but external media and the labor market will usually understand this as job cuts. If some employees are redeployed, that would reduce actual unemployment, but it would not change the fact that the original roles are being replaced by machines/automation.</p>
+<h2>Why This Phrase Matters</h2>
+<h3>1. It Is Capital-Allocation Language, Not Just Technical Language</h3>
+<p>When companies have talked about AI layoffs in the past, they have often used phrases such as “improving efficiency,” “freeing employees to do higher-value work,” and “enhancing customer experience.” Winters' wording is more direct: not simple cost cutting, but in some cases replacing lower-value human capital with financial capital / investment capital.</p>
+<p>For investors, the sentence is clear: AI investment is not a cost center. It is capital expenditure or technology spending that replaces lower-return labor input and improves profit sensitivity to revenue growth. It explains why the market would put this kind of news into models for RoTE, EPS growth, cost-to-income ratio, and income per employee.</p>
+<p>But for employees and the public, the sentence also sounds cold. It puts the value of human roles directly into a capital-substitution formula, making it easy to read as “people being balance-sheeted.” That is why this story is more jarring than an ordinary “bank uses AI” story.</p>
+<h3>2. The Target Is Not All People, but Process-Oriented Knowledge Work</h3>
+<p>Based on public reporting, the affected jobs are mainly corporate functions / support / back-office roles, including HR, corporate affairs, supply chain, risk, regulatory compliance, and similar areas. Private Banker International said the cuts are expected to affect corporate and support functions such as risk management, regulatory compliance, and human resources (<a href="https://www.privatebankerinternational.com/news/standard-chartered-cut-15-roles/">Private Banker International</a>).</p>
+<p>The common feature of these roles is not “low skill.” It is that many units of work have these traits:</p>
+<ul>
+<li>Structured inputs and outputs;</li>
+<li>Relatively clear rules and processes;</li>
+<li>A high share of documents, reviews, queries, reporting, and internal collaboration;</li>
+<li>Ability to be reorganized through workflow, RPA, LLMs, data analytics, and knowledge-base systems.</li>
+</ul>
+<p>So the more accurate reading of “lower-value” is not “low-value employees.” It is “in the bank's current capital-return model, the marginal value of some repetitive support workflows is lower than the expected return from replaceable technology investment.” That is a financial perspective, not an occupational ethics perspective.</p>
+<h3>3. Standard Chartered Had Already Laid the AI and Transformation Groundwork</h3>
+<p>Standard Chartered's 2025 annual report had already put AI into its digitalization and operational-transformation narrative. The annual report said financial digitalization is accelerating and that the bank continues to improve productivity through technology transformation, advanced data skills including AI, process simplification, and disciplined expense management (<a href="https://www.sc.com/en/investors/financial-results/annual-report/">Standard Chartered Annual Report 2025</a>).</p>
+<p>The annual report also disclosed that in July 2025, Standard Chartered signed a strategic partnership with Alibaba to deploy Alibaba Cloud AI tech in client service, sales intelligence, risk management, and compliance functions, and to support workforce upskilling through training programmes (<a href="https://www.sc.com/en/investors/financial-results/annual-report/">Standard Chartered Annual Report 2025</a>).</p>
+<p>This shows that the 2026 investor event was not a sudden pivot. It quantified the earlier AI / automation / Fit for Growth narrative into headcount, productivity, and returns.</p>
+<h2>Industry Background: Finance Is Turning AI Into a Productivity Lever</h2>
+<h3>1. Macro Level: AI Both Creates and Replaces Jobs</h3>
+<p>The World Economic Forum's Future of Jobs Report 2025 predicts that structural labor-market transformation from 2025 to 2030 will affect roles equivalent to 22% of today's jobs, with about 170 million jobs created, about 92 million displaced, and a net increase of about 78 million jobs (<a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/">WEF</a>). The report also says AI and information processing is seen by 86% of employers as a technology trend that will transform their business by 2030.</p>
+<p>Goldman Sachs' 2023 report on generative AI estimated that the equivalent of 300 million full-time jobs globally could be exposed to automation; about two-thirds of jobs in the US and Europe have some degree of exposure to AI automation, and generative AI could substitute around one-fourth of current work tasks (<a href="https://www.gspublishing.com/content/research/en/reports/2023/03/27/d64e052b-0f6e-45d7-967b-d7be35fabd16.html">Goldman Sachs</a>). Goldman also stressed that most jobs are more likely to be partly automated/augmented rather than fully replaced.</p>
+<p>Neither source is direct evidence of bank layoffs. Their use here is to explain why financial institutions would put back-office, operations, and administrative support work on the AI replacement list.</p>
+<h3>2. Inside Financial Institutions: AI Adoption Has Entered Ordinary Operations</h3>
+<p>The Bank of England and FCA's 2024 third AI/ML survey of UK financial-services firms showed (<a href="https://www.bankofengland.co.uk/report/2024/artificial-intelligence-in-uk-financial-services-2024">Bank of England/FCA</a>):</p>
+<blockquote>
+<p>“75% of firms are already using artificial intelligence (AI), with a further 10% planning to use AI over the next three years.”</p>
+</blockquote>
+<p>The same survey also noted that foundation models accounted for 17% of all AI use cases; one-third of AI use cases were third-party implementations; 55% of AI use cases involved some degree of automated decision-making, but fully autonomous decision-making was only 2%.</p>
+<p>This means AI in finance is no longer a fringe experiment. But in the regulatory-sensitive banking environment, fully unmanned decision-making is still rare. The more realistic implementation form is “semi-automated workflows under human supervision.”</p>
+<h3>3. Banking Peer Comparison: Standard Chartered Is More Direct, Others Are More Cautious</h3>
+<p>Publicly visible peer cases are usually more cautious in their wording than Standard Chartered. Goldman Sachs was reported in 2025 to be planning limited layoffs and controlling headcount growth. A management memo said operational efficiency goals needed to reflect gains from transformational technologies (<a href="https://www.bankingdive.com/news/goldman-sachs-limited-cuts-ai-acquisition-industry-ventures-965-million-solomon-q3-earnings/802869/">Banking Dive</a>). That is a hard action linking AI and efficiency targets, but it is not the same as directly saying how many jobs AI will replace.</p>
+<p>So what makes the Standard Chartered case distinctive is that it puts AI, job-reduction percentage, income per employee, RoTE, and the CEO's phrase “replace lower-value human capital” into one investor-day narrative. That is closer to a tradable operating metric than the generic statement “AI improves efficiency.”</p>
+<h2>Risks and Controversies</h2>
+<h3>1. Labor Risk: Redeployment Promises Need Quantification, or They Are Just Narrative Cushioning</h3>
+<p>BBC said it understands Standard Chartered hopes to move some affected employees into other roles in the business (<a href="https://www.bbc.co.uk/news/articles/crep3v8vzglo">BBC</a>). Straits Times quoted Winters as saying affected employees would receive “good, clear notice” ahead of time (<a href="https://www.straitstimes.com/business/stanchart-to-slash-back-office-roles-to-boost-returns">Straits Times</a>).</p>
+<p>But public materials have not yet shown three key details:</p>
+<ul>
+<li>What share of roles will be reduced through natural attrition, internal redeployment, outsourcing changes, or formal layoffs;</li>
+<li>Which countries and functions will be most affected;</li>
+<li>Whether upskilling / reskilling has a budget, target headcount, and metrics.</li>
+</ul>
+<p>Therefore, “the company will support redeployment” should currently be marked as a medium-to-low confidence commitment: directionally credible, but implementation depth is not verifiable.</p>
+<h3>2. Governance Risk: Bank AI Is Not Ordinary Enterprise SaaS Automation</h3>
+<p>The Basel Committee noted as early as its AI/ML workshop summary that bank use of AI/ML creates challenges related to risk governance, data management, and third-party service providers, and that AI/ML models may amplify traditional model risks (<a href="https://www.bis.org/bcbs/events/191003_sig_tokyo.htm">BIS/BCBS</a>).</p>
+<p>The BoE/FCA 2024 survey also showed that AI use by financial institutions already depends heavily on third parties: one-third of use cases are third-party implementations, and concentration is high among major cloud/model/data providers (<a href="https://www.bankofengland.co.uk/report/2024/artificial-intelligence-in-uk-financial-services-2024">Bank of England/FCA</a>).</p>
+<p>This is especially important for Standard Chartered: if the jobs being replaced are related to risk, compliance, or operations, AI systems are not just reducing cost. They are entering the bank's control environment. Potential risks include model errors, incomplete audit trails, supplier concentration, data leakage, cross-border data compliance, automation bias, and employees over-relying on systems.</p>
+<h3>3. Reputation Risk: “Lower-Value Human Capital” May Become the Case Label</h3>
+<p>The reputational risk of this phrase is greater than its technical meaning. To investors, it signals discipline and efficiency. To employees, it may say “management has defined my role as low value.” In a labor-intensive bank operating across many countries and regulatory jurisdictions, this can affect morale, union/employee-representative reactions, hiring brand, and acceptance of transformation.</p>
+<p>Human Resources Director's analysis said Standard Chartered's plan shows that the question of how banks manage, move, and redefine the workforce can no longer be avoided, and noted that “whether that framing holds in practice depends heavily on the rigour of reskilling investment and the quality of workforce planning” (<a href="https://www.hcamag.com/ca/news/general/standard-chartered-axes-nearly-8000-jobs-in-sweeping-ai-overhaul/575725">HRD</a>). This is a commentary source, not an original factual source, but it is useful for assessing HR risk.</p>
+<h2>Cross-Checks and Evidence Strength</h2>
+<p>High-confidence facts:</p>
+<ul>
+<li>Standard Chartered released a new medium-term strategy and financial framework at its May 2026 investor event, which is verifiable on the official page (<a href="https://www.sc.com/en/investors/events-and-presentations/2026-investor-event/">Standard Chartered</a>).</li>
+<li>By 2030, it plans to cut more than 15% of corporate/support/back-office roles, consistently reported by BBC, CNBC, Straits Times, and Reuters syndication.</li>
+<li>The affected scale is about 7,000+ to 7,800 roles. The difference comes from rounding and different role-base references; “about 7,800” is derived from 52,000 x 15%, while Reuters used “more than 7,000.”</li>
+<li>The company explicitly listed automation, advanced analytics, and AI as tools to simplify processes, improve decision-making, and enhance client service/internal efficiency, as cited by BBC.</li>
+<li>The phrase “lower-value human capital” can be cross-confirmed by the Bloomberg headline and Straits Times/Reuters relay coverage, but it appears to be a CEO briefing comment rather than standard wording in the currently visible official press-release text.</li>
+</ul>
+<p>Medium-confidence judgments:</p>
+<ul>
+<li>Affected roles are mainly concentrated in corporate functions / support / back-office, including risk, compliance, HR, and similar areas. Different media list slightly different examples, but the direction is consistent.</li>
+<li>Some employees may be redeployed. BBC and HRD mention this, but public materials do not provide numbers or mechanisms.</li>
+<li>The market will interpret productivity improvement positively. CNBC quoted Jefferies as viewing the targets positively, but that is a sell-side view, not market consensus.</li>
+</ul>
+<p>Low-confidence or still worth tracking:</p>
+<ul>
+<li>The actual country/region distribution of layoffs, which the company has not yet disclosed in detail.</li>
+<li>How much of the actual savings will come from AI, versus traditional process optimization, natural attrition, outsourcing, and organizational restructuring.</li>
+<li>Which exact processes AI tools will replace, how model governance will be implemented, and how responsibility for errors will be allocated.</li>
+</ul>
+<h2>Takeaways for Simin</h2>
+<ol>
+<li>
+<p>The point of this news is not “can AI replace people,” but that large banks are now willing to include AI replacement in 2030 financial models and publicly tie it to productivity and RoTE.</p>
+</li>
+<li>
+<p>“Lower-value human capital” is not a technical judgment. It is a capital-allocation judgment. It means management sees the marginal output of some support workflows as lower than the expected return from automation investment.</p>
+</li>
+<li>
+<p>From a software/data-infrastructure perspective, the opportunity is not only in the LLM application layer. It is also in bank-grade workflow automation, audit trails, permission governance, model monitoring, third-party risk, data lineage, and human-in-the-loop control planes.</p>
+</li>
+<li>
+<p>From a personal career perspective, the most exposed group is not the vague category of “people who don't use AI.” It is knowledge work that remains for a long time in processable, template-based, auditable tasks without much business judgment authority. More resilient positions will sit closer to business ownership, complex client relationships, system design, risk accountability, cross-functional coordination, and model/data governance.</p>
+</li>
+<li>
+<p>To track this Standard Chartered story, the most useful thing is not PR. It is 2026-2030 income per employee, support headcount, cost-to-income ratio, restructuring charges, operational risk incidents, and whether the company discloses quantified reskilling and redeployment metrics.</p>
+</li>
+</ol>
+<h2>Search Notes</h2>
+<p>This report followed <code>workflow_deep_research_survey</code>. Initial source discovery used the Tavily CLI for 3 broad scans: the source of the news headline, Reuters/Bloomberg cross-reporting, and background on banking AI layoffs. Follow-up work used Exa, webfetch, Tavily, and parallel research tracks to add official pages, media reports, industry reports, and regulatory materials. Later Exa searches hit the free MCP rate limit, so later search layers mainly used Tavily, direct URL fetches, and split-track subagent results.</p>
+<h2>Main Sources</h2>
+<ul>
+<li>Bloomberg: https://www.bloomberg.com/news/articles/2026-05-19/stanchart-ceo-says-ai-to-replace-lower-value-human-capital</li>
+<li>Standard Chartered Investor Event 2026: https://www.sc.com/en/investors/events-and-presentations/2026-investor-event/</li>
+<li>Standard Chartered Annual Report 2025: https://www.sc.com/en/investors/financial-results/annual-report/</li>
+<li>BBC: https://www.bbc.co.uk/news/articles/crep3v8vzglo</li>
+<li>CNBC: https://www.cnbc.com/2026/05/19/standard-chartered-job-cuts-corporate-roles-profit-targets.html</li>
+<li>Straits Times: https://www.straitstimes.com/business/stanchart-to-slash-back-office-roles-to-boost-returns</li>
+<li>Reuters via Yahoo Finance: https://uk.finance.yahoo.com/news/stanchart-cut-over-7-000-060928867.html</li>
+<li>Reuters via MarketScreener: https://in.marketscreener.com/news/stanchart-to-cut-more-than-7-000-jobs-as-bank-steps-up-ai-adoption-ce7f5adbdb8ff22d</li>
+<li>Private Banker International: https://www.privatebankerinternational.com/news/standard-chartered-cut-15-roles/</li>
+<li>Human Resources Director: https://www.hcamag.com/ca/news/general/standard-chartered-axes-nearly-8000-jobs-in-sweeping-ai-overhaul/575725</li>
+<li>WEF Future of Jobs Report 2025: https://www.weforum.org/publications/the-future-of-jobs-report-2025/digest/</li>
+<li>Goldman Sachs AI macro report: https://www.gspublishing.com/content/research/en/reports/2023/03/27/d64e052b-0f6e-45d7-967b-d7be35fabd16.html</li>
+<li>Bank of England/FCA AI in UK financial services 2024: https://www.bankofengland.co.uk/report/2024/artificial-intelligence-in-uk-financial-services-2024</li>
+<li>BIS/BCBS AI/ML governance workshop summary: https://www.bis.org/bcbs/events/191003_sig_tokyo.htm</li>
+<li>Banking Dive on Goldman Sachs AI/efficiency cuts: https://www.bankingdive.com/news/goldman-sachs-limited-cuts-ai-acquisition-industry-ventures-965-million-solomon-q3-earnings/802869/</li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
 </body>
 </html>
