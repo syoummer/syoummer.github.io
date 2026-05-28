@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Diskless Kafka, Lakehouse/Iceberg, and Academic Frontier</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A bilingual research note on diskless Kafka, lakehouse-native streaming, Apache Iceberg, VLDB/SIGMOD academic frontier, AWS S3 Tables, Snowflake Open Catalog, and Confluent Tableflow.">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+[hidden] { display: none !important; }
+.share-index-nav { margin: 0 0 1.2em; font-size: 0.86em; line-height: 1.3; }
+.share-index-nav a { display: inline-flex; align-items: center; padding: 0.3em 0.7em; color: var(--muted-color); border: 1px solid var(--border-color); border-radius: 999px; background: var(--switch-bg); }
+.share-index-nav a:hover { color: var(--link-color); border-color: var(--link-color); text-decoration: none; }
+.report-toolbar { display: flex; justify-content: flex-end; margin: 0 0 1.5em; }
+.language-switch { display: inline-flex; align-items: center; gap: 0.6em; color: var(--muted-color); font-size: 0.82em; line-height: 1.2; }
+.language-switch__label { letter-spacing: 0.04em; text-transform: uppercase; }
+.language-switch__options { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--border-color); border-radius: 999px; background: var(--switch-bg); }
+.language-switch button { border: 0; border-radius: 999px; padding: 0.35em 0.75em; color: var(--muted-color); background: transparent; cursor: pointer; font: inherit; }
+.language-switch button[aria-pressed="true"] { color: var(--switch-active-color); background: var(--switch-active-bg); }
+h1 { font-size: 1.8em; line-height: 1.3; margin: 0 0 0.4em; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.12em; margin: 1.4em 0 0.4em; }
+p { margin: 0.8em 0; }
+ul, ol { padding-left: 1.4em; }
+li { margin: 0.35em 0; }
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+code { padding: 2px 5px; border-radius: 3px; color: var(--muted-color); background: var(--code-bg); font-size: 0.85em; line-height: 1.4; }
+footer { margin-top: 2em; padding-top: 1em; border-top: 1px solid var(--border-color); color: var(--muted-color); font-size: 0.92em; }
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  .report-toolbar { justify-content: flex-start; }
+}
+</style>
+</head>
+<body>
+  <nav class="share-index-nav"><a href="/share/">← Share index</a></nav>
+  <div class="report-toolbar" aria-label="Language selector">
+    <div class="language-switch">
+      <span class="language-switch__label">Language</span>
+      <span class="language-switch__options">
+        <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </span>
+    </div>
+  </div>
+  <article data-report-lang="zh">
+<h1>Diskless Kafka、Lakehouse/Iceberg 与学术前沿调研</h1>
+<p>日期：2026-05-28</p>
+<h2>调研问题</h2>
+<p>最近的 diskless Kafka / cloud-native streaming 架构，是否正在和 lakehouse / Apache Iceberg 收敛？如果从数据库系统学术前沿看，VLDB、SIGMOD、CIDR 等会议中的 disaggregation、object-store-native database、open table format、catalog/metadata、stream-table duality 研究如何解释这轮产业变化？AWS S3 Tables、Snowflake Open Catalog、Confluent Tableflow 等厂商产品处在这条技术曲线的什么位置？</p>
+<h2>方法与来源</h2>
+<p>本报告重写自同日早些时候的产业调研版本，并新增学术前沿维度。按工作区 deep research survey 流程，先做 Tavily broad source discovery，再拆成并行轨道：</p>
+<ul>
+<li>产业轨道：Apache Kafka KIP-1150/1163/1164、Confluent Freight/Tableflow、Aiven Iceberg Topics、AutoMQ、WarpStream、Ursa/StreamNative、AWS S3 Tables、Snowflake Open Catalog。</li>
+<li>学术轨道：VLDB/SIGMOD/CIDR 近年论文与教程，重点关注 lakehouse、object-store table formats、catalog/metadata、streaming/disaggregated state、cloud database disaggregation。</li>
+<li>风险轨道：延迟、对象存储 request cost、Kafka 语义兼容、Iceberg commit/compaction/catalog lock-in、exactly-once 和 table maintenance。</li>
+</ul>
+<p>检索过程中 Exa 免费接口触发 rate limit，Tavily 曾有一次 1Password API key 超时，但后续使用 Tavily、VLDB/CIDR 官方页面、论文 PDF 页面、官方产品文档和并行研究轨道完成交叉验证。</p>
+<h2>核心结论</h2>
+<ol>
+<li><strong>学术上最直接的前沿信号是 PVLDB 2025 的 Ursa 论文。</strong> Ursa 被 VLDB 2025 industrial track 收录，题为 <em>Ursa: A Lakehouse-Native Data Streaming Engine for Kafka</em>。论文摘要直接指出两个问题：Kafka 多 AZ leader replication 和 disk-based broker storage 成本高；Kafka 到 lakehouse 依赖 connectors/ETL，导致 two distinct systems、data copied multiple times、real-time data remains locked in Kafka。Ursa 的答案是 leaderless、lakehouse-native、Kafka-compatible streaming engine，直接写 open table formats in object storage。来源：<a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>、<a href="https://vldb.org/2025/?papers-industry=">VLDB 2025 Industrial Papers</a>。</li>
+</ol>
+<ol>
+<li><strong>Diskless Kafka 不是孤立的 Kafka 优化，而是数据库系统长期 disaggregation 趋势进入 streaming log 层。</strong> VLDB 2025 的 <em>Disaggregation: A New Architecture for Cloud Databases</em> 把 cloud database 从 shared-nothing 转向 storage / log / page cache / compute 分离解释为更大趋势；SIGMOD 2023 的 Disaggregated Database Systems tutorial 也把 compute-storage disaggregation、memory disaggregation、cloud-native modularization 作为数据库系统新架构。Diskless Kafka 可以看成把这个逻辑应用到 Kafka log：broker 变成 stateless compute/cache/protocol layer，durability 和 replication 下沉到对象存储或 shared log。来源：<a href="https://www.vldb.org/pvldb/vol18/p5527-xiangyao.pdf">VLDB 2025 disaggregation paper</a>、<a href="https://www.cs.purdue.edu/homes/csjgwang/pubs/SIGMOD23_Tutorial_DisaggregatedDB.pdf">SIGMOD 2023 tutorial PDF</a>。</li>
+</ol>
+<ol>
+<li><strong>Lakehouse 论文解释了为什么“写到 S3”还不够。</strong> CIDR 2021 <em>Lakehouse</em> 论文指出 cloud data lakes such as S3/ADLS/GCS 提供低成本、durability 和 geo-replication，但 lake + warehouse 两层架构带来 ETL 复杂度、延迟和 failure modes。PVLDB 2020 <em>Delta Lake</em> 则指出 object stores 是 key-value stores，metadata operations such as listing objects are expensive，consistency guarantees limited，因此需要 transaction log / metadata layer 才能在对象存储上实现 ACID table storage。来源：<a href="https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf">CIDR Lakehouse</a>、<a href="https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf">PVLDB Delta Lake</a>。</li>
+</ol>
+<ol>
+<li><strong>Iceberg/S3 Tables/Snowflake Open Catalog 代表的不是“文件格式胜利”，而是 metadata/catalog control plane 变成系统边界。</strong> Apache Iceberg spec 说 table state is maintained in metadata files，all changes create a new metadata file and replace the old metadata with an atomic swap；PVLDB 2025 TreeCat 论文也指出 composable data stack 里，如果每个系统维护自己的 catalog，即使共享同一存储也不能真正共享数据。AWS S3 Tables、Snowflake Open Catalog、Confluent Tableflow 都是在争夺这个 catalog + maintenance + governance 层。来源：<a href="https://iceberg.apache.org/spec/">Iceberg spec</a>、<a href="https://www.vldb.org/pvldb/vol18/p4323-oh.pdf">PVLDB TreeCat</a>。</li>
+</ol>
+<ol>
+<li><strong>产业产品和学术问题高度对齐，但成熟度不同。</strong> Confluent Freight/Tableflow 是托管产品路径，Aiven Iceberg Topics 是 Kafka tiered-storage/RSM 原生路径，Ursa/StreamNative、AutoMQ、Fluss 是 lakehouse-native 或 streamhouse 路径。学术上 Ursa 已经进入 VLDB 2025，但 Apache Kafka 上游 KIP-1150 只是 accepted motivational KIP，KIP-1163/1164 仍在讨论；Aiven Iceberg mode 仍是 alpha。短期不能把“学术可行/产品宣称”直接等同于“Kafka 语义完整兼容且生产成熟”。</li>
+</ol>
+<h2>1. 学术脉络：从 Lakehouse 到 Stream-Table Duality</h2>
+<h3>1.1 CIDR/PVLDB 的 lakehouse 基础</h3>
+<p>CIDR 2021 的 <em>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</em> 是理解这条线的起点。它批评 lake + warehouse 两层架构：数据先 ETL 到 data lake，再 ELT 到 downstream warehouse，带来 complexity, delays, and new failure modes。Lakehouse 的承诺是用开放格式和低成本对象存储承载数据，同时补上 warehouse 的 transaction、governance、performance。来源：<a href="https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf">CIDR Lakehouse</a>。</p>
+<p>PVLDB 2020 的 <em>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores</em> 进一步说明对象存储不是数据库：S3/GCS/ADLS 这类 object store 是 cheap and durable，但 listing expensive、consistency limited、缺少 ACID 和高性能 metadata operations。Delta Lake 的设计是 transaction log + Parquet compaction，把 table state 从对象目录 listing 中抽离出来。来源：<a href="https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf">PVLDB Delta Lake</a>。</p>
+<p>这些论文给 diskless Kafka 一个重要提醒：把 Kafka segment 放到 S3 只完成了 storage disaggregation；要成为 lakehouse-native stream，还必须解决 table metadata、snapshot、schema evolution、commit protocol、data skipping 和 compaction。</p>
+<h3>1.2 Iceberg 研究：row-level ops、metadata、maintenance</h3>
+<p>PVLDB 2024 <em>Petabyte-Scale Row-Level Operations in Data Lakehouses</em> 展示了 Iceberg 这类 open table format 正在从“append-only analytics table”走向更复杂的 row-level operations。论文讨论 high-density/sparse modifications、equality/position deletes、lazy merge、write amplification、runtime filtering、adaptive writes，并在 Apache Iceberg/Spark 上实现数量级优化。来源：<a href="https://www.vldb.org/pvldb/vol17/p4159-okolnychyi.pdf">PVLDB Iceberg row-level operations</a>。</p>
+<p>这对 Kafka-to-Iceberg 的含义是：如果 streaming topic 中存在 upsert、delete、tombstone、compacted topic、CDC，那么 Iceberg 表不是简单 append Parquet。必须选择 merge-on-read/copy-on-write、delete file、compaction 和 snapshot 生命周期策略。AWS S3 Tables 的 automatic compaction、snapshot management、unreferenced file removal 正是在产品层接管这些复杂性。来源：<a href="https://aws.amazon.com/s3/features/tables/">AWS S3 Tables</a>。</p>
+<h3>1.3 Ursa：VLDB 2025 对“Kafka topic 即 table”的直接回答</h3>
+<p>Ursa 是本次补充调研最关键的学术前沿。VLDB 2025 industrial paper 列表收录了 <em>Ursa: A Lakehouse-Native Data Streaming Engine for Kafka</em>。来源：<a href="https://vldb.org/2025/?papers-industry=">VLDB 2025 Industrial Papers</a>。</p>
+<p>论文摘要中的关键问题陈述是：</p>
+<ul>
+<li>许多场景只需要 sub-second latencies，例如 200-500ms；此时 cross-AZ communication and replication significantly increase costs。</li>
+<li>Kafka 到 lakehouse 需要 connectors or ETL pipelines，造成 two distinct systems、fragmented tooling、data copied multiple times。</li>
+<li>Ursa writes data directly into open table formats in object storage，by decoupling compute from storage，同时 removing leader-based replication and disk-based broker storage，并 unifying stream and table semantics within a single storage layer。来源：<a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>。</li>
+</ul>
+<p>Ursa 的技术要点可概括为：</p>
+<ul>
+<li>Write-ahead log 处理新写入和低延迟读取。</li>
+<li>Compaction service 把 row-based WAL objects 转成 columnar Parquet。</li>
+<li>Parquet 文件通过 Iceberg/Delta metadata commit 暴露为 lakehouse table。</li>
+<li>Offset index 把 Kafka offset 映射到 WAL/Parquet 位置，保留 streaming read 能力。</li>
+<li>Protocol server 维持 Kafka API 兼容，底层存储则是 leaderless / shared object storage / metadata service。</li>
+</ul>
+<p>这就是“stream-table duality”的直接系统化实现：Kafka topic 和 Iceberg/Delta table 不再是两个系统之间的 pipeline，而是同一套对象和 metadata 的两种视图。</p>
+<h2>2. Disaggregation：为什么 Diskless Kafka 是数据库架构趋势的外溢</h2>
+<p>VLDB 2025 <em>Disaggregation: A New Architecture for Cloud Databases</em> 解释了现代云数据库为什么不断拆分 compute、storage、log、page cache、metadata。它提到 disaggregation 不只是 independent scalability，还能提高 modularity、sharing/pooling 和 resource efficiency；Socrates 进一步把 storage layer 拆成 logging service、page cache、durable page store。来源：<a href="https://www.vldb.org/pvldb/vol18/p5527-xiangyao.pdf">PVLDB disaggregation</a>。</p>
+<p>套到 Kafka 上，传统 Kafka 是 shared-nothing：每个 broker 管本地 log，leader/follower 复制维持 durability 和 availability。Diskless Kafka 则把 durable log 变成 shared external service：</p>
+<ul>
+<li>Broker：协议处理、batching、cache、routing。</li>
+<li>Object storage/shared log：耐久数据和复制。</li>
+<li>Coordinator/metadata service：offset range、batch location、commit/visibility、partition metadata。</li>
+<li>Catalog/table metadata：如果暴露 Iceberg/Delta，则管理 table snapshot、manifest、schema、权限。</li>
+</ul>
+<p>Apache Kafka KIP-1150 的定义与此吻合：diskless primarily refers to not using broker disks as the primary durable storage of user data。KIP-1163 进一步说 data in diskless topics is durably stored in object storage at all times，Kafka delegates replication to object storage。来源：<a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150:+Diskless+Topics">KIP-1150</a>、<a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core">KIP-1163</a>。</p>
+<p>SIGMOD 2023 disaggregated database tutorial 的意义在于，它提醒我们这不是 Kafka 社区临时发明的模式，而是 cloud database architecture 的主线：把固定耦合的单体数据库拆成可独立扩缩、可池化、可跨 workload 共享的服务。Diskless Kafka 是 streaming infrastructure 对同一趋势的响应。</p>
+<h2>3. Catalog/Metadata：新的数据库边界</h2>
+<p>PVLDB 2025 <em>TreeCat: Standalone Catalog Engine for Large Data Systems</em> 与 Snowflake Open Catalog、AWS S3 Tables、Apache Iceberg REST Catalog 形成了很强的产业-学术呼应。TreeCat 的核心观点是：enterprise 里有多个 specialized engines，大家即使用同一个 shared storage，如果各自维护 catalog，数据也不能真正 composable；catalog functionality has to be disaggregated from the rest of the system。来源：<a href="https://www.vldb.org/pvldb/vol18/p4323-oh.pdf">PVLDB TreeCat</a>。</p>
+<p>Iceberg spec 也把 catalog 的核心职责讲得很清楚：catalog 持有 current metadata pointer；每次 table state 变化创建新的 metadata file，并通过 atomic swap 替换旧 metadata。来源：<a href="https://iceberg.apache.org/spec/">Iceberg spec</a>。</p>
+<p>这解释了为什么 AWS 和 Snowflake 的产品不是旁枝：</p>
+<ul>
+<li>AWS S3 Tables：把 Iceberg 表存储、compaction、snapshot management、unreferenced file removal 托管化，并暴露 Iceberg REST Catalog API。来源：<a href="https://aws.amazon.com/s3/features/tables/">AWS S3 Tables</a>、<a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html">S3 Tables docs</a>。</li>
+<li>Snowflake Open Catalog：基于 Apache Iceberg REST protocol，是 managed service for Apache Polaris，提供跨 REST-compatible query engines 的 centralized, secure read/write access。来源：<a href="https://docs.snowflake.com/en/user-guide/opencatalog/overview">Snowflake Open Catalog</a>。</li>
+<li>Confluent Tableflow：把 Kafka topic materialize 成 Iceberg/Delta tables，然后通过 Tableflow Catalog、AWS Glue 或 Snowflake Open Catalog 给查询引擎发现。来源：<a href="https://docs.confluent.io/cloud/current/topics/tableflow/overview.html">Confluent Tableflow</a>、<a href="https://docs.confluent.io/cloud/current/topics/tableflow/how-to-guides/query-engines/query-with-snowflake.html">Tableflow + Snowflake</a>。</li>
+</ul>
+<p>结论：未来 streaming/lakehouse 的控制点不在 Parquet 文件本身，而在 catalog pointer、commit protocol、schema/permission、table maintenance 和 freshness SLA。</p>
+<h2>4. 产业路线：四种实现路径</h2>
+<h3>4.1 Confluent Freight + Tableflow：托管 Kafka 云产品路径</h3>
+<p>Confluent Freight 是 diskless/cloud-native Kafka 的托管产品路径。Confluent 说 Freight 使用 direct write mode，把数据直接写到 S3 等 object storage，bypassing local storage and avoiding replication on Kora brokers；代价是延迟从 sub-100ms 到 up to a second or two，换取显著网络/存储成本下降。来源：<a href="https://www.confluent.io/blog/freight-clusters-are-generally-available/">Confluent Freight GA</a>。</p>
+<p>Tableflow 则解决 Kafka-to-table。文档定义它 materializes Apache Kafka topics as Apache Iceberg or Delta Lake tables。它适合不想自建 Kafka Connect/Flink/Spark pipeline 的团队，但它仍是托管 materialization，不等同于 Kafka log 的原生 Iceberg 表示。来源：<a href="https://docs.confluent.io/cloud/current/topics/tableflow/overview.html">Confluent Tableflow docs</a>。</p>
+<h3>4.2 Aiven Iceberg Topics：Kafka tiered storage 原生路径</h3>
+<p>Aiven Iceberg Topics whitepaper 提出：当 Kafka segment rotate 时，RemoteStorageManager 直接把 records persist as Parquet files into an Iceberg table；fetch 时 reconstruct valid Kafka batches；这样 one durable copy serves two views: Kafka replay and Iceberg analytics。来源：<a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/iceberg_whitepaper.md">Aiven Iceberg whitepaper</a>。</p>
+<p>这是最接近 Apache Kafka native zero-copy 的方向，但当前实现仍早。Aiven README 明确 Iceberg mode was added recently，currently in alpha stage。来源：<a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/README.md">Aiven tiered-storage README</a>。</p>
+<h3>4.3 Ursa/StreamNative：学术与产业共同指向的 lakehouse-native streaming</h3>
+<p>Ursa 是最直接把学术论文、产品实现、lakehouse-native streaming 统一起来的案例。StreamNative 文档称 Lakestream 将 data、metadata、protocol 分成三层；Ursa 是 storage layer，支持 Kafka/Pulsar protocol，数据写到 Iceberg/Delta，topic 同时是 lakehouse table。来源：<a href="https://docs.streamnative.io/cloud/overview/lakestream-overview">StreamNative Lakestream docs</a>、<a href="https://streamnative.io/blog/ursa-wins-vldb-2025-best-industry-paper-the-first-lakehouse-native-streaming-engine-for-kafka">Ursa VLDB 2025 blog</a>。</p>
+<p>学术上，Ursa 的价值是给出了完整系统架构：WAL + Parquet compaction + table metadata commit + offset index + Kafka-compatible protocol server。它比“Kafka + connector + Iceberg”更接近数据库系统意义上的 stream-table duality。</p>
+<h3>4.4 AutoMQ / WarpStream / Fluss：对象存储优先与 streamhouse 分叉</h3>
+<p>AutoMQ 自称 cloud-native, fully Kafka-compatible streaming platform built on S3，采用 S3-first diskless architecture，保留 Kafka compute layer、替换 storage layer。来源：<a href="https://docs.automq.com/automq/what-is-automq/overview">AutoMQ overview</a>。AutoMQ Table Topic 进一步把 Kafka topic 自动转成 Iceberg table，目标是 without user intervention 的 Kafka-Iceberg pipeline。来源：<a href="https://www.automq.com/blog/automq-kafka-to-iceberg-table-topic">AutoMQ Table Topic</a>。</p>
+<p>WarpStream 的 zero disk 架构同样强调对象存储和 stateless agents，但自己也承认适合 If you can tolerate a little extra latency 的场景。来源：<a href="https://www.warpstream.com/blog/zero-disks-is-better-for-kafka">WarpStream Zero Disks</a>。</p>
+<p>Fluss 提供另一种判断：Iceberg 更适合作为 cold tier，Fluss 提供 hot streaming storage、sub-second latency、primary-key semantics，然后 tiering 到 Iceberg/Paimon。来源：<a href="https://fluss.apache.org/blog/2025/12/02/fluss-x-iceberg-why-your-lakehouse-is-not-streamhouse-yet">Fluss x Iceberg</a>。这代表一个重要分歧：并非所有系统都认为 Iceberg 应直接承载 hot streaming log；也有人选择 hot stream layer + cold lakehouse layer 的组合。</p>
+<h2>5. 关键技术问题与风险</h2>
+<h3>5.1 延迟与 request cost</h3>
+<p>对象存储降低 durable storage 和 replication 成本，但 PUT/GET/list/commit latency 会进入 hot path。Confluent Freight 明确把延迟 tradeoff 设为 up to a second or two；KIP-1163 也承认 remote storage may have higher latency than local disks。来源：<a href="https://www.confluent.io/blog/freight-clusters-are-generally-available/">Confluent Freight GA</a>、<a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core">KIP-1163</a>。</p>
+<p>学术上这对应 disaggregation 的经典 tradeoff：独立扩缩和资源池化换来跨服务 RPC、remote storage latency、metadata coordination。适合 high-throughput、成本敏感、可容忍 100ms-秒级延迟的 workloads；不适合无验证地替换所有 low-latency Kafka 场景。</p>
+<h3>5.2 Kafka 语义与 Iceberg 语义不自然等价</h3>
+<p>Kafka 有 offset、consumer group、transactions、compaction、tombstone、exactly-once、ordering；Iceberg 有 snapshot、manifest、metadata pointer、schema evolution、delete files、compaction。把同一批 bytes 同时服务两套语义，需要 offset index、commit visibility、schema mapping、transaction coordination 和 failure recovery。</p>
+<p>Ursa 论文的贡献正在于引入 offset index 与 WAL/Parquet 双层；Aiven 的挑战则是从 Kafka RemoteStorageManager 里 reconstruct valid Kafka batches。当前这些方案仍需要按 workload 验证，而不能只看 Kafka API compatibility smoke test。</p>
+<h3>5.3 小文件、compaction、snapshot 维护</h3>
+<p>Streaming ingest 天然产生小文件和高频 commit。Iceberg/Delta/Hudi 论文和产品都说明，table format 的性能高度依赖 metadata pruning、compaction、delete file 处理和 snapshot lifecycle。AWS S3 Tables 把 automatic compaction 和 snapshot cleanup 变成托管能力，说明这是生产系统瓶颈，不是边缘功能。来源：<a href="https://aws.amazon.com/s3/features/tables/">AWS S3 Tables</a>。</p>
+<h3>5.4 Catalog lock-in 取代文件格式 lock-in</h3>
+<p>开放格式降低了 Parquet/Iceberg 层面的锁定，但 catalog、权限、governance、maintenance、freshness SLA 成为新锁定点。Snowflake Open Catalog、AWS S3 Tables、Confluent Tableflow Catalog、Databricks Unity Catalog、Apache Polaris/Nessie 都在争夺这个控制面。TreeCat 论文从学术上支持了这一点：真正 composable 的数据系统需要独立、统一、高性能 catalog。来源：<a href="https://www.vldb.org/pvldb/vol18/p4323-oh.pdf">PVLDB TreeCat</a>。</p>
+<h2>6. 对 Simin 的判断</h2>
+<p>如果从学术前沿看，diskless Kafka 的真正主题不是“Kafka 省钱版”，而是：<strong>streaming log 正在被重新定义成一种 cloud object storage + metadata/catalog + protocol layer 组合出来的数据库对象</strong>。</p>
+<p>更具体地说：</p>
+<ul>
+<li>Database disaggregation 解释了为什么 broker 可以无状态化。</li>
+<li>Lakehouse/Delta/Iceberg 解释了为什么对象存储需要 metadata/transaction layer 才能成为数据库表。</li>
+<li>Ursa/PVLDB 2025 说明 Kafka-compatible stream-table duality 已经进入顶会工业论文视野。</li>
+<li>TreeCat/Open Catalog/S3 Tables 说明 catalog/metadata 正在成为下一代数据系统的核心控制面。</li>
+<li>Flink state disaggregation、Fluss、AutoMQ 等说明这个趋势不止 Kafka，而是整个 streaming/data processing stack 都在从本地状态走向 disaggregated/shared storage。</li>
+</ul>
+<p>短期最现实的工程路线仍是 Confluent Tableflow / AWS S3 Tables / Snowflake Open Catalog 这类托管组合；中期最值得跟踪的是 Apache Kafka KIP-1150/1163/1164 和 Aiven Iceberg Topics；学术和产业最激进、最值得仔细读的方向是 Ursa 这类 lakehouse-native streaming engine。</p>
+<p>如果你想继续深挖，我建议下一步做一个更窄的 paper reading list：</p>
+<ol>
+<li>Ursa PVLDB 2025：重点看 WAL、offset index、Parquet compaction、Iceberg/Delta commit 和 Kafka compatibility。</li>
+<li>Delta Lake PVLDB 2020 + Iceberg spec：理解 object store table metadata 的基本范式。</li>
+<li>TreeCat PVLDB 2025 + Snowflake Open Catalog / Polaris：理解 catalog 独立化和治理锁定。</li>
+<li>Disaggregation VLDB 2025 + SIGMOD 2023 tutorial：把 diskless Kafka 放入 cloud database architecture 大趋势。</li>
+<li>Iceberg row-level ops PVLDB 2024：理解 CDC/upsert/delete/compaction 对 streaming lakehouse 的真实复杂度。</li>
+</ol>
+<h2>参考来源</h2>
+<h3>学术论文与会议</h3>
+<ul>
+<li>Ursa: A Lakehouse-Native Data Streaming Engine for Kafka, PVLDB 18(12), 2025: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">https://www.vldb.org/pvldb/vol18/p5184-guo.pdf</a></li>
+<li>VLDB 2025 Industrial Papers accepted list: <a href="https://vldb.org/2025/?papers-industry=">https://vldb.org/2025/?papers-industry=</a></li>
+<li>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics, CIDR 2021: <a href="https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf">https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf</a></li>
+<li>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores, PVLDB 13(12), 2020: <a href="https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf">https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf</a></li>
+<li>Petabyte-Scale Row-Level Operations in Data Lakehouses, PVLDB 17(12), 2024: <a href="https://www.vldb.org/pvldb/vol17/p4159-okolnychyi.pdf">https://www.vldb.org/pvldb/vol17/p4159-okolnychyi.pdf</a></li>
+<li>TreeCat: Standalone Catalog Engine for Large Data Systems, PVLDB 18, 2025: <a href="https://www.vldb.org/pvldb/vol18/p4323-oh.pdf">https://www.vldb.org/pvldb/vol18/p4323-oh.pdf</a></li>
+<li>Disaggregation: A New Architecture for Cloud Databases, PVLDB 18, 2025: <a href="https://www.vldb.org/pvldb/vol18/p5527-xiangyao.pdf">https://www.vldb.org/pvldb/vol18/p5527-xiangyao.pdf</a></li>
+<li>Disaggregated Database Systems, SIGMOD 2023 tutorial: <a href="https://www.cs.purdue.edu/homes/csjgwang/pubs/SIGMOD23_Tutorial_DisaggregatedDB.pdf">https://www.cs.purdue.edu/homes/csjgwang/pubs/SIGMOD23_Tutorial_DisaggregatedDB.pdf</a></li>
+<li>Disaggregated State Management in Apache Flink 2.0, PVLDB 18, 2025: <a href="https://www.vldb.org/pvldb/vol18/p4846-mei.pdf">https://www.vldb.org/pvldb/vol18/p4846-mei.pdf</a></li>
+</ul>
+<h3>规范、KIP 与开源资料</h3>
+<ul>
+<li>Apache Kafka KIP-1150: Diskless Topics: <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150:+Diskless+Topics">https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150:+Diskless+Topics</a></li>
+<li>KIP-1150 accepted mail thread: <a href="https://www.mail-archive.com/dev@kafka.apache.org/msg154859.html">https://www.mail-archive.com/dev@kafka.apache.org/msg154859.html</a></li>
+<li>Apache Kafka KIP-1163: Diskless Core: <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core">https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core</a></li>
+<li>Apache Kafka KIP-1164: Diskless Coordinator: <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1164%3A+Diskless+Coordinator">https://cwiki.apache.org/confluence/display/KAFKA/KIP-1164%3A+Diskless+Coordinator</a></li>
+<li>Apache Iceberg spec: <a href="https://iceberg.apache.org/spec/">https://iceberg.apache.org/spec/</a></li>
+<li>Aiven Iceberg Topics whitepaper: <a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/iceberg_whitepaper.md">https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/iceberg_whitepaper.md</a></li>
+<li>Aiven tiered storage README: <a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/README.md">https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/README.md</a></li>
+</ul>
+<h3>产业产品与厂商资料</h3>
+<ul>
+<li>Confluent Freight Clusters GA: <a href="https://www.confluent.io/blog/freight-clusters-are-generally-available/">https://www.confluent.io/blog/freight-clusters-are-generally-available/</a></li>
+<li>Confluent Tableflow overview: <a href="https://docs.confluent.io/cloud/current/topics/tableflow/overview.html">https://docs.confluent.io/cloud/current/topics/tableflow/overview.html</a></li>
+<li>Confluent Tableflow + Snowflake guide: <a href="https://docs.confluent.io/cloud/current/topics/tableflow/how-to-guides/query-engines/query-with-snowflake.html">https://docs.confluent.io/cloud/current/topics/tableflow/how-to-guides/query-engines/query-with-snowflake.html</a></li>
+<li>Confluent Tableflow GA blog: <a href="https://www.confluent.io/blog/tableflow-ga-kafka-snowflake-iceberg">https://www.confluent.io/blog/tableflow-ga-kafka-snowflake-iceberg</a></li>
+<li>AWS S3 Tables product page: <a href="https://aws.amazon.com/s3/features/tables/">https://aws.amazon.com/s3/features/tables/</a></li>
+<li>AWS S3 Tables user guide: <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html">https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html</a></li>
+<li>AWS APN Snowflake + S3 Tables: <a href="https://aws.amazon.com/blogs/apn/build-real-time-data-lakes-with-snowflake-and-amazon-s3-tables/">https://aws.amazon.com/blogs/apn/build-real-time-data-lakes-with-snowflake-and-amazon-s3-tables/</a></li>
+<li>Snowflake Iceberg tables: <a href="https://docs.snowflake.com/en/user-guide/tables-iceberg">https://docs.snowflake.com/en/user-guide/tables-iceberg</a></li>
+<li>Snowflake Open Catalog overview: <a href="https://docs.snowflake.com/en/user-guide/opencatalog/overview">https://docs.snowflake.com/en/user-guide/opencatalog/overview</a></li>
+<li>AutoMQ overview: <a href="https://docs.automq.com/automq/what-is-automq/overview">https://docs.automq.com/automq/what-is-automq/overview</a></li>
+<li>AutoMQ Table Topic: <a href="https://www.automq.com/blog/automq-kafka-to-iceberg-table-topic">https://www.automq.com/blog/automq-kafka-to-iceberg-table-topic</a></li>
+<li>WarpStream Zero Disks is Better for Kafka: <a href="https://www.warpstream.com/blog/zero-disks-is-better-for-kafka">https://www.warpstream.com/blog/zero-disks-is-better-for-kafka</a></li>
+<li>StreamNative Lakestream docs: <a href="https://docs.streamnative.io/cloud/overview/lakestream-overview">https://docs.streamnative.io/cloud/overview/lakestream-overview</a></li>
+<li>Ursa VLDB 2025 award blog: <a href="https://streamnative.io/blog/ursa-wins-vldb-2025-best-industry-paper-the-first-lakehouse-native-streaming-engine-for-kafka">https://streamnative.io/blog/ursa-wins-vldb-2025-best-industry-paper-the-first-lakehouse-native-streaming-engine-for-kafka</a></li>
+<li>Apache Fluss x Iceberg: <a href="https://fluss.apache.org/blog/2025/12/02/fluss-x-iceberg-why-your-lakehouse-is-not-streamhouse-yet">https://fluss.apache.org/blog/2025/12/02/fluss-x-iceberg-why-your-lakehouse-is-not-streamhouse-yet</a></li>
+</ul>
+  </article>
+  <article data-report-lang="en" hidden>
+<h1>Survey: Diskless Kafka, Lakehouse/Iceberg, and the Academic Frontier</h1>
+<p>Date: 2026-05-28</p>
+<h2>Research Question</h2>
+<p>Are recent diskless Kafka and cloud-native streaming architectures converging with the lakehouse and Apache Iceberg? From the academic frontier in database systems, how do research threads in VLDB, SIGMOD, CIDR, and related venues, including disaggregation, object-store-native databases, open table formats, catalog/metadata systems, and stream-table duality, explain this round of industry change? Where do vendor products such as AWS S3 Tables, Snowflake Open Catalog, and Confluent Tableflow sit on this technology curve?</p>
+<h2>Method and Sources</h2>
+<p>This report is rewritten from an earlier industry survey produced on the same day, with an added academic-frontier dimension. Following the workspace deep research survey workflow, I first ran a broad Tavily source-discovery pass, then split the work into parallel tracks:</p>
+<ul>
+<li>Industry track: Apache Kafka KIP-1150/1163/1164, Confluent Freight/Tableflow, Aiven Iceberg Topics, AutoMQ, WarpStream, Ursa/StreamNative, AWS S3 Tables, Snowflake Open Catalog.</li>
+<li>Academic track: recent VLDB/SIGMOD/CIDR papers and tutorials, focused on lakehouse systems, object-store table formats, catalog/metadata, streaming/disaggregated state, and cloud database disaggregation.</li>
+<li>Risk track: latency, object storage request cost, Kafka semantic compatibility, Iceberg commit/compaction/catalog lock-in, exactly-once behavior, and table maintenance.</li>
+</ul>
+<p>During retrieval, the Exa free API hit a rate limit, and Tavily once encountered a 1Password API key timeout. Subsequent cross-checking used Tavily, official VLDB/CIDR pages, paper PDF pages, official product documentation, and parallel research tracks.</p>
+<h2>Core Conclusions</h2>
+<ol>
+<li><strong>The most direct academic frontier signal is the PVLDB 2025 Ursa paper.</strong> Ursa was accepted to the VLDB 2025 industrial track under the title <em>Ursa: A Lakehouse-Native Data Streaming Engine for Kafka</em>. The abstract directly identifies two problems: Kafka multi-AZ leader replication and disk-based broker storage are expensive; Kafka-to-lakehouse flows depend on connectors/ETL, causing two distinct systems, data copied multiple times, and real-time data remaining locked in Kafka. Ursa&#x27;s answer is a leaderless, lakehouse-native, Kafka-compatible streaming engine that writes directly to open table formats in object storage. Sources: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>, <a href="https://vldb.org/2025/?papers-industry=">VLDB 2025 Industrial Papers</a>.</li>
+</ol>
+<ol>
+<li><strong>Diskless Kafka is not an isolated Kafka optimization. It is the long-running database disaggregation trend reaching the streaming log layer.</strong> VLDB 2025&#x27;s <em>Disaggregation: A New Architecture for Cloud Databases</em> frames the move from shared-nothing cloud databases toward separated storage / log / page cache / compute as part of a broader trend. The SIGMOD 2023 Disaggregated Database Systems tutorial also treats compute-storage disaggregation, memory disaggregation, and cloud-native modularization as a new database-systems architecture. Diskless Kafka can be viewed as applying the same logic to the Kafka log: the broker becomes a stateless compute/cache/protocol layer, while durability and replication move down into object storage or a shared log. Sources: <a href="https://www.vldb.org/pvldb/vol18/p5527-xiangyao.pdf">VLDB 2025 disaggregation paper</a>, <a href="https://www.cs.purdue.edu/homes/csjgwang/pubs/SIGMOD23_Tutorial_DisaggregatedDB.pdf">SIGMOD 2023 tutorial PDF</a>.</li>
+</ol>
+<ol>
+<li><strong>Lakehouse papers explain why &quot;writing to S3&quot; is not enough.</strong> The CIDR 2021 <em>Lakehouse</em> paper notes that cloud data lakes such as S3/ADLS/GCS provide low cost, durability, and geo-replication, but the two-layer lake + warehouse architecture introduces ETL complexity, latency, and failure modes. PVLDB 2020&#x27;s <em>Delta Lake</em> further points out that object stores are key-value stores, metadata operations such as listing objects are expensive, and consistency guarantees are limited. A transaction log / metadata layer is therefore needed to implement ACID table storage on object storage. Sources: <a href="https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf">CIDR Lakehouse</a>, <a href="https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf">PVLDB Delta Lake</a>.</li>
+</ol>
+<ol>
+<li><strong>Iceberg/S3 Tables/Snowflake Open Catalog are not mainly a &quot;file format victory&quot;. They show that the metadata/catalog control plane is becoming the system boundary.</strong> The Apache Iceberg spec says table state is maintained in metadata files, and all changes create a new metadata file and replace the old metadata through an atomic swap. The PVLDB 2025 TreeCat paper also argues that in a composable data stack, if each system maintains its own catalog, then the systems cannot truly share data even when they share the same storage. AWS S3 Tables, Snowflake Open Catalog, and Confluent Tableflow are all competing for this catalog + maintenance + governance layer. Sources: <a href="https://iceberg.apache.org/spec/">Iceberg spec</a>, <a href="https://www.vldb.org/pvldb/vol18/p4323-oh.pdf">PVLDB TreeCat</a>.</li>
+</ol>
+<ol>
+<li><strong>Industry products and academic problems are highly aligned, but maturity varies.</strong> Confluent Freight/Tableflow is the managed-product path. Aiven Iceberg Topics is the Kafka tiered-storage/RSM native path. Ursa/StreamNative, AutoMQ, and Fluss are lakehouse-native or streamhouse paths. Academically, Ursa has entered VLDB 2025, but upstream Apache Kafka KIP-1150 is only an accepted motivational KIP, while KIP-1163/1164 remain under discussion. Aiven Iceberg mode is still alpha. In the near term, &quot;academically plausible&quot; or &quot;vendor-claimed&quot; should not be treated as equivalent to &quot;fully compatible with Kafka semantics and production mature.&quot;</li>
+</ol>
+<h2>1. Academic Context: From Lakehouse to Stream-Table Duality</h2>
+<h3>1.1 The CIDR/PVLDB Lakehouse Foundation</h3>
+<p>CIDR 2021&#x27;s <em>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics</em> is the starting point for understanding this line of work. It critiques the two-layer lake + warehouse architecture: data is first ETL&#x27;d into a data lake, then ELT&#x27;d into downstream warehouses, which creates complexity, delays, and new failure modes. The lakehouse promise is to store data in open formats on low-cost object storage while adding warehouse-style transactions, governance, and performance. Source: <a href="https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf">CIDR Lakehouse</a>.</p>
+<p>PVLDB 2020&#x27;s <em>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores</em> further explains why object storage is not a database: object stores such as S3/GCS/ADLS are cheap and durable, but listing is expensive, consistency is limited, and they lack ACID and high-performance metadata operations. Delta Lake&#x27;s design is a transaction log plus Parquet compaction, extracting table state from object-directory listings. Source: <a href="https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf">PVLDB Delta Lake</a>.</p>
+<p>These papers give diskless Kafka an important warning: placing Kafka segments in S3 only completes storage disaggregation. To become a lakehouse-native stream, the system must also solve table metadata, snapshots, schema evolution, commit protocol, data skipping, and compaction.</p>
+<h3>1.2 Iceberg Research: Row-Level Operations, Metadata, Maintenance</h3>
+<p>PVLDB 2024&#x27;s <em>Petabyte-Scale Row-Level Operations in Data Lakehouses</em> shows that open table formats such as Iceberg are moving beyond &quot;append-only analytics tables&quot; toward more complex row-level operations. The paper discusses high-density/sparse modifications, equality/position deletes, lazy merge, write amplification, runtime filtering, and adaptive writes, and implements order-of-magnitude optimizations on Apache Iceberg/Spark. Source: <a href="https://www.vldb.org/pvldb/vol17/p4159-okolnychyi.pdf">PVLDB Iceberg row-level operations</a>.</p>
+<p>For Kafka-to-Iceberg, this means that if a streaming topic includes upserts, deletes, tombstones, compacted topics, or CDC, the Iceberg table is not simply appended Parquet. The system must choose merge-on-read/copy-on-write, delete file, compaction, and snapshot lifecycle strategies. AWS S3 Tables&#x27; automatic compaction, snapshot management, and unreferenced file removal are the product layer taking over this complexity. Source: <a href="https://aws.amazon.com/s3/features/tables/">AWS S3 Tables</a>.</p>
+<h3>1.3 Ursa: VLDB 2025&#x27;s Direct Answer to &quot;Kafka Topic as Table&quot;</h3>
+<p>Ursa is the most important academic frontier found in this supplemental survey. The VLDB 2025 industrial paper list includes <em>Ursa: A Lakehouse-Native Data Streaming Engine for Kafka</em>. Source: <a href="https://vldb.org/2025/?papers-industry=">VLDB 2025 Industrial Papers</a>.</p>
+<p>The paper abstract states the key problems as follows:</p>
+<ul>
+<li>Many scenarios only need sub-second latencies, for example 200-500ms. In those cases, cross-AZ communication and replication significantly increase costs.</li>
+<li>Kafka-to-lakehouse flows require connectors or ETL pipelines, causing two distinct systems, fragmented tooling, and data copied multiple times.</li>
+<li>Ursa writes data directly into open table formats in object storage by decoupling compute from storage, while removing leader-based replication and disk-based broker storage and unifying stream and table semantics within a single storage layer. Source: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>.</li>
+</ul>
+<p>Ursa&#x27;s technical points can be summarized as:</p>
+<ul>
+<li>A write-ahead log handles new writes and low-latency reads.</li>
+<li>A compaction service converts row-based WAL objects into columnar Parquet.</li>
+<li>Parquet files are exposed as lakehouse tables through Iceberg/Delta metadata commits.</li>
+<li>An offset index maps Kafka offsets to WAL/Parquet locations, preserving streaming reads.</li>
+<li>A protocol server maintains Kafka API compatibility, while the storage layer is leaderless / shared object storage / metadata service.</li>
+</ul>
+<p>This is a direct system implementation of &quot;stream-table duality&quot;: Kafka topics and Iceberg/Delta tables are no longer a pipeline between two systems, but two views over the same objects and metadata.</p>
+<h2>2. Disaggregation: Why Diskless Kafka Is Spillover From Database Architecture</h2>
+<p>VLDB 2025&#x27;s <em>Disaggregation: A New Architecture for Cloud Databases</em> explains why modern cloud databases keep separating compute, storage, log, page cache, and metadata. It notes that disaggregation is not only about independent scalability, but also improves modularity, sharing/pooling, and resource efficiency. Socrates further decomposes the storage layer into a logging service, page cache, and durable page store. Source: <a href="https://www.vldb.org/pvldb/vol18/p5527-xiangyao.pdf">PVLDB disaggregation</a>.</p>
+<p>Applied to Kafka, traditional Kafka is shared-nothing: each broker owns local logs, while leader/follower replication maintains durability and availability. Diskless Kafka instead turns the durable log into a shared external service:</p>
+<ul>
+<li>Broker: protocol handling, batching, cache, routing.</li>
+<li>Object storage/shared log: durable data and replication.</li>
+<li>Coordinator/metadata service: offset ranges, batch locations, commit/visibility, partition metadata.</li>
+<li>Catalog/table metadata: if Iceberg/Delta is exposed, this layer manages table snapshots, manifests, schemas, and permissions.</li>
+</ul>
+<p>Apache Kafka KIP-1150 matches this definition: diskless primarily refers to not using broker disks as the primary durable storage of user data. KIP-1163 further says data in diskless topics is durably stored in object storage at all times, and Kafka delegates replication to object storage. Sources: <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150:+Diskless+Topics">KIP-1150</a>, <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core">KIP-1163</a>.</p>
+<p>The significance of the SIGMOD 2023 disaggregated database tutorial is that it reminds us this is not an ad hoc invention by the Kafka community. It is the main line of cloud database architecture: split tightly coupled monolithic databases into services that can scale independently, be pooled, and be shared across workloads. Diskless Kafka is streaming infrastructure responding to the same trend.</p>
+<h2>3. Catalog/Metadata: The New Database Boundary</h2>
+<p>PVLDB 2025&#x27;s <em>TreeCat: Standalone Catalog Engine for Large Data Systems</em> strongly echoes Snowflake Open Catalog, AWS S3 Tables, and the Apache Iceberg REST Catalog on the industry side. TreeCat&#x27;s central point is that enterprises run multiple specialized engines. Even if they all use the same shared storage, data is not truly composable if each engine maintains its own catalog. Catalog functionality has to be disaggregated from the rest of the system. Source: <a href="https://www.vldb.org/pvldb/vol18/p4323-oh.pdf">PVLDB TreeCat</a>.</p>
+<p>The Iceberg spec also states the catalog&#x27;s core responsibility clearly: the catalog holds the current metadata pointer. Every table state change creates a new metadata file and replaces the old metadata through an atomic swap. Source: <a href="https://iceberg.apache.org/spec/">Iceberg spec</a>.</p>
+<p>This explains why AWS and Snowflake products are not side branches:</p>
+<ul>
+<li>AWS S3 Tables: manages Iceberg table storage, compaction, snapshot management, and unreferenced file removal, while exposing the Iceberg REST Catalog API. Sources: <a href="https://aws.amazon.com/s3/features/tables/">AWS S3 Tables</a>, <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html">S3 Tables docs</a>.</li>
+<li>Snowflake Open Catalog: based on the Apache Iceberg REST protocol, it is a managed service for Apache Polaris and provides centralized, secure read/write access across REST-compatible query engines. Source: <a href="https://docs.snowflake.com/en/user-guide/opencatalog/overview">Snowflake Open Catalog</a>.</li>
+<li>Confluent Tableflow: materializes Kafka topics into Iceberg/Delta tables, then exposes them for query-engine discovery through Tableflow Catalog, AWS Glue, or Snowflake Open Catalog. Sources: <a href="https://docs.confluent.io/cloud/current/topics/tableflow/overview.html">Confluent Tableflow</a>, <a href="https://docs.confluent.io/cloud/current/topics/tableflow/how-to-guides/query-engines/query-with-snowflake.html">Tableflow + Snowflake</a>.</li>
+</ul>
+<p>Conclusion: the future control point for streaming/lakehouse systems is not the Parquet file itself. It is the catalog pointer, commit protocol, schema/permission layer, table maintenance, and freshness SLA.</p>
+<h2>4. Industry Routes: Four Implementation Paths</h2>
+<h3>4.1 Confluent Freight + Tableflow: Managed Kafka Cloud Product Path</h3>
+<p>Confluent Freight is the managed-product path for diskless/cloud-native Kafka. Confluent says Freight uses direct write mode, writing data directly to object storage such as S3, bypassing local storage and avoiding replication on Kora brokers. The cost is latency moving from sub-100ms to up to a second or two, in exchange for significantly lower network and storage cost. Source: <a href="https://www.confluent.io/blog/freight-clusters-are-generally-available/">Confluent Freight GA</a>.</p>
+<p>Tableflow addresses Kafka-to-table. The docs define it as materializing Apache Kafka topics as Apache Iceberg or Delta Lake tables. It fits teams that do not want to build Kafka Connect/Flink/Spark pipelines themselves, but it is still managed materialization, not a native Iceberg representation of the Kafka log. Source: <a href="https://docs.confluent.io/cloud/current/topics/tableflow/overview.html">Confluent Tableflow docs</a>.</p>
+<h3>4.2 Aiven Iceberg Topics: Kafka Tiered-Storage Native Path</h3>
+<p>The Aiven Iceberg Topics whitepaper proposes that when Kafka segments rotate, RemoteStorageManager directly persists records as Parquet files into an Iceberg table. On fetch, it reconstructs valid Kafka batches. In this model, one durable copy serves two views: Kafka replay and Iceberg analytics. Source: <a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/iceberg_whitepaper.md">Aiven Iceberg whitepaper</a>.</p>
+<p>This is the closest direction to Apache Kafka native zero-copy, but the implementation is still early. The Aiven README explicitly says Iceberg mode was added recently and is currently in alpha stage. Source: <a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/README.md">Aiven tiered-storage README</a>.</p>
+<h3>4.3 Ursa/StreamNative: Lakehouse-Native Streaming Where Academia and Industry Meet</h3>
+<p>Ursa is the clearest case that brings together the academic paper, product implementation, and lakehouse-native streaming. StreamNative docs say Lakestream splits data, metadata, and protocol into three layers. Ursa is the storage layer, supports Kafka/Pulsar protocol, writes data to Iceberg/Delta, and makes the topic also a lakehouse table. Sources: <a href="https://docs.streamnative.io/cloud/overview/lakestream-overview">StreamNative Lakestream docs</a>, <a href="https://streamnative.io/blog/ursa-wins-vldb-2025-best-industry-paper-the-first-lakehouse-native-streaming-engine-for-kafka">Ursa VLDB 2025 blog</a>.</p>
+<p>Academically, Ursa&#x27;s value is that it gives a complete system architecture: WAL + Parquet compaction + table metadata commit + offset index + Kafka-compatible protocol server. It is closer to database-systems stream-table duality than &quot;Kafka + connector + Iceberg&quot;.</p>
+<h3>4.4 AutoMQ / WarpStream / Fluss: Object-Storage-First and Streamhouse Branches</h3>
+<p>AutoMQ describes itself as a cloud-native, fully Kafka-compatible streaming platform built on S3. It uses an S3-first diskless architecture, keeps the Kafka compute layer, and replaces the storage layer. Source: <a href="https://docs.automq.com/automq/what-is-automq/overview">AutoMQ overview</a>. AutoMQ Table Topic further turns Kafka topics automatically into Iceberg tables, aiming for a Kafka-Iceberg pipeline without user intervention. Source: <a href="https://www.automq.com/blog/automq-kafka-to-iceberg-table-topic">AutoMQ Table Topic</a>.</p>
+<p>WarpStream&#x27;s zero disk architecture similarly emphasizes object storage and stateless agents, but it also acknowledges that it fits scenarios where &quot;you can tolerate a little extra latency.&quot; Source: <a href="https://www.warpstream.com/blog/zero-disks-is-better-for-kafka">WarpStream Zero Disks</a>.</p>
+<p>Fluss provides another judgment: Iceberg is better suited as the cold tier, while Fluss provides hot streaming storage, sub-second latency, and primary-key semantics, then tiers into Iceberg/Paimon. Source: <a href="https://fluss.apache.org/blog/2025/12/02/fluss-x-iceberg-why-your-lakehouse-is-not-streamhouse-yet">Fluss x Iceberg</a>. This marks an important split: not every system believes Iceberg should directly carry the hot streaming log. Some choose a hot stream layer plus cold lakehouse layer instead.</p>
+<h2>5. Key Technical Questions and Risks</h2>
+<h3>5.1 Latency and Request Cost</h3>
+<p>Object storage reduces durable storage and replication cost, but PUT/GET/list/commit latency enters the hot path. Confluent Freight explicitly sets the latency tradeoff at up to a second or two. KIP-1163 also acknowledges that remote storage may have higher latency than local disks. Sources: <a href="https://www.confluent.io/blog/freight-clusters-are-generally-available/">Confluent Freight GA</a>, <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core">KIP-1163</a>.</p>
+<p>Academically, this corresponds to the classic disaggregation tradeoff: independent scaling and resource pooling in exchange for cross-service RPC, remote storage latency, and metadata coordination. It fits high-throughput, cost-sensitive workloads that can tolerate 100ms-to-second-level latency. It should not replace all low-latency Kafka scenarios without validation.</p>
+<h3>5.2 Kafka Semantics and Iceberg Semantics Are Not Naturally Equivalent</h3>
+<p>Kafka has offsets, consumer groups, transactions, compaction, tombstones, exactly-once behavior, and ordering. Iceberg has snapshots, manifests, metadata pointers, schema evolution, delete files, and compaction. Serving the same bytes through both semantic models requires offset indexes, commit visibility, schema mapping, transaction coordination, and failure recovery.</p>
+<p>Ursa&#x27;s contribution is precisely that it introduces an offset index and a WAL/Parquet two-tier design. Aiven&#x27;s challenge is reconstructing valid Kafka batches from Kafka RemoteStorageManager. These solutions still need workload-specific validation; a Kafka API compatibility smoke test is not enough.</p>
+<h3>5.3 Small Files, Compaction, and Snapshot Maintenance</h3>
+<p>Streaming ingest naturally produces small files and frequent commits. Iceberg/Delta/Hudi papers and products all show that table-format performance depends heavily on metadata pruning, compaction, delete-file handling, and snapshot lifecycle. AWS S3 Tables makes automatic compaction and snapshot cleanup managed capabilities, which shows this is a production-system bottleneck, not an edge feature. Source: <a href="https://aws.amazon.com/s3/features/tables/">AWS S3 Tables</a>.</p>
+<h3>5.4 Catalog Lock-In Replaces File Format Lock-In</h3>
+<p>Open formats reduce lock-in at the Parquet/Iceberg layer, but catalogs, permissions, governance, maintenance, and freshness SLAs become new lock-in points. Snowflake Open Catalog, AWS S3 Tables, Confluent Tableflow Catalog, Databricks Unity Catalog, and Apache Polaris/Nessie are all competing for this control plane. The TreeCat paper supports this academically: truly composable data systems need an independent, unified, high-performance catalog. Source: <a href="https://www.vldb.org/pvldb/vol18/p4323-oh.pdf">PVLDB TreeCat</a>.</p>
+<h2>6. Judgment for Simin</h2>
+<p>From the academic frontier, the real theme of diskless Kafka is not &quot;a cheaper Kafka.&quot; It is this: <strong>the streaming log is being redefined as a database object composed from cloud object storage + metadata/catalog + protocol layer</strong>.</p>
+<p>More specifically:</p>
+<ul>
+<li>Database disaggregation explains why brokers can become stateless.</li>
+<li>Lakehouse/Delta/Iceberg explains why object storage needs a metadata/transaction layer before it can become a database table.</li>
+<li>Ursa/PVLDB 2025 shows that Kafka-compatible stream-table duality has entered top-tier industrial database research.</li>
+<li>TreeCat/Open Catalog/S3 Tables show that catalog/metadata is becoming the core control plane for next-generation data systems.</li>
+<li>Flink state disaggregation, Fluss, AutoMQ, and related systems show that this trend goes beyond Kafka. The whole streaming/data processing stack is moving from local state toward disaggregated/shared storage.</li>
+</ul>
+<p>In the short term, the most realistic engineering route is still a managed combination such as Confluent Tableflow / AWS S3 Tables / Snowflake Open Catalog. In the medium term, the most important items to track are Apache Kafka KIP-1150/1163/1164 and Aiven Iceberg Topics. The most aggressive academic and industry direction, and the one most worth reading carefully, is a lakehouse-native streaming engine such as Ursa.</p>
+<p>If you want to go deeper, I suggest a narrower paper reading list as the next step:</p>
+<ol>
+<li>Ursa PVLDB 2025: focus on WAL, offset index, Parquet compaction, Iceberg/Delta commit, and Kafka compatibility.</li>
+<li>Delta Lake PVLDB 2020 + Iceberg spec: understand the basic pattern of object-store table metadata.</li>
+<li>TreeCat PVLDB 2025 + Snowflake Open Catalog / Polaris: understand catalog independence and governance lock-in.</li>
+<li>Disaggregation VLDB 2025 + SIGMOD 2023 tutorial: place diskless Kafka within the broader cloud database architecture trend.</li>
+<li>Iceberg row-level ops PVLDB 2024: understand the real complexity of CDC/upsert/delete/compaction in a streaming lakehouse.</li>
+</ol>
+<h2>References</h2>
+<h3>Academic Papers and Conferences</h3>
+<ul>
+<li>Ursa: A Lakehouse-Native Data Streaming Engine for Kafka, PVLDB 18(12), 2025: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">https://www.vldb.org/pvldb/vol18/p5184-guo.pdf</a></li>
+<li>VLDB 2025 Industrial Papers accepted list: <a href="https://vldb.org/2025/?papers-industry=">https://vldb.org/2025/?papers-industry=</a></li>
+<li>Lakehouse: A New Generation of Open Platforms that Unify Data Warehousing and Advanced Analytics, CIDR 2021: <a href="https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf">https://www.cidrdb.org/cidr2021/papers/cidr2021_paper17.pdf</a></li>
+<li>Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores, PVLDB 13(12), 2020: <a href="https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf">https://www.vldb.org/pvldb/vol13/p3411-armbrust.pdf</a></li>
+<li>Petabyte-Scale Row-Level Operations in Data Lakehouses, PVLDB 17(12), 2024: <a href="https://www.vldb.org/pvldb/vol17/p4159-okolnychyi.pdf">https://www.vldb.org/pvldb/vol17/p4159-okolnychyi.pdf</a></li>
+<li>TreeCat: Standalone Catalog Engine for Large Data Systems, PVLDB 18, 2025: <a href="https://www.vldb.org/pvldb/vol18/p4323-oh.pdf">https://www.vldb.org/pvldb/vol18/p4323-oh.pdf</a></li>
+<li>Disaggregation: A New Architecture for Cloud Databases, PVLDB 18, 2025: <a href="https://www.vldb.org/pvldb/vol18/p5527-xiangyao.pdf">https://www.vldb.org/pvldb/vol18/p5527-xiangyao.pdf</a></li>
+<li>Disaggregated Database Systems, SIGMOD 2023 tutorial: <a href="https://www.cs.purdue.edu/homes/csjgwang/pubs/SIGMOD23_Tutorial_DisaggregatedDB.pdf">https://www.cs.purdue.edu/homes/csjgwang/pubs/SIGMOD23_Tutorial_DisaggregatedDB.pdf</a></li>
+<li>Disaggregated State Management in Apache Flink 2.0, PVLDB 18, 2025: <a href="https://www.vldb.org/pvldb/vol18/p4846-mei.pdf">https://www.vldb.org/pvldb/vol18/p4846-mei.pdf</a></li>
+</ul>
+<h3>Specs, KIPs, and Open-Source Materials</h3>
+<ul>
+<li>Apache Kafka KIP-1150: Diskless Topics: <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150:+Diskless+Topics">https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150:+Diskless+Topics</a></li>
+<li>KIP-1150 accepted mail thread: <a href="https://www.mail-archive.com/dev@kafka.apache.org/msg154859.html">https://www.mail-archive.com/dev@kafka.apache.org/msg154859.html</a></li>
+<li>Apache Kafka KIP-1163: Diskless Core: <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core">https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core</a></li>
+<li>Apache Kafka KIP-1164: Diskless Coordinator: <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1164%3A+Diskless+Coordinator">https://cwiki.apache.org/confluence/display/KAFKA/KIP-1164%3A+Diskless+Coordinator</a></li>
+<li>Apache Iceberg spec: <a href="https://iceberg.apache.org/spec/">https://iceberg.apache.org/spec/</a></li>
+<li>Aiven Iceberg Topics whitepaper: <a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/iceberg_whitepaper.md">https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/iceberg_whitepaper.md</a></li>
+<li>Aiven tiered storage README: <a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/README.md">https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/README.md</a></li>
+</ul>
+<h3>Industry Products and Vendor Materials</h3>
+<ul>
+<li>Confluent Freight Clusters GA: <a href="https://www.confluent.io/blog/freight-clusters-are-generally-available/">https://www.confluent.io/blog/freight-clusters-are-generally-available/</a></li>
+<li>Confluent Tableflow overview: <a href="https://docs.confluent.io/cloud/current/topics/tableflow/overview.html">https://docs.confluent.io/cloud/current/topics/tableflow/overview.html</a></li>
+<li>Confluent Tableflow + Snowflake guide: <a href="https://docs.confluent.io/cloud/current/topics/tableflow/how-to-guides/query-engines/query-with-snowflake.html">https://docs.confluent.io/cloud/current/topics/tableflow/how-to-guides/query-engines/query-with-snowflake.html</a></li>
+<li>Confluent Tableflow GA blog: <a href="https://www.confluent.io/blog/tableflow-ga-kafka-snowflake-iceberg">https://www.confluent.io/blog/tableflow-ga-kafka-snowflake-iceberg</a></li>
+<li>AWS S3 Tables product page: <a href="https://aws.amazon.com/s3/features/tables/">https://aws.amazon.com/s3/features/tables/</a></li>
+<li>AWS S3 Tables user guide: <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html">https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html</a></li>
+<li>AWS APN Snowflake + S3 Tables: <a href="https://aws.amazon.com/blogs/apn/build-real-time-data-lakes-with-snowflake-and-amazon-s3-tables/">https://aws.amazon.com/blogs/apn/build-real-time-data-lakes-with-snowflake-and-amazon-s3-tables/</a></li>
+<li>Snowflake Iceberg tables: <a href="https://docs.snowflake.com/en/user-guide/tables-iceberg">https://docs.snowflake.com/en/user-guide/tables-iceberg</a></li>
+<li>Snowflake Open Catalog overview: <a href="https://docs.snowflake.com/en/user-guide/opencatalog/overview">https://docs.snowflake.com/en/user-guide/opencatalog/overview</a></li>
+<li>AutoMQ overview: <a href="https://docs.automq.com/automq/what-is-automq/overview">https://docs.automq.com/automq/what-is-automq/overview</a></li>
+<li>AutoMQ Table Topic: <a href="https://www.automq.com/blog/automq-kafka-to-iceberg-table-topic">https://www.automq.com/blog/automq-kafka-to-iceberg-table-topic</a></li>
+<li>WarpStream Zero Disks is Better for Kafka: <a href="https://www.warpstream.com/blog/zero-disks-is-better-for-kafka">https://www.warpstream.com/blog/zero-disks-is-better-for-kafka</a></li>
+<li>StreamNative Lakestream docs: <a href="https://docs.streamnative.io/cloud/overview/lakestream-overview">https://docs.streamnative.io/cloud/overview/lakestream-overview</a></li>
+<li>Ursa VLDB 2025 award blog: <a href="https://streamnative.io/blog/ursa-wins-vldb-2025-best-industry-paper-the-first-lakehouse-native-streaming-engine-for-kafka">https://streamnative.io/blog/ursa-wins-vldb-2025-best-industry-paper-the-first-lakehouse-native-streaming-engine-for-kafka</a></li>
+<li>Apache Fluss x Iceberg: <a href="https://fluss.apache.org/blog/2025/12/02/fluss-x-iceberg-why-your-lakehouse-is-not-streamhouse-yet">https://fluss.apache.org/blog/2025/12/02/fluss-x-iceberg-why-your-lakehouse-is-not-streamhouse-yet</a></li>
+</ul>
+  </article>
+  <footer>
+    <p>Published on <a href="/share/">simin.you/share</a>. Source report preserved in the workspace repository.</p>
+  </footer>
+  <script>
+    const buttons = Array.from(document.querySelectorAll('[data-lang]'));
+    const reports = Array.from(document.querySelectorAll('[data-report-lang]'));
+    function setLanguage(lang) {
+      reports.forEach((report) => { report.hidden = report.dataset.reportLang !== lang; });
+      buttons.forEach((button) => { button.setAttribute('aria-pressed', String(button.dataset.lang === lang)); });
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    }
+    buttons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
+  </script>
+</body>
+</html>
