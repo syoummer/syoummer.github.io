@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>MongoDB, AI Agents, and Database Defaults</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A bilingual research note on MongoDB in the AI era, PostgreSQL and pgvector as defaults, coding agents, Atlas growth, and stock guidance pressure.">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+[hidden] { display: none !important; }
+.share-index-nav { margin: 0 0 1.2em; font-size: 0.86em; line-height: 1.3; }
+.share-index-nav a { display: inline-flex; align-items: center; padding: 0.3em 0.7em; color: var(--muted-color); border: 1px solid var(--border-color); border-radius: 999px; background: var(--switch-bg); }
+.share-index-nav a:hover { color: var(--link-color); border-color: var(--link-color); text-decoration: none; }
+.share-index-nav a:focus-visible, .language-switch button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.report-toolbar { display: flex; justify-content: flex-end; margin: 0 0 1.5em; }
+.language-switch { display: inline-flex; align-items: center; gap: 0.6em; color: var(--muted-color); font-size: 0.82em; line-height: 1.2; }
+.language-switch__label { letter-spacing: 0.04em; text-transform: uppercase; }
+.language-switch__options { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--border-color); border-radius: 999px; background: var(--switch-bg); }
+.language-switch button { border: 0; border-radius: 999px; padding: 0.35em 0.75em; color: var(--muted-color); background: transparent; cursor: pointer; font: inherit; }
+.language-switch button[aria-pressed="true"] { color: var(--switch-active-color); background: var(--switch-active-bg); }
+h1, h2, h3 { line-height: 1.35; }
+h1 { font-size: 1.9em; margin: 0.3em 0 0.6em; }
+h2 { font-size: 1.35em; margin: 1.8em 0 0.6em; padding-bottom: 0.25em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.12em; margin: 1.3em 0 0.4em; }
+p, ul, ol { margin: 0.85em 0; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 0.4em 0; }
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { padding: 2px 5px; border-radius: 3px; background: var(--code-bg); font-size: 0.9em; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--border-color); color: var(--muted-color); font-size: 0.92em; }
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  .report-toolbar { justify-content: flex-start; }
+}</style>
+</head>
+<body>
+  <nav class="share-index-nav"><a href="/share/">← Share index</a></nav>
+  <div class="report-toolbar" aria-label="Language selector">
+    <div class="language-switch">
+      <span class="language-switch__label">Language</span>
+      <span class="language-switch__options">
+        <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </span>
+    </div>
+  </div>
+  <article data-report-lang="zh">
+<h1>MongoDB 在 AI 时代相对不好用了吗？数据库默认选择变化与股价压力调研</h1>
+<p>日期：2026-05-29 主题：MongoDB 在 AI / coding agent 时代的产品适配、开发者默认选择、PostgreSQL/pgvector 替代压力、以及股价/指引压力</p>
+<h2>核心判断</h2>
+<p>我的结论：<strong>你的直觉方向是对的，但需要降一档表述。</strong> 更准确地说，不是“AI 让 MongoDB 不好用”或“coding agent 已经系统性抛弃 MongoDB”，而是：</p>
+<ol>
+<li><strong>PostgreSQL 正在变成 AI 应用的更安全默认项。</strong> 它同时覆盖关系数据、JSONB、全文检索、向量检索、权限/事务/迁移/BI 生态，配合 <code>pgvector</code>、Supabase、Neon、Cloud SQL / RDS 等托管生态，已经足够支撑大量 RAG、agent memory、AI SaaS MVP 和中等规模生产场景。</li>
+<li><strong>AI 降低了“设计和维护 schema”的心理成本，削弱了 MongoDB 早年最强的卖点之一。</strong> 过去 MongoDB 的优势是不用提前建模、JSON 直存、迭代快；现在 coding agents、ORM、migration 工具、AI schema generators 能更容易生成 SQL schema、Prisma schema、migration 和测试。关系型数据库的“麻烦”被部分自动化后，Postgres 的一致性、约束、join、SQL 生态优势就更突出。</li>
+<li><strong>但股价/指引压力的直接原因不是这个技术假设本身。</strong> 更直接的证据是：MongoDB 当前业绩仍不错，但市场在惩罚 FY2027 增速降档、Atlas consumption 可见度、AI 货币化尚未成为显著收入驱动、以及软件股整体的 AI 估值焦虑。</li>
+<li><strong>MongoDB 并非没有 AI 产品。</strong> Atlas Vector Search、Automated Embedding、Voyage AI、MAAP、LangChain/LlamaIndex/Semantic Kernel 集成都说明 MongoDB 在积极追 AI。但这些更像“防守 + 再定位”：MongoDB 正从“灵活文档数据库”讲成“AI-ready developer data platform”。市场现在要看的不是故事，而是 Atlas 增速能否因为 AI 重新加速。</li>
+</ol>
+<p>所以我会把假设评级为：<strong>中等可信，作为长期结构性逆风/估值叙事成立；作为解释短期股价下跌的主因证据不足。</strong></p>
+<h2>一、市场和股价：为什么 MongoDB guidance 看起来让市场不满意</h2>
+<p>MongoDB 官方 Q4 FY2026 财报显示，当季基本面并不差：总收入 6.951 亿美元，同比增长 27%；FY2026 全年收入 24.6 亿美元，同比增长 23%；Atlas 当季和全年收入均同比增长 29%；客户总数超过 65,200。官方 CEO 还强调客户对 “search, vector search and embeddings in a single intelligent data layer” 感兴趣。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 官方 8-K/press release</a>。</p>
+<p>但 forward guide 明显降速。MongoDB 对 FY2027 的收入指引为 28.60 亿至 29.00 亿美元。相对 FY2026 的 24.64 亿美元，这大约是 <strong>16%-18% 增长</strong>，低于当季 27% 和 Atlas 29% 的速度。官方 Q4 电话会转录中，CFO 也提到 Atlas FY2027 预计增长约 21%-23%，并说明这是 consumption business，后半年的可见度更有限。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/03/02/mongodb-mdb-q4-2026-earnings-call-transcript/">Motley Fool Q4 FY2026 transcript</a>。</p>
+<p>市场反应集中在“强当季 + 弱未来”这个矛盾上。Reuters/MarketScreener 报道称，MongoDB 股价在财报后下跌约 27%，原因包括云数据库 Atlas 增速放缓、第一季度利润指引低于预期、以及投资者对 AI 冲击软件行业的焦虑。报道还提到 Atlas Q4 增长 29%，低于上一季度 30%，UBS 认为 MongoDB 没有给出足够具体解释。来源：<a href="https://in.marketscreener.com/news/mongodb-shares-plummet-27-on-weak-growth-in-cloud-business-muted-forecast-ce7e5cd2dd81f424">Reuters via MarketScreener</a>。</p>
+<p>SiliconANGLE 的报道也给出相同框架：MongoDB Q4 adjusted EPS 1.65 美元、收入 6.951 亿美元，均高于预期；但 Q1 FY2027 EPS 指引 1.15-1.19 美元低于市场 1.20 美元，收入 6.59-6.64 亿美元基本接近共识，但在软件 AI 焦虑背景下触发估值压力。来源：<a href="https://siliconangle.com/2026/03/02/mongodbs-stock-craters-lower-guidance-whips-investors-ai-software-fears/">SiliconANGLE</a>。</p>
+<p>这说明：<strong>股价下跌的硬证据是增长曲线和指引，而不是已有证据证明客户正在大规模从 MongoDB 迁到 Postgres。</strong> 你的技术假设更像市场愿意相信的“叙事放大器”：如果投资者已经担心 Atlas 增速，Postgres/pgvector 和 AI coding agent 默认偏好会让他们更容易怀疑 MongoDB 的长期差异化。</p>
+<h2>二、AI 收益兑现慢：MongoDB 自己也承认 AI-native 还不是显著收入驱动</h2>
+<p>MongoDB 管理层一方面非常积极讲 AI，另一方面又承认收入兑现仍早。Q4 FY2026 电话会中，管理层表示对 AI-native 客户机会乐观，但这些客户“many of them remain early in their MongoDB journey and are not yet meaningful drivers of revenue”。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/03/02/mongodb-mdb-q4-2026-earnings-call-transcript/">Motley Fool Q4 FY2026 transcript</a>。</p>
+<p>这与 2025 年 Q4 FY2025 电话会的说法一致：MongoDB 当时说企业客户会从实验、原型到生产逐步推进 AI，因此 FY2026 AI 对收入增长只会是 modestly incremental。来源：<a href="https://www.fool.com/earnings/call-transcripts/2025/03/06/mongodb-mdb-q4-2025-earnings-call-transcript/">Motley Fool Q4 FY2025 transcript</a>。</p>
+<p>这点很关键：如果市场把 MongoDB 视为“AI 数据层受益者”，它就需要看到 AI workload 变成明显 Atlas consumption。现在官方口径更接近“长期机会很大，但短期收入贡献有限”。这会让市场把 AI 叙事从加分项重新定价为“还没有证明”。</p>
+<p>MongoDB 也在 Investor Day 强调 AI 扩大市场，并披露“约 30% Atlas ARR 来自至少有一个 AI use case 的客户”，同时强调 AI 不是 winner-take-all，MongoDB 差异化可持续。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000144181625000197/main-investorday2025pres.htm">MongoDB Investor Day 2025 SEC exhibit</a>。但这个指标要谨慎解释：它是“客户至少有一个 AI use case”，不等于 30% Atlas 收入完全由 AI 工作负载直接产生，也不等于 AI 正在拉动总收入重新加速。</p>
+<h2>三、Postgres 为什么在 AI 时代变得更像默认项</h2>
+<h3>1. 开发者偏好和普及度已经明显偏向 PostgreSQL</h3>
+<p>Stack Overflow 2024 Developer Survey 显示，PostgreSQL 是最流行的数据库：所有受访者使用率 48.7%，专业开发者 51.9%；MongoDB 分别约 24.8% 和 25.2%。同一页还显示 PostgreSQL admired 74.5%、desired 47.1%，在数据库中非常领先。来源：<a href="https://survey.stackoverflow.co/2024/technology">Stack Overflow 2024 Technology Survey</a>。</p>
+<p>DB-Engines 2026 年 5 月排名中，MongoDB 仍是全球前五数据库之一，但 PostgreSQL 排在 MongoDB 前面：Oracle、MySQL、Microsoft SQL Server、PostgreSQL、MongoDB。来源：<a href="https://db-engines.com/en/ranking">DB-Engines Ranking</a>。</p>
+<p>这些不是 AI 专属证据，但它们说明 coding agents 训练语料、开源模板、社区问答、官方文档、生产经验的“默认重力”更容易向 Postgres 倾斜。</p>
+<h3>2. pgvector 把 Postgres 从“关系库”扩展成“够用的 AI 数据层”</h3>
+<p><code>pgvector</code> 官方 README 的定位很直接：在 Postgres 里做 open-source vector similarity search，支持 exact / approximate nearest neighbor search、L2 / inner product / cosine / L1 distance、HNSW 和 IVFFlat，并且可以“store your vectors with the rest of your data”。来源：<a href="https://github.com/pgvector/pgvector">pgvector GitHub</a>。</p>
+<p>Supabase 的 AI 文档也把这个产品化：pgvector 是 Postgres extension，可存储 embeddings、执行 vector similarity search，用于 RAG；它还提供 Next.js + OpenAI + Supabase 的 vector search 示例，步骤是把 markdown 转成 embeddings，存到 Postgres/pgvector，再用函数回答用户问题。来源：<a href="https://supabase.com/docs/guides/database/extensions/pgvector">Supabase pgvector docs</a>、<a href="https://supabase.com/docs/guides/ai/examples/nextjs-vector-search">Supabase Next.js Vector Search example</a>。</p>
+<p>LangChain 和 LlamaIndex 的文档同样支持 Postgres/pgvector。LangChain 的 PGVectorStore 文档说它用 Postgres 作为 backend，需要 <code>pgvector</code> extension，并支持 metadata filtering；LangChain.js 文档还区分 legacy PGVector 和 modern PGVectorStore，称新项目推荐 PGVectorStore。来源：<a href="https://docs.langchain.com/oss/python/integrations/vectorstores/pgvectorstore">LangChain PGVectorStore Python</a>、<a href="https://docs.langchain.com/oss/javascript/integrations/vectorstores/pgvector">LangChain PGVector JS</a>。LlamaIndex 也有 <code>PGVectorStore</code>，支持 Postgres vector store。来源：<a href="https://developers.llamaindex.ai/python/framework-api-reference/storage/vector_store/postgres/">LlamaIndex Postgres vector store</a>。</p>
+<p>这构成一个现实开发者判断：如果我已经需要用户、权限、billing、team、documents、jobs、audit、RLS、metadata filters，再加上 embeddings，那么一个 Postgres 能覆盖更多路径。MongoDB 当然也能做向量和文档，但它不再是唯一“更适合 JSON/半结构化”的轻松选择，因为 Postgres 的 JSONB 和扩展生态已经侵蚀了这块心智。</p>
+<h3>3. AI agents 更偏好“高语料密度 + 强约束 + 可验证”的系统</h3>
+<p>这里证据较弱，但逻辑强。Coding agents 生成 SQL schema、Prisma model、migration、索引、测试，比过去人手写更轻松。它们也更容易利用海量 Postgres 样例和 Stack Overflow/文档语料。Yugabyte 一篇关于 AI coding agents 和 distributed SQL 的文章甚至反向说明了这种训练偏置：模型经常写出“看起来像 PostgreSQL”的代码，因为它们被大量 PostgreSQL 样例训练；问题在于这些代码未必适合 distributed SQL。来源：<a href="https://www.yugabyte.com/blog/benchmark-ai-coding-agents-for-distributed-sql/">Yugabyte blog</a>。</p>
+<p>一些 agent-era 观点文章进一步提出，软件形态可能变成 “Agent + Database”，而 PostgreSQL 因为 SQL、JSON、vector、GIS、全文、扩展生态和文档密度，容易成为 agent 时代默认数据库。来源：<a href="https://vonng.com/en/db/agent-native-db/">Vonng, In the AI Era, Software Starts at the Database</a>、<a href="https://vonng.com/en/ai/postgres-and-ai/">Vonng, Why PostgreSQL Won in the AI Era</a>。这些是观点源，不能当成市场份额证据，但能解释为什么开发者叙事正在向 Postgres 聚拢。</p>
+<h2>四、你的核心假设：AI 是否降低了 schema 维护成本，从而削弱 MongoDB？</h2>
+<p>我认为这个假设<strong>部分成立</strong>。</p>
+<p>MongoDB 早年的优势之一是：应用数据天然是 JSON/document，schema 变化频繁，先快速迭代，后面再慢慢治理。这个卖点在 2010s 很强，因为关系型 schema 设计、migration、ORM、join 建模都需要经验，出错成本高。</p>
+<p>现在变化有三层：</p>
+<ol>
+<li><strong>AI 让 schema 生成和迁移更便宜。</strong> 搜索到的开源项目和产品说明里，已经有大量 AI schema generator，把 JSON 或自然语言转成 PostgreSQL DDL、Mongoose schema、Prisma model、migration、索引建议。例如一个 GitHub 项目直接宣传“Paste any JSON and get production-ready PostgreSQL, MongoDB, and Prisma schemas”，并支持嵌套对象拆表、外键检测、索引建议。来源：<a href="https://github.com/biswajit-sarkar-007/build-it-up">build-it-up / SchemaGen AI README</a>。这类工具不证明企业迁移，但说明 schema 负担在下降。</li>
+<li><strong>AI 应用反而更需要强约束。</strong> Agent memory、RAG metadata、权限过滤、tenant isolation、billing、evaluation logs、feedback、documents 与 embeddings 的一致性，都不是纯 document flexibility 能解决的问题。Postgres 的事务、外键、SQL、RLS、join、materialized view、BI 生态在这些场景里有优势。</li>
+<li><strong>Postgres 已经吸收了一部分 MongoDB 的灵活性。</strong> JSONB 让 Postgres 能存半结构化数据；pgvector 让它存 embeddings；全文检索和扩展生态让它减少外部服务依赖。于是 MongoDB 的“灵活文档模型”优势还在，但相对差异缩小。</li>
+</ol>
+<p>但这个假设也有边界：</p>
+<ul>
+<li>AI 不会自动让坏 schema 变好。复杂领域建模、迁移回滚、数据质量、跨租户权限、查询规划仍然很难。</li>
+<li>MongoDB 的 document model 对高度多态、嵌套、内容/产品目录、事件、实时写入、需要横向扩展的 workload 仍然自然。</li>
+<li>没有强证据表明 coding agents 在真实生产项目中已经系统性把 MongoDB 替换成 Postgres。</li>
+</ul>
+<p>所以更稳妥的结论是：<strong>AI 把“用关系库很麻烦”这件事往下压了一截，使得 Postgres 的综合默认性更强；这削弱了 MongoDB 作为默认新项目数据库的边际吸引力。</strong></p>
+<h2>五、MongoDB 的反击：它不是没赶上 AI，而是在重新包装数据库边界</h2>
+<p>MongoDB 的 AI 产品动作是真实存在的。</p>
+<p>MongoDB Vector Search 官方页面定位为 “Design intelligent apps with gen AI”。来源：<a href="https://www.mongodb.com/products/platform/atlas-vector-search">MongoDB Vector Search product page</a>。MongoDB 文档说明，Vector Search 可以手动创建 embeddings 并存入 MongoDB，也可以通过 Automated Embedding 让 MongoDB Vector Search 在 index-time 和 query-time 用 Voyage AI 模型自动生成 embeddings。来源：<a href="https://www.mongodb.com/docs/atlas/atlas-vector-search/create-embeddings/">MongoDB manual embeddings docs</a>、<a href="https://www.mongodb.com/docs/vector-search/crud-embeddings/automated-embedding/">MongoDB Automated Embedding docs</a>。</p>
+<p>Automated Embedding 的设计很重要：MongoDB 把 embeddings 放在同一 cluster 的内部系统 collection <code>__mdb_internal_search</code>，并维护 data locality。这是在对 Postgres/pgvector 的“一库解决”叙事做回应：MongoDB 也希望告诉开发者，不需要额外搬数据到独立 vector DB。来源：<a href="https://www.mongodb.com/docs/vector-search/crud-embeddings/automated-embedding/overview/">MongoDB Automated Embedding overview</a>。</p>
+<p>MongoDB 还收购/整合 Voyage AI，并在 FY2026 Q4 release 中强调 Voyage embedding/reranking、Automated Embedding、Compass/Atlas Data Explorer AI assistant、MongoDB for Startups 等 AI 能力。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 release</a>。</p>
+<p>AI 框架侧也不是只支持 Postgres。LangChain 有 MongoDB Atlas vector store integration；文档说明支持 MongoDB 7.0+ manual embedding mode，Automated embedding 需要 MongoDB 8.2+，并支持 metadata pre-filtering。来源：<a href="https://docs.langchain.com/oss/javascript/integrations/vectorstores/mongodb_atlas">LangChain MongoDB Atlas integration</a>。LlamaIndex 也有 <code>MongoDBAtlasVectorSearch</code>。来源：<a href="https://developers.llamaindex.ai/python/framework-api-reference/storage/vector_store/mongodb/">LlamaIndex MongoDB vector store</a>。Microsoft Semantic Kernel 也有 MongoDB Atlas Vector Search connector。来源：<a href="https://github.com/microsoft/semantic-kernel/blob/main/python/semantic_kernel/connectors/memory_stores/mongodb_atlas/README.md">Semantic Kernel MongoDB connector README</a>。</p>
+<p>这说明反证很明确：<strong>MongoDB 没有缺席 AI stack。</strong> 真正问题是，开发者和投资者是否认为这些 AI 能力足以让 MongoDB 从“可选项”重新变成“默认项”。目前证据看，MongoDB 在 AI 里是强可选项，但 Postgres/pgvector 在“默认 starting point”上的叙事更强。</p>
+<h2>六、coding agent / template 证据：Postgres 默认性更强，但 MongoDB 仍有存在感</h2>
+<p>GitHub 搜索样例中，AI agent / RAG / memory 项目大量采用 PostgreSQL + pgvector。例如 AgentDock 文档把开发环境设为 SQLite + sqlite-vec，生产环境设为 PostgreSQL + pgvector；MaxKB 技术栈写明 PostgreSQL + pgvector；多个 AI starter 使用 Supabase Postgres + pgvector。来源：<a href="https://github.com/AgentDock/AgentDock/blob/main/agentdock-core/src/memory/README.md">AgentDock memory README</a>、<a href="https://github.com/1Panel-dev/MaxKB/blob/v2/README.md">MaxKB README</a>、<a href="https://github.com/fletchertyler914/supabase-ai-starter-kit">supabase-ai-starter-kit README</a>。</p>
+<p>面向 Claude Code 的 <code>create-claude-app</code> 模板也很有代表性：数据库选项是 MySQL、PostgreSQL、SQLite、Skip，没有 MongoDB。来源：<a href="https://github.com/swhsiang/create-claude-app">create-claude-app README</a>。另一个 full-stack AI agent template 的 quick mode 示例直接使用 <code>--database postgresql</code>，RAG 示例也写 <code>--rag --database postgresql</code>。来源：<a href="https://github.com/vstorm-co/full-stack-ai-agent-template/blob/main/README.md">full-stack-ai-agent-template README</a>。</p>
+<p>但 MongoDB 也有不少 AI 示例：PraisonAI MongoDB integration 把 MongoDB 作为 persistent memory store、knowledge store、vector search；Semantic Kernel connector 使用 MongoDB Atlas Vector Search 实现 Semantic Memory；CopilotKit 有 MongoDB Atlas Vector Search demo；一些 Spring AI 示例也使用 MongoDB Atlas Vector Search。来源：<a href="https://github.com/MervinPraison/PraisonAI/blob/main/examples/python/mongodb/README.md">PraisonAI MongoDB README</a>、<a href="https://github.com/microsoft/semantic-kernel/blob/main/dotnet/src/VectorData/MongoDB/README.md">Semantic Kernel MongoDB README</a>、<a href="https://github.com/CopilotKit/CopilotKit/blob/main/examples/v1/_legacy/copilot-openai-mongodb-atlas-vector-search/README.md">CopilotKit MongoDB Atlas demo</a>、<a href="https://github.com/partme-ai/spring-ai-examples/blob/main/spring-ai-ollama-rag-mongodb/README.md">spring-ai-ollama-rag-mongodb README</a>。</p>
+<p>所以这部分证据支持“Postgres 在 AI starter / agent memory 默认项里更常见”，但不足以支持“coding agents 不再推荐 MongoDB”。更严谨的说法是：<strong>当 prompt 没有明确要求 document model 或 MongoDB Atlas 时，AI/coding templates 很可能会沿着 Postgres/Supabase/pgvector 的高语料路径走。</strong></p>
+<h2>七、为什么 MongoDB 在 AI 时代会显得“不特别好用”</h2>
+<p>从开发者体感看，MongoDB 的问题不是单点功能缺失，而是相对优势变窄：</p>
+<ol>
+<li><strong>AI app 通常不是纯非结构化数据。</strong> 它们需要用户、组织、权限、订阅、文档、chunk、embedding、反馈、trace、evaluation、任务状态。很多数据天然有关系和约束。</li>
+<li><strong>RAG 需要 metadata filtering。</strong> Postgres 可以把 vector similarity、tenant/user permission、document status、时间、billing tier 放在一个 SQL 查询或函数里。MongoDB 也能 pre-filter，但开发者心智上 SQL + relational filters 更直观。</li>
+<li><strong>schema flexibility 不再是压倒性优势。</strong> Postgres JSONB + AI 生成 migration + Prisma/Drizzle/Supabase 让“先上关系库”没以前那么慢。</li>
+<li><strong>MongoDB Atlas 的商业模式更像 consumption cloud service。</strong> 对投资者来说，如果 AI workloads 还没变成明显 Atlas consumption，而 Postgres 托管生态又给开发者低门槛替代方案，MongoDB 的估值会更容易被压。</li>
+<li><strong>MongoDB 的 AI 产品叙事需要教育。</strong> Postgres/pgvector 的叙事很简单：“你已经有 Postgres，把 embeddings 放进去。” MongoDB 的叙事是“developer data platform + document model + search + vector + Voyage + automated embeddings”。功能更完整，但心智成本也更高。</li>
+</ol>
+<h2>八、交叉验证与矛盾</h2>
+<p>高可信证据：</p>
+<ul>
+<li>MongoDB FY2026 Q4 财报强，但 FY2027 指引显示增长降档；股价下跌报道集中在 guidance、Atlas 增速、软件 AI 焦虑。</li>
+<li>Stack Overflow 和 DB-Engines 都显示 PostgreSQL 普及度/偏好强于 MongoDB。</li>
+<li>pgvector、Supabase、LangChain、LlamaIndex 等生态使 Postgres 成为 AI 应用的强默认选择。</li>
+<li>MongoDB 官方确实有 Vector Search、Automated Embedding、Voyage AI、MAAP 等 AI 产品动作。</li>
+</ul>
+<p>中可信证据：</p>
+<ul>
+<li>AI/coding agents 更容易推荐 Postgres，因为 Postgres 文档、样例、模板和 SQL 语料更多。</li>
+<li>AI 降低 schema/migration 成本，削弱 MongoDB 的“无需 schema”优势。</li>
+</ul>
+<p>低可信或需要进一步验证的说法：</p>
+<ul>
+<li>“MongoDB 股价不好主要因为 coding agents 不推荐 MongoDB。”目前没有直接证据。</li>
+<li>“MongoDB 不适合 AI 应用。”反证很多，MongoDB Atlas Vector Search 和多个主流框架集成都说明它适合一部分 AI workload。</li>
+<li>“Postgres/pgvector 能替代所有 vector DB 和 MongoDB 场景。”大型向量规模、极高 QPS、强文档多态、全球分片、高写入吞吐仍可能需要专门系统或 MongoDB。</li>
+</ul>
+<h2>最终结论</h2>
+<p>如果只问“MongoDB 为什么在 AI 时代显得没那么顺手”，我的答案是：<strong>因为 AI 应用的默认数据形态从‘灵活 JSON 文档’变成了‘关系数据 + JSON metadata + embeddings + 权限/事务/搜索的一体化工作负载’。Postgres 刚好通过 JSONB、pgvector、全文检索、扩展生态和托管平台吃到了这个交叉点。</strong></p>
+<p>如果问“你的假设对不对”，我会说：<strong>对一半，而且是重要的一半。</strong> AI 确实降低了 schema 维护成本，也让 coding agents 更容易沿着 Postgres 的既有样例和工具链生成代码；这会削弱 MongoDB 作为默认新项目数据库的吸引力。但 MongoDB 股价和 guidance 的短期压力，更直接来自增长预期重置、Atlas consumption 可见度、AI 收入兑现慢、以及软件股整体被 AI 重新定价。</p>
+<p>我会持续观察三个指标：</p>
+<ol>
+<li><strong>Atlas AI workload 是否变成可量化的 revenue acceleration</strong>，而不是“客户有 AI use case”。</li>
+<li><strong>AI starter / agent framework 默认数据库选择</strong>是否继续向 Supabase/Postgres/pgvector 集中。</li>
+<li><strong>MongoDB Automated Embedding + Voyage AI</strong> 是否能形成比 pgvector 更简单、更高质量的开发体验，重新夺回“默认 AI app data layer”的心智。</li>
+</ol>
+<p>当前阶段，MongoDB 不是被 AI 淘汰，而是从“现代应用默认数据库”变成了“需要更具体理由选择的数据库”。这正是估值最敏感的地方：默认项享受溢价，选型项需要证明。</p>
+  </article>
+  <article data-report-lang="en" hidden>
+<h1>Is MongoDB Less Compelling in the AI Era? Database Defaults, AI Agents, and Stock Pressure</h1>
+<p>Date: 2026-05-29 Topic: MongoDB&#x27;s product fit in the AI and coding agent era, developer defaults, pressure from PostgreSQL and <code>pgvector</code>, and stock and guidance pressure.</p>
+<h2>Core View</h2>
+<p>My conclusion: <strong>the thesis is directionally right, but it should be stated more carefully.</strong> It is not that AI makes MongoDB bad, or that coding agents have systematically abandoned MongoDB. The more accurate version is:</p>
+<ol>
+<li><strong>PostgreSQL is becoming the safer default for many AI applications.</strong> It covers relational data, JSONB, full text search, vector search, permissions, transactions, migrations, and BI tooling. With <code>pgvector</code>, Supabase, Neon, Cloud SQL, RDS, and related managed ecosystems, it is already enough for many RAG systems, agent memory layers, AI SaaS MVPs, and mid scale production workloads.</li>
+<li><strong>AI lowers the perceived cost of schema design and maintenance, which weakens one of MongoDB&#x27;s early advantages.</strong> MongoDB&#x27;s old appeal was direct JSON storage, fast iteration, and less upfront modeling. Now coding agents, ORMs, migration tools, and AI schema generators can produce SQL schemas, Prisma models, migrations, indexes, and tests more easily. Once part of the relational database pain is automated away, Postgres&#x27;s consistency, constraints, joins, and SQL ecosystem stand out more.</li>
+<li><strong>But the stock and guidance pressure is not directly caused by this technical shift alone.</strong> The clearer evidence is that MongoDB&#x27;s current results remain solid, while the market is punishing slower FY2027 growth expectations, Atlas consumption visibility, AI monetization that is not yet a major revenue driver, and broader AI related valuation anxiety across software stocks.</li>
+<li><strong>MongoDB does have AI products.</strong> Atlas Vector Search, Automated Embedding, Voyage AI, MAAP, and integrations with LangChain, LlamaIndex, and Semantic Kernel all show that MongoDB is actively pursuing AI. These moves look more like defense plus repositioning: MongoDB is trying to move from “flexible document database” to “AI ready developer data platform.” The market now wants to see whether AI can reaccelerate Atlas growth.</li>
+</ol>
+<p>I would rate the thesis as <strong>medium confidence</strong>: credible as a long term structural headwind and valuation narrative, but not well supported as the main short term cause of the stock drop.</p>
+<h2>1. Market And Stock Pressure</h2>
+<p>MongoDB&#x27;s official Q4 FY2026 release was not weak on the surface. Total revenue was $695.1 million, up 27% year over year. FY2026 revenue was $2.46 billion, up 23%. Atlas revenue was up 29% year over year in both Q4 and the full year, and total customers exceeded 65,200. Management also highlighted customer interest in “search, vector search and embeddings in a single intelligent data layer.” Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 8-K / press release</a>.</p>
+<p>The forward guide, however, implied a clear deceleration. MongoDB guided FY2027 revenue to $2.86 billion to $2.90 billion, or roughly <strong>16% to 18% growth</strong> from FY2026 revenue of $2.46 billion. On the Q4 call, management also said Atlas was expected to grow about 21% to 23% in FY2027 and noted that consumption businesses have more limited visibility in the back half of the year. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/03/02/mongodb-mdb-q4-2026-earnings-call-transcript/">Motley Fool Q4 FY2026 transcript</a>.</p>
+<p>The market reaction centered on this “strong quarter, weaker future” setup. Reuters, via MarketScreener, reported that MongoDB shares fell about 27% after the results, citing slower cloud database growth, weaker first quarter profit guidance, and investor anxiety that AI could disrupt software business models. The report also noted that Atlas grew 29% in Q4, down from 30% in the prior quarter, and that UBS analysts thought MongoDB did not offer a sufficiently concrete explanation. Source: <a href="https://in.marketscreener.com/news/mongodb-shares-plummet-27-on-weak-growth-in-cloud-business-muted-forecast-ce7e5cd2dd81f424">Reuters via MarketScreener</a>.</p>
+<p>SiliconANGLE framed it similarly: MongoDB beat Q4 expectations with adjusted EPS of $1.65 and revenue of $695.1 million, but Q1 FY2027 EPS guidance of $1.15 to $1.19 was below the Street&#x27;s $1.20 estimate, while revenue guidance was roughly in line. In the current software market, that was enough to trigger valuation pressure. Source: <a href="https://siliconangle.com/2026/03/02/mongodbs-stock-craters-lower-guidance-whips-investors-ai-software-fears/">SiliconANGLE</a>.</p>
+<p>The hard evidence behind the stock move is therefore the growth curve and guidance, not proof that customers are migrating from MongoDB to Postgres at scale. The technical thesis is better treated as a narrative amplifier: if investors already worry about Atlas growth, Postgres and <code>pgvector</code> momentum make it easier to question MongoDB&#x27;s long term differentiation.</p>
+<h2>2. AI Monetization Is Still Early</h2>
+<p>MongoDB talks aggressively about AI, but management has also acknowledged that monetization is still early. On the Q4 FY2026 call, management said AI native customers have significant potential, but many remain early in their MongoDB journey and are not yet meaningful revenue drivers. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/03/02/mongodb-mdb-q4-2026-earnings-call-transcript/">Motley Fool Q4 FY2026 transcript</a>.</p>
+<p>That is consistent with the Q4 FY2025 call, where MongoDB said enterprise customers were moving gradually from experimentation to prototypes to production, and that AI would be only modestly incremental to FY2026 revenue growth. Source: <a href="https://www.fool.com/earnings/call-transcripts/2025/03/06/mongodb-mdb-q4-2025-earnings-call-transcript/">Motley Fool Q4 FY2025 transcript</a>.</p>
+<p>This matters because if the market values MongoDB as an AI data layer beneficiary, it wants to see AI workloads turn into visible Atlas consumption. MongoDB&#x27;s current message sounds closer to “large long term opportunity, limited short term revenue contribution.” That makes AI a claim still needing proof rather than an automatic valuation tailwind.</p>
+<p>MongoDB&#x27;s 2025 Investor Day also said AI expands the market and disclosed that roughly 30% of Atlas ARR comes from customers with at least one AI use case. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000144181625000197/main-investorday2025pres.htm">MongoDB Investor Day 2025 SEC exhibit</a>. But this metric needs caution: it means those customers have at least one AI use case, not that 30% of Atlas revenue is directly generated by AI workloads, and not that AI is reaccelerating total revenue.</p>
+<h2>3. Why Postgres Looks More Like The Default In The AI Era</h2>
+<h3>Developer Preference Already Favors PostgreSQL</h3>
+<p>The 2024 Stack Overflow Developer Survey shows PostgreSQL as the most used database: 48.7% of all respondents and 51.9% of professional developers reported using it. MongoDB was around 24.8% and 25.2%, respectively. The same survey also shows PostgreSQL with 74.5% admired and 47.1% desired among databases. Source: <a href="https://survey.stackoverflow.co/2024/technology">Stack Overflow 2024 Technology Survey</a>.</p>
+<p>DB-Engines ranked MongoDB as a top five database in May 2026, but PostgreSQL ranked ahead of it, behind Oracle, MySQL, and Microsoft SQL Server. Source: <a href="https://db-engines.com/en/ranking">DB-Engines Ranking</a>.</p>
+<p>These are not AI specific data points, but they matter for coding agents. Training data, public examples, open source templates, Q&amp;A, documentation, and production patterns all create a gravity well. That gravity is increasingly favorable to Postgres.</p>
+<h3>pgvector Turns Postgres Into A Good Enough AI Data Layer</h3>
+<p><code>pgvector</code> positions itself directly as open source vector similarity search inside Postgres. It supports exact and approximate nearest neighbor search, L2, inner product, cosine, and L1 distance, HNSW and IVFFlat indexes, and the ability to “store your vectors with the rest of your data.” Source: <a href="https://github.com/pgvector/pgvector">pgvector GitHub</a>.</p>
+<p>Supabase productizes this through its AI docs: <code>pgvector</code> is a Postgres extension for storing embeddings and running vector similarity search for RAG. Its Next.js and OpenAI example stores markdown embeddings in Postgres and queries them through database functions. Sources: <a href="https://supabase.com/docs/guides/database/extensions/pgvector">Supabase pgvector docs</a>, <a href="https://supabase.com/docs/guides/ai/examples/nextjs-vector-search">Supabase Next.js Vector Search example</a>.</p>
+<p>LangChain and LlamaIndex also support Postgres and <code>pgvector</code>. LangChain&#x27;s PGVectorStore uses Postgres as the backend, requires the <code>pgvector</code> extension, and supports metadata filtering. Its JavaScript docs distinguish legacy PGVector from modern PGVectorStore and recommend PGVectorStore for new projects. Sources: <a href="https://docs.langchain.com/oss/python/integrations/vectorstores/pgvectorstore">LangChain PGVectorStore Python</a>, <a href="https://docs.langchain.com/oss/javascript/integrations/vectorstores/pgvector">LangChain PGVector JS</a>, <a href="https://developers.llamaindex.ai/python/framework-api-reference/storage/vector_store/postgres/">LlamaIndex Postgres vector store</a>.</p>
+<p>The practical developer conclusion is simple: if an app already needs users, permissions, billing, teams, documents, jobs, audit logs, row level security, metadata filters, and embeddings, one Postgres database covers many paths. MongoDB can also handle vectors and documents, but it is no longer the only easy option for JSON and semi structured data. JSONB and the Postgres extension ecosystem have narrowed that mental gap.</p>
+<h3>Coding Agents Prefer High Corpus Density And Verifiable Systems</h3>
+<p>The evidence here is weaker, but the logic is strong. Coding agents can generate SQL schemas, Prisma models, migrations, indexes, and tests far more easily than humans could do manually. They also benefit from the huge amount of public Postgres examples and documentation.</p>
+<p>A Yugabyte article about AI coding agents and distributed SQL shows this bias from another angle: models often produce code that looks like PostgreSQL because they are trained on so many PostgreSQL examples, even when that code is not ideal for distributed SQL. Source: <a href="https://www.yugabyte.com/blog/benchmark-ai-coding-agents-for-distributed-sql/">Yugabyte blog</a>.</p>
+<p>Some agent era essays argue that software may converge toward “Agent + Database,” and that PostgreSQL is well positioned because it combines SQL, JSON, vector search, GIS, full text search, extensions, and dense documentation. Sources: <a href="https://vonng.com/en/db/agent-native-db/">Vonng, In the AI Era, Software Starts at the Database</a>, <a href="https://vonng.com/en/ai/postgres-and-ai/">Vonng, Why PostgreSQL Won in the AI Era</a>. These are opinion sources, not market share evidence, but they help explain why developer narratives are clustering around Postgres.</p>
+<h2>4. Does AI Reduce Schema Maintenance Cost Enough To Hurt MongoDB?</h2>
+<p>I think this hypothesis is <strong>partly true</strong>.</p>
+<p>One of MongoDB&#x27;s historical advantages was that application data was naturally JSON or document shaped, schemas changed often, and teams could iterate first and govern later. That was a powerful 2010s selling point because relational schema design, migrations, ORM design, and join modeling required experience and had real failure modes.</p>
+<p>Three things have changed:</p>
+<ol>
+<li><strong>AI makes schema generation and migrations cheaper.</strong> There are already open source projects and products that turn JSON or natural language into PostgreSQL DDL, Mongoose schemas, Prisma models, migrations, and index suggestions. One GitHub project explicitly says: “Paste any JSON and get production-ready PostgreSQL, MongoDB, and Prisma schemas,” with nested object flattening, foreign key detection, and index recommendations. Source: <a href="https://github.com/biswajit-sarkar-007/build-it-up">build-it-up / SchemaGen AI README</a>. This does not prove enterprise migration, but it shows the schema burden is falling.</li>
+<li><strong>AI applications often need stronger constraints, not fewer.</strong> Agent memory, RAG metadata, permission filtering, tenant isolation, billing, evaluation logs, feedback, documents, and embeddings consistency are not solved by document flexibility alone. Postgres&#x27;s transactions, foreign keys, SQL, row level security, joins, materialized views, and BI ecosystem are helpful here.</li>
+<li><strong>Postgres has absorbed part of MongoDB&#x27;s flexibility.</strong> JSONB supports semi structured data, <code>pgvector</code> stores embeddings, and full text search plus extensions reduce the need for external systems. MongoDB&#x27;s document model remains useful, but the relative gap has narrowed.</li>
+</ol>
+<p>The caveats are important:</p>
+<ul>
+<li>AI does not automatically make bad schemas good. Domain modeling, rollback, data quality, tenant boundaries, and query planning are still hard.</li>
+<li>MongoDB remains natural for highly polymorphic, deeply nested, catalog, event, real time write, and horizontally scaled workloads.</li>
+<li>There is no strong evidence that coding agents are already replacing MongoDB with Postgres in real production projects at scale.</li>
+</ul>
+<p>The safer conclusion is: <strong>AI compresses the old pain of using relational databases. That makes Postgres a stronger default and weakens MongoDB&#x27;s marginal appeal as the default database for new projects.</strong></p>
+<h2>5. MongoDB&#x27;s Countermove</h2>
+<p>MongoDB is not missing from the AI stack.</p>
+<p>MongoDB Vector Search is explicitly positioned as a way to “Design intelligent apps with gen AI.” MongoDB docs say Vector Search can store manually created embeddings in MongoDB, and Automated Embedding can generate embeddings at index time and query time using Voyage AI models. Sources: <a href="https://www.mongodb.com/products/platform/atlas-vector-search">MongoDB Vector Search product page</a>, <a href="https://www.mongodb.com/docs/atlas/atlas-vector-search/create-embeddings/">MongoDB manual embeddings docs</a>, <a href="https://www.mongodb.com/docs/vector-search/crud-embeddings/automated-embedding/">MongoDB Automated Embedding docs</a>.</p>
+<p>Automated Embedding is especially relevant. MongoDB stores generated embeddings in an internal system collection named <code>__mdb_internal_search</code> on the same cluster, preserving data locality. This directly responds to the Postgres and <code>pgvector</code> “one database” narrative: MongoDB also wants to say developers do not need to move data to a separate vector database. Source: <a href="https://www.mongodb.com/docs/vector-search/crud-embeddings/automated-embedding/overview/">MongoDB Automated Embedding overview</a>.</p>
+<p>MongoDB has also integrated Voyage AI and highlighted Voyage embedding and reranking, Automated Embedding, AI assistants in Compass and Atlas Data Explorer, and MongoDB for Startups in its FY2026 Q4 release. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 release</a>.</p>
+<p>AI frameworks also support MongoDB. LangChain has a MongoDB Atlas vector store integration, including manual embedding mode for MongoDB 7.0+ and automated embedding for MongoDB 8.2+. LlamaIndex has <code>MongoDBAtlasVectorSearch</code>, and Microsoft Semantic Kernel has a MongoDB Atlas Vector Search connector. Sources: <a href="https://docs.langchain.com/oss/javascript/integrations/vectorstores/mongodb_atlas">LangChain MongoDB Atlas integration</a>, <a href="https://developers.llamaindex.ai/python/framework-api-reference/storage/vector_store/mongodb/">LlamaIndex MongoDB vector store</a>, <a href="https://github.com/microsoft/semantic-kernel/blob/main/python/semantic_kernel/connectors/memory_stores/mongodb_atlas/README.md">Semantic Kernel MongoDB connector README</a>.</p>
+<p>So the counter evidence is clear: <strong>MongoDB has not missed AI.</strong> The real question is whether developers and investors see these AI capabilities as enough to make MongoDB the default again. At the moment, MongoDB looks like a strong option for AI, while Postgres and <code>pgvector</code> have the stronger starting point narrative.</p>
+<h2>6. Coding Agent And Template Evidence</h2>
+<p>GitHub examples show many AI agent, RAG, and memory projects using PostgreSQL plus <code>pgvector</code>. AgentDock uses SQLite plus <code>sqlite-vec</code> for development and PostgreSQL plus <code>pgvector</code> for production. MaxKB lists PostgreSQL plus <code>pgvector</code> in its stack. Several AI starters use Supabase Postgres plus <code>pgvector</code>. Sources: <a href="https://github.com/AgentDock/AgentDock/blob/main/agentdock-core/src/memory/README.md">AgentDock memory README</a>, <a href="https://github.com/1Panel-dev/MaxKB/blob/v2/README.md">MaxKB README</a>, <a href="https://github.com/fletchertyler914/supabase-ai-starter-kit">supabase-ai-starter-kit README</a>.</p>
+<p>A Claude Code oriented template, <code>create-claude-app</code>, is also telling: its database choices are MySQL, PostgreSQL, SQLite, and Skip, with no MongoDB option. Source: <a href="https://github.com/swhsiang/create-claude-app">create-claude-app README</a>. Another full stack AI agent template uses <code>--database postgresql</code> in quick mode, and its RAG example also uses <code>--rag --database postgresql</code>. Source: <a href="https://github.com/vstorm-co/full-stack-ai-agent-template/blob/main/README.md">full-stack-ai-agent-template README</a>.</p>
+<p>But MongoDB has AI examples too. PraisonAI uses MongoDB as persistent memory, knowledge store, and vector search. Semantic Kernel uses MongoDB Atlas Vector Search for semantic memory. CopilotKit has a MongoDB Atlas Vector Search demo, and Spring AI examples also use MongoDB Atlas Vector Search. Sources: <a href="https://github.com/MervinPraison/PraisonAI/blob/main/examples/python/mongodb/README.md">PraisonAI MongoDB README</a>, <a href="https://github.com/microsoft/semantic-kernel/blob/main/dotnet/src/VectorData/MongoDB/README.md">Semantic Kernel MongoDB README</a>, <a href="https://github.com/CopilotKit/CopilotKit/blob/main/examples/v1/_legacy/copilot-openai-mongodb-atlas-vector-search/README.md">CopilotKit MongoDB Atlas demo</a>, <a href="https://github.com/partme-ai/spring-ai-examples/blob/main/spring-ai-ollama-rag-mongodb/README.md">spring-ai-ollama-rag-mongodb README</a>.</p>
+<p>This supports the narrower claim that Postgres is more common in AI starters and agent memory examples. It does not prove that coding agents no longer recommend MongoDB. A more careful version is: <strong>when the prompt does not explicitly require a document model or MongoDB Atlas, AI coding templates are likely to follow the high corpus path of Postgres, Supabase, and <code>pgvector</code>.</strong></p>
+<h2>7. Why MongoDB Can Feel Less Natural In The AI Era</h2>
+<p>From a developer experience perspective, MongoDB&#x27;s problem is not a missing feature. It is that its relative advantage has narrowed.</p>
+<ol>
+<li><strong>AI apps are rarely purely unstructured.</strong> They need users, organizations, permissions, subscriptions, documents, chunks, embeddings, feedback, traces, evaluations, and task state. Much of that data has relationships and constraints.</li>
+<li><strong>RAG needs metadata filtering.</strong> Postgres can combine vector similarity, tenant or user permissions, document status, time, and billing tier in one SQL query or function. MongoDB can pre filter too, but SQL plus relational filters are often more natural in developer mental models.</li>
+<li><strong>Schema flexibility is less overwhelming as an advantage.</strong> JSONB, AI generated migrations, Prisma, Drizzle, and Supabase make starting with a relational database less slow than before.</li>
+<li><strong>Atlas is a consumption cloud business.</strong> If AI workloads have not yet become visible Atlas consumption, while managed Postgres gives developers a low friction alternative, MongoDB&#x27;s valuation is more vulnerable.</li>
+<li><strong>MongoDB&#x27;s AI story requires more education.</strong> The Postgres and <code>pgvector</code> story is simple: “You already have Postgres, put embeddings there.” MongoDB&#x27;s story is “developer data platform plus document model plus search plus vector plus Voyage plus automated embeddings.” It may be more complete, but it is also cognitively heavier.</li>
+</ol>
+<h2>Cross Validation And Contradictions</h2>
+<p>High confidence evidence:</p>
+<ul>
+<li>MongoDB&#x27;s FY2026 Q4 results were strong, but FY2027 guidance implies slower growth. Stock drop coverage focused on guidance, Atlas growth, and software AI anxiety.</li>
+<li>Stack Overflow and DB-Engines both show PostgreSQL with stronger popularity or preference signals than MongoDB.</li>
+<li><code>pgvector</code>, Supabase, LangChain, and LlamaIndex make Postgres a strong default for AI applications.</li>
+<li>MongoDB has real AI product work: Vector Search, Automated Embedding, Voyage AI, and MAAP.</li>
+</ul>
+<p>Medium confidence evidence:</p>
+<ul>
+<li>AI and coding agents may recommend Postgres more often because Postgres has denser docs, examples, templates, and SQL training data.</li>
+<li>AI lowers schema and migration cost, weakening MongoDB&#x27;s no schema advantage.</li>
+</ul>
+<p>Low confidence claims that need more validation:</p>
+<ul>
+<li>“MongoDB&#x27;s stock is weak mainly because coding agents do not recommend MongoDB.” There is no direct evidence for this.</li>
+<li>“MongoDB is not suitable for AI applications.” There is strong counter evidence from Atlas Vector Search and multiple framework integrations.</li>
+<li>“Postgres and <code>pgvector</code> can replace every vector database and MongoDB use case.” Very large vector scale, extreme QPS, highly polymorphic documents, global sharding, and very high write throughput may still justify specialized systems or MongoDB.</li>
+</ul>
+<h2>Final Conclusion</h2>
+<p>If the question is why MongoDB feels less natural in the AI era, my answer is: <strong>the default data shape for AI applications has shifted from flexible JSON documents toward relational data plus JSON metadata plus embeddings plus permissions, transactions, and search. Postgres sits directly at that intersection through JSONB, <code>pgvector</code>, full text search, extensions, and managed platforms.</strong></p>
+<p>If the question is whether the original hypothesis is right, my answer is: <strong>half right, and importantly so.</strong> AI does reduce schema maintenance cost, and coding agents can more easily follow the existing Postgres examples and tooling path. That weakens MongoDB&#x27;s appeal as the default database for new projects. But MongoDB&#x27;s stock and guidance pressure is more directly explained by growth expectation reset, Atlas consumption visibility, slow AI revenue conversion, and the broader AI repricing of software stocks.</p>
+<p>I would watch three indicators:</p>
+<ol>
+<li><strong>Whether Atlas AI workloads become measurable revenue acceleration</strong>, not just “customers with an AI use case.”</li>
+<li><strong>Whether AI starter and agent framework defaults</strong> continue to cluster around Supabase, Postgres, and <code>pgvector</code>.</li>
+<li><strong>Whether MongoDB Automated Embedding plus Voyage AI</strong> can become simpler and higher quality than <code>pgvector</code> for developers, enough to reclaim default AI app data layer mindshare.</li>
+</ol>
+<p>For now, MongoDB is not being killed by AI. It is moving from “default modern application database” to “database you choose for specific reasons.” That distinction matters for valuation: defaults receive a premium, while optional choices have to prove themselves.</p>
+  </article>
+  <footer>
+    <p>Published on <a href="/share/">simin.you/share</a>. Source report preserved in the workspace repository.</p>
+  </footer>
+  <script>
+    const buttons = Array.from(document.querySelectorAll('[data-lang]'));
+    const reports = Array.from(document.querySelectorAll('[data-report-lang]'));
+    function setLanguage(lang) {
+      reports.forEach((report) => { report.hidden = report.dataset.reportLang !== lang; });
+      buttons.forEach((button) => { button.setAttribute('aria-pressed', String(button.dataset.lang === lang)); });
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    }
+    buttons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
+  </script>
+</body>
+</html>
