@@ -205,7 +205,16 @@ img { max-width: 100%; height: auto; }
 <nav class="share-index-nav" aria-label="Share index">
   <a href="index.html">← 返回</a>
 </nav>
-<article class="report-content" lang="zh-CN">
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
 <h1>Ursa for Kafka 与 Diskless/Lakehouse Streaming 竞品深度比较</h1>
 <p>日期：2026-05-28</p>
 <h2>调研问题</h2>
@@ -702,5 +711,547 @@ img { max-width: 100%; height: auto; }
 <li>2 Minute Streaming Lakestream explanation: https://blog.2minutestreaming.com/p/what-is-a-lakestream</li>
 </ul>
 </article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Survey: Ursa for Kafka and Diskless/Lakehouse Streaming Competitors</h1>
+<p>Date: 2026-05-28</p>
+<h2>Research Question</h2>
+<p>Building on the earlier <code>Diskless Kafka, Lakehouse/Iceberg, and Academic Frontier Survey</code>, this report takes a deeper look at StreamNative Ursa / Ursa-for-Kafka and compares it with the right set of competitors: what problem it actually solves, what its strengths, weaknesses, and trade-offs are, and which products or architectural paths should be compared with it on the same map.</p>
+<h2>Method and Sources</h2>
+<p>Following the workspace deep research survey workflow, I first ran broad Tavily source discovery, then cross-checked first-party materials against existing reports. Initial Tavily queries included:</p>
+<ul>
+<li><code>Ursa for Kafka StreamNative lakehouse native diskless Kafka competitors WarpStream AutoMQ Bufstream Aiven Inkless</code></li>
+<li><code>diskless Kafka KIP-1150 WarpStream AutoMQ Bufstream Ursa Iceberg Tableflow comparison</code></li>
+<li><code>Kafka topic as Iceberg table Bufstream Ursa Confluent Tableflow Aiven Iceberg Topics</code></li>
+</ul>
+<p>Main source types:</p>
+<ul>
+<li>Ursa first-party sources: the PVLDB 2025 paper, StreamNative UFK/Lakestream blog posts and documentation.</li>
+<li>Kafka upstream sources: KIP-1150, KIP-1163, KIP-1164, KIP-1183, plus Aiven's explanation of KIP-1150 being accepted.</li>
+<li>Competitor sources: WarpStream docs/blog/Tableflow, AutoMQ docs/Table Topic, Confluent Freight/Tableflow docs/blog, Redpanda Tiered Storage/Cloud Topics engineering posts, and mirrored Bufstream Iceberg docs.</li>
+<li>Cross-checking sources: third-party technical commentary on Ursa and Lakestream from TopicPartition / 2 Minute Streaming, plus the existing workspace report <code>diskless_kafka_iceberg_lakehouse_survey_20260528.md</code>.</li>
+</ul>
+<p>Note: some vendor comparison materials come from competitors and carry a clear point of view. They are used only to discover comparison dimensions, not as direct factual authority. Bufstream's official pages redirected to a CoreWeave acquisition page during retrieval, so the Iceberg details for Bufstream mainly rely on public documentation mirrors and earlier captured results. Its maturity needs later verification.</p>
+<h2>Core Conclusions</h2>
+<ol>
+<li>
+<p><strong>Ursa's strongest differentiator is not diskless alone, but diskless + leaderless + lakehouse-native.</strong> WarpStream, AutoMQ, Aiven Inkless, Confluent Freight, and Redpanda Cloud Topics all move the Kafka log toward object storage to varying degrees. Ursa is more aggressive because it turns a Kafka topic directly into an Iceberg/Delta table, treating the streaming log and the lakehouse table as two views over the same object storage data. Sources: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>, <a href="https://docs.streamnative.io/cloud/overview/lakestream-overview">StreamNative Lakestream docs</a>.</p>
+</li>
+<li>
+<p><strong>Ursa is not "faster Kafka", but a cheaper, more lakehouse-native Kafka-compatible ingest layer.</strong> The paper explicitly targets workloads that can tolerate sub-second latency, especially data-intensive ingestion in the 200-500ms range. It trades away the traditional Kafka sub-100ms low-latency assumption in exchange for lower costs from cross-AZ replication, local disk, and Kafka-to-lakehouse connectors. Source: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>.</p>
+</li>
+<li>
+<p><strong>"Leaderless" means leaderless at the broker layer, not leaderless across the whole system.</strong> Ursa removes the centrality of the Kafka partition leader, ISR, and broker local log, but offset assignment, ordering, transaction state, fencing, offset indexes, and catalog commits still require a strongly consistent metadata/control plane. The paper and StreamNative docs place Oxia in the metadata layer, so system complexity moves from broker replication to Oxia, the catalog, the object storage request path, and the compaction service. Sources: <a href="https://docs.streamnative.io/cloud/overview/lakestream-overview">StreamNative Lakestream docs</a>, <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>.</p>
+</li>
+<li>
+<p><strong>The closest competitors need to be shown on two maps.</strong> For diskless Kafka, the closest competitors are WarpStream, AutoMQ, Aiven Inkless / Kafka KIP-1150, Confluent Freight, and Redpanda Cloud Topics. For lakehouse-native streaming, the closest competitors are Bufstream, AutoMQ Table Topic, WarpStream Tableflow, Confluent Tableflow, and Aiven Iceberg Topics. Ursa spans both maps, so it cannot be evaluated only as a "Kafka replacement" or a "Kafka-to-Iceberg connector".</p>
+</li>
+<li>
+<p><strong>For near-term procurement or deployment, Ursa's biggest risks are maturity and verifiability.</strong> It has a strong paper and a clear architecture, but UFK follows StreamNative's Kafka fork / managed service path. By contrast, Confluent/MSK/Kafka tiered storage is more conservative and mature, WarpStream/AutoMQ have clearer diskless production narratives, and Kafka KIP-1150 is the upstream direction but not yet a complete production implementation. Ursa's value is closer to a future architecture template, and deployment requires a strict POC.</p>
+</li>
+<li>
+<p><strong>"Zero-copy" has to be decomposed product by product.</strong> Aiven Iceberg Topics, Bufstream Iceberg Archives, and Ursa SBT all use a narrative where the same object storage data serves Kafka and Iceberg/table reads, but their implementation boundaries differ. Confluent Tableflow and WarpStream Tableflow are more clearly managed materialization paths. AutoMQ Table Topic sits between Kafka-native ingestion and table materialization. This report treats "whether it is zero-copy" as an engineering property that must be verified, not as a marketing phrase.</p>
+</li>
+</ol>
+<h2>1. What Ursa Actually Is</h2>
+<h3>1.1 The Two Problems It Tries to Solve</h3>
+<p>The Ursa paper splits the problem into two parts:</p>
+<ul>
+<li><strong>Kafka is expensive to run in the cloud.</strong> Traditional Kafka is designed for sub-100ms latency. Broker local disk plus leader/follower replication creates high cross-AZ network costs and multiple copies of disk data in multi-AZ deployments. The paper explicitly says many modern ingestion workloads only need sub-second latency, such as 200-500ms, making the traditional replication architecture too expensive. Source: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>.</li>
+<li><strong>The path from Kafka to the lakehouse is too indirect.</strong> Kafka data usually passes through Kafka Connect/Flink/Spark/ETL before being written to Iceberg/Delta/Hudi, creating two systems, two copies of data, added latency, split schema/metadata, and extra operational surface. Source: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>.</li>
+</ul>
+<p>So Ursa's real claim is not "replace EBS with S3 for Kafka storage". It is: <strong>can a Kafka topic natively become a lakehouse table while still preserving Kafka protocol / consumer semantics?</strong></p>
+<h3>1.2 Architecture Layers</h3>
+<p>StreamNative's Lakestream docs split the system into three layers:</p>
+<ul>
+<li><strong>Protocol Layer</strong>: Kafka/Pulsar brokers, stateless and leaderless, where any broker can handle produce/fetch.</li>
+<li><strong>Metadata Layer</strong>: Oxia + catalog, managing strongly consistent metadata, stream indexes, and table metadata pointers.</li>
+<li><strong>Data Layer</strong>: Ursa Stream Storage, where data is written to object storage and can also support different WAL profiles. Data is exposed through open table formats such as Iceberg/Delta. Source: <a href="https://docs.streamnative.io/cloud/overview/lakestream-overview">StreamNative Lakestream docs</a>.</li>
+</ul>
+<p>The data path in the PVLDB paper is more specific:</p>
+<ul>
+<li>WAL objects aggregate new writes from multiple streams/topic-partitions to optimize append.</li>
+<li>The offset index maps Kafka offsets to locations in WAL/Parquet.</li>
+<li>The compaction service converts row-based WAL objects into topic-partition-specific Parquet files.</li>
+<li>The commit phase updates Ursa metadata and registers Parquet files through Iceberg/Delta catalog commits.</li>
+<li>The Kafka protocol server preserves Kafka-compatible produce/fetch semantics for clients. Source: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>.</li>
+</ul>
+<p>This is also why Ursa is more interesting than ordinary diskless Kafka: object storage is not a cold-data archive, but the shared foundation for the streaming log and the lakehouse table.</p>
+<h3>1.3 UFK's Product Positioning</h3>
+<p>StreamNative's 2026 UFK post says Ursa-for-Kafka is a fork based on Apache Kafka 4.2+, not a proxy or protocol compatibility layer. It keeps Kafka request handlers, the group coordinator, the KRaft controller, and so on, while extending local disk storage into a lakehouse-native storage option. Source: <a href="https://streamnative.io/blog/ursa-for-kafka-deep-dive-the-kafka-problem-and-ursas-storage-leaderless-architecture">UFK Deep Dive</a>.</p>
+<p>Another important product point is <strong>mixed storage / dual profile</strong>: the same Kafka fork can keep traditional disk-based topics while enabling a lakehouse-native/diskless profile for selected topics. StreamNative's launch post frames this as a migration advantage: start with high-throughput, latency-insensitive, cost-pressured topics without a big-bang migration. Source: <a href="https://streamnative.io/blog/ursa-for-kafka-native-apache-kafka-service-on-lakestream">Ursa For Kafka launch post</a>.</p>
+<h2>2. Benefits of Ursa</h2>
+<h3>2.1 Cost Structure: Lower Cross-AZ Replication and Fewer Broker Disk Copies</h3>
+<p>Traditional Kafka in multi-AZ deployments usually performs leader/follower replication across AZs while keeping multiple local segment copies. Ursa pushes durable replication down into object storage, so brokers no longer need to replicate each partition log to multiple broker disks. For high-throughput, long-retention ingestion workloads with low or moderate fanout, this directly improves the cost structure.</p>
+<p>This benefit is not unique to Ursa. WarpStream, AutoMQ, Confluent Freight, and Aiven KIP-1150 are all aimed at the same cloud cost structure. Ursa's differentiator is that it combines this with table-native storage.</p>
+<h3>2.2 Operational Elasticity: Brokers Become More Like a Stateless Serving Layer</h3>
+<p>Ursa brokers do not own partition local logs and do not maintain ISR as partition leaders. Scale-out, scale-in, and broker failure do not require traditional Kafka partition reassignment / leader election / local log catch-up. The paper explicitly says brokers can be added or removed without rebalancing partitions or migrating data, and after failures, other brokers can continue serving through metadata + object storage. Source: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>.</p>
+<p>This is the shared appeal of diskless/leaderless architecture: remove the hardest-to-operate Kafka broker state from the broker.</p>
+<h3>2.3 Lakehouse-Native: Reducing the Kafka-to-Iceberg Copy Chain</h3>
+<p>Ursa's Stream-Backed Table mode lets the streaming index and lakehouse table metadata point to the same object storage data, so external engines such as Spark/Trino/Flink can read the lakehouse table. The paper also describes Stream-Delivered-to-Table mode, which can deliver data into external lakehouse tables such as Unity Catalog and Snowflake Open Catalog. Source: <a href="https://www.vldb.org/pvldb/vol18/p5184-guo.pdf">PVLDB Ursa PDF</a>.</p>
+<p>This looks more like stream-table duality in the database systems sense than "Kafka + connector + Iceberg sink": stream and table are not two pipeline stages, but two access semantics over one copy of data.</p>
+<h3>2.4 Migration Story: Keeping the Kafka API and Part of the Kafka Kernel</h3>
+<p>UFK says it is a Kafka fork rather than a rewritten Kafka-compatible broker. This gives adopters two potential benefits:</p>
+<ul>
+<li>Clients, consumer groups, admin tooling, and the protocol surface are more likely to inherit the Kafka ecosystem.</li>
+<li>Traditional topics and diskless/lakehouse-native topics can be mixed in phases.</li>
+</ul>
+<p>But this same advantage also creates fork risk, discussed below.</p>
+<h2>3. Ursa's Weaknesses and Hidden Costs</h2>
+<h3>3.1 It Moves the Leader from the Broker Layer to the Metadata/Control Plane</h3>
+<p>"Leaderless" is easy to misread. Ursa does remove the partition leader broker, but the metadata service still has to decide offsets, ordering, transaction visibility, fencing, and index updates. Oxia itself also requires strongly consistent replication. In other words, Ursa does not eliminate coordination. It concentrates coordination in a more specialized metadata layer.</p>
+<p>This is reasonable: database system disaggregation is precisely about splitting log, metadata, and storage into specialized services. But cost evaluation cannot only look at what brokers no longer do. It must also account for Oxia quorum, catalog commits, metadata write amplification, metadata hot shards, cross-AZ placement, and failover behavior.</p>
+<h3>3.2 The Latency Trade-off Is Built Into the Architecture</h3>
+<p>Object storage PUT/GET/list/range-read, WAL batching, metadata commits, Iceberg commits, and compaction backlog all affect tail latency. The Ursa paper targets sub-second / 200-500ms tolerance, which already signals that it is not a direct replacement for traditional low-latency Kafka.</p>
+<p>WarpStream's docs provide similar evidence: under default configuration, produce p99 is around 500ms and E2E p99 around 900ms. With S3 Express and a lower batch timeout, produce p99 can fall below 150ms, but cost increases. Lightning Topics can reduce produce latency further, but give up full consistency. Source: <a href="https://docs.warpstream.com/warpstream/kafka/advanced-agent-deployment-options/low-latency-clusters">WarpStream Low Latency Clusters</a>.</p>
+<p>So the right question for Ursa is not "can it be faster than Kafka", but "under acceptable latency, can it meaningfully lower total cost and reduce the lakehouse pipeline".</p>
+<h3>3.3 The WAL-to-Parquet Two-Layer Design Adds Background System Complexity</h3>
+<p>Ursa uses WAL objects to optimize writes and Parquet compacted objects to optimize catch-up reads and lakehouse queries. This is a reasonable design, but it means the system has two continuously running planes:</p>
+<ul>
+<li>hot path: produce/fetch, WAL, offset index, metadata commit.</li>
+<li>background path: compaction, schema conversion, Parquet file sizing, Iceberg/Delta commit, WAL reclaim.</li>
+</ul>
+<p>If compaction falls behind, consumer catch-up reads may hit fragmented WAL range reads. If compaction is too aggressive, object storage request cost and catalog commit pressure increase. This is the small-file/commit/freshness trade-off that every streaming-to-table system faces.</p>
+<h3>3.4 Kafka Semantics and Iceberg Semantics Are Not Naturally Equivalent</h3>
+<p>Kafka cares about offsets, ordering, consumer groups, transactions, EOS, compacted topics, tombstones, and retention. Iceberg/Delta cares about snapshots, manifests, metadata pointers, schema evolution, delete files, compaction, and table maintenance.</p>
+<p>Ursa's contribution is exactly the attempt to bridge these two semantic systems with offset indexes + WAL/Parquet + metadata commits. But the hard part is also here. Ordinary append-only logging is easier. More difficult workloads include:</p>
+<ul>
+<li>compacted topics and tombstones.</li>
+<li>transactional producers / exactly-once.</li>
+<li>high fan-out catch-up readers.</li>
+<li>key skew / hot partitions.</li>
+<li>high-frequency schema evolution.</li>
+<li>catalog commit contention under multi-tenancy.</li>
+<li>interactions between retention deletes and the Iceberg snapshot lifecycle.</li>
+</ul>
+<p>The paper and blog posts do not fully cover these production boundaries, so a POC must be built around the actual workload rather than only running standard throughput benchmarks.</p>
+<h3>3.5 Benchmark and Cost Claims Need Itemized Accounting</h3>
+<p>Ursa, WarpStream, AutoMQ, Confluent, and Redpanda each have their own cost/performance narrative. Cross-product comparison requires a unified accounting basis:</p>
+<ul>
+<li>whether metadata service / control plane / coordinator cost is included.</li>
+<li>whether compaction workers / table maintenance / catalog services are included.</li>
+<li>whether object storage PUT/GET/list/range requests, S3 Express, cross-region, and egress costs are included.</li>
+<li>whether the same retention, partition count, message size, producer concurrency, consumer fanout, and catch-up workload are used.</li>
+<li>whether transactions, compaction, schema evolution, and failure recovery are tested, not only steady-state append.</li>
+</ul>
+<p>Without itemized accounting, vendor claims such as "10x cheaper" or "sub-10ms" are easy to compare against the wrong target.</p>
+<h2>4. Competitor Map</h2>
+<h3>4.1 Classification by Technical Path</h3>
+<table>
+<thead>
+<tr>
+<th>Path</th>
+<th>Representatives</th>
+<th>Relationship to Ursa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Diskless Kafka / object-storage log</td>
+<td>WarpStream, AutoMQ, Aiven Inkless/KIP-1150, Confluent Freight, Redpanda Cloud Topics</td>
+<td>Compare cost, latency, Kafka compatibility, operational elasticity</td>
+</tr>
+<tr>
+<td>Lakehouse-native streaming</td>
+<td>Ursa, Bufstream, AutoMQ Table Topic, WarpStream Tableflow, Confluent Tableflow, Aiven Iceberg Topics, Fluss</td>
+<td>Compare whether topic/table is zero-copy, Iceberg/Delta commits, schema/catalog/maintenance</td>
+</tr>
+<tr>
+<td>Kafka upstream evolution</td>
+<td>KIP-1150, KIP-1163, KIP-1164, KIP-1183, KIP-405 tiered storage</td>
+<td>Judge long-term standardization direction and migration risk</td>
+</tr>
+<tr>
+<td>Conservative managed path</td>
+<td>Confluent Cloud/MSK + Tableflow/Connect/Flink/Spark</td>
+<td>Compare maturity, ecosystem, SLA, cost</td>
+</tr>
+</tbody>
+</table>
+<h3>4.2 Quick Comparison Table</h3>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Kafka API/ecosystem</th>
+<th>Storage path</th>
+<th>Lakehouse/Iceberg</th>
+<th>Main advantage</th>
+<th>Main risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ursa/UFK</td>
+<td>Kafka fork, claims native Kafka</td>
+<td>WAL + object storage + Oxia metadata + Parquet compaction</td>
+<td>Native Iceberg/Delta, topic as table</td>
+<td>Most complete diskless + leaderless + lakehouse-native combination</td>
+<td>fork/maturity, Oxia/catalog hot path, poor fit for low latency</td>
+</tr>
+<tr>
+<td>WarpStream</td>
+<td>Kafka-compatible agents</td>
+<td>Direct object storage, stateless agents</td>
+<td>Tableflow can materialize Iceberg</td>
+<td>Strong diskless production narrative, BYOC, clear cost/operations</td>
+<td>Higher latency, low latency needs S3 Express/higher cost, Tableflow is materialization</td>
+</tr>
+<tr>
+<td>AutoMQ</td>
+<td>Kafka-compatible / open source + BYOC</td>
+<td>S3-native, low-latency profile uses WAL. Docs benchmark mentions EBS WAL</td>
+<td>Table Topic automatically writes Iceberg, supports Glue/S3 Tables</td>
+<td>Strong low-latency and Kafka migration narrative, Table Topic adds lakehouse</td>
+<td>Architecture details require separating WAL/object storage cost, vendor claims need testing</td>
+</tr>
+<tr>
+<td>Bufstream</td>
+<td>Kafka-compatible replacement</td>
+<td>object storage + metadata backend</td>
+<td>Iceberg Archives zero-copy, Parquet serves both Kafka and Iceberg</td>
+<td>Closest to Ursa on "topic as Iceberg"</td>
+<td>Product status/post-acquisition path needs verification, ecosystem maturity unknown</td>
+</tr>
+<tr>
+<td>Aiven Inkless / KIP-1150</td>
+<td>Apache Kafka upstream direction</td>
+<td>object storage as durable topic data, diskless coordinator</td>
+<td>Not lakehouse-native, not Iceberg by itself</td>
+<td>Standardization direction, important long-term strategy</td>
+<td>accepted is only direction, sub-KIPs/implementation still advancing</td>
+</tr>
+<tr>
+<td>Confluent Freight</td>
+<td>Confluent Cloud/Kora</td>
+<td>direct write to object storage, bypasses broker local storage</td>
+<td>Paired with Tableflow</td>
+<td>Mature managed enterprise path, strong SLA/ecosystem</td>
+<td>latency up to seconds, closed managed service, lakehouse is side-path materialization</td>
+</tr>
+<tr>
+<td>Confluent Tableflow</td>
+<td>Kafka topic materialization</td>
+<td>Kafka topic -&gt; Parquet/Iceberg/Delta</td>
+<td>Managed Iceberg/Delta tables</td>
+<td>Most conservative and enterprise-friendly, does not replace Kafka</td>
+<td>Not a Kafka storage engine, still a materialized table</td>
+</tr>
+<tr>
+<td>Redpanda Tiered/Cloud Topics</td>
+<td>Kafka API-compatible Redpanda</td>
+<td>tiered/cloud object storage</td>
+<td>Not core lakehouse-native</td>
+<td>Strong low-latency/single-binary/high-performance Kafka replacement</td>
+<td>Not Ursa-style stream-table duality</td>
+</tr>
+<tr>
+<td>Aiven Iceberg Topics</td>
+<td>Apache Kafka RSM plugin path</td>
+<td>rotated/tiered segments written as Parquet/Iceberg</td>
+<td>Goal is one durable copy serving Kafka replay and Iceberg analytics</td>
+<td>Closest to Kafka-native zero-copy Iceberg direction</td>
+<td>Current sources show implementation is still early, Iceberg mode maturity needs verification</td>
+</tr>
+<tr>
+<td>Fluss</td>
+<td>independent streaming storage</td>
+<td>hot streaming storage + tiering to Iceberg/Paimon</td>
+<td>Iceberg is more like cold/lakehouse tier</td>
+<td>Explicitly challenges "Iceberg can directly carry hot streams well enough"</td>
+<td>Not a Kafka drop-in replacement, migration surface is different</td>
+</tr>
+</tbody>
+</table>
+<h2>5. Competitor-by-Competitor Comparison</h2>
+<h3>5.1 WarpStream / Confluent WarpStream</h3>
+<p>WarpStream is one of Ursa's most direct competitors on the diskless Kafka dimension. Its core is Kafka-compatible stateless agents with no local disk, direct writes to object storage, and metadata in the WarpStream Cloud Metadata Store. The official architecture docs say any Agent can act as leader for any topic, commit offsets, and act as coordinator, while scaling resembles running a proxy/web server. Source: <a href="https://docs.warpstream.com/warpstream/overview/architecture.md">WarpStream architecture</a>. WarpStream itself acknowledges that object storage write latency is higher than local disk, and its tuning docs use Little's Law to explain that high concurrency and large batches are needed to saturate throughput. A single 4MiB S3 write can have p99 around 400ms. Source: <a href="https://docs.warpstream.com/warpstream/kafka/configure-kafka-client/tuning-for-performance">WarpStream tuning docs</a>.</p>
+<p>The key details of WarpStream's write path are: the producer tries to connect to an Agent in the same AZ, any Agent can write any topic-partition, and data must first be durably persisted in object storage and committed to the metadata store before the produce request is acknowledged. The default buffer is 250ms or 8MiB. Source: <a href="https://docs.warpstream.com/warpstream/overview/architecture/write-path.md">WarpStream write path</a>. This is highly similar to Ursa's WAL/object + metadata commit pattern, but WarpStream's output is first a Kafka-compatible object log, not a native Iceberg/Delta table.</p>
+<p>WarpStream's low-latency strategies include lowering the agent batch timeout, using a higher control plane tier, using S3 Express, and using Lightning Topics. The official table shows produce p99 around 500ms and E2E p99 around 900ms under the default S3 Standard profile. S3 Express + 50ms batch timeout can reach produce p99 &lt;150ms and E2E p99 &lt;400ms. Lightning Topics can reach produce p99 &lt;50ms, but not full consistency. Source: <a href="https://docs.warpstream.com/warpstream/kafka/advanced-agent-deployment-options/low-latency-clusters">WarpStream Low Latency Clusters</a>. On Tableflow, WarpStream docs say it converts Kafka-compatible topics into Iceberg tables. Under BYOC, compute/storage run in the user's VPC, table raw data exists only in the user's object storage, and compaction/table maintenance are built in. But Tableflow agents do not expose the Kafka protocol. They are a separate table materialization cluster. Source: <a href="https://docs.warpstream.com/warpstream/tableflow/tableflow.md">WarpStream Tableflow setup</a>.</p>
+<p>Key differences from Ursa:</p>
+<ul>
+<li>WarpStream's main path is a diskless Kafka-compatible log, with lakehouse handled by Tableflow materialization.</li>
+<li>Ursa's main path is a lakehouse-native storage engine, with topic/table unified at a lower level.</li>
+<li>WarpStream's production adoption narrative is more mature. Ursa's stream-table duality is more aggressive.</li>
+</ul>
+<p>If comparing "who is better for replacing a high-cost Kafka ingestion cluster", WarpStream is a first-tier competitor to Ursa. If comparing "who natively turns topics into Iceberg/Delta", WarpStream Tableflow looks more like Confluent Tableflow and is not a fully isomorphic competitor.</p>
+<h3>5.2 AutoMQ</h3>
+<p>AutoMQ describes itself as diskless Kafka on S3, 100% Kafka compatible, sub-10ms P99 latency, and zero cross-AZ costs. Sources: <a href="https://www.automq.com">AutoMQ homepage</a>, <a href="https://github.com/AutoMQ/automq">AutoMQ GitHub</a>. Like Ursa, it targets the core cost problem of running Kafka in the cloud, but its technical trade-offs differ.</p>
+<p>AutoMQ's performance benchmark docs clearly state that AutoMQ BYOC uses EBS as WAL storage to achieve low-latency send/receive. In other words, it is not simply an "all hot path writes directly to S3" model. It trades a WAL + shared/object storage hierarchy for latency. Source: <a href="https://docs.automq.com/automq-cloud/appendix/performance-benchmark.md">AutoMQ Performance Benchmark</a>. This explains why it can claim sub-10ms: the durable write path in the low-latency profile is not exactly the same comparison target as the object storage paths of WarpStream/Ursa.</p>
+<p>AutoMQ is also adding lakehouse-native capabilities. The Table Topic docs say it can ingest streaming data into Iceberg tables, has a built-in schema registry, automatically creates Iceberg tables, supports AWS Glue / S3 Table Catalog, and reduces ETL pipelines such as Kafka Connect/Flink. Source: <a href="https://docs.automq.com/automq-cloud/table-topic/overview.md">AutoMQ Table Topic</a>.</p>
+<p>Key differences from Ursa:</p>
+<ul>
+<li>AutoMQ emphasizes Kafka compatibility, low latency, elasticity, and cost. Ursa emphasizes unified storage semantics between Kafka topics and lakehouse tables.</li>
+<li>AutoMQ Table Topic appears close to Ursa's lakehouse goal, but whether it is strictly zero-copy and whether Kafka fetch and Iceberg query share the same Parquet objects must be verified by version and configuration.</li>
+<li>AutoMQ's cross-AZ optimization has prerequisites, such as three AZs and balanced AZ deployment for producers/consumers and AutoMQ. The docs also say partial cross-AZ traffic appears when conditions are not met. Source: <a href="https://docs.automq.com/automq-cloud/eliminate-inter-zone-traffics/broker-configuration.md">AutoMQ broker configuration</a>.</li>
+</ul>
+<p>AutoMQ is a competitor worth serious comparison with Ursa on both lines: Kafka-compatible diskless and lakehouse features.</p>
+<h3>5.3 Bufstream</h3>
+<p>Bufstream is one of Ursa's closest competitors on the lakehouse-native dimension. Public materials describe it as a Kafka-compatible broker / replacement that uses object storage and writes topic data as Iceberg archives in Parquet + Iceberg metadata. Parquet files simultaneously serve as data for Kafka consumers and as data files for Iceberg tables. The previously retrieved Bufstream docs explicitly call Iceberg Archives zero-copy and say no extra copy is created for Iceberg. Source: <a href="https://docs.bufbuild.ru/bufstream/iceberg/reference/">Bufstream Iceberg Archives reference</a>.</p>
+<p>Bufstream's distinctive point is schema/data quality: it relies on a Protobuf schema registry and places broker-side semantic validation plus Protobuf-to-Iceberg schema mapping in the write path. Source: <a href="https://docs.bufbuild.ru/bufstream/iceberg/configuration/">Bufstream Iceberg configuration</a>.</p>
+<p>Key differences from Ursa:</p>
+<ul>
+<li>Bufstream looks more like a "Kafka-compatible + Protobuf/schema-first + Iceberg storage" product path.</li>
+<li>Ursa looks more like a "Kafka/Pulsar protocol + Lakestream storage layer + Oxia metadata + Iceberg/Delta" architecture path.</li>
+<li>Both Bufstream and Ursa should be pressure-tested on consistency between Kafka semantics and Iceberg semantics, especially transactions, compacted topics, schema evolution, invalid records, and retention/snapshot lifecycle.</li>
+</ul>
+<p>Because Bufstream pages redirected during the current retrieval, its product path and availability need separate confirmation. Architecturally, however, it is the most important lakehouse-native control group.</p>
+<h3>5.4 Aiven Iceberg Topics</h3>
+<p>Aiven Iceberg Topics is another important but easily overlooked path. It does not create a separate Kafka-compatible broker. Instead, it starts from Kafka tiered storage / the Remote Storage Manager plugin direction, directly persists topic segments as Parquet/Iceberg, and lets the same durable copy serve both Kafka replay and Iceberg analytics. The whitepaper recorded in the previous survey says that when a segment rotates, the RemoteStorageManager persists records as Parquet files into an Iceberg table, and fetch reconstructs valid Kafka batches. Source: <a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/iceberg_whitepaper.md">Aiven Iceberg whitepaper</a>.</p>
+<p>Differences from Ursa:</p>
+<ul>
+<li>Aiven is closer to Apache Kafka's internal extension points, with lower vendor/fork risk.</li>
+<li>Ursa is a more complete external storage engine + metadata layer design, with stronger architectural control.</li>
+<li>Aiven Iceberg Topics has the advantage of being Kafka-native. Its weakness is maturity and capability boundaries. The previous report noted that its README once marked Iceberg mode as recently added / alpha stage. Source: <a href="https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/README.md">Aiven tiered-storage README</a>.</li>
+</ul>
+<p>If the comparison question is "can the Kafka upstream/plugin ecosystem naturally grow topic-as-table", Aiven Iceberg Topics is a key reference for Ursa.</p>
+<h3>5.5 Apache Kafka KIP-1150 / Aiven Inkless</h3>
+<p>KIP-1150 is Ursa's long-term standardization reference. Aiven's March 2026 article says KIP-1150 Diskless Topics has been accepted by the Apache Kafka community. It positions KIP-1150 as a meta/motivational KIP that first confirms whether Kafka should have diskless topics, with concrete implementation split into later sub-KIPs such as Diskless Core and Diskless Coordinator. Source: <a href="https://aiven.io/blog/kip-1150-accepted-and-the-road-ahead">Aiven KIP-1150 accepted</a>. Aiven's Inkless is a productized/experimental implementation of this direction. Aiven's blog describes the motivation as faster upgrades and recovery, lower infra/network costs, and says Inkless clusters are available in Aiven Cloud. Sources: <a href="https://aiven.io/blog/announcing-inkless-clusters-cloud-kafka-done-right">Aiven Inkless announcement</a>, <a href="https://aiven.io/blog/diskless-apache-kafka-kip-1150">Aiven Diskless Kafka</a>.</p>
+<p>KIP-1150's direction is similar to Ursa: a diskless topic does not use broker disk as the primary durable storage for user data, Kafka delegates replication to object storage, and brokers are no longer the only partition leaders. KIP-1163 further defines the produce/fetch path, KIP-1164 covers the diskless coordinator, and KIP-1183 proposes a unified shared storage / shared log abstraction. Sources: <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150:+Diskless+Topics">KIP-1150</a>, <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core">KIP-1163</a>, <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1164:+Diskless+Coordinator">KIP-1164</a>, <a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-1183%3A+Unified+Shared+Storage">KIP-1183</a>.</p>
+<p>Key differences from Ursa:</p>
+<ul>
+<li>KIP-1150 is an Apache Kafka upstream direction, not a complete product.</li>
+<li>It mainly solves diskless topics and does not build in Ursa-style Iceberg/Delta table duality.</li>
+<li>If KIP-1150 matures, some of the differentiation of Ursa's Kafka fork will be compressed. But Ursa's lakehouse-native/cross-protocol Lakestream may still remain differentiated.</li>
+<li>Aiven's public benchmarks provide a practical latency/cost profile for diskless topics. These numbers can serve as references for an Ursa POC, but should not be mixed directly with Ursa's lakehouse-native table path. Source: <a href="https://aiven.io/blog/benchmarking-diskless-inkless-topics-part-1">Aiven benchmarking diskless topics</a>.</li>
+</ul>
+<p>If your core need is "follow Kafka upstream and reduce long-term fork/vendor risk", KIP-1150/Aiven Inkless is an important reference. If your core need is "turn topics into lakehouse tables now", it is not yet a direct substitute.</p>
+<h3>5.6 Confluent Freight + Tableflow</h3>
+<p>Confluent represents the conservative enterprise path. Freight clusters direct write data to object storage, avoiding local storage and replication in Kora brokers. Confluent positions it as a low-cost cluster type where latency can be relaxed, up to a second or two. Source: <a href="https://www.confluent.io/blog/freight-clusters-are-generally-available/">Confluent Freight GA</a>.</p>
+<p>Tableflow materializes Kafka topics into Iceberg/Delta tables. Confluent docs define it as Kafka topics as Iceberg and Delta Lake tables. The GA blog says it converts Kafka messages into Parquet, organizes them into Iceberg tables, and manages metadata/maintenance such as compaction. Sources: <a href="https://docs.confluent.io/cloud/current/topics/tableflow/overview.html">Confluent Tableflow docs</a>, <a href="https://www.confluent.io/blog/tableflow-ga-kafka-snowflake-iceberg/">Tableflow GA blog</a>.</p>
+<p>Key differences from Ursa:</p>
+<ul>
+<li>Confluent's path splits "Kafka storage" and "Kafka-to-table materialization" into two product surfaces: Freight + Tableflow.</li>
+<li>Ursa combines both into one lakehouse-native storage engine.</li>
+<li>Confluent has strong maturity, SLA, ecosystem, and governance tooling. Ursa's architecture is cleaner but newer and more aggressive.</li>
+</ul>
+<p>In real procurement, Confluent may be the conservative substitute Ursa encounters most often: not isomorphic, but the lowest acceptable-risk path for enterprise users.</p>
+<h3>5.7 Redpanda Tiered Storage / Cloud Topics</h3>
+<p>Redpanda is not an Ursa-style lakehouse-native system, but it is an important reference for Kafka API-compatible alternatives and the object-storage trend. Redpanda Tiered Storage docs say it offloads log segments to object storage to reduce storage cost and accesses remote data through remote write / remote read. Source: <a href="https://docs.redpanda.com/current/manage/tiered-storage/">Redpanda Tiered Storage</a>.</p>
+<p>Redpanda's 2026 Cloud Topics engineering posts focus on two practical issues for streaming on object storage: how high-latency storage maintains throughput through concurrency under Little's Law, and lifecycle/garbage collection for Level Zero temporary objects. Sources: <a href="https://www.redpanda.com/blog/littles-law-in-practice-with-cloud-topics">Little's Law in practice with Cloud Topics</a>, <a href="https://www.redpanda.com/blog/cloud-topics-level-zero-garbage-collection">Cloud Topics: Level Zero garbage collection</a>.</p>
+<p>Key differences from Ursa:</p>
+<ul>
+<li>Redpanda prioritizes high-performance Kafka-compatible streaming, not topic-as-Iceberg-table.</li>
+<li>It is suitable for comparing low latency, operations, Kafka compatibility, and tiered/object storage maturity with Ursa.</li>
+<li>If the workload is still operational streaming rather than lakehouse ingestion, Redpanda may be a more natural fit than Ursa.</li>
+</ul>
+<h3>5.8 Fluss</h3>
+<p>Fluss provides another counter-reference: it does not argue that Iceberg should directly carry all hot streaming storage. Instead, it treats Iceberg/Paimon as the lakehouse/cold tier and keeps low-latency streaming, primary-key semantics, and real-time updates in dedicated hot streaming storage. The previous survey recorded its judgment: Iceberg is better suited as a cold tier, while Fluss provides hot streaming storage, sub-second latency, primary-key semantics, and then tiers into Iceberg/Paimon. Source: <a href="https://fluss.apache.org/blog/2025/12/02/fluss-x-iceberg-why-your-lakehouse-is-not-streamhouse-yet">Fluss x Iceberg</a>.</p>
+<p>It is not a direct procurement competitor to Ursa, but it matters for technical judgment. Ursa's implicit judgment is that streaming logs and lakehouse tables can be unified deeply enough. Fluss's judgment is that hot streams and lakehouse tables should be layered and connected at the boundary. If the workload has high-frequency updates, low-latency primary-key reads/updates, or complex changelogs, a layered path such as Fluss may be more natural than Ursa-style topic-as-table.</p>
+<h2>6. Workloads Where Ursa Fits and Does Not Fit</h2>
+<h3>6.1 Ursa Fits</h3>
+<ul>
+<li>High-throughput logs, metrics, clickstream, IoT ingestion.</li>
+<li>CDC / data lake ingestion.</li>
+<li>Raw event landing for AI/ML pipelines.</li>
+<li>Scenarios that need longer retention and want to reduce Kafka local disk and connector pipelines.</li>
+<li>Scenarios that can tolerate 200ms-to-seconds freshness rather than sub-50ms tail latency.</li>
+<li>Scenarios where Spark/Trino/Flink/Snowflake/Databricks should read streaming data directly.</li>
+</ul>
+<h3>6.2 Ursa Does Not Fit</h3>
+<ul>
+<li>Low-latency transactions, online risk control, request-response event buses.</li>
+<li>Complex workloads that heavily depend on Kafka compaction / tombstones / transactions / EOS, unless the POC covers them well.</li>
+<li>Small-message, low-concurrency workloads with strict tail-latency SLOs.</li>
+<li>Teams unwilling to take on a new metadata/catalog control plane.</li>
+<li>Teams that already have a mature Kafka + Connect/Flink + Iceberg pipeline and whose cost is not a primary bottleneck.</li>
+</ul>
+<h2>7. How to Test Ursa in a POC</h2>
+<h3>7.1 Performance and Cost</h3>
+<ul>
+<li>Use real message size, partition count, producer concurrency, and consumer fanout rather than only the standard OpenMessaging happy path.</li>
+<li>Measure p50/p95/p99/p999 produce latency, E2E latency, and catch-up read latency separately.</li>
+<li>Test both low-concurrency small batches and high-concurrency large batches, because object storage systems are highly sensitive to Little's Law.</li>
+<li>Cost must be separated into broker, Oxia/metadata, compaction workers, catalog, object storage PUT/GET/list/range requests, S3 Express, cross-AZ/cross-region, and egress.</li>
+</ul>
+<h3>7.2 Kafka Semantics</h3>
+<ul>
+<li>transactional producer / exactly-once.</li>
+<li>consumer group churn, rebalance, offset commit.</li>
+<li>compacted topics, tombstones, retention delete.</li>
+<li>key skew, hot partitions, multi-tenant isolation.</li>
+<li>broker crash, metadata leader failover, object storage throttling, AZ failure.</li>
+</ul>
+<h3>7.3 Lakehouse Semantics</h3>
+<ul>
+<li>Iceberg/Delta table freshness SLA.</li>
+<li>small-file count, compaction lag, snapshot count, manifest growth.</li>
+<li>schema evolution, high-frequency schema changes, invalid records / DLQ.</li>
+<li>read consistency for external query engines: whether Spark/Trino/Snowflake/Databricks see the expected snapshot.</li>
+<li>catalog lock contention and catalog vendor lock-in.</li>
+</ul>
+<h2>8. Decision Framework</h2>
+<p>If the goal is <strong>lowering Kafka cost while still mainly serving Kafka consumers</strong>, prioritize comparing WarpStream, AutoMQ, Confluent Freight, Aiven/KIP-1150, and Redpanda Cloud Topics. Ursa can be included, but should not receive credit only because it is lakehouse-native.</p>
+<p>If the goal is <strong>turning Kafka ingestion directly into Iceberg/Delta data assets</strong>, prioritize comparing Ursa, Bufstream, AutoMQ Table Topic, WarpStream Tableflow, Confluent Tableflow, and Aiven Iceberg Topics. Here Ursa is one of the most architecturally ambitious options.</p>
+<p>If the goal is <strong>safe enterprise deployment</strong>, Confluent Cloud/MSK/Kafka + Tableflow/Connect/Flink remains the realistic baseline. It may be less elegant and more expensive, but maturity, SLA, ecosystem, and hiring/operations familiarity are stronger.</p>
+<p>If the goal is <strong>judging the long-term technical direction</strong>, KIP-1150/1163/1164 matter more than any single vendor. Once upstream Kafka forms a diskless topic standard, vendor differentiation will move from "can it be diskless" to "how good are metadata, catalog, maintenance, governance, and lakehouse integration".</p>
+<h2>9. Ursa Bear Case: Why It May Not Be Right for You</h2>
+<p>If you only read StreamNative's paper and launch posts, Ursa can easily look like a unified answer to Kafka cost, broker operations, lakehouse ingestion, and stream-table duality. From the bear-case view, it has at least seven ways to go wrong.</p>
+<h3>9.1 It May Only Move Kafka's Complexity Somewhere Else</h3>
+<p>Ursa removes the partition leader, ISR, local log, and rebalancing from Kafka brokers, but it does not remove hard problems such as ordering, offset assignment, transaction visibility, fencing, and metadata commits. They move into Oxia, the offset index, catalog commits, and the compaction service.</p>
+<p>This means Ursa's operational problem is no longer "which broker disk is full, which partition leader is hot". It becomes:</p>
+<ul>
+<li>whether Oxia/metadata shards become hot partitions.</li>
+<li>whether metadata quorum cross-AZ cost and latency are fully accounted for.</li>
+<li>whether catalog commits become a new bottleneck under high-frequency writes.</li>
+<li>whether the offset index and table metadata remain consistent during failure recovery.</li>
+<li>whether Kafka replay and table queries degrade together when compaction falls behind.</li>
+</ul>
+<p>So Ursa's complexity does not disappear. It moves from the familiar Kafka broker layer into a newer metadata/table-control-plane layer. For a team, this may reduce dimensionality, or it may replace familiar failure modes with a more unfamiliar set.</p>
+<h3>9.2 Its Best-Fit Scenario Is Narrower Than the Marketing Narrative</h3>
+<p>Ursa is best suited for high-throughput data streams that can tolerate sub-second freshness and are centered on lake landing / analytics / AI ingestion. If the workload is mainly operational streaming, such as low-latency event buses, order status streams, risk-control signals, online service coordination, or strict p99/p999 SLOs, Ursa's lakehouse-native advantage may go unused while the cost of object storage and metadata commits becomes exposed.</p>
+<p>Put differently, Ursa's question is not "can it run the Kafka API", but "does your Kafka workload really want to trade 200-500ms or higher tail latency for cost and lakehouse visibility". If the answer is no, Redpanda, traditional Kafka, Confluent low-latency profiles, AutoMQ low-latency profiles, or WarpStream S3 Express profiles may be more reasonable.</p>
+<h3>9.3 Topic-as-Table May Underestimate Iceberg/Delta Maintenance Cost</h3>
+<p>"Every Kafka topic is an Iceberg/Delta table" sounds clean, but production Iceberg/Delta tables are not just Parquet files. They also require:</p>
+<ul>
+<li>small-file compaction and compaction backlog handling.</li>
+<li>snapshot expiration and orphan file cleanup.</li>
+<li>schema evolution and bad-data handling.</li>
+<li>partition/sort strategy effects on query performance.</li>
+<li>catalog commit contention.</li>
+<li>semantic boundaries between table maintenance and Kafka retention.</li>
+</ul>
+<p>Traditional Kafka-to-Iceberg pipelines are ugly, but at least their complexity is explicit: Connect/Flink/Spark jobs, DLQs, catalogs, compaction, and monitoring are each visible. Once Ursa internalizes this pipeline, the operational surface shrinks, but the system internals must get all of these things right. For users, this may reduce operational burden, or it may reduce observability and control.</p>
+<h3>9.4 The Hard Part of Kafka Compatibility Is Long-Tail Semantics, Not the Happy Path</h3>
+<p>Produce/fetch, consumer groups, and ordinary append-only topics do not prove that Ursa is equivalent to Kafka. The semantics that really need pressure-testing are long-tail cases:</p>
+<ul>
+<li>transactions / exactly-once.</li>
+<li>compacted topic / tombstone.</li>
+<li>key skew and hot partitions.</li>
+<li>high fan-out catch-up readers.</li>
+<li>interactions between retention delete and the Iceberg snapshot lifecycle.</li>
+<li>consumer group churn and offset commit storms.</li>
+<li>schema evolution storms.</li>
+<li>recovery under object storage throttling, catalog outage, and metadata failover.</li>
+</ul>
+<p>These are also the scenarios vendor benchmarks are most likely to under-cover. If a POC only measures throughput and average latency, Ursa's risk will be systematically underestimated.</p>
+<h3>9.5 Cost Advantages May Be Partly Consumed by the Control Plane and Table Maintenance</h3>
+<p>Ursa's cost savings mainly come from reducing cross-AZ broker replication, local disk, and connector pipelines. But the real bill also needs to include:</p>
+<ul>
+<li>Oxia/metadata service machines, storage, and quorum traffic.</li>
+<li>compaction workers.</li>
+<li>object storage PUT/GET/range request/list cost.</li>
+<li>Iceberg/Delta catalog and table maintenance.</li>
+<li>amplification when query engines read unoptimized small files.</li>
+<li>the cost of using a more expensive storage tier or smaller batches to lower latency.</li>
+</ul>
+<p>This does not mean Ursa cannot save money. It means conclusions such as "10x cheaper" must be itemized on your own workload. Especially when there are many topics, small messages, frequent schema changes, or high query freshness requirements, metadata and maintenance costs will stand out more than they do in marketing materials.</p>
+<h3>9.6 The Fork Path Carries Long-Term Maintenance Risk</h3>
+<p>One of UFK's selling points is that it is a Kafka fork, not a proxy. But the fork is also a risk:</p>
+<ul>
+<li>how UFK follows upstream Kafka as KIP-1150/1163/1164 continue to evolve.</li>
+<li>how Kafka security patches, protocol changes, and group coordinator/KRaft behavior changes are synchronized.</li>
+<li>whether surrounding tools that depend on broker internal behavior, rather than pure protocol behavior, see compatibility differences.</li>
+<li>whether UFK's differentiation shifts toward a proprietary storage/catalog layer if native Apache Kafka diskless topics mature in the future.</li>
+</ul>
+<p>These risks may not affect a short-term POC, but they matter for a 3-5 year platform choice.</p>
+<h3>9.7 The Biggest Uncertainty Is Maturity, Not Whether the Architecture Is Elegant</h3>
+<p>Ursa's architecture direction is persuasive and backed by a PVLDB paper. But for platform teams, the question is not "is this architecture advanced". It is:</p>
+<ul>
+<li>whether there are enough public production cases.</li>
+<li>whether Oxia, the offset index, compaction, and catalog commits can be observed and debugged.</li>
+<li>whether there are clear failure recovery runbooks.</li>
+<li>whether the Kafka semantics and governance tools you depend on are supported.</li>
+<li>whether it can run stably in your cloud, your object storage, your catalog, and your query engine combination.</li>
+</ul>
+<p>Therefore, Ursa is better suited as a high-potential POC candidate than as an immediate default Kafka platform replacement. The safest adoption path is to start with high-throughput, low-latency-insensitive, append-heavy topics where lake landing has high value, rather than migrating core operational topics.</p>
+<h2>10. Final Conclusion</h2>
+<p>Ursa is worth serious study because it compresses three trends into one architecture:</p>
+<ul>
+<li>Kafka brokers becoming stateless / diskless.</li>
+<li>Cloud object storage as the durable streaming log.</li>
+<li>Iceberg/Delta catalogs as the table control plane for streaming data.</li>
+</ul>
+<p>Its benefits are clear: it saves cross-AZ replication and local disk, simplifies broker operations, and turns the Kafka-to-lakehouse pipeline into a native storage path. Its risks are equally clear: the metadata/control plane becomes a new hot path, object storage latency and request cost enter the system design, Iceberg/Delta maintenance is no longer a side-path problem, and the Kafka fork/product maturity must be verified.</p>
+<p>The most accurate assessment is: <strong>Ursa is a strong template for a lakehouse-native streaming engine, not a universal replacement for every Kafka workload.</strong> For high-throughput, cost-sensitive analytics/AI/CDC lake landing scenarios, it is a very attractive direction. For low-latency operational streaming, traditional Kafka/Redpanda or low-latency profiles from AutoMQ/Confluent/WarpStream may be more suitable.</p>
+<p>More sharply: Ursa's greatest value is that it turns Kafka into part of the lakehouse ingestion/control plane. Its greatest risk is the same thing. You are not just getting "cheap Kafka". You are adopting a new streaming-table storage engine. Ursa is the better choice only when the benefits of lakehouse-native design are large enough to cover metadata, catalog, compaction, fork, and maturity risks.</p>
+<p>If continuing this work, the most valuable next step would be a POC checklist or benchmark matrix that puts Ursa, WarpStream, AutoMQ, and Bufstream/Confluent Tableflow under the same workload, rather than further comparing vendor claims.</p>
+<h2>References</h2>
+<ul>
+<li>StreamNative / PVLDB Ursa paper: https://www.vldb.org/pvldb/vol18/p5184-guo.pdf</li>
+<li>StreamNative UFK Deep Dive: https://streamnative.io/blog/ursa-for-kafka-deep-dive-the-kafka-problem-and-ursas-storage-leaderless-architecture</li>
+<li>StreamNative UFK launch post: https://streamnative.io/blog/ursa-for-kafka-native-apache-kafka-service-on-lakestream</li>
+<li>StreamNative Lakestream docs: https://docs.streamnative.io/cloud/overview/lakestream-overview</li>
+<li>Apache Kafka KIP-1150: https://cwiki.apache.org/confluence/display/KAFKA/KIP-1150:+Diskless+Topics</li>
+<li>Apache Kafka KIP-1163: https://cwiki.apache.org/confluence/display/KAFKA/KIP-1163:+Diskless+Core</li>
+<li>Apache Kafka KIP-1164: https://cwiki.apache.org/confluence/display/KAFKA/KIP-1164:+Diskless+Coordinator</li>
+<li>Apache Kafka KIP-1183: https://cwiki.apache.org/confluence/display/KAFKA/KIP-1183%3A+Unified+Shared+Storage</li>
+<li>Aiven KIP-1150 accepted: https://aiven.io/blog/kip-1150-accepted-and-the-road-ahead</li>
+<li>Aiven Inkless repo: https://github.com/aiven/inkless</li>
+<li>Aiven Inkless announcement: https://aiven.io/blog/announcing-inkless-clusters-cloud-kafka-done-right</li>
+<li>Aiven Diskless Kafka / KIP-1150: https://aiven.io/blog/diskless-apache-kafka-kip-1150</li>
+<li>Aiven diskless benchmark: https://aiven.io/blog/benchmarking-diskless-inkless-topics-part-1</li>
+<li>WarpStream low latency docs: https://docs.warpstream.com/warpstream/kafka/advanced-agent-deployment-options/low-latency-clusters</li>
+<li>WarpStream performance tuning docs: https://docs.warpstream.com/warpstream/kafka/configure-kafka-client/tuning-for-performance</li>
+<li>WarpStream architecture docs: https://docs.warpstream.com/warpstream/overview/architecture.md</li>
+<li>WarpStream write path docs: https://docs.warpstream.com/warpstream/overview/architecture/write-path.md</li>
+<li>WarpStream TCO blog: https://www.warpstream.com/blog/warpstream-benchmarks-and-tco</li>
+<li>WarpStream S3 Express benchmark: https://www.warpstream.com/blog/warpstream-s3-express-one-zone-benchmark-and-total-cost-of-ownership</li>
+<li>WarpStream Tableflow: https://www.warpstream.com/tableflow</li>
+<li>WarpStream Tableflow setup: https://docs.warpstream.com/warpstream/tableflow/tableflow.md</li>
+<li>AutoMQ homepage: https://www.automq.com</li>
+<li>AutoMQ GitHub: https://github.com/AutoMQ/automq</li>
+<li>AutoMQ performance benchmark: https://docs.automq.com/automq-cloud/appendix/performance-benchmark.md</li>
+<li>AutoMQ cross-AZ broker configuration: https://docs.automq.com/automq-cloud/eliminate-inter-zone-traffics/broker-configuration.md</li>
+<li>AutoMQ Table Topic: https://docs.automq.com/automq-cloud/table-topic/overview.md</li>
+<li>Bufstream Iceberg Archives reference: https://docs.bufbuild.ru/bufstream/iceberg/reference/</li>
+<li>Bufstream Iceberg configuration: https://docs.bufbuild.ru/bufstream/iceberg/configuration/</li>
+<li>Confluent Freight GA: https://www.confluent.io/blog/freight-clusters-are-generally-available/</li>
+<li>Confluent Tableflow docs: https://docs.confluent.io/cloud/current/topics/tableflow/overview.html</li>
+<li>Confluent Tableflow GA blog: https://www.confluent.io/blog/tableflow-ga-kafka-snowflake-iceberg/</li>
+<li>Aiven Iceberg Topics whitepaper: https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/iceberg_whitepaper.md</li>
+<li>Aiven tiered-storage README: https://raw.githubusercontent.com/Aiven-Open/tiered-storage-for-apache-kafka/main/README.md</li>
+<li>Fluss x Iceberg: https://fluss.apache.org/blog/2025/12/02/fluss-x-iceberg-why-your-lakehouse-is-not-streamhouse-yet</li>
+<li>Redpanda Tiered Storage: https://docs.redpanda.com/current/manage/tiered-storage/</li>
+<li>Redpanda Cloud Topics L0 GC: https://www.redpanda.com/blog/cloud-topics-level-zero-garbage-collection</li>
+<li>Redpanda Cloud Topics / Little's Law: https://www.redpanda.com/blog/littles-law-in-practice-with-cloud-topics</li>
+<li>TopicPartition Ursa analysis: https://topicpartition.io/blog/ursa-a-new-lakehouse-first-storage-engine-for-kafka</li>
+<li>2 Minute Streaming Lakestream explanation: https://blog.2minutestreaming.com/p/what-is-a-lakestream</li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
 </body>
 </html>
