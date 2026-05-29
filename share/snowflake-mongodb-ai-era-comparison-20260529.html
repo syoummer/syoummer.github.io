@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Snowflake vs. MongoDB in the AI Era</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A bilingual research note comparing why Snowflake receives clearer AI-to-consumption credit while MongoDB faces a more contested AI application database default-choice narrative.">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+* { box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+[hidden] { display: none !important; }
+.share-index-nav { margin: 0 0 1.2em; font-size: 0.86em; line-height: 1.3; }
+.share-index-nav a { display: inline-flex; align-items: center; padding: 0.3em 0.7em; color: var(--muted-color); border: 1px solid var(--border-color); border-radius: 999px; background: var(--switch-bg); }
+.share-index-nav a:hover { color: var(--link-color); border-color: var(--link-color); text-decoration: none; }
+.share-index-nav a:focus-visible, .language-switch button:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+.report-toolbar { display: flex; justify-content: flex-end; margin: 0 0 1.5em; }
+.language-switch { display: inline-flex; align-items: center; gap: 0.6em; color: var(--muted-color); font-size: 0.82em; line-height: 1.2; }
+.language-switch__label { letter-spacing: 0.04em; text-transform: uppercase; }
+.language-switch__options { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--border-color); border-radius: 999px; background: var(--switch-bg); }
+.language-switch button { border: 0; border-radius: 999px; padding: 0.35em 0.75em; color: var(--muted-color); background: transparent; cursor: pointer; font: inherit; }
+.language-switch button[aria-pressed="true"] { color: var(--switch-active-color); background: var(--switch-active-bg); }
+h1, h2, h3 { line-height: 1.35; }
+h1 { font-size: 1.9em; margin: 0.3em 0 0.6em; }
+h2 { font-size: 1.35em; margin: 1.8em 0 0.6em; padding-bottom: 0.25em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.12em; margin: 1.3em 0 0.4em; }
+p, ul, ol { margin: 0.85em 0; }
+ul, ol { padding-left: 1.5em; }
+li { margin: 0.4em 0; }
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+code { padding: 2px 5px; border-radius: 3px; background: var(--code-bg); font-size: 0.9em; }
+footer { margin-top: 3em; padding-top: 1em; border-top: 1px solid var(--border-color); color: var(--muted-color); font-size: 0.92em; }
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  .report-toolbar { justify-content: flex-start; }
+}</style>
+</head>
+<body>
+  <nav class="share-index-nav"><a href="/share/">← Share index</a></nav>
+  <div class="report-toolbar" aria-label="Language selector">
+    <div class="language-switch">
+      <span class="language-switch__label">Language</span>
+      <span class="language-switch__options">
+        <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </span>
+    </div>
+  </div>
+  <article data-report-lang="zh">
+<h1>Snowflake 为什么没有像 MongoDB 一样承压？AI 时代数据平台与应用数据库的市场分化调研</h1>
+<p>日期：2026-05-29 主题：对比 Snowflake 与 MongoDB 在 AI 时代的市场反应、财务指引、AI 产品货币化、数据库默认选择压力与投资者叙事差异</p>
+<h2>核心结论</h2>
+<p>需要新写一篇。原因是 Snowflake 和 MongoDB 的前两篇报告分别回答了两个局部问题：Snowflake 那篇解释“为什么 SNOW 财报后大涨”，MongoDB 那篇解释“为什么 MongoDB 在 AI/coding agent 时代的默认数据库地位变得没那么稳”。但用户现在问的是第三个问题：<strong>为什么 AI 时代同样是数据基础设施公司，Snowflake 的 AI 叙事被市场奖励，而 MongoDB 更容易被市场怀疑？</strong> 这个问题需要横向比较。</p>
+<p>我的结论是：<strong>Snowflake 并不是没有风险，也不是完全没受到 AI/software 估值压力；但它最新财报给出了更直接的 AI-to-consumption 证据。MongoDB 也在改善，尤其 Q1 FY2027 beat/raise 后，不能再简单说“MongoDB 被 AI 伤害”。真正差别是：Snowflake 的 AI 叙事更容易被投资者映射到产品收入、RPO、NRR 和全年指引；MongoDB 的 AI 叙事仍更多需要证明它能抵消“新 AI 应用默认数据库可能转向 Postgres/pgvector”的结构性疑问。</strong></p>
+<p>一句话概括：<strong>Snowflake 被市场看成“AI 让企业数据消费更多”的受益者；MongoDB 被市场同时看成“AI 应用需要数据库”的受益者和“AI 降低 schema 成本、Postgres/pgvector 抢默认位置”的潜在受压者。</strong></p>
+<h2>1. 最直接差异：Snowflake 给了“AI 推动消费上修”的证据</h2>
+<p>Snowflake Q1 FY2027 官方财报显示：产品收入 13.3 亿美元，同比增长 34%；总收入 13.9 亿美元，同比增长 33%；net revenue retention 126%；RPO 92.1 亿美元，同比增长 38%；过去 12 个月产品收入超过 100 万美元的客户数 779 个，同比增长 29%。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>。</p>
+<p>更关键的是，Snowflake 把全年产品收入指引从 56.60 亿美元、同比 27% 上调到 58.40 亿美元、同比 31%；同时把 FY2027 non-GAAP operating margin 指引从 12.5% 上调到 13.5%。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>。这就是市场最喜欢的组合：<strong>增长加速，指引上修，利润率没有被 AI 投资拖垮。</strong></p>
+<p>Snowflake 还给了很具体的 AI 使用指标：超过 13,600 个账户正在使用 Snowflake AI capabilities；Snowflake Intelligence 账户数环比翻倍；Cortex Code 已经有超过 7,100 个账户使用；官方稿称这些创新“contributed to the strongest sequential product revenue dollar growth in company history”。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>。</p>
+<p>电话会转录进一步强化了这个因果链。管理层称 AI 通过三层影响 Snowflake：第一，客户为了安全、治理、上下文，把更多 workload 迁到 Snowflake，拉动核心平台消费；第二，Snowflake Intelligence 和 Cortex Code 是公司历史上采用最快的新产品；第三，AI 产品采用会进一步增加核心平台消费。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/05/27/snowflake-snow-q1-2027-earnings-transcript/">Motley Fool Snowflake Q1 FY2027 transcript</a>。</p>
+<p>这说明 Snowflake 的 AI 叙事不是“我们也有 AI 功能”，而是“AI 已经让客户更多使用平台，并且我们把这个使用行为纳入了全年指引”。Snowflake 官方 Cortex Agents 博客把商业化逻辑说得更直白：在 Snowflake 的 credit consumption model 下，“AI agent usage translates directly into credits consumed”。来源：<a href="https://www.snowflake.com/en/blog/enterprise-ai-agent-platform/">Snowflake Cortex Agents blog</a>。MarketBeat 对电话会的总结也抓住了这一点：Snowflake Q1 产品收入同比增长 34%，net revenue retention 升至 126%，全年产品收入指引上调到 58.4 亿美元，AI 产品成为主要增长驱动。来源：<a href="https://www.marketbeat.com/instant-alerts/snowflake-q1-earnings-call-highlights-2026-05-27/">MarketBeat Snowflake Q1 earnings call highlights</a>。</p>
+<h2>2. MongoDB 的旧压力：Q4 后市场看到的是“AI 机会大，但收入兑现慢”</h2>
+<p>MongoDB Q4 FY2026 的当季数据并不差：总收入 6.951 亿美元，同比增长 27%；FY2026 全年收入 24.6 亿美元，同比增长 23%；Atlas 当季和全年收入均同比增长 29%。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 SEC exhibit</a>。</p>
+<p>但 Q4 后的问题在 forward guide。MongoDB 当时给出的 FY2027 revenue guide 是 28.60 亿至 29.00 亿美元，相当于 16%-18% 增长；电话会中 Atlas FY2027 预计增长约 21%-23%，且管理层说明 consumption business 后半年的可见度更有限。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/03/02/mongodb-mdb-q4-2026-earnings-call-transcript/">Motley Fool MongoDB Q4 FY2026 transcript</a>。Reuters/MarketScreener 报道称，MongoDB 股价财报后下跌约 27%，原因包括云数据库 Atlas 增速放缓、第一季度利润指引低于预期、以及市场对 AI 冲击软件行业的焦虑。来源：<a href="https://in.marketscreener.com/news/mongodb-shares-plummet-27-on-weak-growth-in-cloud-business-muted-forecast-ce7e5cd2dd81f424">Reuters via MarketScreener</a>。</p>
+<p>MongoDB 管理层对 AI 的表述当时也更谨慎。Q4 电话会中，管理层称客户使用 AI capabilities 的增长令人鼓舞，vector search 客户数同比接近翻倍，Voyage embedding models 客户数自收购后也翻倍；但同时明确说 AI native 客户仍处早期，尚不是 meaningful revenue drivers。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/03/02/mongodb-mdb-q4-2026-earnings-call-transcript/">Motley Fool MongoDB Q4 FY2026 transcript</a>。</p>
+<p>这就是 Q4 后市场给 Snowflake 和 MongoDB 不同待遇的原因：<strong>Snowflake 把 AI adoption 直接连到产品收入上修；MongoDB 当时更多是在讲 AI adoption 和长期机会，但还承认收入驱动尚早。</strong></p>
+<h2>3. 但最新 Q1 改变了 MongoDB 的叙事：不能再简单说 MongoDB 持续受伤</h2>
+<p>这次重新调研最重要的更新是：MongoDB Q1 FY2027 也显著改善了。官方财报显示，MongoDB Q1 FY2027 总收入 6.876 亿美元，同比增长 25%；Atlas revenue 同比增长超过 29%；公司上调 FY2027 guidance，主要由 Atlas strength 驱动。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 official SEC exhibit</a>、<a href="https://www.prnewswire.com/news-releases/mongodb-inc-announces-first-quarter-fiscal-2027-financial-results-302784757.html">MongoDB Q1 FY2027 official release via PRNewswire</a>。</p>
+<p>StockTitan 的 8-K 摘要给出更完整数字：Q1 revenue 6.876 亿美元，同比增长 25%；RPO 14.586 亿美元，同比增长 88%；free cash flow 1.975 亿美元；Q2 revenue guide 为 7.29 亿至 7.34 亿美元；FY2027 revenue guide 上调到 29.2 亿至 29.6 亿美元；non-GAAP EPS guide 上调到 5.95-6.14 美元。来源：<a href="https://www.stocktitan.net/sec-filings/MDB/8-k-mongo-db-inc-reports-material-event-0718af50c5d7.html">StockTitan MongoDB Q1 FY2027 8-K summary</a>。</p>
+<p>MongoDB Q1 电话会也明显加强了 AI/agent 叙事。转录摘要称 FY2027 revenue guide 上调到 29.2 亿至 29.6 亿美元，对应 19%-20% 增长；自动 Voyage AI embeddings 进入 public preview；MongoDB 与 LangChain 合作，试图把 Atlas 做成 production AI agents 的统一 backend；MongoDB Checkpointer for LangSmith 可以把过去每个 agent 一个 dedicated Postgres instance 的模式折叠到一个 shared Atlas cluster，用于 state、memory 和 operational data。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>。</p>
+<p>这说明 MongoDB 的情况不是“AI 正在打垮它”。恰恰相反，MongoDB 正在试图把自己重新定位成 agentic application backend，并且 Q1 的 Atlas/RPO/guidance 证明需求没有崩。正确的比较应该是：<strong>MongoDB 的 Q1 修复了一部分 Q4 后的增长担忧，但它仍没有像 Snowflake 那样把 AI adoption 明确转成“全年增长重新加速 + AI 产品已经是 major revenue engine”的市场共识。</strong></p>
+<h2>4. 产品类别不同：Snowflake 是企业数据消费平台，MongoDB 是应用数据库</h2>
+<p>这可能是最根本的差异。</p>
+<p>Snowflake 的核心用例是企业数据平台：数据仓库、数据湖、治理、共享、AI/ML、应用和 agent 访问企业上下文。AI 时代企业最先遇到的问题是：数据分散、权限复杂、上下文不足、模型需要安全访问企业数据。Snowflake 的叙事天然顺：<strong>AI 需要更多 clean/governed/context-rich enterprise data，所以客户把更多数据和 workload 放到 Snowflake，产品收入增加。</strong></p>
+<p>MongoDB 的核心用例是应用数据库：支撑现代应用、operational data、document model、search/vector、agent memory/state。AI 当然也需要这些，但应用数据库市场的默认选择争夺更激烈。新的 AI app 如果要快速搭一个用户系统、权限、billing、RAG metadata、embeddings、任务状态，开发者可能选择 Postgres/Supabase/pgvector，因为它一套覆盖关系数据、JSONB、向量、权限和 SQL 生态。这正是 MongoDB 那篇报告的核心：AI/coding agents 降低了 schema/migration 维护成本，使 Postgres 的“默认性”增强，从而削弱 MongoDB 的历史 flexible-schema 心智优势。来源：<a href="mongodb-ai-era-database-default-20260529.html">MongoDB 在 AI 时代相对不好用了吗？</a>。</p>
+<p>所以二者面对的 AI 问题不一样：</p>
+<p>- Snowflake 的问题是：AI 是否增加企业数据平台消费？最新财报给出的答案偏“是”。 - MongoDB 的问题是：AI-native application 的默认 operational database 会不会选 MongoDB？答案仍在争夺中。</p>
+<p>这解释了为什么 Snowflake 的 AI 叙事更直接被市场理解，而 MongoDB 的 AI 叙事需要更多教育。</p>
+<h2>5. Snowflake 的 AI 叙事更接近“存量客户扩张”，MongoDB 的 AI 叙事更接近“新应用默认权争夺”</h2>
+<p>Snowflake 的 AI adoption 很多发生在存量企业数据平台内部。已有客户用 Snowflake 做数据治理、分析、数据共享，现在用 Cortex、Snowflake Intelligence、Cortex Code、agentic workflows，就会自然增加 compute、storage、data transfer 和产品消费。Snowflake 的商业模式本来就是 consumption-based，product revenue 直接反映客户使用量。</p>
+<p>MongoDB 也有存量扩张，但它的 AI 叙事更依赖“agentic application backend”的未来架构。MongoDB Q1 transcript 中管理层把 agentic workload 的三条腿描述为 harness、LLM 和 data layer，并强调 LangChain 作为 harness 与 MongoDB data layer 的结合。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>。这方向有潜力，但它仍需要证明：当开发者或 agent scaffold 新应用时，Atlas 会成为默认 data layer，而不是 Supabase/Postgres/pgvector、SQLite、专门 vector DB 或云厂商原生数据库。</p>
+<p>因此，Snowflake 的增长证据更像“既有平台上 AI 拉动更多消费”；MongoDB 的增长证据更像“我们正在争取成为新一代 agent app 的 backend”。前者更容易在一个季度的财报里验证，后者需要多个季度看开发者 adoption、框架默认、Atlas AI workload、agent memory/state 产品化和生产化程度。</p>
+<h2>6. 投资者叙事不同：Snowflake 解决了一个担忧，MongoDB 同时打开了一个新问题</h2>
+<p>Snowflake 财报前的担忧是：增长是不是会继续降速？AI 产品是不是只是 narrative？AI 投入会不会拖累 margin 和 FCF？Q1 答案几乎逐项反驳：product revenue 增长 34%，全年 guide 从 27% 上调到 31%，operating margin guide 从 12.5% 上调到 13.5%，AI 使用指标和消费增长被管理层直接绑定。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>。</p>
+<p>MongoDB Q4 后的担忧更复杂：Atlas 增速是否降档？AI 是否只是长期机会？Postgres/pgvector 是否成为 AI app 默认数据库？MongoDB 的 flexible-schema 优势是否被 AI schema generation 和 ORM/migration 工具压缩？Q1 beat/raise 改善了前两个问题，但没有完全关闭后两个结构性问题。</p>
+<p>也就是说，Snowflake 的 Q1 是“AI 让增长重新加速”的证明；MongoDB 的 Q1 是“业务没有坏，AI/agent 后台叙事正在形成”的修复。两者都正面，但市场确定性不同。</p>
+<h2>7. 反方：MongoDB 可能没有想象中更受影响</h2>
+<p>必须保留反方。MongoDB Q1 FY2027 数据明显强于 Q4 后市场担忧：收入 +25%，Atlas +29% 以上，RPO +88%，FCF 1.975 亿美元，FY2027 revenue guide 上调到 29.2-29.6 亿美元。来源：<a href="https://www.stocktitan.net/sec-filings/MDB/8-k-mongo-db-inc-reports-material-event-0718af50c5d7.html">StockTitan MongoDB Q1 FY2027 8-K summary</a>。这说明 Q4 后的股价反应可能更多是预期和估值问题，而不是需求崩坏。</p>
+<p>MongoDB 也不是被 Postgres/pgvector 单向打压。Q1 transcript 显示，MongoDB 正在反过来攻击“每个 agent 一个 dedicated Postgres instance”的复杂性，强调用共享 Atlas cluster 统一 state、memory 和 operational data。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>。这很重要：MongoDB 正在把 Postgres/pgvector 的“一库解决”叙事改写成“Atlas 作为 agent backend 的一体化解决方案”。</p>
+<p>所以如果我们现在写报告，不能写成“Snowflake 赢，MongoDB 输”。更准确的是：<strong>Snowflake 当前有更强的 AI 收入确定性；MongoDB 正在重新加速和重新叙事，但仍处在默认权争夺阶段。</strong></p>
+<h2>8. 交叉验证：为什么新报告值得保留</h2>
+<p>已有报告之间有一个表面矛盾：MongoDB 那篇说 MongoDB 在 AI 时代默认性受压；但最新 MongoDB Q1 又 beat/raise，说明业务动能强。这个矛盾不能靠原报告解决，因为原 MongoDB 报告写于 Q4 后压力逻辑，虽然结论已经谨慎，但没有完整纳入 Q1 FY2027 的反转。</p>
+<p>Snowflake 那篇也没有解释 MongoDB，因为它关注的是 Snowflake 自身财报：产品收入 beat、全年指引上修、AI 使用量被视为消费收入驱动。</p>
+<p>因此需要新报告来回答一个更高层问题：<strong>AI 对不同“数据基础设施”公司的影响不是同一种影响。对 Snowflake，AI 更像提升企业数据平台消费的顺风；对 MongoDB，AI 既是 agent backend 新机会，也是默认数据库竞争加剧的压力。</strong></p>
+<h2>最终判断</h2>
+<p>为什么 Snowflake 没有像 MongoDB 一样承压？</p>
+<p>因为 Snowflake 最新财报把 AI 叙事变成了四个硬信号：产品收入增长加速、RPO 和 NRR 强、全年产品收入指引从 27% 上调到 31%、利润率指引也上调。市场看到的是：AI 不只是发布会故事，而是正在增加 Snowflake 平台消费。</p>
+<p>为什么 MongoDB 的影响看起来更大？</p>
+<p>因为 MongoDB 处在应用数据库默认权争夺中。AI/coding agents 降低 schema 维护成本，使 Postgres/pgvector/Supabase 更像新 AI 应用的默认起点；MongoDB 虽然有 Atlas Vector Search、Voyage、Automated Embedding、LangChain partnership、agent memory/state 叙事，但这些还需要更多季度证明能转化成 Atlas consumption 和开发者默认选择。</p>
+<p>但这个判断必须更新：<strong>MongoDB 最新 Q1 FY2027 已经明显改善，不能再说 MongoDB 正被 AI 持续伤害。更准确地说，MongoDB 的 AI 机会正在兑现早期迹象，但市场对它的确定性低于 Snowflake，因为 Snowflake 的 AI 收益更直接落在当季消费和全年指引上。</strong></p>
+<p>我会继续观察：</p>
+<ol>
+<li>Snowflake 的 AI accounts 是否继续转化成 product revenue acceleration，而不是只停留在 adoption。</li>
+<li>MongoDB 的 LangChain/Claude Code/agent memory integrations 是否带来可量化 Atlas AI workload。</li>
+<li>AI app starter、agent framework、coding agent scaffold 的默认 database 是否继续偏向 Postgres/pgvector，还是 MongoDB Atlas 能夺回默认权。</li>
+<li>两家公司未来几季是否都能在上调 growth guide 的同时维持或提高 margin guide。</li>
+</ol>
+  </article>
+  <article data-report-lang="en" hidden>
+<h1>Why Hasn&#x27;t Snowflake Come Under Pressure Like MongoDB? A Survey of the Market Split Between Data Platforms and Application Databases in the AI Era</h1>
+<p>Date: 2026-05-29 Topic: Comparing Snowflake and MongoDB in the AI era across market reactions, financial guidance, AI product monetization, database default-choice pressure, and investor narratives</p>
+<h2>Core Conclusion</h2>
+<p>A new piece needs to be written. The reason is that the two earlier reports on Snowflake and MongoDB each answered a narrower question: the Snowflake piece explained &quot;why SNOW rallied after earnings,&quot; while the MongoDB piece explained &quot;why MongoDB&#x27;s default database position has become less stable in the AI/coding agent era.&quot; But the user&#x27;s current question is a third one: <strong>why, in the AI era, are two data infrastructure companies being treated so differently, with Snowflake&#x27;s AI narrative rewarded by the market while MongoDB&#x27;s is more easily doubted?</strong> This question needs a side-by-side comparison.</p>
+<p>My conclusion is: <strong>Snowflake is not risk-free, nor has it been completely spared from AI/software valuation pressure. But its latest earnings report gave more direct AI-to-consumption evidence. MongoDB is also improving, especially after its Q1 FY2027 beat and raise, so it is no longer accurate to simply say &quot;MongoDB is being hurt by AI.&quot; The real difference is this: Snowflake&#x27;s AI narrative is easier for investors to map to product revenue, RPO, NRR, and full-year guidance. MongoDB&#x27;s AI narrative still needs to prove that it can offset the structural question of whether new AI applications may default to Postgres/pgvector instead.</strong></p>
+<p>In one sentence: <strong>the market sees Snowflake as a beneficiary of &quot;AI drives more enterprise data consumption&quot;; it sees MongoDB both as a beneficiary of &quot;AI applications need databases&quot; and as a potential pressured player because &quot;AI lowers schema costs, while Postgres/pgvector takes more of the default position.&quot;</strong></p>
+<h2>1. The Most Direct Difference: Snowflake Gave Evidence That AI Is Driving Higher Consumption Guidance</h2>
+<p>Snowflake&#x27;s official Q1 FY2027 earnings release showed: product revenue of $1.33 billion, up 34% year over year; total revenue of $1.39 billion, up 33% year over year; net revenue retention of 126%; RPO of $9.21 billion, up 38% year over year; and 779 customers with trailing 12-month product revenue above $1 million, up 29% year over year. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>.</p>
+<p>More importantly, Snowflake raised its full-year product revenue guidance from $5.660 billion, up 27% year over year, to $5.840 billion, up 31% year over year. It also raised FY2027 non-GAAP operating margin guidance from 12.5% to 13.5%. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>. This is the combination the market likes most: <strong>accelerating growth, raised guidance, and margins not being crushed by AI investment.</strong></p>
+<p>Snowflake also gave very specific AI usage metrics: more than 13,600 accounts are using Snowflake AI capabilities; the number of Snowflake Intelligence accounts doubled quarter over quarter; Cortex Code is already used by more than 7,100 accounts; and the official release said these innovations &quot;contributed to the strongest sequential product revenue dollar growth in company history.&quot; Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>.</p>
+<p>The earnings call transcript further strengthened this causal chain. Management said AI affects Snowflake across three layers: first, customers are moving more workloads to Snowflake for security, governance, and context, which drives core platform consumption; second, Snowflake Intelligence and Cortex Code are the fastest-adopted new products in company history; third, AI product adoption will further increase core platform consumption. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/05/27/snowflake-snow-q1-2027-earnings-transcript/">Motley Fool Snowflake Q1 FY2027 transcript</a>.</p>
+<p>This shows that Snowflake&#x27;s AI narrative is not &quot;we also have AI features.&quot; It is &quot;AI is already making customers use the platform more, and we have included that usage behavior in full-year guidance.&quot; Snowflake&#x27;s official Cortex Agents blog states the monetization logic even more plainly: under Snowflake&#x27;s credit consumption model, &quot;AI agent usage translates directly into credits consumed.&quot; Source: <a href="https://www.snowflake.com/en/blog/enterprise-ai-agent-platform/">Snowflake Cortex Agents blog</a>. MarketBeat&#x27;s earnings call summary also captured this point: Snowflake Q1 product revenue grew 34% year over year, net revenue retention rose to 126%, full-year product revenue guidance was raised to $5.84 billion, and AI products became a major growth driver. Source: <a href="https://www.marketbeat.com/instant-alerts/snowflake-q1-earnings-call-highlights-2026-05-27/">MarketBeat Snowflake Q1 earnings call highlights</a>.</p>
+<h2>2. MongoDB&#x27;s Old Pressure: After Q4, the Market Saw &quot;Large AI Opportunity, Slow Revenue Conversion&quot;</h2>
+<p>MongoDB&#x27;s Q4 FY2026 quarterly numbers were not bad: total revenue was $695.1 million, up 27% year over year; full-year FY2026 revenue was $2.46 billion, up 23% year over year; and Atlas revenue grew 29% year over year both for the quarter and for the full year. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 SEC exhibit</a>.</p>
+<p>But after Q4, the issue was the forward guide. MongoDB&#x27;s FY2027 revenue guide at the time was $2.860 billion to $2.900 billion, implying 16% to 18% growth. On the call, Atlas FY2027 growth was expected to be about 21% to 23%, and management explained that visibility in the consumption business was more limited in the second half of the year. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/03/02/mongodb-mdb-q4-2026-earnings-call-transcript/">Motley Fool MongoDB Q4 FY2026 transcript</a>. Reuters/MarketScreener reported that MongoDB shares fell about 27% after earnings, citing slower growth in cloud database Atlas, first-quarter profit guidance below expectations, and market anxiety about AI&#x27;s impact on the software industry. Source: <a href="https://in.marketscreener.com/news/mongodb-shares-plummet-27-on-weak-growth-in-cloud-business-muted-forecast-ce7e5cd2dd81f424">Reuters via MarketScreener</a>.</p>
+<p>MongoDB management&#x27;s AI language at the time was also more cautious. On the Q4 call, management said growth in customer use of AI capabilities was encouraging, vector search customers had nearly doubled year over year, and Voyage embedding model customers had also doubled since the acquisition. But it also clearly said AI-native customers were still early and were not yet meaningful revenue drivers. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/03/02/mongodb-mdb-q4-2026-earnings-call-transcript/">Motley Fool MongoDB Q4 FY2026 transcript</a>.</p>
+<p>This is why the market treated Snowflake and MongoDB differently after Q4: <strong>Snowflake directly linked AI adoption to higher product revenue guidance; MongoDB at the time was mainly talking about AI adoption and long-term opportunity, while acknowledging that revenue contribution was still early.</strong></p>
+<h2>3. But the Latest Q1 Changed MongoDB&#x27;s Narrative: It Is No Longer Accurate to Say MongoDB Is Still Being Hurt</h2>
+<p>The most important update from this new round of research is that MongoDB Q1 FY2027 also improved materially. The official earnings release showed MongoDB Q1 FY2027 total revenue of $687.6 million, up 25% year over year; Atlas revenue growth of more than 29% year over year; and raised FY2027 guidance, mainly driven by Atlas strength. Sources: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 official SEC exhibit</a>, <a href="https://www.prnewswire.com/news-releases/mongodb-inc-announces-first-quarter-fiscal-2027-financial-results-302784757.html">MongoDB Q1 FY2027 official release via PRNewswire</a>.</p>
+<p>StockTitan&#x27;s 8-K summary gave the fuller numbers: Q1 revenue of $687.6 million, up 25% year over year; RPO of $1.4586 billion, up 88% year over year; free cash flow of $197.5 million; Q2 revenue guide of $729 million to $734 million; FY2027 revenue guide raised to $2.92 billion to $2.96 billion; and non-GAAP EPS guide raised to $5.95 to $6.14. Source: <a href="https://www.stocktitan.net/sec-filings/MDB/8-k-mongo-db-inc-reports-material-event-0718af50c5d7.html">StockTitan MongoDB Q1 FY2027 8-K summary</a>.</p>
+<p>MongoDB&#x27;s Q1 call also strengthened its AI/agent narrative. The transcript summary said FY2027 revenue guidance was raised to $2.92 billion to $2.96 billion, implying 19% to 20% growth; automated Voyage AI embeddings entered public preview; MongoDB partnered with LangChain in an attempt to make Atlas the unified backend for production AI agents; and MongoDB Checkpointer for LangSmith can collapse the old pattern of one dedicated Postgres instance per agent into a shared Atlas cluster for state, memory, and operational data. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>.</p>
+<p>This shows MongoDB is not in a situation where &quot;AI is crushing it.&quot; Quite the opposite: MongoDB is trying to reposition itself as an agentic application backend, and Q1 Atlas/RPO/guidance proved demand has not collapsed. The right comparison is: <strong>MongoDB&#x27;s Q1 repaired part of the growth concern that followed Q4, but it still has not converted AI adoption into the same market consensus Snowflake has, namely &quot;full-year growth is reaccelerating, and AI products are already a major revenue engine.&quot;</strong></p>
+<h2>4. The Product Categories Are Different: Snowflake Is an Enterprise Data Consumption Platform, MongoDB Is an Application Database</h2>
+<p>This may be the most fundamental difference.</p>
+<p>Snowflake&#x27;s core use case is the enterprise data platform: data warehousing, data lakes, governance, sharing, AI/ML, applications, and agent access to enterprise context. In the AI era, the first problems enterprises run into are fragmented data, complex permissions, insufficient context, and models that need secure access to enterprise data. Snowflake&#x27;s narrative is naturally smooth: <strong>AI needs more clean, governed, context-rich enterprise data, so customers put more data and workloads into Snowflake, which increases product revenue.</strong></p>
+<p>MongoDB&#x27;s core use case is the application database: supporting modern applications, operational data, the document model, search/vector, and agent memory/state. AI certainly needs these too, but the market for default application databases is more contested. If a new AI app needs to quickly set up a user system, permissions, billing, RAG metadata, embeddings, and task state, developers may choose Postgres/Supabase/pgvector because one stack covers relational data, JSONB, vectors, permissions, and the SQL ecosystem. This was the core argument of the MongoDB report: AI/coding agents lower the maintenance cost of schemas and migrations, which strengthens Postgres&#x27;s &quot;defaultness&quot; and weakens MongoDB&#x27;s historic flexible-schema mindshare advantage. Source: <a href="mongodb-ai-era-database-default-20260529.html">Has MongoDB Become Relatively Less Useful in the AI Era?</a>.</p>
+<p>So the two companies face different AI questions:</p>
+<p>- Snowflake&#x27;s question is: does AI increase enterprise data platform consumption? The latest earnings report gives an answer that leans &quot;yes.&quot; - MongoDB&#x27;s question is: will MongoDB be the default operational database for AI-native applications? The answer is still being fought over.</p>
+<p>This explains why Snowflake&#x27;s AI narrative is more directly understood by the market, while MongoDB&#x27;s AI narrative requires more education.</p>
+<h2>5. Snowflake&#x27;s AI Narrative Is Closer to &quot;Expansion Within Existing Customers,&quot; While MongoDB&#x27;s AI Narrative Is Closer to &quot;A Fight for Default Status in New Applications&quot;</h2>
+<p>Much of Snowflake&#x27;s AI adoption happens inside the existing enterprise data platform. Existing customers already use Snowflake for data governance, analytics, and data sharing. When they now use Cortex, Snowflake Intelligence, Cortex Code, and agentic workflows, they naturally increase compute, storage, data transfer, and product consumption. Snowflake&#x27;s business model was already consumption-based, and product revenue directly reflects customer usage.</p>
+<p>MongoDB also has existing-customer expansion, but its AI narrative depends more on the future architecture of the &quot;agentic application backend.&quot; In MongoDB&#x27;s Q1 transcript, management described agentic workloads as having three legs: the harness, the LLM, and the data layer, and emphasized the combination of LangChain as the harness with MongoDB as the data layer. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>. This direction has potential, but it still needs to prove that when developers or agents scaffold new applications, Atlas will become the default data layer rather than Supabase/Postgres/pgvector, SQLite, specialized vector databases, or cloud-native databases.</p>
+<p>So Snowflake&#x27;s growth evidence looks more like &quot;AI is driving more consumption on an existing platform.&quot; MongoDB&#x27;s growth evidence looks more like &quot;we are trying to become the backend for the next generation of agent apps.&quot; The former is easier to verify in one quarter&#x27;s earnings report. The latter requires several quarters of evidence across developer adoption, framework defaults, Atlas AI workloads, and the degree to which agent memory/state products become productized and production-ready.</p>
+<h2>6. Investor Narratives Differ: Snowflake Resolved One Concern, While MongoDB Also Opened a New Question</h2>
+<p>Before Snowflake&#x27;s earnings report, the worries were: will growth keep slowing? Are AI products just a narrative? Will AI investment drag down margin and FCF? Q1 answered almost point by point: product revenue grew 34%, the full-year guide was raised from 27% growth to 31%, operating margin guidance was raised from 12.5% to 13.5%, and AI usage metrics were directly tied by management to consumption growth. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>.</p>
+<p>After MongoDB Q4, the worries were more complex: is Atlas growth downshifting? Is AI only a long-term opportunity? Will Postgres/pgvector become the default database for AI apps? Will MongoDB&#x27;s flexible-schema advantage be compressed by AI schema generation and ORM/migration tools? The Q1 beat and raise improved the first two questions, but it did not fully close the latter two structural questions.</p>
+<p>In other words, Snowflake&#x27;s Q1 was proof that &quot;AI is making growth reaccelerate.&quot; MongoDB&#x27;s Q1 was a repair story: &quot;the business is not broken, and the AI/agent backend narrative is taking shape.&quot; Both are positive, but the market confidence level is different.</p>
+<h2>7. The Counterargument: MongoDB May Not Be as Affected as It Seems</h2>
+<p>The counterargument must be preserved. MongoDB&#x27;s Q1 FY2027 data was clearly stronger than the market feared after Q4: revenue +25%, Atlas above +29%, RPO +88%, FCF of $197.5 million, and FY2027 revenue guidance raised to $2.92 billion to $2.96 billion. Source: <a href="https://www.stocktitan.net/sec-filings/MDB/8-k-mongo-db-inc-reports-material-event-0718af50c5d7.html">StockTitan MongoDB Q1 FY2027 8-K summary</a>. This suggests the post-Q4 stock reaction may have been more about expectations and valuation than a collapse in demand.</p>
+<p>MongoDB is also not being pushed down one-way by Postgres/pgvector. The Q1 transcript shows MongoDB attacking, in reverse, the complexity of &quot;one dedicated Postgres instance per agent,&quot; while emphasizing a shared Atlas cluster that unifies state, memory, and operational data. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>. This matters: MongoDB is trying to rewrite the Postgres/pgvector &quot;one database solves it&quot; narrative into &quot;Atlas as an integrated solution for agent backends.&quot;</p>
+<p>So if we write the report now, we cannot write it as &quot;Snowflake wins, MongoDB loses.&quot; The more accurate version is: <strong>Snowflake currently has stronger AI revenue certainty; MongoDB is reaccelerating and rebuilding its narrative, but it is still in the fight for default status.</strong></p>
+<h2>8. Cross-Check: Why the New Report Is Worth Keeping</h2>
+<p>There is an apparent contradiction between the existing reports: the MongoDB piece says MongoDB&#x27;s defaultness is under pressure in the AI era, but the latest MongoDB Q1 beat and raise show strong business momentum. That contradiction cannot be resolved by the original report, because the original MongoDB report was written around the post-Q4 pressure logic. Although its conclusion was already cautious, it did not fully include the Q1 FY2027 reversal.</p>
+<p>The Snowflake piece also did not explain MongoDB, because it focused on Snowflake&#x27;s own earnings report: product revenue beat, full-year guidance raise, and AI usage being treated as a consumption revenue driver.</p>
+<p>So a new report is needed to answer a higher-level question: <strong>AI does not affect every &quot;data infrastructure&quot; company in the same way. For Snowflake, AI looks more like a tailwind that lifts enterprise data platform consumption. For MongoDB, AI is both a new agent-backend opportunity and pressure from intensified default-database competition.</strong></p>
+<h2>Final Judgment</h2>
+<p>Why hasn&#x27;t Snowflake come under pressure like MongoDB?</p>
+<p>Because Snowflake&#x27;s latest earnings report turned the AI narrative into four hard signals: faster product revenue growth, strong RPO and NRR, full-year product revenue guidance raised from 27% growth to 31%, and margin guidance also raised. What the market sees is this: AI is not just a launch-event story. It is already increasing consumption on the Snowflake platform.</p>
+<p>Why does the impact on MongoDB look larger?</p>
+<p>Because MongoDB sits inside the fight for default status among application databases. AI/coding agents lower schema maintenance costs, making Postgres/pgvector/Supabase look more like the default starting point for new AI applications. MongoDB has Atlas Vector Search, Voyage, Automated Embedding, the LangChain partnership, and an agent memory/state narrative, but these still need more quarters to prove they can translate into Atlas consumption and developer default choice.</p>
+<p>But this judgment must be updated: <strong>MongoDB&#x27;s latest Q1 FY2027 has already improved materially, so it is no longer accurate to say MongoDB is being continuously hurt by AI. More precisely, MongoDB&#x27;s AI opportunity is showing early signs of conversion, but the market has lower certainty on it than on Snowflake because Snowflake&#x27;s AI benefits land more directly in current-quarter consumption and full-year guidance.</strong></p>
+<p>I will continue watching:</p>
+<ol>
+<li>Whether Snowflake&#x27;s AI accounts keep translating into product revenue acceleration, rather than staying at adoption only.</li>
+<li>Whether MongoDB&#x27;s LangChain/Claude Code/agent memory integrations bring quantifiable Atlas AI workloads.</li>
+<li>Whether the default database for AI app starters, agent frameworks, and coding agent scaffolds keeps leaning toward Postgres/pgvector, or whether MongoDB Atlas can win back default status.</li>
+<li>Whether both companies can maintain or raise margin guidance while raising growth guidance over the next few quarters.</li>
+</ol>
+  </article>
+  <footer>
+    <p>Published on <a href="/share/">simin.you/share</a>. Source reports preserved in the workspace repository.</p>
+  </footer>
+  <script>
+    const buttons = Array.from(document.querySelectorAll('[data-lang]'));
+    const reports = Array.from(document.querySelectorAll('[data-report-lang]'));
+    function setLanguage(lang) {
+      reports.forEach((report) => { report.hidden = report.dataset.reportLang !== lang; });
+      buttons.forEach((button) => { button.setAttribute('aria-pressed', String(button.dataset.lang === lang)); });
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+    }
+    buttons.forEach((button) => button.addEventListener('click', () => setLanguage(button.dataset.lang)));
+  </script>
+</body>
+</html>
