@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Databricks 会怎样发展？AI 时代 Databricks 与 Snowflake 的竞争格局 / Databricks vs. Snowflake in the AI Data Platform Era</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>Databricks 会怎样发展？AI 时代 Databricks 与 Snowflake 的竞争格局</h1>
+<p>Databricks 现在是 Snowflake 最强的长期竞争者，但它不是在简单复制 Snowflake 的数据仓库。更准确地说，Databricks 正在把自己从 lakehouse / data engineering / ML 平台，扩成一个覆盖数据、AI、应用、agent 和 operational database 的企业 AI 应用底座。</p>
+<p>一句话判断：<strong>Snowflake 最新财报证明 AI 已经在拉动公开可验证的企业数据平台消费；Databricks 最新融资披露讲的是 AI 正在把 Databricks 推向企业 AI 应用平台。前者确定性更强，后者上限更高，但估值要求也更苛刻。</strong></p>
+<h2>核心判断</h2>
+<p>Databricks 的未来大概可以分成三层：</p>
+<ol>
+<li>短期：继续高速增长。公司披露 revenue run-rate 超过 48 亿美元、同比超过 55%，AI products 和 Data Warehousing 都超过 10 亿美元 run-rate。</li>
+<li>中期：继续正面进入 Snowflake 的主场，尤其是 SQL warehouse、BI、governance、AI on enterprise data。</li>
+<li>长期：真正目标不是只赢 data warehouse，而是成为企业 AI apps 和 agents 的统一数据操作系统，包括 Lakehouse、Databricks SQL、Unity Catalog、Lakebase、Databricks Apps、Agent Bricks。</li>
+</ol>
+<p>我的判断是：<strong>Databricks 值得看多业务，不宜无条件看多估值；Snowflake 不宜低估竞争压力，也不宜低估它已经用最新财报证明的 AI 变现能力。</strong></p>
+<h2>Databricks 增长很强，但证据口径要打折</h2>
+<p>Databricks 2025 年 12 月 Series L 融资稿披露，公司正以 1340 亿美元估值融资超过 40 亿美元；Q3 revenue run-rate 超过 48 亿美元，同比增长超过 55%；AI products revenue run-rate 超过 10 亿美元；Data Warehousing revenue run-rate 超过 10 亿美元；过去 12 个月 positive free cash flow；NRR 持续超过 140%；超过 700 个客户年化消费超过 100 万美元。来源：<a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">PRNewswire / Databricks Series L release</a>。</p>
+<p>关键原文：</p>
+<blockquote>
+<p>Databricks ... announced it is raising a &gt;$4 billion Series L investment, valuing the company at $134 billion. Additionally, the company crossed a $4.8 billion revenue run-rate during its Q3, growing &gt;55% year over year, including &gt;$1 billion revenue run-rate from its Data Warehousing business and &gt;$1 billion revenue run-rate from its AI products — all while delivering positive free cash flow over the last 12 months.</p>
+</blockquote>
+<p>这些数字非常强。问题在于 Databricks 仍是私有公司，这些数据来自公司融资披露，不是公开公司 SEC 财报。外部看不到完整 revenue recognition、gross margin、SBC、RPO、deferred revenue、AI products 毛利、客户集中度和云成本结构。</p>
+<p>对比 Snowflake，Q1 FY2027 的公开数据是：product revenue 13.34 亿美元，同比增长 34%；总收入 13.91 亿美元，同比增长 33%；NRR 126%；RPO 92.1 亿美元，同比增长 38%；FY2027 product revenue guidance 上调到 58.4 亿美元，同比增长 31%；non-GAAP product gross margin guidance 75%。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>Databricks</th>
+<th>Snowflake</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最新收入规模口径</td>
+<td>&gt;48 亿美元 revenue run-rate</td>
+<td>Q1 FY2027 product revenue 13.34 亿美元；FY2027 product revenue guide 58.4 亿美元</td>
+</tr>
+<tr>
+<td>增速</td>
+<td>&gt;55% YoY run-rate growth</td>
+<td>Q1 product revenue +34%；FY2027 product revenue guide +31%</td>
+</tr>
+<tr>
+<td>NRR</td>
+<td>&gt;140%</td>
+<td>126%</td>
+</tr>
+<tr>
+<td>AI 相关披露</td>
+<td>AI products &gt;10 亿美元 run-rate</td>
+<td>13,600+ accounts using AI capabilities；Cortex Code 7,100+ accounts；未单独披露 AI revenue</td>
+</tr>
+<tr>
+<td>可验证性</td>
+<td>公司融资披露，非完整财报</td>
+<td>SEC/IR 财报，公开公司口径</td>
+</tr>
+</tbody>
+</table>
+<p>所以更稳的说法是：<strong>业务动能上 Databricks 更猛；证据硬度上 Snowflake 更强。</strong></p>
+<h2>竞争已经不是“lakehouse vs warehouse”</h2>
+<p>Databricks 已经不只是 Spark / data engineering 公司。Databricks SQL 产品页直接用 data warehouse 语言定位自己，标题是 “The Best Data Warehouse Is a Lakehouse”，并称其为 serverless intelligent data warehouse。来源：<a href="https://www.databricks.com/product/databricks-sql">Databricks SQL</a>。</p>
+<p>页面原文：</p>
+<blockquote>
+<p>Eliminate the cost and complexity of legacy data warehouses with Databricks SQL — a serverless data warehouse built on lakehouse architecture that natively integrates AI.</p>
+</blockquote>
+<p>这意味着 Databricks 正在从 data engineering / ML 主场往 Snowflake 的 SQL analytics、BI、warehouse 主场推进。</p>
+<p>Snowflake 也不再只是 warehouse。Snowflake 最新财报把自己定义为 AI Data Cloud，并强调 AI 是 Q1 的 clear inflection point：超过 13,600 个账户使用 Snowflake AI capabilities，Snowflake Intelligence accounts 环比翻倍，Cortex Code 超过 7,100 个账户使用。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>。</p>
+<p>二者重合的区域已经包括 SQL warehouse、数据治理、AI on enterprise data、数据应用和企业 agent 平台。竞争已经不是单纯的 lakehouse vs warehouse，而是 AI data platform vs AI data platform。</p>
+<h2>最大产品分歧：应用底座 vs control plane</h2>
+<p>Databricks Series L 融资稿明确说新资金会加速三个战略产品：Lakebase、Databricks Apps、Agent Bricks，用于帮助客户构建 Data Intelligent Applications。来源：<a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">PRNewswire / Databricks Series L release</a>。</p>
+<p>关键原文：</p>
+<blockquote>
+<p>Databricks will use this new capital to help customers build AI apps and agents on their proprietary data, leveraging Lakebase as the system of record, Databricks Apps as the user experience layer, and Agent Bricks to power multi-agent systems.</p>
+</blockquote>
+<p>这句话说明 Databricks 不只是想做数据存储和分析，而是想把企业 AI app 的三层都放进 Databricks：Lakebase 做 system of record，Databricks Apps 做用户体验层，Agent Bricks 做 multi-agent 系统。</p>
+<p>Lakebase 产品页把自己定义为 “The operational database for AI agents and apps”，即 Postgres integrated with the lakehouse。功能包括 autoscaling with scale to zero、branching、point-in-time recovery、Unity Catalog integration、Databricks Apps integration、PostGIS、pgvector、PostgREST API、read replicas、Sync From Delta Lake。来源：<a href="https://www.databricks.com/product/lakebase">Databricks Lakebase</a>。</p>
+<p>这让 Databricks 开始接近 MongoDB、Postgres、Supabase、Neon 这类 operational backend 市场，同时把分析数据、应用状态和 agent memory 放到同一平台里。</p>
+<p>Snowflake 的方向不同。Snowflake Cortex Agents 博客强调的是在 Snowflake security / governance perimeter 内构建和治理 enterprise AI agents，包括 MCP connectors、agent skills、sandboxed Python、multi-tenancy、agent versioning、resource budgets、shared resource budgets、evaluations。来源：<a href="https://www.snowflake.com/en/blog/enterprise-ai-agent-platform/">Snowflake Cortex Agents blog</a>。</p>
+<p>其中最关键的一句是：</p>
+<blockquote>
+<p>AI agent usage translates directly into credits consumed.</p>
+</blockquote>
+<p>这解释了 Snowflake 的商业逻辑：AI agent 使用越多，credits consumption 越多，可以比较直接映射到 product revenue。Databricks 也有 usage-based 逻辑，但外部看不到完整季度消费、毛利和 AI workload mix。</p>
+<h2>Snowflake 已经证明 AI 是收入驱动</h2>
+<p>Snowflake Q1 FY2027 的重点不是单纯 beat，而是 AI 叙事从 adoption 进入 guidance。官方财报显示：product revenue 13.34 亿美元，同比增长 34%；FY2027 product revenue guidance 从 56.6 亿美元、同比 27%，上调到 58.4 亿美元、同比 31%；non-GAAP operating margin guidance 从 12.5% 上调到 13.5%。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>。</p>
+<p>CEO Sridhar Ramaswamy 的原文也很直接：</p>
+<blockquote>
+<p>AI continues to be a powerful tailwind for Snowflake, and Q1 marks a clear inflection point in that journey. With Cortex Code and Snowflake Intelligence, we are extending from the trusted foundation for enterprise data and context to become the control plane for the Agentic Enterprise.</p>
+</blockquote>
+<p>这和 Databricks 的差异在于：Snowflake 的 AI 影响已经进入公开财报和全年 guidance，投资者可以逐季验证。Databricks 的 AI products &gt;10 亿美元 run-rate 更激进，但外部无法拆解它的增量性和持续性。</p>
+<h2>估值是 Databricks 最大争议</h2>
+<p>Databricks Series L 估值 1340 亿美元，revenue run-rate 超过 48 亿美元。简单计算，估值约为 27.9x run-rate revenue。来源：<a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">PRNewswire / Databricks Series L release</a>。</p>
+<p>这个 multiple 不是不可能合理。Databricks 增长更快、NRR 更高、AI products 和 warehouse 都已经披露超过 10 亿美元 run-rate，而且它的故事不是单一 warehouse，而是 AI app / agent 平台。</p>
+<p>但问题也很清楚：<strong>如果 IPO 后公开市场按 Snowflake 或高增长软件公司的公开市场 multiple 给价，而不是按私募 AI infrastructure 稀缺性给价，1340 亿美元估值的上行空间会被压缩。</strong></p>
+<p>Hiive 页面说明 Databricks 是私有公司，没有公开股价，只有 accredited / institutional investors 可买卖私募股票；Nasdaq Private Market 页面也强调 Databricks 不是上市股票，可通过公司或二级市场买入私募股份。来源：<a href="https://www.hiive.com/securities/databricks-stock">Hiive Databricks</a>、<a href="https://www.nasdaqprivatemarket.com/company/databricks">Nasdaq Private Market Databricks</a>。</p>
+<p>因此估值结论是：<strong>Databricks 值得看多业务，但不宜无条件看多估值。业务强和价格便宜是两件事。</strong></p>
+<h2>为什么 Databricks 对 Snowflake 构成真实压力</h2>
+<p>Databricks 对 Snowflake 的压力来自三层叠加。</p>
+<p>第一，它已经在 Snowflake 的 warehouse 主场里形成十亿美元级业务。Databricks 披露 Data Warehousing revenue run-rate 超过 10 亿美元，Databricks SQL 又明确定位为 serverless intelligent data warehouse。来源：<a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">PRNewswire</a>、<a href="https://www.databricks.com/product/databricks-sql">Databricks SQL</a>。</p>
+<p>第二，它的 AI 产品不是附属功能，而是已经披露超过 10 亿美元 run-rate。Snowflake 披露 AI adoption 和对收入增长的贡献，但没有单独披露 AI revenue run-rate。</p>
+<p>第三，它的 open lakehouse 叙事对数据工程、ML、AI app 团队有吸引力。Databricks SQL 页面强调 open table formats、data portability、no vendor lock-in；Agent Bricks 强调 open and multi-AI，可以接入 OpenAI、Anthropic、Google、Meta 和开源模型。来源：<a href="https://www.databricks.com/product/databricks-sql">Databricks SQL</a>、<a href="https://www.databricks.com/product/artificial-intelligence/agent-bricks">Agent Bricks</a>。</p>
+<p>如果企业的数据团队以 data engineering、ML、RAG、agent、open formats、应用开发为中心，Databricks 更容易成为主平台。如果企业以 SQL analytics、BI、治理、业务 self-service、稳定消费为中心，Snowflake 仍然非常强。</p>
+<h2>为什么 Snowflake 不会轻易被 Databricks 吃掉</h2>
+<p>Snowflake 最新财报反驳了“Databricks 会单向压制 Snowflake”的简单叙事。Snowflake product revenue growth 达到 34%，FY2027 product revenue guidance 上修到 31%，operating margin guidance 也上修。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>。</p>
+<p>Snowflake 的优势在于企业 data warehouse、BI、governance、business user self-service 心智强；consumption model 能把 AI agent usage 映射到 credits consumed；治理、安全、跨组织 data sharing、Marketplace 和企业采购路径成熟；财报透明，投资者能看到 revenue、RPO、NRR、margin、FCF、guide。</p>
+<p>Snowflake Cortex Agents 的生产化能力也很具体，包括 MCP、sandboxed Python、multi-tenancy、versioning、budgets、evaluations。Snowflake Intelligence 运行在 Snowflake 既有 governance 和 access controls 之上。来源：<a href="https://www.snowflake.com/en/blog/enterprise-ai-agent-platform/">Snowflake Cortex Agents blog</a>。</p>
+<p>所以 Snowflake 不是被动防守。它在做的是把自己从 warehouse 扩成 agentic enterprise 的 control plane。Databricks 在做的是把 lakehouse 扩成 data intelligent applications 的 foundation。两家公司方向不同，但会在 enterprise AI apps 这个终局市场交汇。</p>
+<h2>Databricks 的真正上限</h2>
+<p>Databricks 最值得重视的地方，是它试图把过去分散的系统统一起来：data lake / warehouse、data engineering、ML / AI、governance、app runtime、operational database、agent platform。</p>
+<p>Agent Bricks 页面把自己定义为 “Production AI Agents”，即 unified platform to build and govern AI agents that continuously improve。它强调 agents know your data、open and multi-AI、unified governance、MCP、persistent memory with Lakebase、deploy agents through Databricks Apps。来源：<a href="https://www.databricks.com/product/artificial-intelligence/agent-bricks">Agent Bricks</a>。</p>
+<p>关键原文：</p>
+<blockquote>
+<p>Give agents persistent memory with Lakebase, stored in your lakehouse.</p>
+</blockquote>
+<p>这个方向和 Snowflake 的 agentic control plane 会非常直接地竞争。谁能让企业在自己的平台里安全、低成本、可观测地构建 agent，并让 agent 访问企业数据、行动、记忆、评估、治理，谁就能拿到 AI 时代新增的数据消费。</p>
+<p>从这个角度看，Databricks 的终局不是“打败 Snowflake 的 warehouse”，而是“让 warehouse 只是企业 AI 应用平台里的一个 workload”。这也是它估值能高于传统 data warehouse comp 的核心逻辑。</p>
+<h2>反方与风险</h2>
+<p>第一，私募披露不等于公开财报。Databricks 给了 run-rate、growth、NRR、AI run-rate、FCF，但没有给完整收入确认口径、gross margin、SBC、RPO、deferred revenue、customer concentration、AI 产品毛利和云成本结构。</p>
+<p>第二，估值容错率低。1340 亿美元除以 48 亿美元 run-rate，约 28x run-rate revenue。如果增长从 55% 降到 35%-40%，或者 AI 产品毛利低于市场预期，IPO 后 multiple 可能被压缩。</p>
+<p>第三，产品边界太宽。Lakebase、Apps、Agent Bricks、SQL、BI、AI、governance、security、lakehouse 都要做，战略上有上限，但执行复杂度高。</p>
+<p>第四，Snowflake 已证明 AI 对它是实质增量，不是被 Databricks 单向挤压。Snowflake Q1 FY2027 的 AI accounts、Cortex Code usage、guidance raise、margin raise 都说明它有能力在现有客户基础上把 AI 变成消费增长。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>。</p>
+<p>第五，二级市场价格不是连续、深度、透明的公开市场价格。Hiive 和 Nasdaq Private Market 都只能作为私募市场需求和估值锚的方向性参考，不能替代 IPO 后公开市场定价。</p>
+<h2>最终判断</h2>
+<p>Databricks 会继续高速增长，也会继续正面挤压 Snowflake，但它更像 Snowflake 的“上限扩展版竞争者”，而不是简单替代品。</p>
+<p>Databricks 的优势是增长快、NRR 高、AI 产品收入披露强、warehouse 业务已过 10 亿美元 run-rate、产品路线覆盖数据到应用到 agent 的完整链条。如果 AI 时代企业真的围绕 proprietary data 构建内部 AI apps 和 agents，Databricks 的平台叙事非常顺。</p>
+<p>Snowflake 的优势是公开财务更硬、核心 warehouse / BI / governance 场景更成熟、AI 已经反映在 product revenue guidance 里、企业数据消费路径更直接。Snowflake 不是被动被打，它最新财报已经证明 AI 同样能成为它的增长加速器。</p>
+<p>所以我不会写成“Databricks 赢，Snowflake 输”。更准确的是：<strong>Databricks 可能拥有更大的平台扩张故事，Snowflake 拥有更强的公开财务验证。Databricks 的业务风险低于估值风险；Snowflake 的估值风险低于叙事上限风险。</strong></p>
+<p>未来最值得跟踪的指标：</p>
+<ol>
+<li>Databricks IPO 或下一轮是否披露完整 ARR / revenue、gross margin、FCF margin、SBC、RPO、AI product revenue composition。</li>
+<li>Databricks AI products run-rate 是否从 10 亿美元继续高速增长，还是主要由早期大客户 / 短期 AI boom 推动。</li>
+<li>Databricks SQL 是否继续从 10 亿美元 run-rate 往 20 亿美元级别扩张，并实际迁移 Snowflake / Teradata / Redshift 工作负载。</li>
+<li>Lakebase 是否能从“很漂亮的产品战略”变成真实 production app / backend workload。</li>
+<li>Snowflake Cortex Code / Snowflake Intelligence 是否持续推动 product revenue acceleration。</li>
+<li>Snowflake AI 产品是否继续在不牺牲 75% product gross margin guidance 的前提下扩大。</li>
+</ol>
+<p>最终一句话：<strong>Databricks 值得看多业务，不宜无条件看多估值；Snowflake 不宜低估竞争压力，也不宜低估它已经用最新财报证明的 AI 变现能力。</strong></p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Where Is Databricks Headed? Databricks vs. Snowflake in the AI Data Platform Era</h1>
+<p>Databricks is now Snowflake's strongest long-term competitor, but it is not simply trying to copy Snowflake's data warehouse. A better framing is that Databricks is expanding from a lakehouse, data engineering, and ML platform into an enterprise AI application foundation that spans data, AI, applications, agents, and operational databases.</p>
+<p>The short version: <strong>Snowflake's latest earnings show that AI is already driving publicly verifiable data platform consumption; Databricks' latest financing disclosure tells a higher-upside story about becoming the platform for enterprise AI applications. Snowflake has stronger verification. Databricks may have more upside, but its valuation leaves less room for error.</strong></p>
+<h2>Core View</h2>
+<p>Databricks' future has three layers:</p>
+<ol>
+<li>Near term: it should continue to grow quickly. The company disclosed a revenue run-rate above $4.8 billion, more than 55% year-over-year growth, and more than $1 billion run-rate each from AI products and Data Warehousing.</li>
+<li>Medium term: it will keep entering Snowflake's core territory, especially SQL warehousing, BI, governance, and AI on enterprise data.</li>
+<li>Long term: its real goal is not just to win data warehousing. It wants to become the operating system for enterprise AI apps and agents, across Lakehouse, Databricks SQL, Unity Catalog, Lakebase, Databricks Apps, and Agent Bricks.</li>
+</ol>
+<p>My bottom line: <strong>Databricks is worth being bullish on as a business, but not automatically as a valuation. Snowflake should not be underestimated either: competitive pressure is real, but so is its demonstrated ability to monetize AI through its existing platform.</strong></p>
+<h2>Databricks Is Growing Fast, But the Disclosure Quality Matters</h2>
+<p>Databricks' December 2025 Series L announcement said the company is raising more than $4 billion at a $134 billion valuation; crossed a $4.8 billion revenue run-rate in Q3; grew more than 55% year over year; exceeded $1 billion revenue run-rate from AI products; exceeded $1 billion revenue run-rate from Data Warehousing; delivered positive free cash flow over the last 12 months; sustained net retention above 140%; and had more than 700 customers consuming over $1 million in annual revenue run-rate. Source: <a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">PRNewswire / Databricks Series L release</a>.</p>
+<p>Key excerpt:</p>
+<blockquote>
+<p>Databricks ... announced it is raising a &gt;$4 billion Series L investment, valuing the company at $134 billion. Additionally, the company crossed a $4.8 billion revenue run-rate during its Q3, growing &gt;55% year over year, including &gt;$1 billion revenue run-rate from its Data Warehousing business and &gt;$1 billion revenue run-rate from its AI products — all while delivering positive free cash flow over the last 12 months.</p>
+</blockquote>
+<p>Those are very strong numbers. The caveat is that Databricks is still private. These are company disclosures in a financing announcement, not full public-company SEC financials. Outsiders cannot see full revenue recognition, gross margin, stock-based compensation, RPO, deferred revenue, AI product gross margin, customer concentration, or cloud cost structure.</p>
+<p>Snowflake's Q1 FY2027 public numbers are more verifiable: product revenue was $1.334 billion, up 34% year over year; total revenue was $1.391 billion, up 33%; net revenue retention was 126%; RPO was $9.21 billion, up 38%; full-year FY2027 product revenue guidance was raised to $5.84 billion, implying 31% growth; and non-GAAP product gross margin guidance was 75%. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Databricks</th>
+<th>Snowflake</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Latest revenue scale</td>
+<td>&gt;$4.8B revenue run-rate</td>
+<td>Q1 FY2027 product revenue $1.334B; FY2027 product revenue guide $5.84B</td>
+</tr>
+<tr>
+<td>Growth</td>
+<td>&gt;55% YoY run-rate growth</td>
+<td>Q1 product revenue +34%; FY2027 product revenue guide +31%</td>
+</tr>
+<tr>
+<td>NRR</td>
+<td>&gt;140%</td>
+<td>126%</td>
+</tr>
+<tr>
+<td>AI disclosure</td>
+<td>AI products &gt;$1B run-rate</td>
+<td>13,600+ accounts using AI capabilities; 7,100+ Cortex Code accounts; no separate AI revenue disclosed</td>
+</tr>
+<tr>
+<td>Verifiability</td>
+<td>Company financing disclosure, not full public financials</td>
+<td>SEC / investor relations reporting</td>
+</tr>
+</tbody>
+</table>
+<p>The cleanest conclusion is: <strong>Databricks appears stronger on business momentum; Snowflake is stronger on evidence quality.</strong></p>
+<h2>This Is No Longer Just Lakehouse vs. Warehouse</h2>
+<p>Databricks is no longer just a Spark and data engineering company. The Databricks SQL product page directly uses data warehouse positioning: “The Best Data Warehouse Is a Lakehouse,” and calls the product a serverless intelligent data warehouse. Source: <a href="https://www.databricks.com/product/databricks-sql">Databricks SQL</a>.</p>
+<p>The page says:</p>
+<blockquote>
+<p>Eliminate the cost and complexity of legacy data warehouses with Databricks SQL — a serverless data warehouse built on lakehouse architecture that natively integrates AI.</p>
+</blockquote>
+<p>That means Databricks is moving from its data engineering and ML home turf into Snowflake's SQL analytics, BI, and warehouse home turf.</p>
+<p>Snowflake is no longer just a warehouse either. Its latest earnings release defines it as the AI Data Cloud and says Q1 was a “clear inflection point” for AI: more than 13,600 accounts are using Snowflake AI capabilities, Snowflake Intelligence accounts more than doubled quarter over quarter, and Cortex Code is already used across more than 7,100 accounts. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>.</p>
+<p>The overlap now covers SQL warehousing, governance, AI on enterprise data, data applications, and enterprise agent platforms. This is not simply lakehouse vs. warehouse anymore. It is AI data platform vs. AI data platform.</p>
+<h2>The Product Difference: Application Foundation vs. Control Plane</h2>
+<p>Databricks' Series L announcement says the new capital will accelerate three strategic products: Lakebase, Databricks Apps, and Agent Bricks, all aimed at helping customers build Data Intelligent Applications. Source: <a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">PRNewswire / Databricks Series L release</a>.</p>
+<p>Key excerpt:</p>
+<blockquote>
+<p>Databricks will use this new capital to help customers build AI apps and agents on their proprietary data, leveraging Lakebase as the system of record, Databricks Apps as the user experience layer, and Agent Bricks to power multi-agent systems.</p>
+</blockquote>
+<p>This matters because Databricks is not only trying to store and analyze data. It wants to host the three layers of enterprise AI applications: Lakebase as system of record, Databricks Apps as user experience layer, and Agent Bricks as multi-agent system layer.</p>
+<p>Lakebase describes itself as “The operational database for AI agents and apps,” or Postgres integrated with the lakehouse. Its feature set includes autoscaling with scale to zero, branching, point-in-time recovery, Unity Catalog integration, Databricks Apps integration, PostGIS, pgvector, PostgREST API, read replicas, and Sync From Delta Lake. Source: <a href="https://www.databricks.com/product/lakebase">Databricks Lakebase</a>.</p>
+<p>This pushes Databricks closer to operational backend markets associated with MongoDB, Postgres, Supabase, and Neon, while connecting analytical data, application state, and agent memory in one platform.</p>
+<p>Snowflake's direction is different. The Snowflake Cortex Agents blog emphasizes building and governing enterprise AI agents inside Snowflake's security and governance perimeter, with MCP connectors, agent skills, sandboxed Python, multi-tenancy, agent versioning, resource budgets, shared resource budgets, and evaluations. Source: <a href="https://www.snowflake.com/en/blog/enterprise-ai-agent-platform/">Snowflake Cortex Agents blog</a>.</p>
+<p>The most important line is:</p>
+<blockquote>
+<p>AI agent usage translates directly into credits consumed.</p>
+</blockquote>
+<p>That explains Snowflake's business logic: more AI agent usage means more credit consumption, which can map directly into product revenue. Databricks likely has a similar usage-based logic, but outsiders cannot see the full quarterly consumption, gross margin, or AI workload mix.</p>
+<h2>Snowflake Has Already Shown AI as a Revenue Driver</h2>
+<p>Snowflake's Q1 FY2027 was not just a beat. It showed the AI narrative moving from adoption into guidance. Product revenue was $1.334 billion, up 34%; full-year product revenue guidance rose from $5.66 billion, or 27% growth, to $5.84 billion, or 31% growth; and non-GAAP operating margin guidance rose from 12.5% to 13.5%. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>.</p>
+<p>CEO Sridhar Ramaswamy put it directly:</p>
+<blockquote>
+<p>AI continues to be a powerful tailwind for Snowflake, and Q1 marks a clear inflection point in that journey. With Cortex Code and Snowflake Intelligence, we are extending from the trusted foundation for enterprise data and context to become the control plane for the Agentic Enterprise.</p>
+</blockquote>
+<p>The contrast is clear. Snowflake's AI impact is now visible in public financial reporting and annual guidance. Databricks' AI products run-rate above $1 billion is more aggressive, but outsiders cannot decompose its incrementality or durability.</p>
+<h2>Valuation Is the Biggest Databricks Debate</h2>
+<p>Databricks' Series L valuation is $134 billion against a revenue run-rate above $4.8 billion. That is roughly 27.9x run-rate revenue. Source: <a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">PRNewswire / Databricks Series L release</a>.</p>
+<p>That multiple is not impossible to justify. Databricks is growing faster, has higher disclosed NRR, has AI products and warehousing both above $1 billion run-rate, and is telling a broader story than a single warehouse product.</p>
+<p>But the risk is also obvious: <strong>if the public market values Databricks after IPO closer to Snowflake or high-growth software multiples, rather than private-market AI infrastructure scarcity, the upside from a $134 billion entry valuation could be compressed.</strong></p>
+<p>Hiive says Databricks is private and has no public stock price; only accredited and institutional investors can buy private shares. Nasdaq Private Market similarly notes that Databricks is not a listed stock and that investors can buy through the company or secondary marketplaces. Sources: <a href="https://www.hiive.com/securities/databricks-stock">Hiive Databricks</a>, <a href="https://www.nasdaqprivatemarket.com/company/databricks">Nasdaq Private Market Databricks</a>.</p>
+<p>The valuation conclusion is simple: <strong>Databricks can be an excellent business without automatically being an attractive price. Business quality and entry valuation are different questions.</strong></p>
+<h2>Why Databricks Is Real Pressure on Snowflake</h2>
+<p>Databricks pressures Snowflake on three levels.</p>
+<p>First, it has already built a billion-dollar business inside Snowflake's warehouse territory. Databricks disclosed more than $1 billion run-rate from Data Warehousing, while Databricks SQL explicitly positions itself as a serverless intelligent data warehouse. Sources: <a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">PRNewswire</a>, <a href="https://www.databricks.com/product/databricks-sql">Databricks SQL</a>.</p>
+<p>Second, its AI products are not a small add-on. Databricks disclosed more than $1 billion run-rate from AI products. Snowflake discloses AI adoption and AI's contribution to growth, but does not separately disclose AI revenue run-rate.</p>
+<p>Third, its open lakehouse narrative is attractive to data engineering, ML, AI application, and agent teams. Databricks SQL emphasizes open table formats, data portability, and no vendor lock-in. Agent Bricks emphasizes open and multi-AI access across OpenAI, Anthropic, Google, Meta, and open source models. Sources: <a href="https://www.databricks.com/product/databricks-sql">Databricks SQL</a>, <a href="https://www.databricks.com/product/artificial-intelligence/agent-bricks">Agent Bricks</a>.</p>
+<p>If an enterprise data team is centered on data engineering, ML, RAG, agents, open formats, and application development, Databricks is more likely to become the primary platform. If the enterprise is centered on SQL analytics, BI, governance, business self-service, and predictable consumption, Snowflake remains very strong.</p>
+<h2>Why Snowflake Will Not Be Easily Displaced</h2>
+<p>Snowflake's latest earnings push back against the simple narrative that Databricks will overwhelm it. Snowflake product revenue grew 34%, full-year product revenue guidance was raised to 31% growth, and operating margin guidance was raised. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>.</p>
+<p>Snowflake's advantages are strong enterprise mindshare in data warehousing, BI, governance, and business-user self-service; a consumption model that turns agent usage into credits consumed; mature governance, security, data sharing, marketplace, and procurement paths; and public financial transparency across revenue, RPO, NRR, margin, free cash flow, and guidance.</p>
+<p>Snowflake Cortex Agents also has concrete production capabilities: MCP, sandboxed Python, multi-tenancy, versioning, budgets, and evaluations. Snowflake Intelligence runs on top of Snowflake's existing governance and access controls. Source: <a href="https://www.snowflake.com/en/blog/enterprise-ai-agent-platform/">Snowflake Cortex Agents blog</a>.</p>
+<p>So Snowflake is not merely defending. It is trying to expand from warehouse into the control plane for the agentic enterprise. Databricks is trying to expand from lakehouse into the foundation for data intelligent applications. Their directions are different, but they converge in enterprise AI apps.</p>
+<h2>Databricks' Real Ceiling</h2>
+<p>The most important thing about Databricks is that it is trying to unify systems that used to be separate: data lake and warehouse, data engineering, ML and AI, governance, app runtime, operational database, and agent platform.</p>
+<p>Agent Bricks describes itself as “Production AI Agents,” a unified platform to build and govern AI agents that continuously improve. It emphasizes agents that know your data, open and multi-AI, unified governance, MCP, persistent memory with Lakebase, and deployment through Databricks Apps. Source: <a href="https://www.databricks.com/product/artificial-intelligence/agent-bricks">Agent Bricks</a>.</p>
+<p>Key excerpt:</p>
+<blockquote>
+<p>Give agents persistent memory with Lakebase, stored in your lakehouse.</p>
+</blockquote>
+<p>This directly competes with Snowflake's agentic control plane. The platform that lets enterprises build agents safely, cheaply, observably, and with access to data, actions, memory, evaluation, and governance will capture new AI-era data consumption.</p>
+<p>From this angle, Databricks' endgame is not “beat Snowflake's warehouse.” It is to make warehousing just one workload inside a broader enterprise AI application platform. That is the core logic behind a valuation above traditional data warehouse comparables.</p>
+<h2>Risks and Counterarguments</h2>
+<p>First, private disclosures are not public financials. Databricks disclosed run-rate, growth, NRR, AI run-rate, and free cash flow, but not full revenue recognition, gross margin, stock-based compensation, RPO, deferred revenue, customer concentration, AI product gross margin, or cloud cost structure.</p>
+<p>Second, valuation leaves little room for error. $134 billion divided by $4.8 billion run-rate revenue is roughly 28x run-rate revenue. If growth slows from 55% to 35%-40%, or if AI product gross margins disappoint, public-market multiples could compress after IPO.</p>
+<p>Third, the product surface is very wide. Lakebase, Apps, Agent Bricks, SQL, BI, AI, governance, security, and lakehouse together create a large strategic ceiling, but also high execution complexity.</p>
+<p>Fourth, Snowflake has already shown that AI is a real incremental driver for its own platform. Snowflake's Q1 FY2027 AI accounts, Cortex Code usage, guidance raise, and margin raise all suggest that it can turn AI into consumption growth within its existing customer base. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake Q1 FY2027 SEC exhibit</a>.</p>
+<p>Fifth, secondary market prices are not continuous, deep, transparent public-market prices. Hiive and Nasdaq Private Market are useful directional signals for private-market demand and valuation anchors, not substitutes for public IPO pricing.</p>
+<h2>Final Judgment</h2>
+<p>Databricks will probably keep growing fast and will keep pressuring Snowflake, but it is better understood as an “expanded-ceiling competitor” to Snowflake rather than a simple replacement.</p>
+<p>Databricks' strengths are fast growth, high NRR, strong AI product revenue disclosure, a warehouse business already above $1 billion run-rate, and a product roadmap that runs from data to applications to agents. If enterprise AI apps and agents are really built around proprietary data, Databricks has a very coherent platform story.</p>
+<p>Snowflake's strengths are harder public financial evidence, stronger maturity in warehouse, BI, and governance, AI already visible in product revenue guidance, and a more direct enterprise consumption path. Snowflake is not passively losing; its latest earnings show that AI can also accelerate its own business.</p>
+<p>So the conclusion is not “Databricks wins, Snowflake loses.” It is: <strong>Databricks may have the larger platform expansion story, while Snowflake has stronger public financial validation. Databricks' business risk is lower than its valuation risk; Snowflake's valuation risk is lower than its narrative-ceiling risk.</strong></p>
+<p>The metrics to watch next are:</p>
+<ol>
+<li>Whether Databricks discloses full ARR / revenue, gross margin, FCF margin, SBC, RPO, and AI product revenue composition in an IPO or future financing.</li>
+<li>Whether Databricks AI products run-rate continues growing quickly from $1 billion, or was partly driven by early large customers and a short-term AI boom.</li>
+<li>Whether Databricks SQL can grow from $1 billion run-rate toward $2 billion and actually migrate workloads from Snowflake, Teradata, and Redshift.</li>
+<li>Whether Lakebase becomes a real production app / backend workload, not just an elegant strategic complement.</li>
+<li>Whether Snowflake Cortex Code and Snowflake Intelligence keep driving product revenue acceleration.</li>
+<li>Whether Snowflake can expand AI products while preserving its 75% non-GAAP product gross margin guidance.</li>
+</ol>
+<p>Final line: <strong>Databricks is worth being bullish on as a business, but not blindly as a valuation. Snowflake's competitive pressure is real, but so is the AI monetization it has already demonstrated in public results.</strong></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
