@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>MongoDB 为什么先暴跌、又暴涨？</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>MongoDB 为什么先暴跌、又暴涨？重新检查 MongoDB 与 Snowflake 的 AI 时代论点</h1>
+<p>MongoDB 这次大涨，核心不是市场突然忘记了之前的风险，而是 Q1 FY2027 把三月 Q4 财报后的主要担忧逐项修复了：Atlas 没有断档，全年指引上修，RPO 和自由现金流很强，AI / agent 叙事也从长期故事变成了早期可见 traction。</p>
+<p>我的更新判断是：<strong>此前对 MongoDB 的短期 bearish 论点需要降级，但长期结构性问题没有消失。MongoDB 在 AI app starter 默认性上仍受 Postgres / Supabase / pgvector 压力，但它正在争夺 production agent backend 的默认权。</strong></p>
+<h2>核心判断</h2>
+<ol>
+<li><strong>三月暴跌主要是预期和指引问题。</strong> MongoDB Q4 FY2026 当季结果不错，但 FY2027 初始收入指引显示增长降档，市场担心 Atlas 可见度、AI 收入兑现和软件股估值压力。</li>
+<li><strong>这次暴涨是典型 beat-and-raise。</strong> Q1 FY2027 收入 6.876 亿美元，同比增长 25%；Atlas 收入同比增长超过 29%；RPO 同比增长 88%；公司上调 FY2027 revenue guide 到 29.2 亿至 29.6 亿美元。</li>
+<li><strong>不能再说 MongoDB 正被 AI 持续伤害。</strong> Q1 数据反证很强：核心业务稳住，Atlas 仍强，AI / agentic workload 也开始出现更具体的早期信号。</li>
+<li><strong>但 Postgres 默认性压力仍然存在。</strong> Postgres / Supabase / pgvector 在 AI app starter、MVP、RAG metadata、关系权限和 billing 场景里仍是非常强的默认起点。</li>
+<li><strong>Snowflake 的 AI 货币化证据仍更直接。</strong> Snowflake 把 AI adoption 更直接地映射到 product revenue、RPO、NRR 和全年指引；MongoDB 的 AI upside 更偏 agent memory、state、operational backend 和 production agent workloads。</li>
+</ol>
+<h2>三月财报后为什么暴跌</h2>
+<p>MongoDB Q4 FY2026 的当季结果本身并不差：总收入 6.951 亿美元，同比增长 27%；FY2026 全年收入 24.6 亿美元，同比增长 23%；Atlas 当季和全年收入均同比增长 29%。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 SEC exhibit</a>。</p>
+<p>问题在 forward guide。Q4 后 MongoDB 给出的 FY2027 revenue guide 是 28.60 亿至 29.00 亿美元；Q1 FY2027 revenue guide 是 6.59 亿至 6.64 亿美元。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 SEC exhibit</a>。这意味着市场看到的是：当季 +27%、Atlas +29%，但全年增长预期切到约 16%-18%。</p>
+<p>Investopedia 当时也把下跌归因于利润指引让市场失望，而不是当季 miss。文章称 MDB 当时下跌近 21%，并指出 Q4 revenue 6.95 亿美元和 adjusted EPS 1.65 美元都高于预期，但 Q1 adjusted EPS 指引 1.15-1.19 美元低于 Visible Alpha 共识 1.21 美元。来源：<a href="https://www.investopedia.com/database-provider-mongodb-profit-forecast-disappoints-its-stock-is-plunging-11918088">Investopedia</a>。</p>
+<p>所以三月暴跌的准确解释是：<strong>强当季、弱未来、软件 AI 焦虑、Atlas 可见度折价。</strong> 这不是数据库选型已经发生大规模迁移的证据。</p>
+<h2>这次为什么又暴涨</h2>
+<p>MongoDB Q1 FY2027 官方财报显示：总收入 6.876 亿美元，同比增长 25%；subscription revenue 6.661 亿美元，同比增长 25%；services revenue 2,150 万美元，同比增长 22%。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>。</p>
+<p>这显著高于 Q4 后给出的 Q1 revenue guide。MarketBeat 汇总显示，实际收入 6.8762 亿美元，高于预期 6.6453 亿美元；实际 EPS 1.32 美元，高于共识 1.19 美元。来源：<a href="https://www.marketbeat.com/earnings/reports/2026-5-28-mongodb-inc-stock/">MarketBeat earnings summary</a>。</p>
+<p>更关键的是 Atlas。官方财报标题直接写：Atlas revenue up more than 29% year-over-year。电话会转录进一步补充：Atlas 同比增长 29.4%，同比新增收入创纪录达到 1.17 亿美元，Atlas 现在约 20 亿美元 run-rate，并且连续第四个季度同比增长至少 29%。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>。</p>
+<p>这直接修复了 Q4 后最危险的市场担忧：<strong>Atlas 增速不是突然掉到低 20%，而是在大数基础上继续接近 30%。</strong></p>
+<p>MongoDB 还把 FY2027 revenue guide 上调到 29.2 亿至 29.6 亿美元；Q2 revenue guide 给到 7.29 亿至 7.34 亿美元；FY2027 non-GAAP EPS guide 给到 5.95-6.14 美元。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>。官方标题写得很直接：</p>
+<blockquote>
+<p>Raising full-year fiscal 2027 guidance driven mainly by strength in Atlas.</p>
+</blockquote>
+<p>其他质量指标也很强：RPO 14.586 亿美元，同比增长 88%；cRPO 7.663 亿美元，同比增长 69%；free cash flow 1.975 亿美元，去年同期为 1.059 亿美元；总客户 67,700+，Atlas 客户 66,400+，100K+ ARR 客户 2,895。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>。</p>
+<p>财报后，分析师目标价上调也形成二级催化。例子包括：Morgan Stanley 将目标价从 335 美元上调到 380 美元并维持 Overweight；Needham 将目标价从 300 美元上调到 400 美元并维持 Buy；Barclays 将目标价从 370 美元上调到 387 美元并维持 Overweight；Wedbush 将目标价从 380 美元上调到 390 美元并维持 Outperform；Monness Crespi &amp; Hardt 将目标价从 370 美元上调到 415 美元并维持 Buy。来源：<a href="https://sg.finance.yahoo.com/news/morgan-stanley-resets-mongodb-stock-000300777.html">Yahoo / Morgan Stanley syndication</a>、<a href="https://www.benzinga.com/analyst-stock-ratings/price-target/26/05/52879206/mongodb-analyst-raises-price-target-over-30-on-ai-traction">Benzinga / Needham</a>、<a href="https://www.marketbeat.com/instant-alerts/mongodb-nasdaqmdb-given-new-38700-price-target-at-barclays-2026-05-29">MarketBeat / Barclays and Monness</a>、<a href="https://www.marketbeat.com/instant-alerts/mongodb-nasdaqmdb-given-new-39000-price-target-at-wedbush-2026-05-29">MarketBeat / Wedbush</a>。</p>
+<p>MarketWatch 显示 2026-06-01 MDB 收盘 403.88 美元，上涨 68.33 美元，涨幅 20.36%，成交量 678 万股，约为 65 日均量 305%。来源：<a href="https://www.marketwatch.com/investing/stock/mdb">MarketWatch MDB quote</a>。</p>
+<h2>AI / agent 叙事发生了什么变化</h2>
+<p>MongoDB Q1 的重要变化是：公司不再只是说“AI 长期有机会”，而是开始给出更具体的 agent backend 路径。</p>
+<p>官方业务亮点包括：MongoDB.local London 发布 7 项新能力，用于缩小 AI experiment 到 high-performance production deployment 的差距；这些能力推进 automated retrieval 和 persistent AI agent memory；MongoDB 与 LangChain 正式战略合作，要把 Atlas 变成 production-ready AI agents 的 unified backend，整合 vector search、persistent memory、natural-language querying。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>。</p>
+<p>电话会里，管理层说 AI adoption 正在加速，MCP server usage 显著增长，Voyage customers 环比超过翻倍，vector search adoption 远快于公司整体增长。但管理层也保留了关键限定：本季度结果主要由 core workloads 驱动，AI / agentic workloads 有真实且增长中的 momentum。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>。</p>
+<p>这意味着：<strong>市场可以开始给 MongoDB AI 期权重新定价，但还不能把 Q1 增长完全归因于 AI。</strong> UBS 的观点也偏克制：结果主要由核心业务驱动，而不是早期 AI demand。来源：<a href="https://ca.finance.yahoo.com/news/ubs-raises-pt-mongodb-mdb-134833000.html">Yahoo / UBS syndication</a>。</p>
+<h2>旧论点应该怎么修正</h2>
+<p>需要避免的说法：<strong>AI 正在打坏 MongoDB 业务。</strong> Q1 revenue +25%、Atlas +29% 以上、RPO +88%、FCF 几乎翻倍、FY guide 上修，都不支持需求崩坏。</p>
+<p>也需要避免的说法：<strong>MongoDB 不适合 agentic AI。</strong> MongoDB Vector Search、Voyage、Automated Embeddings、LangChain partnership、MongoDB Checkpointer、agent memory/state 叙事都说明它适合一类 agentic workload，尤其是 operational data、persistent memory/state、hybrid retrieval。</p>
+<p>但此前关于 Postgres 默认性增强的判断仍然成立。Postgres / Supabase / pgvector 在 AI app starter、MVP、RAG metadata、关系权限、billing 和快速原型中仍是非常强的默认起点。AI 降低 schema / migration 心理成本，也确实削弱了 MongoDB 早期 flexible schema 的相对优势。</p>
+<p>更准确的更新框架是“默认权分层”：</p>
+<ol>
+<li><strong>AI app starter / MVP / Supabase 模板：</strong> Postgres 默认性更强。</li>
+<li><strong>企业 operational data modernization：</strong> MongoDB 仍强。</li>
+<li><strong>Production agent backend / memory / state / hybrid retrieval：</strong> MongoDB 正在争夺新默认权。</li>
+</ol>
+<p>所以旧 thesis 不是被推翻，而是要从“MongoDB 默认性受压”更新为：<strong>MongoDB 在 AI starter 默认性上受压，但正在 production agent backend 层级反击。</strong></p>
+<h2>和 Snowflake 的比较有没有变化</h2>
+<p>此前的 Snowflake / MongoDB 对比结论仍大体成立：Snowflake 的 AI 叙事更容易映射到 product revenue、RPO、NRR 和全年指引；MongoDB 的 AI 叙事仍需要更多季度证明它能转成 Atlas consumption。</p>
+<p>Snowflake Q1 FY2027 官方数据很强：product revenue 13.34 亿美元，同比增长 34%；total revenue 13.91 亿美元，同比增长 33%；NRR 126%；RPO 92.1 亿美元，同比增长 38%；FY2027 product revenue guide 从 56.6 亿美元、同比 27%，上调到 58.4 亿美元、同比 31%；Snowflake AI capabilities 使用账户超过 13,600，Snowflake Intelligence accounts 环比翻倍，Cortex Code 超过 7,100 个账户使用。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>。</p>
+<p>差异仍然清楚：</p>
+<ol>
+<li>Snowflake 的 AI 更直接变成 enterprise data platform consumption。</li>
+<li>MongoDB 的 AI 更像 agentic application backend 的新默认权争夺。</li>
+<li>Snowflake 的公开财报已经把 AI 与全年 guide raise 绑定得更紧。</li>
+<li>MongoDB Q1 证明的是：核心业务没坏，Atlas 强，AI / agent 早期 traction 足以让市场重新给期权定价。</li>
+</ol>
+<p>所以现在不能写成“Snowflake 赢、MongoDB 输”。更准确是：<strong>Snowflake 的 AI 货币化确定性仍更强；MongoDB 的业务修复和 agent backend 叙事让它从 Q4 后的折价里显著反弹。</strong></p>
+<h2>最终判断</h2>
+<p>今天 MongoDB 暴涨的直接原因是：<strong>Q1 FY2027 给了市场想要的 beat-and-raise，并且 Atlas、RPO、FCF、AI / agent 叙事都比 Q4 后预期更强。</strong></p>
+<p>此前论点大方向没有错，但语气必须更新：</p>
+<ol>
+<li><strong>短期财务：</strong> MongoDB 明显修复，Q4 后悲观预期过度。</li>
+<li><strong>中期产品：</strong> MongoDB 不一定赢 AI app starter 默认权，但有机会赢 production agent backend。</li>
+<li><strong>和 Snowflake 对比：</strong> Snowflake 的 AI 收入确定性更直接，MongoDB 的 AI 上行期权更偏应用后端和 agent memory/state。</li>
+<li><strong>旧 thesis 状态：</strong> 不是推翻，而是从“MongoDB 默认性受压”升级为“默认权分层，MongoDB 正在新层级反击”。</li>
+</ol>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Why Did MongoDB Plunge, Then Surge? Rechecking the MongoDB vs. Snowflake Thesis in the AI Era</h1>
+<p>MongoDB's latest rally was not a case of the market suddenly forgetting the prior risks. The simpler explanation is that Q1 FY2027 repaired the main concerns that drove the selloff after Q4: Atlas did not break down, full-year guidance was raised, RPO and free cash flow were strong, and the AI / agent narrative moved from a long-term story to early visible traction.</p>
+<p>My updated view: <strong>the short-term bearish thesis on MongoDB should be downgraded, but the longer-term structural question has not disappeared. MongoDB still faces pressure from Postgres / Supabase / pgvector as the default starting point for many AI apps, but it is now contesting a different layer: the default backend for production agents.</strong></p>
+<h2>Core View</h2>
+<ol>
+<li><strong>The March plunge was mainly about expectations and guidance.</strong> MongoDB's Q4 FY2026 results were solid, but the initial FY2027 guide implied a growth step-down. Investors worried about Atlas visibility, AI monetization, and broader software-stock valuation pressure.</li>
+<li><strong>The latest surge was a classic beat-and-raise.</strong> Q1 FY2027 revenue was $687.6 million, up 25% year over year; Atlas grew more than 29%; RPO grew 88%; and MongoDB raised FY2027 revenue guidance to $2.92 billion to $2.96 billion.</li>
+<li><strong>It is no longer reasonable to say AI is continuously hurting MongoDB.</strong> Q1 was strong evidence that the core business is intact, Atlas remains strong, and AI / agentic workloads are beginning to show more concrete early signals.</li>
+<li><strong>The Postgres default-pressure thesis still matters.</strong> Postgres / Supabase / pgvector remain powerful default starting points for AI app starters, MVPs, RAG metadata, relational permissions, and billing-heavy application backends.</li>
+<li><strong>Snowflake still has more direct AI monetization evidence.</strong> Snowflake maps AI adoption more directly into product revenue, RPO, NRR, and full-year guidance. MongoDB's AI upside is more tied to agent memory, state, operational backends, and production agent workloads.</li>
+</ol>
+<h2>Why the Stock Plunged After the March Earnings Report</h2>
+<p>MongoDB's Q4 FY2026 quarter was not weak on its face: total revenue was $695.1 million, up 27% year over year; FY2026 full-year revenue was $2.46 billion, up 23%; and Atlas revenue grew 29% in both the fourth quarter and the full year. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 SEC exhibit</a>.</p>
+<p>The problem was forward guidance. After Q4, MongoDB guided FY2027 revenue to $2.86 billion to $2.90 billion and Q1 FY2027 revenue to $659 million to $664 million. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026013199/mdb-13126xex991xrelease.htm">MongoDB FY2026 Q4 SEC exhibit</a>. Investors saw a company growing 27% in the quarter and 29% in Atlas, but guiding full-year growth to roughly 16%-18%.</p>
+<p>Investopedia also framed the decline around disappointing profit guidance rather than a quarterly miss. The article said MDB was down nearly 21%, even though Q4 revenue of $695 million and adjusted EPS of $1.65 both beat expectations; Q1 adjusted EPS guidance of $1.15 to $1.19 came in below the Visible Alpha consensus of $1.21. Source: <a href="https://www.investopedia.com/database-provider-mongodb-profit-forecast-disappoints-its-stock-is-plunging-11918088">Investopedia</a>.</p>
+<p>The accurate explanation for the March selloff is: <strong>strong current quarter, weaker forward setup, AI anxiety across software stocks, and a discount for Atlas visibility.</strong> It was not proof that database selection had already shifted away from MongoDB at scale.</p>
+<h2>Why the Stock Surged This Time</h2>
+<p>MongoDB's Q1 FY2027 results showed total revenue of $687.6 million, up 25% year over year; subscription revenue of $666.1 million, up 25%; and services revenue of $21.5 million, up 22%. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>.</p>
+<p>That was well above the prior Q1 revenue guide. MarketBeat summarized actual revenue at $687.62 million versus expected revenue of $664.53 million, and actual EPS at $1.32 versus consensus EPS of $1.19. Source: <a href="https://www.marketbeat.com/earnings/reports/2026-5-28-mongodb-inc-stock/">MarketBeat earnings summary</a>.</p>
+<p>The most important datapoint was Atlas. The official release says Atlas revenue grew more than 29% year over year. The earnings call transcript adds that Atlas grew 29.4%, delivered a record $117 million of year-over-year dollar growth, reached roughly a $2 billion run-rate, and has now grown at least 29% year over year for four consecutive quarters. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>.</p>
+<p>That directly repaired the most dangerous post-Q4 concern: <strong>Atlas did not suddenly fall into low-20s growth. It remained near 30% growth at larger scale.</strong></p>
+<p>MongoDB also raised FY2027 revenue guidance to $2.92 billion to $2.96 billion; guided Q2 revenue to $729 million to $734 million; and guided FY2027 non-GAAP EPS to $5.95 to $6.14. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>. The official headline was direct:</p>
+<blockquote>
+<p>Raising full-year fiscal 2027 guidance driven mainly by strength in Atlas.</p>
+</blockquote>
+<p>Other quality indicators were also strong: RPO was $1.4586 billion, up 88% year over year; cRPO was $766.3 million, up 69%; free cash flow was $197.5 million versus $105.9 million a year earlier; total customers were 67,700+; Atlas customers were 66,400+; and customers with more than $100K ARR reached 2,895. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>.</p>
+<p>Analyst target increases added a secondary catalyst. Examples included Morgan Stanley raising its target from $335 to $380 while keeping Overweight; Needham raising its target from $300 to $400 while keeping Buy; Barclays raising its target from $370 to $387 while keeping Overweight; Wedbush raising its target from $380 to $390 while keeping Outperform; and Monness Crespi &amp; Hardt raising its target from $370 to $415 while keeping Buy. Sources: <a href="https://sg.finance.yahoo.com/news/morgan-stanley-resets-mongodb-stock-000300777.html">Yahoo / Morgan Stanley syndication</a>, <a href="https://www.benzinga.com/analyst-stock-ratings/price-target/26/05/52879206/mongodb-analyst-raises-price-target-over-30-on-ai-traction">Benzinga / Needham</a>, <a href="https://www.marketbeat.com/instant-alerts/mongodb-nasdaqmdb-given-new-38700-price-target-at-barclays-2026-05-29">MarketBeat / Barclays and Monness</a>, <a href="https://www.marketbeat.com/instant-alerts/mongodb-nasdaqmdb-given-new-39000-price-target-at-wedbush-2026-05-29">MarketBeat / Wedbush</a>.</p>
+<p>MarketWatch showed MDB closing at $403.88 on June 1, 2026, up $68.33, or 20.36%, with volume of 6.78 million shares, about 305% of its 65-day average. Source: <a href="https://www.marketwatch.com/investing/stock/mdb">MarketWatch MDB quote</a>.</p>
+<h2>What Changed in the AI / Agent Narrative</h2>
+<p>The important change in Q1 is that MongoDB is no longer just saying “AI is a long-term opportunity.” It is now presenting a more concrete agent-backend path.</p>
+<p>MongoDB's official business highlights included seven new platform capabilities announced at MongoDB.local London, aimed at closing the gap between AI experimentation and high-performance production deployment; advancing automated retrieval and persistent AI agent memory; and a formal strategic partnership with LangChain to make Atlas the unified backend for production-ready AI agents across vector search, persistent memory, and natural-language querying. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>.</p>
+<p>On the earnings call, management said AI adoption of MongoDB technologies is accelerating, MCP server usage is growing significantly, Voyage customers more than doubled quarter over quarter, and vector search adoption is far outpacing overall company growth. But management also kept an important qualifier: this quarter's results were driven primarily by core workloads, while AI / agentic workloads are showing real and growing momentum. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>.</p>
+<p>That means: <strong>the market can start repricing MongoDB's AI option value, but Q1 growth should not be attributed entirely to AI.</strong> UBS took a similarly cautious view, saying results were driven mainly by core business rather than early-stage AI demand. Source: <a href="https://ca.finance.yahoo.com/news/ubs-raises-pt-mongodb-mdb-134833000.html">Yahoo / UBS syndication</a>.</p>
+<h2>How the Prior Thesis Should Be Updated</h2>
+<p>One claim should be avoided: <strong>AI is damaging MongoDB's business.</strong> Q1 revenue growth of 25%, Atlas growth above 29%, RPO growth of 88%, near-doubling of free cash flow, and raised full-year guidance do not support a demand-collapse thesis.</p>
+<p>Another claim should also be avoided: <strong>MongoDB is not suitable for agentic AI.</strong> MongoDB Vector Search, Voyage, Automated Embeddings, the LangChain partnership, MongoDB Checkpointer, and the agent memory/state narrative all point the other way. MongoDB is suitable for an important class of agentic workloads, especially operational data, persistent memory/state, and hybrid retrieval.</p>
+<p>However, the earlier Postgres-default thesis still matters. Postgres / Supabase / pgvector remain powerful default starting points for AI app starters, MVPs, RAG metadata, relational permissions, billing, and fast prototypes. AI also reduces the perceived cost of schema and migration work, which does weaken one of MongoDB's older flexible-schema advantages.</p>
+<p>The better updated framework is “default status by layer”:</p>
+<ol>
+<li><strong>AI app starter / MVP / Supabase templates:</strong> Postgres has the stronger default position.</li>
+<li><strong>Enterprise operational data modernization:</strong> MongoDB remains strong.</li>
+<li><strong>Production agent backend / memory / state / hybrid retrieval:</strong> MongoDB is actively contesting a new default layer.</li>
+</ol>
+<p>So the old thesis is not overturned. It should be updated from “MongoDB's default status is under pressure” to: <strong>MongoDB is under pressure as a default for AI starters, but it is fighting back at the production agent backend layer.</strong></p>
+<h2>Has the Snowflake Comparison Changed?</h2>
+<p>The prior Snowflake / MongoDB comparison still mostly holds: Snowflake's AI story maps more directly into product revenue, RPO, NRR, and full-year guidance; MongoDB's AI story still needs more quarters to prove it can become sustained Atlas consumption.</p>
+<p>Snowflake's Q1 FY2027 official numbers were strong: product revenue was $1.334 billion, up 34%; total revenue was $1.391 billion, up 33%; NRR was 126%; RPO was $9.21 billion, up 38%; FY2027 product revenue guidance was raised from $5.66 billion, or 27% growth, to $5.84 billion, or 31% growth; more than 13,600 accounts were using Snowflake AI capabilities; Snowflake Intelligence accounts more than doubled quarter over quarter; and Cortex Code was used by more than 7,100 accounts. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>.</p>
+<p>The difference remains clear:</p>
+<ol>
+<li>Snowflake's AI story turns more directly into enterprise data platform consumption.</li>
+<li>MongoDB's AI story is more about contesting the default backend for agentic applications.</li>
+<li>Snowflake has tied AI more tightly to full-year guidance in public financial reporting.</li>
+<li>MongoDB's Q1 proved that the core business is not broken, Atlas is strong, and early AI / agent traction is enough for the market to reprice the option value.</li>
+</ol>
+<p>So the conclusion should not be “Snowflake wins, MongoDB loses.” A better version is: <strong>Snowflake still has more direct AI monetization certainty; MongoDB's business repair and agent-backend narrative helped it rebound sharply from the post-Q4 discount.</strong></p>
+<h2>Final View</h2>
+<p>The direct reason MongoDB surged is simple: <strong>Q1 FY2027 delivered the beat-and-raise the market wanted, and Atlas, RPO, free cash flow, and the AI / agent narrative were all stronger than post-Q4 expectations.</strong></p>
+<p>The earlier thesis was not directionally wrong, but the tone must be updated:</p>
+<ol>
+<li><strong>Near-term financials:</strong> MongoDB has repaired the story; the post-Q4 pessimism was too aggressive.</li>
+<li><strong>Medium-term product position:</strong> MongoDB may not win the default position for AI app starters, but it can win the production agent backend layer.</li>
+<li><strong>Compared with Snowflake:</strong> Snowflake has more direct AI revenue certainty; MongoDB's AI upside is more tied to application backends, agent memory, and state.</li>
+<li><strong>Status of the old thesis:</strong> it is not overturned; it has evolved from “MongoDB's default status is under pressure” to “default status is splitting by layer, and MongoDB is fighting back in a new layer.”</li>
+</ol>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
