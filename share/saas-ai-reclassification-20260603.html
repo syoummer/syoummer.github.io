@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>SaaS 不是整体回来了：AI 时代软件股的选择性重新分类</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>SaaS 不是整体回来了：AI 时代软件股的选择性重新分类</h1>
+<p>日期：2026-06-03</p>
+<h2>核心结论</h2>
+<p><strong>SaaS 不是整体回来了。更准确的说法是：市场正在把软件股重新拆篮子。</strong></p>
+<p>第一类是 <strong>AI-compressed SaaS</strong>：seat-based、workflow、静态 dashboard、薄 UI、点工具、人工流程外包型软件。这类公司的风险是 AI agent 减少人类 seats、绕过传统 UI、降低内部开发和集成成本，导致旧的 per-seat expansion 逻辑被压缩。</p>
+<p>第二类是 <strong>AI-consumption / AI-infrastructure software</strong>：data platform、warehouse/lakehouse、operational database、agent backend、observability、security、developer agent control plane。这类公司的机会是 AI 增加数据量、compute/storage/query 消费、agent state/memory、LLM trace、治理、安全、成本控制和系统复杂度。</p>
+<p>当前最强公开市场锚点是 Snowflake。Snowflake 用 Q1 FY2027 证明了 AI 可以转成 consumption revenue 和全年 guide 上修：product revenue 13.34 亿美元、同比 34%；FY2027 product revenue guide 上调到 58.4 亿美元、同比 31%；RPO 92.1 亿美元、同比 38%；NRR 126%；13,600+ accounts 使用 Snowflake AI capabilities；Cortex Code 7,100+ accounts。来源：<a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>。</p>
+<p>MongoDB 是第二层锚点。它没有 Snowflake 那么直接的 AI-to-consumption 证据，但 Q1 FY2027 已经修复了“Atlas 降档 / AI 伤害数据库需求”的 bearish thesis：revenue 6.876 亿美元、同比 25%；Atlas revenue 同比超过 29%；RPO 14.586 亿美元、同比 88%；FCF 1.975 亿美元；FY2027 revenue guide 上调到 29.2 亿至 29.6 亿美元。来源：<a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>。</p>
+<p>Databricks 是私有市场的高 beta 版本：公司融资披露显示 revenue run-rate 超过 48 亿美元、同比超过 55%，AI products 和 Data Warehousing 都超过 10 亿美元 run-rate，NRR 超过 140%。但这是私募融资披露，不是 SEC 完整财报，证据硬度低于 Snowflake。来源：<a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">Databricks Series L release</a>。</p>
+<p>最终判断：<strong>市场不是从“AI 会杀死软件”切到“AI 会拯救 SaaS”。它是在重新定价哪些软件是 AI 工作负载的消费层，哪些软件只是可被 AI agent 压缩的人类流程层。</strong></p>
+<h2>1. 为什么这是重新分类，不是普通 SaaS 反弹</h2>
+<p>2026 年软件股下跌的核心叙事不是普通宏观风险，而是 AI 改变软件采购逻辑。Yahoo Finance 对软件股下跌的报道引用 Jefferies 观点称，software sentiment 很低，因为 AI 给 sector 投下 uncertainty；投资者担心客户可以用 Anthropic Claude Code 等 AI 工具内部开发软件，减少对 Salesforce 等外部 SaaS 的依赖。来源：<a href="https://finance.yahoo.com/news/why-software-stocks-are-getting-crushed-as-ai-casts-shadow-of-uncertainty-over-sector-160011783.html">Yahoo Finance</a>。</p>
+<p>Reuters/Yahoo 对 1 月软件股下跌的报道也直接给出这条逻辑：美国软件股下跌，是因为 SAP cloud outlook 和 ServiceNow 财报后下跌加深了市场对传统软件 provider 被 AI players 赶超的担忧；报道还写到，AI 能以更低成本即时生成 code 和 apps，挑战订阅 SaaS。来源：<a href="https://finance.yahoo.com/news/us-software-stocks-slide-sap-151029472.html">Yahoo Finance / Reuters</a>。</p>
+<p>这解释了为什么软件股不是“财报不好所以跌”，而是估值范式被问了一个更根本的问题：如果 AI agent 可以做销售、客服、分析、代码、内部工具，那么企业还需要为多少人类 seats 付 SaaS 订阅费？</p>
+<p>但这条负面逻辑不是对所有软件都同等成立。Snowflake 财报后，Yahoo Finance/StockStory 把 Snowflake 的强结果描述为缓解 broader AI fears，并提到 MongoDB、Datadog、Elastic、Oracle 等 data software peers 受益。来源：<a href="https://finance.yahoo.com/sectors/technology/articles/software-sector-rallies-snowflake-results-170424728.html">Yahoo Finance / StockStory</a>、<a href="https://www.investors.com/news/technology/mongodb-stock-elastic-oracle-snowflake-ai">IBD</a>。</p>
+<p>所以这不是 SaaS monolith 的反弹。它更像一个 classification trade：</p>
+<table>
+<thead>
+<tr>
+<th>旧问题</th>
+<th>新问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>软件股估值是否过低？</td>
+<td>这家公司到底是 AI 受害者，还是 AI 工作负载的消费层？</td>
+</tr>
+<tr>
+<td>AI 功能有没有发布？</td>
+<td>AI adoption 有没有转成收入、RPO/cRPO、NRR、guide raise？</td>
+</tr>
+<tr>
+<td>Revenue beat 了吗？</td>
+<td>Beat 是否证明了 AI 替代风险被降级？</td>
+</tr>
+<tr>
+<td>SaaS 能否继续涨？</td>
+<td>哪些子行业能从 seat-based multiple 切到 consumption / infrastructure multiple？</td>
+</tr>
+</tbody>
+</table>
+<h2>2. 公开市场 tape：压力和修复同时存在</h2>
+<p>负面 tape 很清楚。Stocktwits 对 SaaS selloff 的报道称，Anthropic 新 AI 工具发布加剧了软件抛售，Intuit 单周下跌 16%，Adobe 和 Salesforce 下跌超过 11%，IGV 单周下跌 6.4%、月内跌幅扩大到 7%。来源：<a href="https://stocktwits.com/news-articles/markets/equity/saas-stocks-stumble-as-ai-fears-trigger-selloff-retail-eyes-selective-bets/cmUu4hVR49H">Stocktwits</a>。</p>
+<p>CNBC 对软件 M&amp;A 机会的报道引用 RBC 分析师 Rishi Jaluria 的观点：seat-based application companies such as Monday.com、Asana、Sprout Social are the most exposed；软件股被 AI 拖累后，可能推动并购和 strategic alternatives。来源：<a href="https://www.cnbc.com/2026/01/22/selloff-in-software-from-ai-sets-stage-for-potential-big-year-of-ma.html">CNBC</a>。</p>
+<p>但修复 tape 也存在。Yahoo Finance/Investing.com 报道称，ServiceNow、Salesforce、Workday、Zscaler、Intuit 和 IGV 出现反弹，原因是投资者开始重新评估 AI threat 是否已经 price in；同时文中保留关键对比：IGV 年初以来仍跌 12.8%，而 Philadelphia Semiconductor Index 同期涨 55%。来源：<a href="https://uk.finance.yahoo.com/news/servicenow-salesforce-shares-climb-software-113607301.html">Yahoo Finance UK</a>。</p>
+<p>这说明市场的真实状态是：<strong>software 从极端悲观里反弹，但资金并没有把软件整体重新等同于 AI 半导体或 AI infra。</strong></p>
+<p>最强的选择性重估发生在 Snowflake。Investopedia 报道 Snowflake 财报后上涨超过 34%，从财报前 2026 年内跌约 20% 转为年内上涨接近 7%；催化包括强指引、AI demand、Amazon deal 和 AI agent platform 收购，William Blair 称其为 AI adoption 的 clear inflection。来源：<a href="https://www.investopedia.com/snowflake-stock-pops-nearly-40-percent-back-into-the-green-here-is-what-has-investors-excited-11985216">Investopedia</a>。</p>
+<p>所以 tape 的交叉验证是：</p>
+<table>
+<thead>
+<tr>
+<th>证据</th>
+<th>指向</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IGV、Salesforce、Adobe、Intuit、ServiceNow 等受 AI fears 压制</td>
+<td>AI-compressed SaaS 风险真实</td>
+</tr>
+<tr>
+<td>Snowflake 财报后大涨并带动 data software peers</td>
+<td>AI-consumption software 有重估锚点</td>
+</tr>
+<tr>
+<td>软件股反弹但仍落后半导体</td>
+<td>市场不是全面 risk-on，而是 selective repair</td>
+</tr>
+<tr>
+<td>Oracle、Snowflake、MongoDB、Datadog、Elastic 等 data/infrastructure names 联动</td>
+<td>重估更偏 data/software infrastructure，而不是 SaaS 全体</td>
+</tr>
+</tbody>
+</table>
+<h2>3. 子行业分类：哪些更像 AI 受益者，哪些更像 AI 压缩对象</h2>
+<h3>Data platform / warehouse / lakehouse</h3>
+<p>这是当前证据最强的受益篮子。</p>
+<p>AI 对这一类的需求不是“多一个 AI feature”，而是多了数据接入、治理、上下文、compute、storage、query、embedding、agent access、cost governance。Snowflake 的 product revenue 本来就是 compute、storage、data transfer consumption，AI agent usage 越多，就越容易变成 credits consumed。Snowflake 官方 Cortex Agents 博客直接写道：</p>
+<blockquote>
+<p>“AI agent usage translates directly into credits consumed.”</p>
+</blockquote>
+<p>来源：<a href="https://www.snowflake.com/en/blog/enterprise-ai-agent-platform/">Snowflake Cortex Agents blog</a>。</p>
+<p>Databricks 也在同一方向扩张。其 Series L 融资稿称新资金会加速 Lakebase、Databricks Apps、Agent Bricks，帮助客户 build AI apps and agents on proprietary data，并把 Lakebase 作为 system of record、Apps 作为 user experience layer、Agent Bricks 作为 multi-agent systems。来源：<a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">Databricks Series L release</a>。</p>
+<p>结论：data platform 不是被 AI 绕过的 UI，而是 AI 要访问、治理、消费企业数据时的底座。</p>
+<h3>Operational database / agent backend</h3>
+<p>这一类是 MongoDB 的核心位置，但竞争更复杂。</p>
+<p>AI app 和 agent 需要 operational data、state、memory、metadata、vector/hybrid search、real-time update。MongoDB Vector Search 官方产品页强调：</p>
+<blockquote>
+<p>“Avoid the synchronization tax. With MongoDB Vector Search, your operational and vector data stay in one place — no separate databases, no data to sync.”</p>
+</blockquote>
+<p>来源：<a href="https://www.mongodb.com/products/platform/atlas-vector-search">MongoDB Atlas Vector Search</a>。</p>
+<p>这就是 MongoDB 的重分类路径：从“传统数据库 SaaS”变成“agent backend / operational AI data layer”。但它的风险也比 Snowflake 更明显，因为 Postgres/Supabase/pgvector、Databricks Lakebase、specialized vector DB、cloud-native databases 都在争夺同一个 default backend。</p>
+<p>MongoDB Q1 FY2027 修复了基本面，但还没有完全证明 AI agent workloads 已经成为可量化 Atlas consumption。管理层在电话会中仍强调 Q1 primarily driven by core workloads，AI/agentic workloads real and growing but not yet the main revenue driver。来源：<a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>。</p>
+<p>结论：MongoDB 是 AI 受益候选，不是 Snowflake 式已完全验证的 direct consumption winner。</p>
+<h3>Observability / monitoring</h3>
+<p>Observability 很可能是 AI complexity beneficiary。</p>
+<p>传统 APM 监控 services、logs、traces；AI 应用还要监控 prompts、model responses、retrieval steps、tool calls、tokens、latency、hallucination、prompt injection、PII exposure。Datadog LLM Observability 产品页写道：</p>
+<blockquote>
+<p>“Trace every request across prompts, model responses, retrieval steps, and tool calls to understand how your AI system executes.”</p>
+</blockquote>
+<p>还写到：</p>
+<blockquote>
+<p>“Track latency, token usage, retries, and errors across each step.”</p>
+</blockquote>
+<p>来源：<a href="https://www.datadoghq.com/product/llm-observability/">Datadog LLM Observability</a>。</p>
+<p>Datadog Q1 2025 官方财报显示 revenue 7.62 亿美元、同比增长 25%，$100K+ ARR customers 约 3,770 个，高于一年前约 3,340 个。来源：<a href="https://investors.datadoghq.com/news-releases/news-release-details/datadog-announces-first-quarter-2025-financial-results">Datadog Q1 2025 IR</a>。</p>
+<p>结论：AI 不会减少 observability，反而增加新的 trace/eval/security/cost 维度。它更接近 AI-consumption software。</p>
+<h3>Security</h3>
+<p>Security 的逻辑是“双边 AI”：攻击者用 AI 提高攻击规模，防守方用 AI 自动化 SOC、triage、investigation、response。CrowdStrike Charlotte AI 官方页称其为 “The brain of the agentic SOC”，并给出指标：平均每周节省 40+ 小时，investigations manual effort 减少 70%。来源：<a href="https://www.crowdstrike.com/en-us/platform/charlotte-ai/">CrowdStrike Charlotte AI</a>。</p>
+<p>Cloudflare Q1 2025 官方财报显示 revenue 4.791 亿美元、同比增长 27%，并称拿下公司历史最大合同：超过 1 亿美元，driven by Workers developer platform；同一稿提到 From networking, to security, to AI。来源：<a href="https://cloudflare.net/news/news-details/2025/Cloudflare-Announces-First-Quarter-2025-Financial-Results/default.aspx">Cloudflare Q1 2025 IR</a>。</p>
+<p>结论：security 有 seat compression 的一面，比如 SOC analyst 重复工作被 agent 化；但企业攻击面、治理和自动化需求更可能提升平台 spend。它更像 platform consolidation beneficiary，而不是纯 seat-risk SaaS。</p>
+<h3>Workflow / CRM / collaboration / seat-based SaaS</h3>
+<p>这是最容易被 AI 压缩的篮子，但不能一刀切。</p>
+<p>风险来自三个地方：</p>
+<ol>
+<li>AI agent 替代人类客服、SDR、analyst、ops seats。</li>
+<li>Natural-language workflow builder 降低自建/替代成本。</li>
+<li>企业从“为 access 付费”转向“为结果、conversation、action、credit 付费”。</li>
+</ol>
+<p>Oliver Wyman 的 agentic AI SaaS valuation 分析把最暴露的模型列为 seat-based, labor-linked SaaS、thin UX/workflow layers、standalone point solutions，并指出 AI agents do the work of people, reducing seat numbers and their value。来源：<a href="https://www.oliverwyman.com/our-expertise/insights/2026/apr/how-agentic-ai-reshaping-saas-valuations.html">Oliver Wyman</a>。</p>
+<p>但 Salesforce 也在给出反证。Salesforce Q1 FY2026 官方财报显示 revenue 98 亿美元、同比 8%；cRPO 296 亿美元、同比 12%；Data Cloud and AI ARR 超过 10 亿美元、同比超过 120%；Q1 top 100 deals 中接近 60% 包含 Data Cloud and AI；Agentforce launch 以来 closed over 8,000 deals，其中 half are paid；help.salesforce.com 上 Agentforce handled over 750,000 requests，case volume 同比减少 7%。来源：<a href="https://www.salesforce.com/news/press-releases/2025/05/28/fy26-q1-earnings/">Salesforce Q1 FY2026 earnings</a>。</p>
+<p>这组数字说明 Salesforce 不是纯受害者，但它的重分类证明难度比 Snowflake 更高。因为投资者要确认：Agentforce/Data Cloud 的 ARR、paid deals、cRPO 是否足以抵消 seat compression。</p>
+<p>结论：workflow SaaS 的好公司可以转型成 AI outcome platform，但估值不应因为“有 agent”自动重分类。必须看 AI ARR、paid adoption、cRPO、NRR、case deflection、pricing power。</p>
+<h3>Developer tools / code agents</h3>
+<p>Developer tools 是最有争议的一类：AI 会压缩传统开发服务和部分工具需求，但 code agents 本身也创造新的 usage/credit spend。</p>
+<p>GitHub Copilot 官方页把 Copilot 定义为 “AI accelerator for every workflow”，并写到 GitHub AI Credits 用于 chat、agents、Copilot CLI、Spaces、Spark；1 AI credit = $0.01。来源：<a href="https://github.com/features/copilot">GitHub Copilot</a>。</p>
+<p>这类业务的未来更像 hybrid：基础 seat 仍在，但高阶 agent、premium model、task execution、cloud coding、MCP/governance 走 usage credits。旧开发工具如果只是静态辅助，会被压缩；能成为 agent control plane 的工具会受益。</p>
+<h2>4. 估值框架：不要从旧 SaaS multiple 直接跳到 AI infra multiple</h2>
+<p>软件股的重新分类不是贴一个 AI 标签就结束。估值应该按证据强度分层。</p>
+<p>Clouded Judgement 2026 年 2 月统计 public software median EV/NTM revenue 约 3.4x；high growth median 9.7x，mid growth 6.3x，low growth 2.7x；median NTM growth 12%，gross margin 76%，FCF margin 20%，net retention 110%。来源：<a href="https://cloudedjudgement.substack.com/p/clouded-judgement-21326-build-vs">Clouded Judgement</a>。</p>
+<p>Multiples.vc May 2026 public comps 显示 All SaaS 2.6x EV/NTM revenue，Infrastructure SaaS 3.1x，Data Infrastructure 5.7x，DevOps 11.6x，All AI 3.9x，Horizontal SaaS 2.3x。来源：<a href="https://multiples.vc/insights/software-saas-valuation-multiples">Multiples.vc</a>。</p>
+<p>Aventis Advisors 对 SaaS multiples 的分析称 March 2026 public SaaS median EV/revenue 约 3.4x，Q4 2025 median revenue growth 12.2%，median Rule of 40 为 28%，只有 20% 公司超过 Rule of 40；每提高 10 个 Rule of 40 points，约对应 +1.1x EV/revenue。来源：<a href="https://aventis-advisors.com/saas-valuation-multiples">Aventis Advisors</a>。</p>
+<p>这给出一个实用估值框架：</p>
+<table>
+<thead>
+<tr>
+<th>桶</th>
+<th>估值逻辑</th>
+<th>必要证据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI-compressed SaaS</td>
+<td>旧 SaaS / low growth SaaS multiple，甚至 discount</td>
+<td>seat growth 承压、NRR 下滑、AI adoption 未变现、guide weak</td>
+</tr>
+<tr>
+<td>AI-enhanced SaaS</td>
+<td>中间 SaaS multiple，视 AI attach 提升</td>
+<td>AI ARR、paid deals、cRPO/NRR 支撑，但 seat risk 未完全消除</td>
+</tr>
+<tr>
+<td>AI-consumption software</td>
+<td>data infra / DevOps / consumption premium</td>
+<td>product revenue/consumption 增长、RPO/cRPO、NRR、guide raise、毛利/FCF 稳定</td>
+</tr>
+<tr>
+<td>AI platform / control plane</td>
+<td>更高 multiple，但容错率低</td>
+<td>多产品平台化、大客户扩张、usage + governance + switching cost 共同成立</td>
+</tr>
+</tbody>
+</table>
+<p>Snowflake 的证据最接近第三桶：product revenue 增长、guide raise、RPO、NRR、AI adoption、gross margin/operating margin guide 同时成立。</p>
+<p>Salesforce/ServiceNow 这类更像第二桶向第三桶迁移：有 AI ARR、paid agent deals、cRPO，但还要证明 agent 不只是减少 seats，也能扩大 wallet。</p>
+<p>Databricks 可能是第四桶，但公开市场投资者应该给它“证据折扣”：私募 run-rate 很强，但缺少 SEC 级别 gross margin、RPO、SBC、customer concentration、AI product composition。</p>
+<h2>5. 如何判断一家公司是否真的完成 AI reclassification</h2>
+<p>正面 checklist：</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>为什么重要</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revenue/product revenue 再加速</td>
+<td>AI 不是 demo，而是进入收入</td>
+</tr>
+<tr>
+<td>RPO/cRPO 高于或支撑收入增长</td>
+<td>未来需求有合约/消费可见度</td>
+</tr>
+<tr>
+<td>NRR 稳定或回升</td>
+<td>存量客户因 AI 扩大消费，而不是减少 seats</td>
+</tr>
+<tr>
+<td>Guide raise</td>
+<td>管理层愿意把 AI momentum 纳入全年预期</td>
+</tr>
+<tr>
+<td>AI usage 转 ARR/ACV/consumption</td>
+<td>adoption metric 变成商业化 metric</td>
+</tr>
+<tr>
+<td>Gross margin / FCF 不恶化</td>
+<td>AI inference、GPU、云成本没有吃掉单位经济</td>
+</tr>
+<tr>
+<td>Top deals 中 AI attach 高</td>
+<td>AI 进入大客户采购，而不是小规模试用</td>
+</tr>
+<tr>
+<td>Sector peers 同时确认</td>
+<td>不是单票短 squeeze，而是 basket 重估</td>
+</tr>
+</tbody>
+</table>
+<p>反证 checklist：</p>
+<table>
+<thead>
+<tr>
+<th>反证</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI usage 很高但 ARR/consumption 不动</td>
+<td>adoption 无法 monetization</td>
+</tr>
+<tr>
+<td>Seats 下滑、ARPU 或 NRR 下滑</td>
+<td>agent efficiency 压缩旧 SaaS 计费基础</td>
+</tr>
+<tr>
+<td>Guide down 或 billings/RPO 变弱</td>
+<td>AI narrative 没挡住基本面降速</td>
+</tr>
+<tr>
+<td>Gross margin/FCF 被 AI 成本压缩</td>
+<td>AI 收入质量低于传统软件</td>
+</tr>
+<tr>
+<td>AI-native competitor 抢默认入口</td>
+<td>UI/workflow moat 被 agent 绕过</td>
+</tr>
+<tr>
+<td>Hyperscaler/platform bundling</td>
+<td>独立 SaaS point solution 被平台化吃掉</td>
+</tr>
+<tr>
+<td>只发布 AI feature，没有客户/收入指标</td>
+<td>只是 narrative，不是 reclassification</td>
+</tr>
+</tbody>
+</table>
+<h2>6. 对主要子行业的最终归类</h2>
+<table>
+<thead>
+<tr>
+<th>子行业</th>
+<th>当前归类</th>
+<th>代表公司</th>
+<th>关键观察指标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data platform / warehouse / lakehouse</td>
+<td>最强 AI-consumption beneficiary</td>
+<td>Snowflake、Databricks、BigQuery、Oracle</td>
+<td>product revenue、RPO、NRR、AI accounts、guide raise、gross margin</td>
+</tr>
+<tr>
+<td>Operational database / agent backend</td>
+<td>受益候选，但 default 竞争激烈</td>
+<td>MongoDB、Postgres/Supabase、Databricks Lakebase、Redis、Elastic</td>
+<td>cloud DB growth、vector/search usage、AI workload revenue、developer default</td>
+</tr>
+<tr>
+<td>Observability / monitoring</td>
+<td>AI complexity beneficiary</td>
+<td>Datadog、New Relic、Splunk、Grafana、LangSmith</td>
+<td>LLM spans、APM/log growth、$100K+ customers、AI observability attach</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Platform consolidation beneficiary</td>
+<td>CrowdStrike、Palo Alto、Cloudflare、Zscaler、Okta</td>
+<td>ARR/large deals、SOC automation、AI threat/gov products、retention</td>
+</tr>
+<tr>
+<td>Workflow / CRM / collaboration</td>
+<td>混合；seat risk 最大</td>
+<td>Salesforce、ServiceNow、Workday、Atlassian、Zendesk</td>
+<td>AI ARR、paid agent deals、cRPO、seat trends、case deflection、NRR</td>
+</tr>
+<tr>
+<td>Developer tools / code agents</td>
+<td>新 consumption 增长，但替代旧工具</td>
+<td>GitHub、Cursor、Anthropic、OpenAI、JetBrains</td>
+<td>AI credits、agent runs、enterprise governance、seat + usage mix</td>
+</tr>
+</tbody>
+</table>
+<h2>7. 回到 MongoDB、Snowflake、Databricks 三个锚点</h2>
+<p>Snowflake 是 <strong>direct proof</strong>：AI adoption 已经被市场映射到 product revenue、guide raise、RPO、NRR、margin guide。它最像“AI software infrastructure”而不是传统 SaaS。</p>
+<p>MongoDB 是 <strong>repair + optionality</strong>：Q1 FY2027 修复了 Q4 后的 Atlas 降速恐惧；Atlas、RPO、FCF 和 guide 都强。但它还需要未来几个季度证明 AI/agent backend 能转成可量化 Atlas consumption，而不只是 core workload strength。</p>
+<p>Databricks 是 <strong>private-market upside version</strong>：它的叙事最完整，覆盖 lakehouse、warehouse、AI products、Lakebase、Apps、Agent Bricks，甚至要做企业 AI apps 的系统底座。但由于披露是融资稿，估值和证据硬度都要打折。</p>
+<p>三者共同指向一个 sector 结论：<strong>AI 时代的软件赢家不是“有 AI feature 的 SaaS”，而是能控制数据、执行、治理、观测、安全、agent memory/state、usage metering 的软件平台。</strong></p>
+<h2>最终判断</h2>
+<p>这轮 SaaS/software move 的正确解释不是“AI fears are over”，也不是“SaaS 又整体回来了”。</p>
+<p>更准确的 thesis 是：<strong>软件 sector 正在从横向 SaaS 估值框架，切到 AI 工作负载价值链框架。能成为 AI data/agent/security/observability/control plane 的软件，被重新定价为 AI consumption beneficiary；只卖人类 seats、薄 workflow、静态 UI、点功能的软件，被重新定价为 AI-compressed SaaS。</strong></p>
+<p>投资或观察上，我会把问题改成三句：</p>
+<ol>
+<li>这家公司是 AI agent 要消费的底层系统，还是 AI agent 可以绕过的上层 UI？</li>
+<li>AI adoption 有没有进入 revenue、RPO/cRPO、NRR、guide raise 和 margin，而不只是发布会？</li>
+<li>如果 seats 变少，公司的新 usage/outcome/credit pricing 能不能扩大 wallet？</li>
+</ol>
+<p>当前最可验证的结论是：<strong>Snowflake 已经给出 sector-level proof；MongoDB 给出 second-layer repair；Databricks 给出 private-market platform upside；workflow SaaS 仍需要逐家公司证明自己不是被 AI 压缩，而是能把 AI 变成新的付费单位。</strong></p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>SaaS Is Not Back as a Monolith: Selective Software Reclassification in the AI Era</h1>
+<p>Date: 2026-06-03</p>
+<h2>Core Conclusion</h2>
+<p><strong>SaaS is not simply back. The market is separating software into different AI-era buckets.</strong></p>
+<p>The first bucket is <strong>AI-compressed SaaS</strong>: seat-based workflow software, static dashboards, thin UI layers, point solutions, and software tied to human labor processes. These companies face the risk that AI agents reduce human seats, bypass traditional interfaces, lower internal build costs, and compress the old per-seat expansion model.</p>
+<p>The second bucket is <strong>AI-consumption / AI-infrastructure software</strong>: data platforms, warehouses and lakehouses, operational databases, agent backends, observability, security, and developer-agent control planes. These companies may benefit because AI increases data volume, compute/storage/query consumption, agent state and memory, LLM traces, governance, security, cost control, and system complexity.</p>
+<p>The strongest public-market anchor is Snowflake. Snowflake's Q1 FY2027 showed that AI can translate into consumption revenue and full-year guidance upside: product revenue of $1.334 billion, up 34%; FY2027 product revenue guidance raised to $5.84 billion, up 31%; RPO of $9.21 billion, up 38%; NRR of 126%; 13,600+ accounts using Snowflake AI capabilities; and 7,100+ accounts using Cortex Code. Source: <a href="https://www.sec.gov/Archives/edgar/data/1640147/000164014726000027/fy2027q1earnings.htm">Snowflake FY2027 Q1 SEC exhibit</a>.</p>
+<p>MongoDB is a second-layer anchor. It does not yet have Snowflake's direct AI-to-consumption proof, but Q1 FY2027 repaired the bearish thesis around Atlas deceleration and AI hurting database demand: revenue of $687.6 million, up 25%; Atlas revenue up more than 29%; RPO of $1.459 billion, up 88%; FCF of $197.5 million; and FY2027 revenue guidance raised to $2.92 billion to $2.96 billion. Source: <a href="https://www.sec.gov/Archives/edgar/data/1441816/000162828026038798/mdb-043026xex991xrelease.htm">MongoDB Q1 FY2027 SEC exhibit</a>.</p>
+<p>Databricks is the private-market high-beta version. Its financing disclosure says revenue run-rate exceeded $4.8 billion, growing more than 55% year over year, with both AI products and Data Warehousing above $1 billion run-rate and NRR above 140%. But this is a private financing disclosure, not a full SEC filing, so the evidence is less hard than Snowflake's. Source: <a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">Databricks Series L release</a>.</p>
+<p>The final judgment: <strong>the market is not moving from “AI will kill software” to “AI will save SaaS.” It is repricing which software companies sit in the consumption layer of AI workloads, and which ones are merely human workflow layers that agents can compress.</strong></p>
+<h2>1. Why This Is Reclassification, Not a Generic SaaS Rebound</h2>
+<p>The core pressure on software stocks in 2026 is not just macro weakness. It is the possibility that AI changes software procurement. Yahoo Finance, citing Jefferies, described software sentiment as weak because AI casts uncertainty over the sector; investors worry customers could use tools such as Anthropic's Claude Code to build internal software and reduce reliance on external SaaS vendors such as Salesforce. Source: <a href="https://finance.yahoo.com/news/why-software-stocks-are-getting-crushed-as-ai-casts-shadow-of-uncertainty-over-sector-160011783.html">Yahoo Finance</a>.</p>
+<p>Reuters/Yahoo made the same point around the January software selloff: SAP's cloud outlook and ServiceNow's post-earnings decline deepened concerns that traditional software providers were being outpaced by AI players; AI could generate code and apps quickly and cheaply, challenging subscription-based SaaS. Source: <a href="https://finance.yahoo.com/news/us-software-stocks-slide-sap-151029472.html">Yahoo Finance / Reuters</a>.</p>
+<p>That is why the issue is not simply whether software earnings are good or bad. The market is asking a more fundamental question: if AI agents can do sales, support, analysis, coding, and internal tools, how many human seats do enterprises still need to buy?</p>
+<p>But that negative logic does not apply equally to all software. After Snowflake's results, Yahoo Finance/StockStory described the report as soothing broader AI fears and noted that MongoDB, Datadog, Elastic, and Oracle also benefited. Sources: <a href="https://finance.yahoo.com/sectors/technology/articles/software-sector-rallies-snowflake-results-170424728.html">Yahoo Finance / StockStory</a>, <a href="https://www.investors.com/news/technology/mongodb-stock-elastic-oracle-snowflake-ai">IBD</a>.</p>
+<p>This is not a monolithic SaaS rebound. It is a classification trade:</p>
+<table>
+<thead>
+<tr>
+<th>Old Question</th>
+<th>New Question</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Are software stocks cheap?</td>
+<td>Is this company an AI victim or an AI workload consumption layer?</td>
+</tr>
+<tr>
+<td>Did the company launch AI features?</td>
+<td>Did AI adoption convert into revenue, RPO/cRPO, NRR, or guidance upside?</td>
+</tr>
+<tr>
+<td>Did revenue beat?</td>
+<td>Did the beat reduce AI substitution risk?</td>
+</tr>
+<tr>
+<td>Can SaaS go up?</td>
+<td>Which subsectors can move from seat-based multiples to consumption/infrastructure multiples?</td>
+</tr>
+</tbody>
+</table>
+<h2>2. Market Tape: Pressure and Repair Both Exist</h2>
+<p>The negative tape is clear. Stocktwits reported that Anthropic's new AI tool intensified a SaaS selloff, with Intuit down 16% in a week, Adobe and Salesforce down more than 11%, and IGV down 6.4% for the week and 7% month to date. Source: <a href="https://stocktwits.com/news-articles/markets/equity/saas-stocks-stumble-as-ai-fears-trigger-selloff-retail-eyes-selective-bets/cmUu4hVR49H">Stocktwits</a>.</p>
+<p>CNBC reported that software weakness could drive M&amp;A and cited RBC analyst Rishi Jaluria saying seat-based application companies such as Monday.com, Asana, and Sprout Social are among the most exposed. Source: <a href="https://www.cnbc.com/2026/01/22/selloff-in-software-from-ai-sets-stage-for-potential-big-year-of-ma.html">CNBC</a>.</p>
+<p>But repair also exists. Yahoo Finance/Investing.com reported rebounds in ServiceNow, Salesforce, Workday, Zscaler, Intuit, and IGV as investors reassessed how much AI risk was already priced in. The same article preserved the key contrast: IGV was still down 12.8% year to date, while the Philadelphia Semiconductor Index was up 55%. Source: <a href="https://uk.finance.yahoo.com/news/servicenow-salesforce-shares-climb-software-113607301.html">Yahoo Finance UK</a>.</p>
+<p>That means software has bounced from extreme pessimism, but investors have not reclassified the entire sector as AI infrastructure.</p>
+<p>The strongest selective rerating happened in Snowflake. Investopedia reported Snowflake rising more than 34% after earnings, moving from down roughly 20% year to date before the report to up nearly 7% for 2026; catalysts included strong guidance, AI demand, an Amazon deal, and an AI agent platform acquisition. William Blair called it a clear inflection for AI adoption. Source: <a href="https://www.investopedia.com/snowflake-stock-pops-nearly-40-percent-back-into-the-green-here-is-what-has-investors-excited-11985216">Investopedia</a>.</p>
+<p>Cross-validation of the tape:</p>
+<table>
+<thead>
+<tr>
+<th>Evidence</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IGV, Salesforce, Adobe, Intuit, and ServiceNow were pressured by AI fears</td>
+<td>AI-compressed SaaS risk is real</td>
+</tr>
+<tr>
+<td>Snowflake rallied and pulled data software peers higher</td>
+<td>AI-consumption software has a public-market anchor</td>
+</tr>
+<tr>
+<td>Software bounced but still lagged semiconductors</td>
+<td>This is selective repair, not broad AI risk-on</td>
+</tr>
+<tr>
+<td>Oracle, Snowflake, MongoDB, Datadog, and Elastic showed data/infrastructure linkage</td>
+<td>The rerating is more data/software-infrastructure than SaaS-wide</td>
+</tr>
+</tbody>
+</table>
+<h2>3. Subsector Taxonomy</h2>
+<h3>Data Platform / Warehouse / Lakehouse</h3>
+<p>This is the strongest beneficiary bucket.</p>
+<p>AI adds data ingestion, governance, context, compute, storage, queries, embeddings, agent access, and cost governance. Snowflake product revenue is already based on compute, storage, and data transfer consumption. More AI agent usage can translate into more credits consumed. Snowflake's Cortex Agents blog states:</p>
+<blockquote>
+<p>“AI agent usage translates directly into credits consumed.”</p>
+</blockquote>
+<p>Source: <a href="https://www.snowflake.com/en/blog/enterprise-ai-agent-platform/">Snowflake Cortex Agents blog</a>.</p>
+<p>Databricks is expanding in the same direction. Its Series L release says new capital will accelerate Lakebase, Databricks Apps, and Agent Bricks to help customers build AI apps and agents on proprietary data, using Lakebase as the system of record, Apps as the user experience layer, and Agent Bricks for multi-agent systems. Source: <a href="https://www.prnewswire.com/news-releases/databricks-grows-55-yoy-surpasses-4-8b-revenue-run-rate-and-is-raising-4b-series-l-at-134b-valuation-302643445.html">Databricks Series L release</a>.</p>
+<p>Conclusion: data platforms are not UI layers that AI bypasses. They are the foundation AI needs to access, govern, and consume enterprise data.</p>
+<h3>Operational Database / Agent Backend</h3>
+<p>This is MongoDB's core AI-era position, but competition is more complex.</p>
+<p>AI apps and agents need operational data, state, memory, metadata, vector/hybrid search, and real-time updates. MongoDB Atlas Vector Search says:</p>
+<blockquote>
+<p>“Avoid the synchronization tax. With MongoDB Vector Search, your operational and vector data stay in one place — no separate databases, no data to sync.”</p>
+</blockquote>
+<p>Source: <a href="https://www.mongodb.com/products/platform/atlas-vector-search">MongoDB Atlas Vector Search</a>.</p>
+<p>This is MongoDB's reclassification path: from a traditional database software company to an agent backend / operational AI data layer. But the risk is greater than Snowflake's because Postgres/Supabase/pgvector, Databricks Lakebase, specialized vector databases, and cloud-native databases are all competing for the same default-backend role.</p>
+<p>MongoDB Q1 FY2027 repaired the basic growth story, but it has not yet fully proved that AI agent workloads are a measurable Atlas consumption driver. Management still emphasized that Q1 was primarily driven by core workloads, while AI/agentic workloads were real and growing but not yet the main revenue driver. Source: <a href="https://www.fool.com/earnings/call-transcripts/2026/05/28/mongodb-mdb-q1-2027-earnings-transcript/">Motley Fool MongoDB Q1 FY2027 transcript</a>.</p>
+<p>Conclusion: MongoDB is an AI-beneficiary candidate, not yet a Snowflake-like direct consumption winner.</p>
+<h3>Observability / Monitoring</h3>
+<p>Observability is likely an AI complexity beneficiary.</p>
+<p>Traditional APM monitors services, logs, and traces. AI applications also need monitoring for prompts, model responses, retrieval steps, tool calls, tokens, latency, hallucinations, prompt injection, and PII exposure. Datadog LLM Observability says:</p>
+<blockquote>
+<p>“Trace every request across prompts, model responses, retrieval steps, and tool calls to understand how your AI system executes.”</p>
+</blockquote>
+<p>It also says:</p>
+<blockquote>
+<p>“Track latency, token usage, retries, and errors across each step.”</p>
+</blockquote>
+<p>Source: <a href="https://www.datadoghq.com/product/llm-observability/">Datadog LLM Observability</a>.</p>
+<p>Datadog Q1 2025 reported revenue of $762 million, up 25%, and about 3,770 customers with $100K+ ARR, up from about 3,340 a year earlier. Source: <a href="https://investors.datadoghq.com/news-releases/news-release-details/datadog-announces-first-quarter-2025-financial-results">Datadog Q1 2025 IR</a>.</p>
+<p>Conclusion: AI does not reduce observability needs. It adds new trace, evaluation, security, and cost dimensions.</p>
+<h3>Security</h3>
+<p>Security has a two-sided AI logic: attackers use AI to scale attacks, while defenders use AI to automate SOC triage, investigation, and response. CrowdStrike calls Charlotte AI “The brain of the agentic SOC” and cites 40+ hours of average weekly time savings and a 70% reduction in manual investigation effort. Source: <a href="https://www.crowdstrike.com/en-us/platform/charlotte-ai/">CrowdStrike Charlotte AI</a>.</p>
+<p>Cloudflare Q1 2025 reported revenue of $479.1 million, up 27%, and said it landed the largest contract in company history, a more than $100 million deal driven by its Workers developer platform. The same release framed Cloudflare across networking, security, and AI. Source: <a href="https://cloudflare.net/news/news-details/2025/Cloudflare-Announces-First-Quarter-2025-Financial-Results/default.aspx">Cloudflare Q1 2025 IR</a>.</p>
+<p>Conclusion: security has some seat-compression risk in SOC work, but the larger enterprise need for defense, governance, and automation likely increases platform spend.</p>
+<h3>Workflow / CRM / Collaboration / Seat-Based SaaS</h3>
+<p>This is the most exposed bucket, but it should not be treated as uniformly doomed.</p>
+<p>The risks are:</p>
+<ol>
+<li>AI agents replace human support, SDR, analyst, and operations seats.</li>
+<li>Natural-language workflow builders lower internal build and replacement costs.</li>
+<li>Enterprises move from paying for access to paying for outcomes, conversations, actions, or credits.</li>
+</ol>
+<p>Oliver Wyman identifies seat-based, labor-linked SaaS, thin UX/workflow layers, and standalone point solutions as the most exposed, and says AI agents do the work of people, reducing seat numbers and their value. Source: <a href="https://www.oliverwyman.com/our-expertise/insights/2026/apr/how-agentic-ai-reshaping-saas-valuations.html">Oliver Wyman</a>.</p>
+<p>But Salesforce is also giving counterevidence. Its Q1 FY2026 release showed revenue of $9.8 billion, up 8%; cRPO of $29.6 billion, up 12%; Data Cloud and AI ARR above $1 billion, up more than 120%; nearly 60% of top 100 deals including Data Cloud and AI; more than 8,000 Agentforce deals since launch, half paid; and Agentforce handling more than 750,000 help.salesforce.com requests while cutting case volume 7% year over year. Source: <a href="https://www.salesforce.com/news/press-releases/2025/05/28/fy26-q1-earnings/">Salesforce Q1 FY2026 earnings</a>.</p>
+<p>Those numbers show Salesforce is not a pure victim. But its reclassification burden is higher than Snowflake's: investors need to see whether Agentforce and Data Cloud ARR, paid deals, and cRPO can offset seat compression.</p>
+<p>Conclusion: good workflow SaaS companies can become AI outcome platforms, but having agents is not enough. The key metrics are AI ARR, paid adoption, cRPO, NRR, case deflection, and pricing power.</p>
+<h3>Developer Tools / Code Agents</h3>
+<p>Developer tools are contested: AI can compress traditional developer services and some old tools, but coding agents also create new usage and credit spend.</p>
+<p>GitHub Copilot describes itself as an “AI accelerator for every workflow” and says GitHub AI Credits pay for chat, agents, Copilot CLI, Spaces, and Spark, with 1 AI credit equal to $0.01. Source: <a href="https://github.com/features/copilot">GitHub Copilot</a>.</p>
+<p>The future of this category is hybrid: base seats remain, but premium agents, models, task execution, cloud coding, MCP, and governance move toward usage credits. Old static tools may be compressed; agent control planes may benefit.</p>
+<h2>4. Valuation Framework</h2>
+<p>Software reclassification is not automatic just because a company says “AI.” Valuation should follow evidence quality.</p>
+<p>Clouded Judgement reported a February 2026 public software median EV/NTM revenue multiple of about 3.4x; high-growth median 9.7x, mid-growth 6.3x, low-growth 2.7x; median NTM growth 12%, gross margin 76%, FCF margin 20%, and net retention 110%. Source: <a href="https://cloudedjudgement.substack.com/p/clouded-judgement-21326-build-vs">Clouded Judgement</a>.</p>
+<p>Multiples.vc May 2026 public comps showed All SaaS at 2.6x EV/NTM revenue, Infrastructure SaaS at 3.1x, Data Infrastructure at 5.7x, DevOps at 11.6x, All AI at 3.9x, and Horizontal SaaS at 2.3x. Source: <a href="https://multiples.vc/insights/software-saas-valuation-multiples">Multiples.vc</a>.</p>
+<p>Aventis Advisors estimated March 2026 public SaaS median EV/revenue at about 3.4x, Q4 2025 median revenue growth at 12.2%, median Rule of 40 at 28%, and only 20% of companies above Rule of 40. It also estimated that each 10-point increase in Rule of 40 corresponds to about +1.1x EV/revenue. Source: <a href="https://aventis-advisors.com/saas-valuation-multiples">Aventis Advisors</a>.</p>
+<p>A practical framework:</p>
+<table>
+<thead>
+<tr>
+<th>Bucket</th>
+<th>Valuation Logic</th>
+<th>Required Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI-compressed SaaS</td>
+<td>Old SaaS / low-growth SaaS multiple, possibly discounted</td>
+<td>Seat growth pressure, NRR decline, AI adoption without monetization, weak guide</td>
+</tr>
+<tr>
+<td>AI-enhanced SaaS</td>
+<td>Mid SaaS multiple, depending on AI attach</td>
+<td>AI ARR, paid deals, cRPO/NRR support, but seat risk not fully eliminated</td>
+</tr>
+<tr>
+<td>AI-consumption software</td>
+<td>Data infra / DevOps / consumption premium</td>
+<td>Product revenue or consumption growth, RPO/cRPO, NRR, guide raise, stable margin/FCF</td>
+</tr>
+<tr>
+<td>AI platform / control plane</td>
+<td>Higher multiple, lower tolerance for misses</td>
+<td>Multi-product platform expansion, large-customer growth, usage + governance + switching cost</td>
+</tr>
+</tbody>
+</table>
+<p>Snowflake sits closest to the third bucket because product revenue growth, guide raise, RPO, NRR, AI adoption, and margin guide all line up.</p>
+<p>Salesforce and ServiceNow look more like second-bucket names trying to migrate toward the third: they have AI ARR, paid agent deals, and cRPO, but still need to prove agents expand wallet rather than only reduce seats.</p>
+<p>Databricks may fit the fourth bucket, but public-market investors should apply an evidence discount because the numbers are private run-rate disclosures, not SEC-level gross margin, RPO, SBC, customer concentration, and AI product composition.</p>
+<h2>5. Reclassification Checklist</h2>
+<p>Positive signals:</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Why It Matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revenue/product revenue acceleration</td>
+<td>AI is entering revenue, not just demos</td>
+</tr>
+<tr>
+<td>RPO/cRPO supporting revenue growth</td>
+<td>Future demand has contractual or consumption visibility</td>
+</tr>
+<tr>
+<td>Stable or rising NRR</td>
+<td>Existing customers expand usage instead of reducing seats</td>
+</tr>
+<tr>
+<td>Guidance raise</td>
+<td>Management is willing to put AI momentum into full-year expectations</td>
+</tr>
+<tr>
+<td>AI usage converts into ARR/ACV/consumption</td>
+<td>Adoption becomes monetization</td>
+</tr>
+<tr>
+<td>Gross margin / FCF does not deteriorate</td>
+<td>AI inference, GPU, and cloud costs do not destroy unit economics</td>
+</tr>
+<tr>
+<td>High AI attach in top deals</td>
+<td>AI is part of enterprise procurement, not just pilots</td>
+</tr>
+<tr>
+<td>Sector peers confirm the move</td>
+<td>This is basket rerating, not a single-stock squeeze</td>
+</tr>
+</tbody>
+</table>
+<p>Falsifiers:</p>
+<table>
+<thead>
+<tr>
+<th>Falsifier</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>High AI usage but flat ARR/consumption</td>
+<td>Adoption is not monetizing</td>
+</tr>
+<tr>
+<td>Seats decline, ARPU or NRR falls</td>
+<td>Agent efficiency compresses the old SaaS base</td>
+</tr>
+<tr>
+<td>Guide down or weaker billings/RPO</td>
+<td>AI narrative cannot offset deceleration</td>
+</tr>
+<tr>
+<td>Gross margin/FCF pressure from AI costs</td>
+<td>AI revenue quality is worse than legacy software</td>
+</tr>
+<tr>
+<td>AI-native competitor wins the default interface</td>
+<td>UI/workflow moat is bypassed</td>
+</tr>
+<tr>
+<td>Hyperscaler/platform bundling</td>
+<td>Independent point solution is absorbed by platforms</td>
+</tr>
+<tr>
+<td>AI feature launches without customer/revenue metrics</td>
+<td>Narrative, not reclassification</td>
+</tr>
+</tbody>
+</table>
+<h2>6. Final Subsector Classification</h2>
+<table>
+<thead>
+<tr>
+<th>Subsector</th>
+<th>Current Classification</th>
+<th>Representative Companies</th>
+<th>Key Metrics</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data platform / warehouse / lakehouse</td>
+<td>Strongest AI-consumption beneficiary</td>
+<td>Snowflake, Databricks, BigQuery, Oracle</td>
+<td>Product revenue, RPO, NRR, AI accounts, guide raise, gross margin</td>
+</tr>
+<tr>
+<td>Operational database / agent backend</td>
+<td>Beneficiary candidate, but default competition is intense</td>
+<td>MongoDB, Postgres/Supabase, Databricks Lakebase, Redis, Elastic</td>
+<td>Cloud DB growth, vector/search usage, AI workload revenue, developer default</td>
+</tr>
+<tr>
+<td>Observability / monitoring</td>
+<td>AI complexity beneficiary</td>
+<td>Datadog, New Relic, Splunk, Grafana, LangSmith</td>
+<td>LLM spans, APM/log growth, $100K+ customers, AI observability attach</td>
+</tr>
+<tr>
+<td>Security</td>
+<td>Platform consolidation beneficiary</td>
+<td>CrowdStrike, Palo Alto, Cloudflare, Zscaler, Okta</td>
+<td>ARR/large deals, SOC automation, AI threat/gov products, retention</td>
+</tr>
+<tr>
+<td>Workflow / CRM / collaboration</td>
+<td>Mixed; highest seat risk</td>
+<td>Salesforce, ServiceNow, Workday, Atlassian, Zendesk</td>
+<td>AI ARR, paid agent deals, cRPO, seat trends, case deflection, NRR</td>
+</tr>
+<tr>
+<td>Developer tools / code agents</td>
+<td>New consumption growth, but old tools face substitution</td>
+<td>GitHub, Cursor, Anthropic, OpenAI, JetBrains</td>
+<td>AI credits, agent runs, enterprise governance, seat + usage mix</td>
+</tr>
+</tbody>
+</table>
+<h2>7. Snowflake, MongoDB, and Databricks as Anchors</h2>
+<p>Snowflake is <strong>direct proof</strong>: AI adoption is already mapped to product revenue, guidance upside, RPO, NRR, and margin guidance. It looks more like AI software infrastructure than traditional SaaS.</p>
+<p>MongoDB is <strong>repair plus optionality</strong>: Q1 FY2027 repaired the post-Q4 Atlas deceleration fear; Atlas, RPO, FCF, and guidance were strong. But it still needs multiple quarters to prove AI/agent backend workloads can become measurable Atlas consumption.</p>
+<p>Databricks is the <strong>private-market upside version</strong>: its story is the broadest, spanning lakehouse, warehouse, AI products, Lakebase, Apps, and Agent Bricks. It may become a foundation for enterprise AI applications, but its disclosure quality and valuation should be discounted.</p>
+<p>Together, they point to one sector conclusion: <strong>AI-era software winners are not companies that merely launch AI features. They are platforms that control data, execution, governance, observability, security, agent memory/state, and usage metering.</strong></p>
+<h2>Final Judgment</h2>
+<p>The correct interpretation is not “AI fears are over” or “SaaS is back.”</p>
+<p>The better thesis is: <strong>software is moving from a horizontal SaaS valuation framework to an AI workload value-chain framework. Software that becomes an AI data, agent, security, observability, or control plane gets repriced as an AI consumption beneficiary; software that mainly sells human seats, thin workflows, static UI, or point features gets repriced as AI-compressed SaaS.</strong></p>
+<p>The practical questions are:</p>
+<ol>
+<li>Is this company a system AI agents consume, or a UI layer AI agents can bypass?</li>
+<li>Has AI adoption entered revenue, RPO/cRPO, NRR, guidance, and margins, or is it still just a launch story?</li>
+<li>If seats decline, can the company's new usage, outcome, or credit pricing expand wallet?</li>
+</ol>
+<p>The current best reading: <strong>Snowflake has provided sector-level proof; MongoDB has provided second-layer repair; Databricks provides private-market platform upside; workflow SaaS still needs to prove, company by company, that AI is a new paid unit rather than a seat-compression force.</strong></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
