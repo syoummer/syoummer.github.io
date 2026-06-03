@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>太空数据中心再调研：SemiAnalysis 新文拆解、事实核查与我们的判断</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>太空数据中心再调研：SemiAnalysis 新文拆解、事实核查与我们的判断</h1>
+<p>日期：2026-06-03</p>
+<h2>核心结论</h2>
+<p>SemiAnalysis 这篇文章最有价值的地方，不是证明“太空数据中心一定会赢”，而是把讨论从物理可行性拉回到一个更硬的系统问题：<strong>地面数据中心供给栈、芯片制造供给栈、轨道工程成本三者同时约束，任何只讲太阳能或散热的论证都是不完整的。</strong></p>
+<p>我们的更新判断：</p>
+<ol>
+<li><strong>同意 SemiAnalysis 对粗糙乐观论的批判</strong>：太空不是免费太阳能、免费冷却、天然低延迟、无需许可的乌托邦。SSO 近连续日照有价值，但轨道容量、散热面积、地面 I/O、维护和监管都会吃掉一部分优势。</li>
+<li><strong>同意“芯片制造是第五层瓶颈”这个新增视角</strong>：如果先进逻辑、HBM、CoWoS/先进封装卡住，把数据中心搬上天不能变出更多芯片。</li>
+<li><strong>不同意把 2030 年代初 scaled space datacenter 当成高置信结论</strong>：SemiAnalysis 的 early-2030s 可行窗口依赖多个强假设同时成立，包括 Starship 成本/频率、太阳能/散热器成本下降、辐射和无人维护、地面供给恶化、芯片产能大幅扩张。这里更像上行情景，不是 base-rate 预测。</li>
+<li><strong>最可能的惊喜不在“太空 hyperscale 云”，而在“轨道 AI appliance”</strong>：高度集成的计算、供电、热控一体化节点，服务星上数据、批处理推理、国防/遥感/科学任务，可能比把地面 GPU 机架搬上天更早成立。</li>
+<li><strong>需要大胆挑战的是“太空数据中心 vs 地面数据中心”这个二分法本身</strong>：真正的未来可能是地面 hyperscale + 近地轨道边缘集群 + 空间原生数据处理 + 特定高价值推理任务的混合系统，而不是一方替代另一方。</li>
+</ol>
+<p>一句话判断：<strong>SemiAnalysis 提供了目前最好的经济框架之一，但其结论仍是模型驱动、假设敏感的。我们应接受它的框架，不应接受它的时间表。</strong></p>
+<h2>SemiAnalysis 的主要 claims</h2>
+<h3>Claim 1：太空数据中心今天比地面贵数倍，但长期可能达到成本平价</h3>
+<p>SemiAnalysis 称，2026 年部署一个 30.5kW B300 cluster，太空总 program capital cost 约 410 万美元，地面约 140 万美元；月度拥有成本太空约 100,925 美元，地面约 27,724 美元；GPU-hour TCO 太空约 8.64 美元，地面约 2.37 美元；考虑 SLA、辐射可用性和冗余后，LCOC 太空约 10.91 美元/GPU-hour，地面约 2.49 美元/GPU-hour。来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>。</p>
+<p>其模型结论是：base case 下 Space-Earth cost parity 约在 2040 年；“Elon Musk case”下可在 2030 年代初接近平价。来源同上。</p>
+<p>判断：方向合理，数字只能中等置信。公开文章展示了结论和部分参数，但完整模型是 SemiAnalysis 自有付费模型，外部无法完全复算。</p>
+<h3>Claim 2：太空数据中心成立的真正条件不是四个常见口号</h3>
+<p>文章反驳四个常见说法：</p>
+<ul>
+<li>太空有 24 小时免费太阳能。</li>
+<li>冷却免费。</li>
+<li>真空光速带来最低延迟。</li>
+<li>太空无需许可。</li>
+</ul>
+<p>SemiAnalysis 的反驳要点是：LEO 通常只有约 60% 日照，SSO/dawn-dusk SSO 才更接近持续日照；真空没有对流，废热必须靠辐射；低轨卫星对特定地面站只有短暂过境窗口，多跳 ISL 和地面站限制会引入延迟；SSO 是 LEO 内更受限的轨道资源，且仍会面对 FCC、轨道安全、天文和环境问题。来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>。</p>
+<p>判断：高置信，并被 NASA、GAO、Google、WEF 等来源支持。</p>
+<h3>Claim 3：真正的需求触发条件，是 AI 需求超过地面四层供给</h3>
+<p>SemiAnalysis 把地面供给分成四层：grid-connected supply、converted bitcoin miners/powered land、behind-the-meter generation、industrial capacity/manpower。文章认为，只有这些地面供给层都被挤压到非常昂贵或无法及时交付，太空才从“优化选择”变成“必要选择”。来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>。</p>
+<p>文章给出的部分数据包括：全球不含中国的 tracked datacenter capacity 可能从 2026 年 89GW 增至 2030 年最多 338GW；2024 年全球数据中心用电约 340TWh，约全球电力 1.1%；AI-specific demand 2030 年 base case 接近全球发电 5%，加速情景约 7%，约 380GW 连续功率。来源同上。</p>
+<p>判断：框架高价值，具体容量数字中等置信。这个框架比“地面没电所以去太空”的线性叙事更强，因为它指出地面供给不是单一瓶颈，而是价格逐级上升的供给曲线。</p>
+<h3>Claim 4：芯片制造是第五层、也是 universal constraint</h3>
+<p>SemiAnalysis 强调，在讨论地面还是太空部署之前，必须先有足够 AI 芯片。文章称，行业已从 power-constrained 进入 accelerator-constrained regime；TSMC N3、HBM 和先进封装会先成为全球约束。来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis 新文</a>、<a href="https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage">SemiAnalysis: The Great AI Silicon Shortage</a>。</p>
+<p>SemiAnalysis 在相关文章中称，AI-related accelerator、host CPU、networking N3 demand 2026 年占 TSMC N3 output 接近 60%，2027 年约 86%；HBM 和 DRAM 产能也显著被 AI 拉紧。来源：<a href="https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage">The Great AI Silicon Shortage</a>。</p>
+<p>判断：这是本文最重要的新信息。太空数据中心不能绕过芯片供应链；如果先进芯片供应仍被地面 hyperscaler 争抢，轨道基础设施会缺少可部署的“有效载荷”。</p>
+<h3>Claim 5：SpaceX 的愿景极大，但要被工程和供应链现实打折</h3>
+<p>SpaceX S-1 称，xAI 并入 SpaceX 后，SpaceX 认为可用可复用火箭、卫星制造和运营能力部署 massive AI compute satellite constellations，可能达到 millions of satellites；其 goal over time 是每年向太空发射 100GW compute，并预计 space-based compute 可扩大 AI compute scale、改善 token economics。来源：<a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm">SpaceX S-1</a>。</p>
+<p>FCC public notice 确认 SpaceX 申请一个最多 100 万颗卫星的新 NGSO 系统，作为 “SpaceX Orbital Data Center system”，轨道高度 500-2000km，包含 30 度和 sun-synchronous inclinations，主要依赖 optical inter-satellite links，并可能连接 Starlink 一代/二代系统。来源：<a href="https://docs.fcc.gov/public/attachments/DA-26-113A1.txt">FCC DA 26-113</a>。</p>
+<p>DCD 报道称 SpaceX 文件提出，如果 Starship 可复用并达到规模，发射每年 100 万吨卫星、每吨 100kW compute，可每年增加 100GW AI compute capacity；但没有给出具体时间表，并请求豁免 FCC 常规 NGSO milestone obligations。来源：<a href="https://www.datacenterdynamics.com/en/news/spacex-files-for-million-satellite-orbital-ai-data-center-megaconstellation/">DCD</a>。Light Reading 和 MeriTalk 也报道了同一核心说法。来源：<a href="https://www.lightreading.com/satellite/spacex-seeks-fcc-approval-for-mega-ai-data-center-constellation">Light Reading</a>、<a href="https://www.meritalk.com/articles/fcc-weighs-spacex-proposal-for-orbital-data-centers">MeriTalk</a>。</p>
+<p>判断：SpaceX 的申请是真实且战略上重要的，但更像愿景、占位和监管测试，不等于工程闭环。SpaceX 的强项是垂直整合能力，弱项是该计划的规模跳跃过大、补星 cadence 和公共资源治理风险巨大。</p>
+<h2>关键数据与支持证据</h2>
+<h3>经济与 TCO 数据</h3>
+<p>SemiAnalysis 公开文章给出的 TCO 数据：</p>
+<ul>
+<li>2026 年 30.5kW B300 cluster 太空 program capex 约 410 万美元，地面约 140 万美元。</li>
+<li>月度拥有成本太空约 100,925 美元，地面约 27,724 美元。</li>
+<li>GPU-hour TCO 太空约 8.64 美元，地面约 2.37 美元。</li>
+<li>LCOC 太空约 10.91 美元/GPU-hour，地面约 2.49 美元/GPU-hour。</li>
+<li>太空 LCOC 比 TCO 多 26% gross-up，地面约 5%。</li>
+<li>太空数据中心寿命假设 5 年，地面 15 年。</li>
+<li>Falcon 9 当前 launch cost 约 1,400-1,800 美元/kg，未来 Starship 约 250 美元/kg。</li>
+</ul>
+<p>来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>。</p>
+<p>Google Project Suncatcher 也认为，如果 launch price 到 2030 年代中期降至低于 200 美元/kg，space-based data center 的发射和运营成本可能在 per-kW/year 口径上接近地面数据中心能源成本。来源：<a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research Project Suncatcher</a>。</p>
+<p>判断：低发射成本是必要条件，不是充分条件。即便低于 200-250 美元/kg，还需要散热器、太阳能板、可靠性、维修/替换、地面通信和监管成本都一起下降。</p>
+<h3>太阳能与轨道数据</h3>
+<p>SemiAnalysis 称 LEO 约 15 圈/日，多数 LEO 接收阳光约 60% 时间，平均捕获约 800W/m²；dawn-dusk SSO 更适合太空数据中心，因为 eclipse 可能短至每天 35 分钟。来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>。</p>
+<p>Google 称，在合适轨道中太阳能板可比地面 productive up to 8x，并几乎连续产电；Suncatcher 设想 dawn-dusk SSO。来源：<a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research Project Suncatcher</a>。</p>
+<p>判断：SSO 的能源优势真实，但不是无限容量的“免许可能源”。Dawn-dusk SSO 是稀缺轨道槽位，且卫星长期受光会增加天文观测可见性问题。</p>
+<h3>散热数据</h3>
+<p>NASA 热控材料指出：真空中没有对流，外部热交换主要靠 radiation，内部可用 conduction、heat pipes、loop heat pipes 等搬运热。来源：<a href="https://www.nasa.gov/wp-content/uploads/2021/10/7.soa_thermal_2021_0.pdf">NASA Small Spacecraft Thermal Control</a>。</p>
+<p>SemiAnalysis 称 ISS radiator system 可排 70kW 热，面积 325m²，成本 3.4-5 亿美元，并用它说明散热是核心约束。来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>。</p>
+<p>WEF 文章也引用 ISS 作为 reality check，称 ISS external active thermal control system 通过约 7 吨 radiator wings 排 70kW；若按 ISS-style hardware 放大到 1MW，radiators alone 约 100 吨。来源：<a href="https://www.weforum.org/stories/2026/06/space-data-centres-cooling">WEF</a>。</p>
+<p>GAO 称，space-based data centers 的大功率和冷却需求仍需工程发展；large data centers 会产生必须散到太空的废热，冷却方案在该尺度尚未验证。来源：<a href="https://www.gao.gov/products/gao-26-109012">GAO Science &amp; Tech Spotlight</a>。</p>
+<p>判断：散热不是绝对物理不可行，但它会把地面的水/风/冷却塔问题转换成轨道结构面积、质量、姿态、材料和装配问题。早期应避开地面高功率密度 rack 复制路线。</p>
+<h3>通信与延迟数据</h3>
+<p>SemiAnalysis 指出，LEO compute satellite 对特定 ground station 的过境可能只有 5-7 分钟，非直连窗口需要 ISL 多跳和 gateway，可能累计 30-80ms one-way delay；光地链路还受大气和天气影响。来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>。</p>
+<p>Google Suncatcher 表示，大规模 ML workload 需要 satellite-to-satellite links 达到 tens of Tbps；其 bench-scale demonstrator 已用单 transceiver pair 实现 800Gbps each-way，即 1.6Tbps total，但要靠公里级甚至更近的紧密编队来闭合 link budget。来源：<a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research Project Suncatcher</a>。</p>
+<p>判断：通信最大问题不是“能不能传”，而是“什么 workload 值得传”。地面海量训练数据上传到轨道再训练，早期经济性很差；轨道原生数据、批处理推理、模型较稳定的任务更合理。</p>
+<h3>辐射与可靠性数据</h3>
+<p>Google 称其测试 Trillium TPU v6e，在 67MeV proton beam 下评估 TID 和 SEE；HBM 最敏感，在 2krad(Si) 后开始出现 irregularities，而其 five-year shielded mission dose 目标约 750rad(Si)；单芯片在 15krad(Si) 下没有归因于 TID 的 hard failures。来源：<a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research Project Suncatcher</a>。</p>
+<p>GAO 称 space radiation 可随机 corrupt data 并 degrade hardware；缓解可能昂贵或降低计算性能；in-space servicing 未成熟，导致更频繁退役、碎片和再入风险。来源：<a href="https://www.gao.gov/products/gao-26-109012">GAO</a>。</p>
+<p>SemiAnalysis 称地面 GPU cluster 每年约 3-6% GPU 出现需要人工干预的 failure；太空要通过 robotics、更高可靠性、overprovisioning 或组合方式解决。来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>。</p>
+<p>判断：现代 AI 芯片不是“上天即死”，但数据中心级系统的可靠性不是单芯片辐射测试能证明的。HBM、SSD、电源、连接器、热循环、重启、latch-up、无人维修才是系统级风险。</p>
+<h2>与此前判断的一致和分歧</h2>
+<p>此前判断是：“太空边缘计算”已经有现实需求和技术路径；“太空 hyperscale 数据中心”技术可行性增强，但经济、散热、维护和环境许可远未闭环。</p>
+<p>SemiAnalysis 与此基本一致，但用 TCO 模型给出更明确的成本路径：今天太空约 4x+ 成本劣势，base case 到 2040 平价，upside case 2030 年代初接近平价。来源：<a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>。</p>
+<p>最大的新增点是“地面供给栈 + 芯片供给栈”。这会改变时间表判断：即便 SpaceX、Google 或 Starcloud 在 2027-2030 年证明在轨 AI 芯片可运行，也不代表能立刻规模化，因为先进芯片供应可能仍被地面 hyperscaler 争抢。</p>
+<p>潜在分歧在于时间窗口。SemiAnalysis 比我们更愿意给出“early 2030s scaled space datacenters”窗口。我们仍更保守，因为这需要一组正相关乐观假设同时成立：Starship 达到低成本高频可靠发射、太空 solar/radiator 成本和质量快速下降、辐射和故障可靠性通过系统架构解决、无人维护或一次性替换路线经济可行、地面电力和许可显著恶化、芯片产能大幅扩张。</p>
+<p>这些条件不是不可能，但组合概率低于单项概率。</p>
+<h2>置信分层</h2>
+<h3>高置信</h3>
+<ul>
+<li>SpaceX 确实向 FCC 提交了最多 100 万颗 orbital data center satellites 的 NGSO 系统申请。来源：<a href="https://docs.fcc.gov/public/attachments/DA-26-113A1.txt">FCC DA 26-113</a>。</li>
+<li>SpaceX S-1 确实把 xAI、AI compute satellite constellations、millions of satellites 和每年 100GW compute 放进 IPO/公司叙事。来源：<a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm">SpaceX S-1</a>。</li>
+<li>太空散热必须靠辐射作为最终热汇，冷却不是免费午餐。来源：<a href="https://www.nasa.gov/wp-content/uploads/2021/10/7.soa_thermal_2021_0.pdf">NASA</a>、<a href="https://www.gao.gov/products/gao-26-109012">GAO</a>、<a href="https://www.weforum.org/stories/2026/06/space-data-centres-cooling">WEF</a>。</li>
+<li>Google Suncatcher 确实计划 2027 年初与 Planet 发射两颗原型卫星，并已公开 TPU 辐射测试和光链路/编队设想。来源：<a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research</a>。</li>
+<li>ASCEND 认为空间数据中心若要显著降低 CO2，需要全生命周期排放低 10 倍的发射器。来源：<a href="https://www.thalesaleniaspace.com/en/press-releases/thales-alenia-space-reveals-results-ascend-feasibility-study-space-data-centers-0">Thales ASCEND</a>。</li>
+</ul>
+<h3>中等置信</h3>
+<ul>
+<li>太空数据中心 2026 年约为地面成本 4x+，2040 左右有可能接近平价。这个方向合理，但具体数字依赖 SemiAnalysis 模型。</li>
+<li>若 Starship 或同类系统达到 200-250 美元/kg 发射成本，部分太空计算方案可能接近地面边际能源成本。Google 和 SemiAnalysis 均支持这个方向，但它不是完整 TCO 平价。</li>
+<li>芯片制造会在未来几年先于地面数据中心容量成为约束。SemiAnalysis 供应链分析支持强，但仍依赖模型和行业预测。</li>
+</ul>
+<h3>低置信或需强折扣</h3>
+<ul>
+<li>“2-3 年内太空是最低成本 AI compute”。目前证据不足，更多是 SpaceX/Musk 式前瞻性叙事。</li>
+<li>“100GW/年太空 compute 可以低维护、低运营成本快速部署”。补星、在轨故障、热管理、轨道拥堵、芯片供应和发射 cadence 均未闭环。</li>
+<li>“冷却在太空因 3K 背景而更容易”。这是误导。背景温度低不等于废热可免费排出，瓶颈是辐射面积、温度、发射率和姿态/遮蔽。</li>
+</ul>
+<h2>我们自己的观点</h2>
+<h3>不要把太空数据中心想成“地面数据中心搬家”</h3>
+<p>真正可能成功的路线，不是把 GB300/NVL rack 原样塞进卫星，而是重构成空间原生 compute appliance：芯片、供电、热控、姿态、通信、容错作为一个整体协同设计。</p>
+<p>Google Suncatcher 的思路更接近这条路：紧密编队、TPU、tens of Tbps ISL、dawn-dusk SSO、辐射测试、原型验证。来源：<a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research</a>。</p>
+<p>大胆假设：未来最早有商业价值的不是“orbital AWS”，而是“orbital inference fabric”或“space-native batch compute fabric”。</p>
+<h3>地面数据中心不是静态靶子</h3>
+<p>很多乐观太空论把地面数据中心假设成停滞状态：电网不扩、审批不变、冷却不进步、芯片供应不变。但 SemiAnalysis 的四层供给框架提醒我们，地面系统会涨价、迁移、绕路、模块化、自备电、改造矿场、签长期能源合同。</p>
+<p>太空要赢，不是赢今天的地面数据中心，而是赢一个也在快速适应的地面供给系统。</p>
+<h3>芯片约束可能反而削弱太空路线，而不是增强太空路线</h3>
+<p>直觉上，AI 需求越大越有利于太空。但如果真实瓶颈是先进芯片、HBM 和封装，那么太空路线会和地面路线争同一批稀缺芯片。</p>
+<p>除非太空芯片走出完全不同的供应链，例如更高能效、更低散热、更容错、更适合辐射的专用 ASIC，否则轨道部署只是把同一瓶颈送到更难维护的地方。</p>
+<h3>SpaceX 的最大价值可能不是运营太空数据中心，而是把别人逼到可验证路线图</h3>
+<p>SpaceX 的百万卫星叙事可能过度激进，但它会迫使 Google、Amazon/Kuiper、Blue Origin、Starcloud、Axiom、欧洲 ASCEND 等玩家把抽象概念变成具体指标：每 kg compute、每 m² radiator、每 W optical bandwidth、每年补星率、每五年 mission dose、每 MW orbital capex。</p>
+<p>这种“指标化”比愿景本身更有价值。</p>
+<h3>监管和公共资源治理不是外部噪音，而是核心成本项</h3>
+<p>百万卫星不是单一公司的工程项目，而是对轨道、夜空、频谱、大气再入和国际协调的公共资源占用。</p>
+<p>即使工程可行，公共许可也可能成为实际 bottleneck。</p>
+<h2>未来最值得跟踪的验证点</h2>
+<ol>
+<li><strong>Google/Planet 2027 原型是否成功</strong>：看 TPU/HBM、光链路、热控、编队控制和实际 workload，而不是 PR。</li>
+<li><strong>Starship 的真实成本和 cadence</strong>：不是单次演示，而是可保险、可复用、可高频商业运营的 $/kg。</li>
+<li><strong>SpaceX FCC 申请是否补充技术细节</strong>：质量、尺寸、太阳能面积、散热面积、轨道分布、补星率、寿命、再入材料和频谱使用。</li>
+<li><strong>散热器质量和面积指标</strong>：关注 W/kg、W/m²、可展开可靠性、长期微陨石风险、姿态遮蔽、太阳/地球红外/反照率影响。</li>
+<li><strong>芯片供应链是否真的缓解</strong>：N3/N2、HBM4、CoWoS/SoW、面板级封装、chiplet、专用低功耗 AI ASIC。</li>
+<li><strong>地面供给是否真的枯竭</strong>：BTM gas、SMR、矿场改造、全球数据中心迁移、输电/变压器供给、地方审批。</li>
+<li><strong>在轨故障处理策略</strong>：robotic servicing、一次性可替换模块、overprovisioning、checkpoint/restart、autonomous repair。</li>
+</ol>
+<h2>最终判断</h2>
+<p>SemiAnalysis 的文章值得重视，因为它把太空数据中心从“科幻式可能性”推进到“可建模的基础设施选择”。但它仍然不是定论。</p>
+<p>我们应吸收三点：</p>
+<ul>
+<li>用 TCO 和供给曲线讨论，不用口号讨论。</li>
+<li>把芯片制造列为与电力、散热、发射同级的核心约束。</li>
+<li>区分 base case、upside case 和 Musk narrative，不要混在一起。</li>
+</ul>
+<p>我们应挑战三点：</p>
+<ul>
+<li>不要把 early-2030s scaled deployment 当成高置信预测。</li>
+<li>不要把低发射成本等同于完整经济闭环。</li>
+<li>不要默认通用 hyperscale AI training 是最先成立的 workload。</li>
+</ul>
+<p>更新后的观点是：<strong>太空数据中心会先以空间原生、批处理、边缘推理、遥感/国防/科学场景出现；通用 hyperscale orbital cloud 仍是 2030 年代以后、且强依赖发射/芯片/热控/监管多重突破的高风险押注。最值得期待的惊喜，不是“地面云上天”，而是新的空间原生计算架构。</strong></p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Space Data Centers Revisited: SemiAnalysis, Fact Checks, and Our View</h1>
+<p>Date: 2026-06-03</p>
+<h2>Core Takeaways</h2>
+<p>The most valuable part of SemiAnalysis' new article is not that it proves space data centers will win. It moves the debate from a narrow physics question to a harder systems question: <strong>terrestrial data center supply, semiconductor manufacturing supply, and orbital engineering costs all constrain the outcome at the same time. Any argument based only on solar power or cooling is incomplete.</strong></p>
+<p>Our updated view:</p>
+<ol>
+<li><strong>We agree with SemiAnalysis' critique of shallow optimism.</strong> Space is not a world of free solar power, free cooling, naturally lowest latency, and no permitting. Sun-synchronous orbit is valuable, but orbital capacity, radiator area, ground I/O, maintenance, and regulation all consume part of that advantage.</li>
+<li><strong>We agree that semiconductor manufacturing is a fifth bottleneck.</strong> If advanced logic, HBM, CoWoS, and advanced packaging are constrained, moving the data center to orbit does not create more chips.</li>
+<li><strong>We do not treat early-2030s scaled space data centers as a high-confidence forecast.</strong> SemiAnalysis' early-2030s case depends on several strong assumptions holding together: Starship cost and cadence, solar and radiator cost declines, radiation and autonomous maintenance, worsening terrestrial supply, and major chip capacity expansion. That is an upside scenario, not the base rate.</li>
+<li><strong>The real surprise is more likely an orbital AI appliance than a hyperscale orbital cloud.</strong> A tightly integrated compute-power-thermal node serving in-space data, batch inference, defense, remote sensing, and science could become useful earlier than flying terrestrial GPU racks into orbit.</li>
+<li><strong>The binary framing of space data centers versus terrestrial data centers is the wrong frame.</strong> The more likely future is a hybrid system: terrestrial hyperscale, LEO edge clusters, space-native data processing, and selected high-value inference workloads.</li>
+</ol>
+<p>One-sentence view: <strong>SemiAnalysis gives us one of the best economic frameworks so far, but its conclusions remain model-driven and assumption-sensitive. We should accept the framework, not the timeline.</strong></p>
+<h2>Major Claims From SemiAnalysis</h2>
+<h3>Claim 1: Space data centers are several times more expensive today, but may reach parity later</h3>
+<p>SemiAnalysis estimates that a 30.5kW B300 cluster deployed in 2026 would have total program capital cost of about $4.1M in space versus $1.4M on Earth. Monthly ownership cost is estimated at $100,925 in space versus $27,724 on Earth. GPU-hour TCO is estimated at $8.64 in space versus $2.37 on Earth. After SLA, radiation availability, and redundancy adjustments, LCOC is estimated at $10.91/GPU-hour in space versus $2.49/GPU-hour on Earth. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>The model conclusion is that the base case reaches Space-Earth cost parity around 2040, while the “Elon Musk case” approaches parity in the early 2030s. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>Our view: directionally plausible, but the exact numbers deserve only medium confidence. The public article shows conclusions and some parameters, but the full model is proprietary and cannot be fully reproduced externally.</p>
+<h3>Claim 2: The real case is not the four casual arguments</h3>
+<p>The article rejects four common claims:</p>
+<ul>
+<li>Space provides 24-hour free solar power.</li>
+<li>Cooling is free.</li>
+<li>Vacuum light speed creates the lowest latency.</li>
+<li>Space requires no permitting.</li>
+</ul>
+<p>SemiAnalysis argues that most LEO orbits see sunlight around 60% of the time; SSO or dawn-dusk SSO is much better but more constrained. Vacuum removes convection, so waste heat must be radiated. A LEO compute satellite has only short direct windows over a specific ground station, and multi-hop ISL plus gateway routing can add delay. SSO is a constrained subset of LEO, and orbital safety, astronomy, environmental effects, and FCC processes still matter. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>Our view: high confidence. NASA, GAO, Google, and WEF sources support the same direction.</p>
+<h3>Claim 3: The demand trigger is AI demand exceeding four layers of terrestrial supply</h3>
+<p>SemiAnalysis frames terrestrial supply in four layers: grid-connected supply, converted bitcoin miners and powered land, behind-the-meter generation, and industrial capacity/manpower. Space becomes necessary only when those layers become too expensive or too slow to deliver. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>The article gives several headline numbers: tracked global data center capacity excluding China could rise from 89GW in 2026 to as much as 338GW in 2030; global data center electricity use reached about 340TWh in 2024, roughly 1.1% of global power output; AI-specific demand could approach 5% of global generation by 2030 in the base case and around 7%, or about 380GW continuous power, in an accelerated case. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>Our view: the framework is highly useful; the exact capacity numbers deserve medium confidence. It is stronger than the simplistic “Earth has no power, therefore go to space” narrative because it treats terrestrial capacity as a rising supply curve, not a single bottleneck.</p>
+<h3>Claim 4: Semiconductor production is the fifth, universal constraint</h3>
+<p>SemiAnalysis argues that before debating Earth versus orbit, the industry must have enough AI chips. The article says the sector has moved from a power-constrained regime to an accelerator-constrained regime, with TSMC N3, HBM, and advanced packaging as key constraints. Sources: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>, <a href="https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage">The Great AI Silicon Shortage</a>.</p>
+<p>SemiAnalysis' related chip shortage article says AI-related accelerator, host CPU, and networking demand will take close to 60% of TSMC N3 output in 2026 and about 86% in 2027; HBM and DRAM capacity are also being pulled tight by AI demand. Source: <a href="https://newsletter.semianalysis.com/p/the-great-ai-silicon-shortage">The Great AI Silicon Shortage</a>.</p>
+<p>Our view: this is the most important new insight. Space data centers cannot bypass the chip supply chain. If advanced chips remain scarce and are still being fought over by terrestrial hyperscalers, orbital infrastructure may lack the payload it needs to scale.</p>
+<h3>Claim 5: SpaceX's vision is real, but must be heavily discounted by engineering and supply-chain reality</h3>
+<p>SpaceX's S-1 says the xAI combination lets SpaceX combine reusable rockets, satellite manufacturing, and operational expertise to deploy massive AI compute satellite constellations, potentially with millions of satellites. It states a goal over time of launching 100GW of compute to space each year and says space-based compute could massively increase AI compute scale and improve token economics. Source: <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm">SpaceX S-1</a>.</p>
+<p>The FCC public notice confirms SpaceX applied for a new NGSO system of up to one million satellites as the “SpaceX Orbital Data Center system,” operating at 500-2,000km, including 30-degree and sun-synchronous inclinations, primarily using optical inter-satellite links and potentially connecting with Starlink Gen1 and Gen2 systems. Source: <a href="https://docs.fcc.gov/public/attachments/DA-26-113A1.txt">FCC DA 26-113</a>.</p>
+<p>DCD reports that SpaceX says if Starship is reusable and scaled, launching one million tonnes of satellites per year at 100kW of compute per tonne would add 100GW of AI compute capacity annually. The same report notes that no specific timeline was provided and that SpaceX requested waivers from normal FCC NGSO milestone obligations. Source: <a href="https://www.datacenterdynamics.com/en/news/spacex-files-for-million-satellite-orbital-ai-data-center-megaconstellation/">DCD</a>. Light Reading and MeriTalk report the same core claim. Sources: <a href="https://www.lightreading.com/satellite/spacex-seeks-fcc-approval-for-mega-ai-data-center-constellation">Light Reading</a>, <a href="https://www.meritalk.com/articles/fcc-weighs-spacex-proposal-for-orbital-data-centers">MeriTalk</a>.</p>
+<p>Our view: the filing is real and strategically important, but it is closer to a vision, placeholder, and regulatory test than an engineering closure. SpaceX's strength is vertical integration. Its weakness is the huge scale jump, replacement cadence, and public-commons governance risk.</p>
+<h2>Key Evidence</h2>
+<h3>Economics and TCO</h3>
+<p>SemiAnalysis' public TCO figures include:</p>
+<ul>
+<li>2026 30.5kW B300 cluster program capex: about $4.1M in space versus $1.4M on Earth.</li>
+<li>Monthly ownership cost: about $100,925 in space versus $27,724 on Earth.</li>
+<li>GPU-hour TCO: $8.64 in space versus $2.37 on Earth.</li>
+<li>LCOC: $10.91/GPU-hour in space versus $2.49/GPU-hour on Earth.</li>
+<li>Space LCOC requires a 26% gross-up over TCO, versus about 5% on Earth.</li>
+<li>Assumed useful life: 5 years in space, 15 years on Earth.</li>
+<li>Falcon 9 launch cost: about $1,400-$1,800/kg today; future Starship: about $250/kg.</li>
+</ul>
+<p>Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>Google Project Suncatcher also argues that if launch prices fall below $200/kg by the mid-2030s, the launch and operation cost of a space-based data center could become roughly comparable to reported terrestrial data center energy costs on a per-kW/year basis. Source: <a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research Project Suncatcher</a>.</p>
+<p>Our view: low launch cost is necessary, not sufficient. Even below $200-$250/kg, radiators, solar arrays, reliability, replacement, ground communications, and regulation all must improve together.</p>
+<h3>Solar and orbit</h3>
+<p>SemiAnalysis says LEO objects orbit roughly 15 times per day and most LEO satellites receive sunlight around 60% of the time, capturing about 800W/m² on average. Dawn-dusk SSO is better because eclipse time may be as low as 35 minutes per day. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>Google says that in the right orbit a solar panel can be up to 8x more productive than on Earth and can produce power nearly continuously; Suncatcher assumes a dawn-dusk SSO design. Source: <a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research Project Suncatcher</a>.</p>
+<p>Our view: the SSO energy advantage is real, but it is not infinite free energy. Dawn-dusk SSO is a constrained orbital resource, and sunlit satellites also worsen visibility for astronomy.</p>
+<h3>Thermal management</h3>
+<p>NASA thermal control material states that in vacuum there is no convection; external heat rejection is mainly radiation, while internal transport can use conduction, heat pipes, and loop heat pipes. Source: <a href="https://www.nasa.gov/wp-content/uploads/2021/10/7.soa_thermal_2021_0.pdf">NASA Small Spacecraft Thermal Control</a>.</p>
+<p>SemiAnalysis says the ISS radiator system rejects 70kW of heat with 325m² of radiator area and cost of $340M-$500M, using it as an illustration of why thermal rejection is central. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>WEF similarly uses the ISS as a reality check, saying the ISS external active thermal control system rejects 70kW through about 7 tonnes of radiator wings; scaling ISS-style hardware to 1MW would imply about 100 tonnes of radiators alone. Source: <a href="https://www.weforum.org/stories/2026/06/space-data-centres-cooling">WEF</a>.</p>
+<p>GAO says large space-based data centers will need further engineering development for power and cooling; cooling at this scale remains unproven. Source: <a href="https://www.gao.gov/products/gao-26-109012">GAO Science &amp; Tech Spotlight</a>.</p>
+<p>Our view: cooling is not physically impossible, but it transforms the terrestrial water, fan, and cooling tower problem into orbital area, mass, attitude, material, and assembly problems. Early systems should avoid simply copying terrestrial high-power-density racks.</p>
+<h3>Communications and latency</h3>
+<p>SemiAnalysis argues that a LEO compute satellite may be over a specific ground station for only 5-7 minutes, and outside direct windows traffic needs ISL hops and gateways, which may add 30-80ms one-way delay. Optical ground links also face atmospheric and weather constraints. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>Google Suncatcher says large-scale ML workloads need satellite-to-satellite links in the tens of Tbps. Its bench-scale demonstrator achieved 800Gbps each way, or 1.6Tbps total, with a single transceiver pair, but closing the link budget requires close formation flying at kilometer-scale or less. Source: <a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research Project Suncatcher</a>.</p>
+<p>Our view: the core question is not whether data can be transmitted. It is which workloads are worth transmitting. Uploading massive terrestrial training datasets to orbit is unattractive early on. Space-native data, batch inference, and stable-model workloads are more plausible.</p>
+<h3>Radiation and reliability</h3>
+<p>Google tested its Trillium TPU v6e in a 67MeV proton beam for TID and SEE. HBM was the most sensitive subsystem, showing irregularities after 2krad(Si), while the expected shielded five-year mission dose is about 750rad(Si). A single chip saw no TID-attributed hard failures up to 15krad(Si). Source: <a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research Project Suncatcher</a>.</p>
+<p>GAO says space radiation can corrupt data and degrade hardware, while mitigation can be expensive or reduce performance; in-space servicing remains underdeveloped, increasing decommissioning, debris, and reentry risks. Source: <a href="https://www.gao.gov/products/gao-26-109012">GAO</a>.</p>
+<p>SemiAnalysis says 3-6% of GPUs in terrestrial clusters annually suffer failures requiring human intervention; space systems must solve this through robotics, reliability, overprovisioning, or a combination. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>Our view: modern AI chips are not guaranteed to fail immediately in orbit. But data center-scale reliability cannot be proven by a single-chip radiation test. HBM, SSDs, power systems, connectors, thermal cycling, reboots, latch-up, and no-human-maintenance operations are the real system-level risks.</p>
+<h2>Agreement and Disagreement With Our Prior View</h2>
+<p>Our prior view was that space edge computing already has a real path, while hyperscale space data centers are becoming more technically plausible but remain economically, thermally, operationally, and environmentally unproven.</p>
+<p>SemiAnalysis broadly agrees, but adds a more explicit cost path: space is around 4x+ more expensive today, reaches parity around 2040 in the base case, and reaches near parity in the early 2030s in an upside case. Source: <a href="https://newsletter.semianalysis.com/p/to-boldly-go-the-case-for-space-datacenters">SemiAnalysis</a>.</p>
+<p>The biggest new contribution is the terrestrial supply stack plus semiconductor supply stack. This changes the timeline: even if SpaceX, Google, or Starcloud prove orbital AI chips work in 2027-2030, scaling still requires enough advanced chips, and terrestrial hyperscalers will compete for the same supply.</p>
+<p>The main disagreement is timing. SemiAnalysis is more willing to give an early-2030s window for scaled deployments. We remain more conservative because that window requires many optimistic assumptions to hold together: low-cost high-cadence reliable Starship launches, rapid cost and mass declines for solar and radiators, system-level radiation and failure mitigation, economical no-human maintenance or disposable replacement, worsening terrestrial power and permitting, and major chip capacity expansion.</p>
+<p>Each is possible. The combination is much less certain.</p>
+<h2>Confidence Levels</h2>
+<h3>High Confidence</h3>
+<ul>
+<li>SpaceX really filed with the FCC for up to one million orbital data center satellites. Source: <a href="https://docs.fcc.gov/public/attachments/DA-26-113A1.txt">FCC DA 26-113</a>.</li>
+<li>SpaceX's S-1 really includes xAI, AI compute satellite constellations, millions of satellites, and 100GW/year compute as part of the corporate story. Source: <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026036936/spaceexplorationtechnologi.htm">SpaceX S-1</a>.</li>
+<li>Space cooling ultimately requires radiation; it is not free. Sources: <a href="https://www.nasa.gov/wp-content/uploads/2021/10/7.soa_thermal_2021_0.pdf">NASA</a>, <a href="https://www.gao.gov/products/gao-26-109012">GAO</a>, <a href="https://www.weforum.org/stories/2026/06/space-data-centres-cooling">WEF</a>.</li>
+<li>Google Suncatcher plans two prototype satellites with Planet in early 2027 and has published TPU radiation and optical-link work. Source: <a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research</a>.</li>
+<li>ASCEND says space data centers need a launcher with 10x lower lifecycle emissions to significantly reduce CO2. Source: <a href="https://www.thalesaleniaspace.com/en/press-releases/thales-alenia-space-reveals-results-ascend-feasibility-study-space-data-centers-0">Thales ASCEND</a>.</li>
+</ul>
+<h3>Medium Confidence</h3>
+<ul>
+<li>Space data centers are around 4x+ more expensive today and may approach parity around 2040. Directionally plausible, but the exact numbers depend on SemiAnalysis' model.</li>
+<li>If Starship or similar systems reach $200-$250/kg, some orbital compute concepts may approach terrestrial marginal energy economics. Google and SemiAnalysis both support the direction, but that is not full TCO parity.</li>
+<li>Semiconductor manufacturing may constrain AI deployments before terrestrial data center capacity does. SemiAnalysis makes a strong case, but it remains model- and forecast-dependent.</li>
+</ul>
+<h3>Low Confidence or Heavy Discount</h3>
+<ul>
+<li>“In 2-3 years, space is the lowest-cost place for AI compute.” Evidence is insufficient; this is closer to a SpaceX/Musk narrative.</li>
+<li>“100GW/year of orbital compute can be deployed quickly with low maintenance.” Replacement cadence, orbital failures, thermal management, congestion, chip supply, and launch cadence are not closed.</li>
+<li>“Cooling is easy because space is near 3K.” Misleading. A cold background does not make heat disappear; the bottleneck is radiator area, temperature, emissivity, orientation, and shielding from solar and Earth heat.</li>
+</ul>
+<h2>Our View</h2>
+<h3>Do not think of this as moving terrestrial data centers into space</h3>
+<p>The path that may work is not putting GB300/NVL racks into satellites. It is designing a space-native compute appliance where chips, power, thermal management, attitude control, communication, and fault tolerance are co-designed.</p>
+<p>Google Suncatcher is closer to this path: close formation flying, TPUs, tens-of-Tbps ISL, dawn-dusk SSO, radiation testing, and prototype validation. Source: <a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research</a>.</p>
+<p>Bold hypothesis: the first commercial winner is not “orbital AWS,” but an orbital inference fabric or space-native batch compute fabric.</p>
+<h3>Terrestrial data centers are not a static target</h3>
+<p>Many optimistic space arguments assume the terrestrial system does not adapt. But it will: grids expand, projects move, powered sites get repurposed, behind-the-meter generation grows, modular construction improves, and long-term energy contracts get signed.</p>
+<p>Space has to beat not today's data center system, but a terrestrial supply system that is also adapting quickly.</p>
+<h3>Chip constraints may weaken the space case rather than strengthen it</h3>
+<p>AI demand intuitively supports the space case. But if the true bottleneck is advanced chips, HBM, and packaging, space deployment competes with Earth for the same scarce chips.</p>
+<p>Unless space compute shifts to a meaningfully different chip supply path, with more efficient, lower-thermal, more fault-tolerant, radiation-aware ASICs, orbital deployment may simply send the same bottleneck to a harder-to-maintain location.</p>
+<h3>SpaceX's biggest value may be forcing measurable roadmaps</h3>
+<p>SpaceX's million-satellite narrative may be too aggressive, but it forces Google, Amazon/Kuiper, Blue Origin, Starcloud, Axiom, and ASCEND-like programs to make the debate measurable: compute per kg, radiator W/m², optical bandwidth per W, replacement rate, five-year mission dose, and orbital capex per MW.</p>
+<p>That metric discipline is more valuable than the vision itself.</p>
+<h3>Regulation and public-commons governance are core costs</h3>
+<p>A million-satellite system is not just one company's engineering project. It uses orbital space, the night sky, spectrum, atmospheric reentry capacity, and international coordination.</p>
+<p>Even if the engineering works, public permission may become the real bottleneck.</p>
+<h2>What To Watch Next</h2>
+<ol>
+<li><strong>Google/Planet's 2027 prototype mission</strong>: TPU/HBM behavior, optical links, thermal control, formation control, and real workloads, not PR.</li>
+<li><strong>Real Starship cost and cadence</strong>: insured, reusable, high-frequency commercial $/kg, not one-off demonstrations.</li>
+<li><strong>SpaceX's FCC technical detail</strong>: mass, size, solar area, radiator area, orbital distribution, replacement cadence, lifetime, reentry materials, and spectrum use.</li>
+<li><strong>Radiator mass and area metrics</strong>: W/kg, W/m², deployment reliability, micrometeoroid risk, attitude constraints, solar and Earth IR/albedo effects.</li>
+<li><strong>Chip supply relief</strong>: N3/N2, HBM4, CoWoS/SoW, panel-level packaging, chiplets, and specialized low-power AI ASICs.</li>
+<li><strong>Whether terrestrial supply really runs out</strong>: BTM gas, SMRs, miner conversions, data center migration, transformers, transmission, and local permitting.</li>
+<li><strong>Orbital failure handling</strong>: robotic servicing, disposable replaceable modules, overprovisioning, checkpoint/restart, and autonomous repair.</li>
+</ol>
+<h2>Final View</h2>
+<p>SemiAnalysis' article matters because it moves space data centers from science-fiction plausibility to a modelable infrastructure choice. But it is not the final answer.</p>
+<p>We should adopt three ideas:</p>
+<ul>
+<li>Use TCO and supply curves, not slogans.</li>
+<li>Treat semiconductor manufacturing as a core constraint alongside power, cooling, launch, and regulation.</li>
+<li>Separate the base case, upside case, and Musk narrative.</li>
+</ul>
+<p>We should challenge three ideas:</p>
+<ul>
+<li>Do not treat early-2030s scaled deployment as high confidence.</li>
+<li>Do not equate low launch cost with full economic closure.</li>
+<li>Do not assume general-purpose hyperscale AI training is the first viable workload.</li>
+</ul>
+<p>Updated view: <strong>space data centers will first appear as space-native, batch, edge inference, remote sensing, defense, or science infrastructure. General-purpose hyperscale orbital cloud remains a post-2030s high-risk bet that depends on launch, chips, thermal management, and regulation all improving together. The real surprise is not terrestrial cloud moving into space. It is a new space-native compute architecture.</strong></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
