@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>亚太与中国太空算力：从天数天算到轨道数据中心</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>亚太与中国太空算力：从“天数天算”到轨道数据中心</h1>
+<p>日期：2026-06-04</p>
+<h2>核心结论</h2>
+<ol>
+<li><strong>中国已经有可验证的在轨太空算力项目，但它首先是“空间原生边缘 AI/天数天算”，不是已经商业化的通用 hyperscale 太空云。</strong> 之江实验室、国星宇航、氦星光联等参与的“三体计算星座/星算计划”在 2025-05-14 发射 12 颗计算卫星，公开报道称首发星座具备 5POPS 在轨算力、30TB 存储、最高 100Gbps 星间激光通信，并在 2026 年初披露 10 个 AI 模型/应用在轨验证。</li>
+<li><strong>中国另有更接近“太空数据中心”的北京路线，但仍处于规划与试验星阶段。</strong> 北京星辰未来空间技术研究院、北京轨道辰光科技有限公司提出在 700-800km 晨昏轨道建设 GW 级集中式大型数据中心系统；“辰光一号”原计划 2025 年底或 2026 年初择机发射，但 2026-01-22 顺灏股份互动平台称其“目前尚未发射”，2026-04 SpaceNews 也写到其“似乎尚未发射”。</li>
+<li><strong>“阿里巴巴/阿里云造太空数据中心”的直接证据不足。</strong> 更准确的说法是：王坚与之江实验室、阿里云历史关系构成认知与人才线索；SpaceNews 把 Zhejiang Lab 的成立背景写为浙江省政府、浙江大学和 Alibaba Group 的合作；人民网披露国星宇航把通义千问 Qwen3 部署至“星算”01 组太空计算中心。但这不等于阿里云已公开宣布自建太空数据中心星座。</li>
+<li><strong>亚太横向看，中国最先把“多星组网算力”送入轨道；日本偏在轨边缘处理；印度刚公布 2026 年 Pathfinder 计划；韩国/东南亚目前证据较弱。</strong> Space Compass 与 Microsoft 已在轨验证船舶检测、下行数据量减少 98.1%；Pixxel/Sarvam 官方计划 2026 Q4 发射印度首颗 orbital data centre satellite；韩国与东南亚暂未看到同量级一手项目证据。</li>
+<li><strong>投资和产业叙事需要降权。</strong> 国内外都在把“太空算力”包装成下一代基础设施，但一手证据显示当前最确定的商业价值仍是遥感、天文、气象、应急等“以计算换带宽”的在轨边缘处理。真正的地面数据上传到轨道训练/推理，即“地数天算”或“天基主算”，还需要等待能源、散热、通信、在轨维护和发射成本曲线验证。</li>
+</ol>
+<h2>中国路线一：三体计算星座/星算计划，已经在轨</h2>
+<h3>首发任务</h3>
+<p>科技日报 2025-05-14 报道，国星宇航、之江实验室在酒泉卫星发射中心使用长征二号丁，成功将“太空计算星座021任务”12 颗卫星发射升空，称其“标志着全球首个太空计算卫星星座成功发射” (<a href="https://www.stdaily.com/web/gdxw/2025-05/14/content_339319.html">科技日报</a>)。</p>
+<p>关键公开参数：</p>
+<ul>
+<li>12 颗计算卫星，一轨组网。</li>
+<li>“星算计划”目标为 2800 颗算力卫星组网，建设覆盖全球的天地一体化算力网络。</li>
+<li>首发星座在轨计算能力 5POPS。</li>
+<li>星间激光通信速率最大 100Gbps。</li>
+<li>搭载国星宇航自研智能网联卫星平台、AI 载荷，以及之江实验室星载智能计算机、太空计算软硬件和天基模型。</li>
+<li>面向“天数地算”到“天数天算”的转变，即卫星数据在轨处理后只回传结果或高价值数据。</li>
+</ul>
+<p>光明日报/光明网对同一任务给出更完整工程描述：12 星通过“顶置主星+侧挂从星”方式分层布局，计算卫星最高单星算力达 744TOPS，12 星互联后具备 5POPS 计算能力和 30TB 存储容量；之江实验室承担星载智能计算机等太空计算软硬件和天基模型，国星宇航承担智能网联卫星平台和整星研制，氦星光联承担激光通信终端 (<a href="https://news.gmw.cn/2025-05/15/content_38025939.htm">光明网</a>)。</p>
+<p>SpaceNews 作为外部专业媒体也交叉确认了 2025-05-14 长征二号丁发射 12 星、5POPS、30TB、100Gbps 激光星间链路、2800 颗 Star-Compute Program 等信息，并将 ADA Space 识别为成都国星宇航科技股份有限公司 (<a href="https://spacenews.com/china-launches-first-of-2800-satellites-for-ai-space-computing-constellation">SpaceNews</a>)。</p>
+<h3>2026 年在轨验证进展</h3>
+<p>新华网转载科技日报 2026-02-13 报道称，三体计算星座经过 9 个月在轨测试后，已形成组网、计算、模型部署、科学载荷在轨验证四大核心能力，并完成 10 个 AI 模型和应用的在轨部署与验证 (<a href="https://www.news.cn/tech/20260213/269a5565afda44a48c527c05f9868cfb/c.html">新华网/科技日报</a>)。</p>
+<p>该报道的关键增量：</p>
+<ul>
+<li>已部署 80 亿参数天基遥感模型、80 亿参数天基天文时域模型。</li>
+<li>1.5 亿参数“伏羲”气象模型、6 亿参数千问大语言模型、地表要素提取模型等 6 个模型与算法通过地面上注在轨更新部署。</li>
+<li>天文 GRB 场景中，下传数据量从每天几百 MB 减少至几十 KB，约为传统观测方式的万分之一；处理时间从数小时缩短至数秒；事件识别准确率 99%。</li>
+<li>近期实现 6 颗卫星在轨建链。</li>
+<li>首发任务所有在轨计算节点协同运行，整体在轨算力 5POPS，最大可支持 1400 亿参数模型在轨部署与推理。</li>
+</ul>
+<p>人民网 2026-01-27 报道补充了 Qwen 线索：国星宇航执行副总裁王亚波称，2025 年 11 月已将通义千问 Qwen3 大模型部署至“星算”计划 01 组太空计算中心，实现多次端到端推理，问题从地面上传至卫星、卫星在轨推理、结果回传，全流程不到 2 分钟 (<a href="http://finance.people.com.cn/n1/2026/0127/c1004-40653910.html">人民网</a>)。</p>
+<p>这条路线不是把地面云完整搬上去，而是先把“太空产生的数据”在太空处理。它最强的商业逻辑是：遥感、天文、气象、低空经济、灾害监测等场景原始数据大、有效信息少、下行链路贵，星上 AI 可以先筛选、压缩、分类、推理。</p>
+<p>换句话说，当前更像“轨道边缘计算 + 星间协同 + 天基模型部署”，不是已经向地面客户提供通用 GPU 云训练的轨道 AWS。</p>
+<h2>中国路线二：北京 GW 级太空数据中心，规划雄心更大但未完成在轨证明</h2>
+<p>北京市科委/中关村管委会体系下的国际科技创新中心网络服务平台 2025-11-28 发布《把大规模AI算力搬上太空，北京加速布局太空数据中心！》，披露 11 月 27 日召开太空数据中心建设工作推进会 (<a href="https://www.ncsti.gov.cn/kjdt/xwjj/202511/t20251128_230415.html">北京国际科技创新中心</a>)。</p>
+<p>关键规划如下：</p>
+<ul>
+<li>北京星辰未来空间技术研究院提出在距地面 700-800km 晨昏轨道布设算力星群。</li>
+<li>目标是在该轨道建设运营超过 GW 功率的集中式大型数据中心系统。</li>
+<li>系统由空间算力、中继传输和地面管控分系统组成。</li>
+<li>空间算力计划部署多座太空数据中心，每座功率约 1GW，可容纳百万卡级别服务器集群。</li>
+<li>2025-2027 年：突破能源与散热关键技术，迭代研制试验星，建设一期算力星座，计划总功率 200KW、算力规模 1000POPS，实现“天数天算”。</li>
+<li>2028-2030 年：突破在轨组装建造等关键技术，降低建设与运营成本，建设二期算力星座，实现“地数天算”。</li>
+<li>2031-2035 年：卫星大规模批量生产并组网发射，在轨对接建成大规模太空数据中心，支持“天基主算”。</li>
+<li>太空数据中心创新联合体首批 24 家成员单位签署工作机制。</li>
+<li>第一代试验星“辰光一号”已完成产品研制，正在总装试验，原文称拟于 2025 年底或 2026 年初择机发射。</li>
+</ul>
+<p>这个项目需要分三层看：</p>
+<ul>
+<li><strong>事实层</strong>：北京确实已把“太空数据中心”作为商业航天和 AI 的交叉方向进行组织化推进，并公开给出路线图和创新联合体。</li>
+<li><strong>试验星状态层</strong>：人民网北京频道 2025-06-22 报道称，轨道辰光完成首轮及加轮总计 1.4 亿元人民币融资，资金将用于关键技术研发、试验星发射及组网运行，并称首颗算力试验星已经投产、预计当年年底左右发射入轨 (<a href="http://bj.people.com.cn/n2/2025/0622/c14540-41267879.html">人民网北京频道</a>)。但第一财经 2026-01-22 快讯援引顺灏股份互动平台称，参股公司北京轨道辰光第一代试验星“辰光一号”已完成研制、目前尚未发射，实际发射时间受天气、环境、火箭产品、发射场管理单位意见以及监管与安全审查等因素影响，具有不确定性 (<a href="https://www.yicai.com/brief/103019258.html">第一财经</a>)。SpaceNews 2026-04-22 也写到 Chenguang-1 原定 2025 年底或 2026 年初发射，但“似乎尚未发射” (<a href="https://spacenews.com/china-backs-orbital-data-center-startup-with-8-4-billion-in-credit-lines">SpaceNews</a>)。</li>
+<li><strong>验证层</strong>：GW 级、百万卡、在轨对接、大规模散热与能源系统尚未由在轨硬件证明。第一步仍停留在试验星验证前后。</li>
+</ul>
+<p>资金侧也要谨慎。SpaceNews 报道称轨道辰光 2026-04-20 完成 Pre-A1 轮融资，未披露金额；同时称公司获得 12 家大型金融机构总计 577 亿元人民币、约 84 亿美元战略授信额度，但明确提醒这类授信通常代表潜在融资而非已承诺资本 (<a href="https://spacenews.com/china-backs-orbital-data-center-startup-with-8-4-billion-in-credit-lines">SpaceNews</a>)。</p>
+<p>若用产业成熟度描述，三体/星算是“已发射的早期在轨算力网络”，北京 GW 数据中心是“政策和工程路线图明确、等待试验星验证的超大规模轨道数据中心设想”。</p>
+<h2>阿里、王坚、之江实验室和 Qwen：应如何准确表述</h2>
+<p>可以确认的事实：</p>
+<ul>
+<li>三体计算星座核心人物包括中国工程院院士、之江实验室主任王坚。科技日报报道引用其说法：“人工智能不能因为缺失算力而缺席太空” (<a href="https://www.stdaily.com/web/gdxw/2025-05/14/content_339319.html">科技日报</a>)。</li>
+<li>SpaceNews 写到 Zhejiang Lab 于 2017 年由浙江省政府、浙江大学和 Alibaba Group 合作成立，目标包括 AI、智能计算和大数据能力 (<a href="https://spacenews.com/china-launches-first-of-2800-satellites-for-ai-space-computing-constellation">SpaceNews</a>)。</li>
+<li>人民网披露国星宇航将通义千问 Qwen3 大模型部署至“星算”计划 01 组太空计算中心 (<a href="http://finance.people.com.cn/n1/2026/0127/c1004-40653910.html">人民网</a>)。</li>
+</ul>
+<p>不能确认或不应夸大的说法：</p>
+<ul>
+<li>不能写成“阿里云已宣布建设太空数据中心星座”。目前没有找到阿里云官方发布自建星座或轨道数据中心的直接证据。</li>
+<li>不能把“Qwen 模型被部署到国星宇航卫星”直接等同为“阿里是该星座运营方”。更准确是“阿里生态模型/技术栈被用于在轨验证，之江实验室与阿里有历史和组织渊源”。</li>
+</ul>
+<h2>亚太对照：日本、印度、韩国与东南亚</h2>
+<h3>日本</h3>
+<p>Space Compass 是 NTT 与 SKY Perfect JSAT 的合资公司。2025-04-14 官方新闻稿称，Space Compass 与 Microsoft 合作，使用 Azure Orbital Space SDK 开发并上注在轨 AI 应用，完成船舶检测处理；三个月演示期内执行 40 多次在轨处理，在特定条件下仅提取船舶信息并删除不必要数据，使下传数据量减少 98.1% (<a href="https://space-compass.com/en/news/000078.html">Space Compass</a>)。</p>
+<p>这是一条很清晰的日本路径：</p>
+<ul>
+<li>与地面云开发环境结合，降低卫星端软件开发门槛。</li>
+<li>在轨处理遥感图像，把 insight 而不是原始数据下传。</li>
+<li>未来与高速大容量光数据中继服务、光中继卫星边缘计算功能结合。</li>
+</ul>
+<p>它和中国三体/星算的共同点是“以计算换带宽”。差异是，中国项目已经强调多星算力星座、5POPS 和 2800 颗计划；日本 Space Compass 公开案例更像单任务/服务型的 orbital edge AI demonstration。</p>
+<h3>印度</h3>
+<p>Pixxel 官方 2026-05-04 宣布与 Sarvam 合作，开发印度首颗 orbital data centre satellite “Pathfinder”。Pixxel 将设计、建造、发射和运营卫星；Sarvam 提供 AI backbone，模型和推理平台在卫星 GPU compute layer 上运行 (<a href="https://www.pixxel.space/news/pixxel-to-launch-indias-first-orbital-data-centre-satellite-powered-by-sarvam">Pixxel</a>)。</p>
+<p>关键参数和定位：</p>
+<ul>
+<li>Pathfinder 为 200kg 级卫星。</li>
+<li>计划最早 2026 Q4 入轨。</li>
+<li>搭载 data centre-class GPUs。</li>
+<li>搭载 Pixxel 高光谱成像相机，在轨用 foundation models 分析遥感数据。</li>
+<li>目标是验证实时 AI inference、数据处理、功耗管理、热约束和实时数据工作流。</li>
+</ul>
+<p>这个项目与中国/日本相比处于“已公布官方计划，未发射”阶段。它的叙事更接近“单星 orbital data centre demonstrator”，比日本边缘处理更明确使用“data centre”术语，但成熟度低于中国 12 星已在轨验证。</p>
+<h3>韩国与东南亚</h3>
+<p>韩国已有卫星 onboard AI computing 技术论文、趋势分析和“宇宙数据中心”政策/产业讨论，也有政府相关博客提到宇宙航空厅将研究太空数据中心概念、可行性、与 6G 低轨卫星通信系统的关系。但这些多为研究、概念和政策预热，未看到类似中国 12 星在轨组网、Space Compass-Microsoft 在轨演示、Pixxel/Sarvam 官方发射计划的一手项目证据。</p>
+<p>东南亚公开结果更弱，主要出现全球项目转述、财经报道和区域机会讨论。当前不宜把东南亚写成已经进入第一梯队。</p>
+<h2>与欧美路线的差异，重点看 SpaceX</h2>
+<p>新华网/科技日报 2025-11-17 对全球太空数据中心浪潮做了概述：AI 推动数据中心需求激增，2024 年全球数据中心耗电约 415TWh、占全球用电 1.5%，2030 年预计翻倍至 945TWh；全球公司关注太空太阳能、土地和冷却优势，但发射成本、辐射防护、散热、太空垃圾仍是挑战 (<a href="http://www.xinhuanet.com/tech/20251117/d81b5fe12ec54e0dbd3117b68a9b4870/c.html">新华网/科技日报</a>)。</p>
+<h3>时间线对比</h3>
+<table>
+<thead>
+<tr>
+<th>时间</th>
+<th>中国路线</th>
+<th>SpaceX/美国路线</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025-05</td>
+<td>国星宇航/之江实验室 12 颗计算卫星入轨，形成 5POPS、30TB、最高 100Gbps 星间激光通信的首发星座。</td>
+<td>美国侧还主要是概念、Starcloud/Google/SpaceX 等项目准备。</td>
+<td>中国在“多星在轨算力星座”上先落地。</td>
+</tr>
+<tr>
+<td>2025-11</td>
+<td>北京披露 GW 级太空数据中心路线图，辰光一号进入研制/总装试验叙事。</td>
+<td>Google 发布 Project Suncatcher，提出 dawn-dusk SSO、TPU、紧密编队、tens of Tbps 星间链路，计划 2027 年初与 Planet 发射两颗原型星 (<a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research</a>)。</td>
+<td>中国偏“工程组织与产业动员”；Google 偏“体系设计、芯片/链路/编队验证”。</td>
+</tr>
+<tr>
+<td>2026-01</td>
+<td>人民网披露 Qwen3 已在星算 01 组完成在轨部署和端到端推理；辰光一号仍未发射。</td>
+<td>SpaceX 1 月 30 日向 FCC 提交最多 100 万颗卫星的 “SpaceX Orbital Data Center system” 申请；FCC 2 月 4 日受理并征求意见，系统高度 500-2000km，包含 30 度和太阳同步轨道，主要依赖光学星间链路，并可连接 Starlink Gen1/Gen2 (<a href="https://docs.fcc.gov/public/attachments/DA-26-113A1.txt">FCC DA 26-113</a>)。</td>
+<td>SpaceX 正式把轨道数据中心放进监管申请，但不是已批准/已部署。</td>
+</tr>
+<tr>
+<td>2026-02</td>
+<td>新华网/科技日报称三体计算星座已形成组网、计算、模型部署、科学载荷在轨验证能力，部署 10 个 AI 模型/应用。</td>
+<td>SpaceX 申请仍缺少卫星质量、成本、部署节奏等关键工程细节；DCD 指出其申请没有具体时间表，并请求豁免 FCC 常规 NGSO 部署里程碑 (<a href="https://www.datacenterdynamics.com/en/news/spacex-files-for-million-satellite-orbital-ai-data-center-megaconstellation">DCD</a>)。</td>
+<td>中国的近期证据更实；SpaceX 的长期上限更大但不确定性更大。</td>
+</tr>
+<tr>
+<td>2026-03</td>
+<td>北京项目继续停留在规划/融资/试验星状态。</td>
+<td>Musk 在 3 月 21 日活动展示 “AI Sat Mini” 概念：单星为 AI 处理器提供 100kW 功率，卫星长度如按图示比例或超过 170 米，约 100 平方米散热器；未来更大版本可到 MW 级；同时提出 Terafab 芯片生产计划，但未披露成本或发射时间表 (<a href="https://spacenews.com/spacex-offers-details-on-orbital-data-center-satellites">SpaceNews</a>)。</td>
+<td>SpaceX 开始给出单星功率和热控轮廓，但仍是演示/叙事层，未形成硬件验证。</td>
+</tr>
+<tr>
+<td>2027-2030</td>
+<td>星算计划 02/03 组、北京一期星座若按计划推进，将验证从“天数天算”走向更大星座。</td>
+<td>Google 计划 2027 年初两颗原型星；SpaceX 若 Starship、Starlink V3、AI Sat Mini 进展顺利，可能先做推理/专用任务试点。</td>
+<td>这个阶段看谁先跑出“可复用发射 + 在轨功耗/散热 + 持续链路 + 有付费任务”的闭环。</td>
+</tr>
+<tr>
+<td>2030s</td>
+<td>北京路线图称 2028-2030 实现“地数天算”，2031-2035 建成大规模太空数据中心。</td>
+<td>SpaceX 目标远大，DCD 引述其说法：若 Starship 可复用并规模化，每年发射 100 万吨、每吨 100kW compute，可每年增加 100GW AI compute capacity；Google 则把 launch cost 低于 200 美元/kg 的平价窗口放在 2030 年代中期 (<a href="https://www.datacenterdynamics.com/en/news/spacex-files-for-million-satellite-orbital-ai-data-center-megaconstellation">DCD</a>, <a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research</a>)。</td>
+<td>真正通用轨道云大概率是 2030 年代命题，不是 2026-2027 年即可商业成熟。</td>
+</tr>
+</tbody>
+</table>
+<h3>SpaceX 的技术实力强在哪里</h3>
+<p>SpaceX 的优势不是已经有太空数据中心在运行，而是它拥有最接近“把太空数据中心做成规模工程”的底层栈：</p>
+<ul>
+<li><strong>发射能力</strong>：Starship 若实现高频可复用，是把大质量太阳能板、散热器、计算硬件送入轨道的关键变量。SpaceX 的经济模型几乎完全押注这一点。</li>
+<li><strong>星座制造和运营</strong>：Starlink 已经证明 SpaceX 能批量制造、发射、运营大量低轨卫星。DCD 报道称截至 2026 年初 SpaceX 已发射 9500 多颗 Starlink，其中约 8000 颗运行中；这不是算力星座，但证明了大规模卫星运营能力 (<a href="https://www.datacenterdynamics.com/en/news/spacex-files-for-million-satellite-orbital-ai-data-center-megaconstellation">DCD</a>)。</li>
+<li><strong>光学星间链路网络</strong>：FCC 公告写明 SpaceX 轨道数据中心系统将主要依赖光学星间链路，并可能接入 Starlink Gen1/Gen2；SpaceX 在申请中称 Starlink 的高容量、高可靠激光 mesh 可把流量路由到地面站 (<a href="https://docs.fcc.gov/public/attachments/DA-26-113A1.txt">FCC DA 26-113</a>)。</li>
+<li><strong>需求方和资本叙事</strong>：SpaceX、xAI、Tesla 之间的潜在组合让“AI 模型需求 + 芯片 + 发射 + 星座网络”可以被讲成一条垂直整合链。SpaceNews 报道 Musk 把高端芯片生产称为轨道数据中心计划的 “missing ingredient”，并提出 Terafab 项目 (<a href="https://spacenews.com/spacex-offers-details-on-orbital-data-center-satellites">SpaceNews</a>)。</li>
+</ul>
+<p>但这些优势也对应四个硬约束：</p>
+<ul>
+<li><strong>Starship 必须真的低成本、高频、可复用</strong>，否则百万卫星/100GW 叙事无法经济闭合。</li>
+<li><strong>散热不是“太空很冷就免费解决”</strong>。AI Sat Mini 的 100 平方米散热器只是初步轮廓，真正要验证的是每瓦热量的散热面积、质量、姿态控制和长期可靠性。</li>
+<li><strong>芯片供应链不能绕过地面瓶颈</strong>。即便在轨有太阳能和散热空间，先进 AI 芯片、HBM、封装仍来自地面供应链；Musk 提 Terafab 恰恰说明芯片是瓶颈。</li>
+<li><strong>监管与轨道公共资源是大问题</strong>。FCC 受理不等于批准；最多 100 万颗卫星远超当前任何实际星座，会触发频谱、碰撞风险、再入、天文观测和国际协调问题。</li>
+</ul>
+<h3>中国与 SpaceX 可能实现的结果不同</h3>
+<p>短期看，中国更可能先实现“空间数据的空间处理”：遥感、天文、气象、应急和低空经济数据在轨筛选，只下传结果或高价值样本。这是星算计划已经在验证的方向。</p>
+<p>SpaceX 如果推进顺利，短期更可能先从“Starlink/Starship 体系上的专用 AI 推理节点”开始，而不是立即替代地面 hyperscale cloud。因为真正的大模型训练需要极高的节点间一致性、持续带宽、故障恢复、硬件替换和供应链保障；这些远比“把 GPU 放到卫星上”复杂。</p>
+<p>中期看，两条路线可能收敛到混合架构：</p>
+<ul>
+<li>中国路径：天数天算先行，逐步扩大到星地协同、地数天算。</li>
+<li>SpaceX 路径：通信星座/发射栈先行，逐步把 AI compute payload 加进轨道基础设施。</li>
+<li>Google/Starcloud 路径：专用验证星先行，证明 TPU/H100 级硬件在轨能跑、能散热、能联网。</li>
+</ul>
+<p>最终结果上，SpaceX 的上限更像“轨道 AI 基础设施平台”，中国当前上限更像“天地一体化空间信息与算力网络”。前者若成功，可能直接冲击云计算和 AI 基建市场；后者即使不替代地面云，也已经能改变遥感、科学观测、低空经济和应急场景的数据链路。更保守但更可验证的结论是：<strong>2026 年的中国赢在已在轨验证，SpaceX 赢在长期规模化所需的发射和星座底座；谁先进入真正商业化，要看 2027-2030 年谁先证明单位算力成本、散热、链路和补星 cadence。</strong></p>
+<h2>商业化判断</h2>
+<p>近期最可信的商业化不是“把 ChatGPT 训练搬到天上”，而是：</p>
+<ul>
+<li>遥感影像在轨云检测、目标识别、变化检测。</li>
+<li>天文瞬变源事件识别和触发观测。</li>
+<li>气象、水环境、自然资源、灾害监测等需要快速筛选的空间数据。</li>
+<li>低空经济、应急安全、船舶/航空目标识别等低时延场景。</li>
+</ul>
+<p>这些场景共同特点是数据源在太空或靠近太空，原始数据大，下行瓶颈强，回传结果比回传原始数据更划算。</p>
+<p>中期会看到更多“算力星座 + 地面云 + 模型服务”的混合系统。地面模型训练、压缩、编译、上注；星上执行推理、筛选、任务调度；星间链路共享算力和数据；地面只接收结果和高价值样本。</p>
+<p>这会更像“空间边缘云”，而非完全独立的轨道超算中心。</p>
+<p>长期的 GW 级太空数据中心、百万卡、地面数据上传到太空训练、天基主算，仍需要证明：</p>
+<ul>
+<li>真空中大规模服务器散热。</li>
+<li>辐射下消费级/数据中心级 GPU 的可靠性和纠错成本。</li>
+<li>在轨维护、升级、替换硬件的经济性。</li>
+<li>大规模星间/星地带宽的可用性和单位成本。</li>
+<li>可重复使用火箭把发射成本降到足以支撑云计算经济模型。</li>
+<li>太空垃圾、轨道资源和监管约束。</li>
+</ul>
+<h2>结论</h2>
+<p>亚太太空算力目前不是一个均匀展开的市场，而是中国、日本、印度三条成熟度不同的路线：</p>
+<ul>
+<li><strong>中国</strong>：已在轨多星组网，最强证据是三体计算星座/星算计划；同时北京提出 GW 级太空数据中心路线图，是更远期、更高风险的工程设想。</li>
+<li><strong>日本</strong>：已完成在轨边缘 AI 处理验证，定位更务实，强调遥感 insight 和地面云工具链结合。</li>
+<li><strong>印度</strong>：Pixxel/Sarvam 把 orbital data centre satellite 说得最直白，但仍等 2026 Q4 Pathfinder 发射验证。</li>
+<li><strong>韩国/东南亚</strong>：目前主要是研究、政策、市场观察和全球趋势转述，未看到第一梯队级别一手证据。</li>
+</ul>
+<p>中国的真实进展比“概念股炒作”扎实，但也比“太空云已经成熟”保守。最合理的判断是：中国已经率先把“空间原生数据的 AI 处理”做成可在轨验证的算力星座雏形；真正替代地面数据中心的轨道通用算力，还处在路线图和工程攻关早期。</p>
+<h2>后续跟踪清单</h2>
+<ol>
+<li>“辰光一号”是否发射、轨道、载荷、功率、算力和在轨测试结果。</li>
+<li>星算计划 02 组/03 组星座是否按 2026 年计划部署，单星算力是否从 TOPS/POPS 继续提升。</li>
+<li>Qwen3 或其他通用模型在轨推理是否出现公开 benchmark、功耗、延迟、容错和任务类型数据。</li>
+<li>Pixxel/Sarvam Pathfinder 是否在 2026 Q4 发射，实际 GPU 型号、功耗、散热和任务结果如何。</li>
+<li>Space Compass 是否从在轨演示转向商业服务，是否推出可购买的 orbital edge computing 服务。</li>
+<li>SpaceX 的 FCC 申请是否获批，是否补充卫星质量、寿命、散热面积、太阳能面积、部署节奏、退役/再入方案和实际客户工作负载。</li>
+<li>Starship/Starlink V3 是否在 2026-2027 年形成足够高频的发射和大容量光网，AI Sat Mini 是否有首发任务。</li>
+<li>北京项目的资金、联合体成员、发射合同、地面管控系统和在轨组装技术是否出现一手披露。</li>
+<li>国内财经媒体和券商提到的上市公司是否有真实订单、试验载荷、联合实验室或只是概念映射。</li>
+</ol>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Space Compute in Asia-Pacific and China: From In-Orbit Edge AI to Orbital Data Centers</h1>
+<p>Date: 2026-06-04</p>
+<h2>Key Takeaways</h2>
+<ol>
+<li><strong>China now has a verifiable in-orbit space-computing project, but it is first and foremost space-native edge AI, not a commercial hyperscale orbital cloud.</strong> The Three-Body Computing Constellation / Star-Compute Program involving Zhejiang Lab, ADA Space / Guoxing Aerospace, and laser communications partners launched 12 computing satellites on 2025-05-14. Public reports describe the first cluster as having 5 POPS of in-orbit compute, 30 TB of storage, up to 100 Gbps laser inter-satellite links, and 10 AI models or applications validated in orbit by early 2026.</li>
+<li><strong>China also has a Beijing-led roadmap that looks much closer to a “space data center,” but it remains in the planning and test-satellite phase.</strong> Beijing Astro-Future Institute of Space Technology and Beijing Orbital Chenguang have proposed a gigawatt-scale data center system in a 700-800 km dawn-dusk orbit. The first test satellite, Chenguang-1, was originally targeted for late 2025 or early 2026, but Shunhao said on 2026-01-22 that it had not yet launched, and SpaceNews also wrote in April 2026 that it did not appear to have launched.</li>
+<li><strong>There is not enough direct evidence to say Alibaba Cloud is building its own orbital data center constellation.</strong> A more accurate formulation is that Wang Jian, Zhejiang Lab, and Alibaba Cloud have historical and talent links; SpaceNews describes Zhejiang Lab as a collaboration between the Zhejiang provincial government, Zhejiang University, and Alibaba Group; and People’s Daily Online reported that Qwen3 was deployed on ADA Space’s Star-Compute 01 space computing center. That is not the same as Alibaba Cloud announcing and operating its own orbital data center constellation.</li>
+<li><strong>Across Asia-Pacific, China is the first to place a multi-satellite compute constellation in orbit; Japan is focused on orbital edge processing; India has announced a 2026 Pathfinder mission; and Korea/Southeast Asia still lack comparable primary-source evidence.</strong> Space Compass and Microsoft have demonstrated in-orbit ship detection with a 98.1% reduction in downlinked data volume; Pixxel and Sarvam plan to launch India’s first orbital data centre satellite in Q4 2026; Korea and Southeast Asia are still mostly at the level of research, policy discussion, or market commentary.</li>
+<li><strong>Market narratives should be heavily discounted.</strong> Space compute is being framed as next-generation infrastructure, but the strongest near-term business case remains in-orbit edge processing for remote sensing, astronomy, weather, emergency response, and similar applications where compute can replace downlink bandwidth. Uploading terrestrial workloads to orbit for training or large-scale inference remains dependent on unresolved energy, thermal, communications, maintenance, and launch-cost curves.</li>
+</ol>
+<h2>China Track 1: Three-Body / Star-Compute, Already In Orbit</h2>
+<h3>First launch</h3>
+<p>Science and Technology Daily reported on 2025-05-14 that ADA Space / Guoxing Aerospace and Zhejiang Lab launched 12 satellites for the Space Computing Constellation 021 mission from Jiuquan on a Long March 2D, calling it the successful launch of the world’s first space computing satellite constellation (<a href="https://www.stdaily.com/web/gdxw/2025-05/14/content_339319.html">Science and Technology Daily</a>).</p>
+<p>Publicly reported parameters include:</p>
+<ul>
+<li>12 computing satellites in one orbital plane.</li>
+<li>A Star-Compute Program goal of 2,800 computing satellites for a global integrated space-ground compute network.</li>
+<li>5 POPS of in-orbit compute for the first cluster.</li>
+<li>Up to 100 Gbps laser inter-satellite links.</li>
+<li>ADA Space’s smart networked satellite platform and AI payloads, plus Zhejiang Lab’s onboard intelligent computer, space computing hardware/software, and space-based models.</li>
+<li>A shift from “space data, ground compute” to “space data, space compute,” where satellites process data in orbit and return only results or high-value data.</li>
+</ul>
+<p>Guangming Daily / Guangming Online gave more engineering detail: the 12 satellites used a stacked and side-mounted deployment arrangement; individual satellites reached up to 744 TOPS; the 12-satellite cluster had 5 POPS of compute and 30 TB of storage; Zhejiang Lab developed the onboard computing and models; ADA Space developed the satellite platform and spacecraft; and Hexing Guanglian developed the laser communications terminals (<a href="https://news.gmw.cn/2025-05/15/content_38025939.htm">Guangming Online</a>).</p>
+<p>SpaceNews independently confirmed the May 2025 Long March 2D launch, 12 satellites, 5 POPS, 30 TB, 100 Gbps laser inter-satellite links, the 2,800-satellite Star-Compute Program, and ADA Space as Chengdu Guoxing Aerospace Technology Co., Ltd. (<a href="https://spacenews.com/china-launches-first-of-2800-satellites-for-ai-space-computing-constellation">SpaceNews</a>).</p>
+<h3>2026 in-orbit validation</h3>
+<p>Xinhua, citing Science and Technology Daily, reported on 2026-02-13 that after nine months of in-orbit testing the Three-Body constellation had formed four core capabilities: networking, compute, model deployment, and scientific payload validation. It had deployed and validated 10 AI models and applications in orbit (<a href="https://www.news.cn/tech/20260213/269a5565afda44a48c527c05f9868cfb/c.html">Xinhua / Science and Technology Daily</a>).</p>
+<p>Key additions from that report:</p>
+<ul>
+<li>An 8-billion-parameter space-based remote-sensing model and an 8-billion-parameter space-based astronomical time-domain model.</li>
+<li>A 150-million-parameter Fuxi weather model, a 600-million-parameter Qwen language model, a surface-feature extraction model, and other models or algorithms uploaded and updated from the ground.</li>
+<li>In gamma-ray burst astronomy, downlinked data volume reportedly fell from hundreds of MB per day to tens of KB, about one ten-thousandth of the traditional approach; processing time fell from hours to seconds; event-recognition accuracy remained at 99%.</li>
+<li>Six satellites had recently established in-orbit links.</li>
+<li>All in-orbit compute nodes in the first mission were operating collaboratively, with total in-orbit compute of 5 POPS and the ability to support deployment and inference for models up to 140 billion parameters.</li>
+</ul>
+<p>People’s Daily Online added the Qwen angle on 2026-01-27: ADA Space executive Wang Yabo said Qwen3 had been deployed to the Star-Compute 01 space computing center in November 2025, completing multiple end-to-end in-orbit inference tasks in less than two minutes from ground question upload to satellite inference and result downlink (<a href="http://finance.people.com.cn/n1/2026/0127/c1004-40653910.html">People’s Daily Online</a>).</p>
+<p>This is not a complete terrestrial cloud lifted into space. Its strongest logic is processing space-generated data in space. Remote sensing, astronomy, weather, low-altitude economy, and emergency monitoring all produce large raw datasets with sparse useful information and expensive downlink constraints. In-orbit AI can filter, compress, classify, and infer before downlink.</p>
+<p>In other words, this is closer to orbital edge computing plus inter-satellite collaboration plus space-based model deployment. It is not yet orbital AWS for general-purpose GPU training.</p>
+<h2>China Track 2: Beijing’s GW-Scale Orbital Data Center Roadmap</h2>
+<p>Beijing’s International Science and Technology Innovation Center platform published an article on 2025-11-28 describing a space data center construction meeting held on November 27 (<a href="https://www.ncsti.gov.cn/kjdt/xwjj/202511/t20251128_230415.html">Beijing International Science and Technology Innovation Center</a>).</p>
+<p>The announced plan includes:</p>
+<ul>
+<li>Deploying computing satellite clusters in a 700-800 km dawn-dusk orbit.</li>
+<li>Building and operating a centralized large-scale data center system with more than gigawatt-level power.</li>
+<li>A system composed of space compute, relay transmission, and ground control subsystems.</li>
+<li>Multiple space data centers, each around 1 GW, each potentially housing million-card server clusters.</li>
+<li>2025-2027: key energy and thermal breakthroughs, iterative test satellites, a first-phase compute constellation with 200 kW of total power and 1,000 POPS of compute, targeting “space data, space compute.”</li>
+<li>2028-2030: in-orbit assembly and construction breakthroughs, lower construction and operating costs, a second-phase compute constellation, targeting “ground data, space compute.”</li>
+<li>2031-2035: mass satellite production and launches, in-orbit docking, a large-scale space data center, and future “space-based primary compute.”</li>
+<li>A 24-member innovation consortium for space data centers.</li>
+<li>The first-generation test satellite Chenguang-1 completed product development and was in final assembly/testing, with the original article saying it was targeted for late 2025 or early 2026.</li>
+</ul>
+<p>This project should be read in three layers:</p>
+<ul>
+<li><strong>Fact layer</strong>: Beijing is organizing space data centers as a strategic intersection of commercial space and AI, with a public roadmap and consortium.</li>
+<li><strong>Test-satellite status</strong>: People’s Daily Online Beijing reported on 2025-06-22 that Orbital Chenguang had completed first-round and follow-on financing totaling RMB 140 million for key R&amp;D, test-satellite launch, and constellation operations, and that the first compute test satellite had entered production and was expected to launch around year-end (<a href="http://bj.people.com.cn/n2/2025/0622/c14540-41267879.html">People’s Daily Online Beijing</a>). However, Yicai reported on 2026-01-22 that Shunhao said its investee Beijing Orbital Chenguang had completed development of Chenguang-1 but had not yet launched it, and that launch timing remained uncertain due to weather, launch vehicle, launch-site, regulatory, and safety factors (<a href="https://www.yicai.com/brief/103019258.html">Yicai</a>). SpaceNews also wrote on 2026-04-22 that Chenguang-1 had been slated for late 2025 or early 2026 but did not appear to have launched (<a href="https://spacenews.com/china-backs-orbital-data-center-startup-with-8-4-billion-in-credit-lines">SpaceNews</a>).</li>
+<li><strong>Validation layer</strong>: GW-scale power, million-card clusters, in-orbit docking, and large-scale thermal and energy systems have not yet been demonstrated in orbit.</li>
+</ul>
+<p>Funding claims also require caution. SpaceNews reported that Orbital Chenguang completed a Pre-A1 round on 2026-04-20 without disclosing the equity amount, and said the company had obtained RMB 57.7 billion, or about USD 8.4 billion, in strategic credit lines from 12 major financial institutions. It also explicitly noted that such credit agreements typically represent potential financing rather than committed capital (<a href="https://spacenews.com/china-backs-orbital-data-center-startup-with-8-4-billion-in-credit-lines">SpaceNews</a>).</p>
+<p>In maturity terms, Three-Body / Star-Compute is an early in-orbit compute network. The Beijing GW-scale data center is a clear policy and engineering roadmap awaiting test-satellite validation.</p>
+<h2>Alibaba, Wang Jian, Zhejiang Lab, and Qwen</h2>
+<p>Confirmed facts:</p>
+<ul>
+<li>Wang Jian, director of Zhejiang Lab and an academician of the Chinese Academy of Engineering, is a core figure in the Three-Body Computing Constellation. Science and Technology Daily quoted him as saying that AI cannot be absent from space simply because space lacks compute (<a href="https://www.stdaily.com/web/gdxw/2025-05/14/content_339319.html">Science and Technology Daily</a>).</li>
+<li>SpaceNews wrote that Zhejiang Lab was founded in 2017 as a collaboration between the Zhejiang provincial government, Zhejiang University, and Alibaba Group, with aims including AI, intelligent computing, and big data (<a href="https://spacenews.com/china-launches-first-of-2800-satellites-for-ai-space-computing-constellation">SpaceNews</a>).</li>
+<li>People’s Daily Online reported that ADA Space deployed Qwen3 to the Star-Compute 01 space computing center (<a href="http://finance.people.com.cn/n1/2026/0127/c1004-40653910.html">People’s Daily Online</a>).</li>
+</ul>
+<p>What should not be overstated:</p>
+<ul>
+<li>It is not accurate to say Alibaba Cloud has announced its own orbital data center constellation. No direct Alibaba Cloud announcement of that kind was found.</li>
+<li>Qwen running on ADA Space satellites does not make Alibaba the constellation operator. A safer phrasing is that Alibaba-ecosystem models and technical lineage appear in in-orbit validation, while Zhejiang Lab also has historical links to Alibaba.</li>
+</ul>
+<h2>Asia-Pacific Comparison</h2>
+<h3>Japan</h3>
+<p>Space Compass is a joint venture between NTT and SKY Perfect JSAT. On 2025-04-14 it announced that, in collaboration with Microsoft, it had used Azure Orbital Space SDK to develop and upload an in-orbit AI application for ship detection. During a three-month demonstration, the application performed more than 40 in-orbit processing runs and reduced downlinked data volume by 98.1% under certain conditions by extracting vessel information and deleting unnecessary image data (<a href="https://space-compass.com/en/news/000078.html">Space Compass</a>).</p>
+<p>Japan’s route is clear:</p>
+<ul>
+<li>Use terrestrial cloud tooling to simplify satellite software development.</li>
+<li>Process Earth-observation imagery in orbit and downlink insights rather than raw data.</li>
+<li>Combine future high-capacity optical relay services with edge compute on optical relay satellites.</li>
+</ul>
+<p>This shares China’s “compute instead of downlink” logic. The difference is that China is already emphasizing multi-satellite compute constellations, 5 POPS, and a 2,800-satellite plan, while Space Compass currently looks more like an application-level orbital edge AI demonstration.</p>
+<h3>India</h3>
+<p>Pixxel announced on 2026-05-04 that it is partnering with Sarvam to develop India’s first orbital data centre satellite, Pathfinder. Pixxel will design, build, launch, and operate the satellite; Sarvam will provide the AI backbone, with models and inference running on the satellite’s GPU compute layer (<a href="https://www.pixxel.space/news/pixxel-to-launch-indias-first-orbital-data-centre-satellite-powered-by-sarvam">Pixxel</a>).</p>
+<p>Key parameters and positioning:</p>
+<ul>
+<li>Pathfinder is a 200 kg-class satellite.</li>
+<li>It is scheduled to reach orbit as early as Q4 2026.</li>
+<li>It will host data-centre-class GPUs.</li>
+<li>It will carry Pixxel’s hyperspectral imaging camera and analyze data in orbit using foundation models.</li>
+<li>Its goal is to validate real-time AI inference, data processing, power management, thermal constraints, and real-time data workflows.</li>
+</ul>
+<p>Compared with China and Japan, this is still an announced plan, not an in-orbit system. It uses “data centre” language more explicitly than Japan’s edge-processing demonstration, but its maturity is lower than China’s 12-satellite in-orbit validation.</p>
+<h3>Korea and Southeast Asia</h3>
+<p>Korea has papers, trend reports, and policy discussions about satellite onboard AI computing and space data centers. Some government-related material also points to concept studies and links with 6G LEO satellite communications. However, these remain mostly research and policy signals, not primary-source evidence of a project comparable to China’s 12-satellite in-orbit network, Space Compass/Microsoft’s in-orbit demonstration, or Pixxel/Sarvam’s official launch plan.</p>
+<p>Southeast Asian public evidence is weaker still, mostly consisting of global trend reporting, financial commentary, and regional opportunity discussion. It should not be described as first-wave deployment.</p>
+<h2>Comparison With the U.S. and Europe, Especially SpaceX</h2>
+<p>Xinhua / Science and Technology Daily summarized the broader global wave on 2025-11-17: AI is pushing data center demand sharply upward; global data centers used about 415 TWh in 2024, about 1.5% of global electricity use, and are expected to double to 945 TWh by 2030. Companies are looking at orbital solar power, land constraints, and cooling advantages, while launch cost, radiation protection, thermal management, and space debris remain major challenges (<a href="http://www.xinhuanet.com/tech/20251117/d81b5fe12ec54e0dbd3117b68a9b4870/c.html">Xinhua / Science and Technology Daily</a>).</p>
+<h3>Timeline comparison</h3>
+<table>
+<thead>
+<tr>
+<th>Time</th>
+<th>China route</th>
+<th>SpaceX / U.S. route</th>
+<th>Assessment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2025-05</td>
+<td>ADA Space / Zhejiang Lab launch 12 computing satellites, with 5 POPS, 30 TB, and up to 100 Gbps laser inter-satellite links.</td>
+<td>U.S. efforts are still mostly concepts and preparation across Starcloud, Google, and SpaceX.</td>
+<td>China is first to put a multi-satellite compute constellation in orbit.</td>
+</tr>
+<tr>
+<td>2025-11</td>
+<td>Beijing discloses a GW-scale space data center roadmap; Chenguang-1 enters the public narrative as a test satellite in development/final assembly.</td>
+<td>Google publishes Project Suncatcher: dawn-dusk SSO, TPUs, tight formation flying, tens-of-Tbps inter-satellite links, and two prototype satellites with Planet planned for early 2027 (<a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research</a>).</td>
+<td>China emphasizes engineering organization and industrial mobilization; Google emphasizes system design and validation of chips, links, and formation flying.</td>
+</tr>
+<tr>
+<td>2026-01</td>
+<td>People’s Daily Online reports Qwen3 has completed in-orbit deployment and end-to-end inference on Star-Compute 01; Chenguang-1 has not yet launched.</td>
+<td>SpaceX files with the FCC on Jan. 30 for up to one million satellites as the SpaceX Orbital Data Center system. FCC accepts the application for comment on Feb. 4. The system would operate at 500-2,000 km, in 30-degree and sun-synchronous inclinations, rely primarily on optical inter-satellite links, and connect with Starlink Gen1/Gen2 (<a href="https://docs.fcc.gov/public/attachments/DA-26-113A1.txt">FCC DA 26-113</a>).</td>
+<td>SpaceX has placed orbital data centers into the regulatory record, but that is not approval or deployment.</td>
+</tr>
+<tr>
+<td>2026-02</td>
+<td>Xinhua / Science and Technology Daily report that Three-Body has networking, compute, model deployment, and scientific-payload validation capabilities, with 10 AI models or applications deployed.</td>
+<td>The SpaceX filing still lacks mass, cost, and deployment cadence details. DCD notes that no specific timeline was shared and that SpaceX requested a waiver from normal FCC NGSO deployment milestones (<a href="https://www.datacenterdynamics.com/en/news/spacex-files-for-million-satellite-orbital-ai-data-center-megaconstellation">DCD</a>).</td>
+<td>China has stronger near-term evidence; SpaceX has greater long-term scale but much greater uncertainty.</td>
+</tr>
+<tr>
+<td>2026-03</td>
+<td>Beijing’s project remains in roadmap, financing, and test-satellite status.</td>
+<td>Musk shows an “AI Sat Mini” concept: 100 kW for AI processors per satellite, a spacecraft that could be more than 170 meters long if the illustration is to scale, roughly 100 square meters of radiator, future MW-class larger satellites, and a Terafab chip plan. No costs or launch schedule were disclosed (<a href="https://spacenews.com/spacex-offers-details-on-orbital-data-center-satellites">SpaceNews</a>).</td>
+<td>SpaceX has begun giving power and thermal outlines, but this remains executive-level technical narrative, not in-orbit validation.</td>
+</tr>
+<tr>
+<td>2027-2030</td>
+<td>Star-Compute 02/03 and Beijing’s first-phase constellation, if executed, would test scaling from “space data, space compute” to larger constellations.</td>
+<td>Google plans two prototype satellites in early 2027. If Starship, Starlink V3, and AI Sat Mini progress, SpaceX could begin with inference or specialized workloads.</td>
+<td>This phase will test who first closes the loop on reusable launch, in-orbit power/thermal performance, sustained links, and paying workloads.</td>
+</tr>
+<tr>
+<td>2030s</td>
+<td>Beijing’s roadmap targets “ground data, space compute” in 2028-2030 and a large-scale space data center in 2031-2035.</td>
+<td>SpaceX’s stated ambition is much larger. DCD quotes SpaceX’s filing: if Starship becomes operational and reusable, launching one million tonnes per year of satellites at 100 kW of compute per tonne would add 100 GW of AI compute capacity annually. Google places launch-cost parity below USD 200/kg in the mid-2030s (<a href="https://www.datacenterdynamics.com/en/news/spacex-files-for-million-satellite-orbital-ai-data-center-megaconstellation">DCD</a>, <a href="https://research.google/blog/exploring-a-space-based-scalable-ai-infrastructure-system-design/">Google Research</a>).</td>
+<td>General-purpose orbital cloud is more likely a 2030s question than a 2026-2027 commercial reality.</td>
+</tr>
+</tbody>
+</table>
+<h3>Where SpaceX is strong</h3>
+<p>SpaceX does not yet operate an orbital data center. Its advantage is that it owns or influences the stack most likely to make one scalable:</p>
+<ul>
+<li><strong>Launch capability</strong>: Starship, if it becomes high-cadence and reusable, is the key variable for delivering large solar arrays, radiators, and compute hardware to orbit. SpaceX’s economics depend almost entirely on this.</li>
+<li><strong>Constellation manufacturing and operations</strong>: Starlink has shown SpaceX can build, launch, and operate thousands of LEO satellites. DCD reported that by early 2026 SpaceX had launched more than 9,500 Starlink satellites, about 8,000 of them functioning. That is not a compute constellation, but it demonstrates large-scale satellite operations (<a href="https://www.datacenterdynamics.com/en/news/spacex-files-for-million-satellite-orbital-ai-data-center-megaconstellation">DCD</a>).</li>
+<li><strong>Optical inter-satellite link network</strong>: The FCC notice says the proposed system would primarily rely on optical inter-satellite links and could connect with Starlink Gen1 and Gen2. SpaceX says Starlink’s high-capacity, high-reliability laser mesh would route traffic to ground stations (<a href="https://docs.fcc.gov/public/attachments/DA-26-113A1.txt">FCC DA 26-113</a>).</li>
+<li><strong>Demand-side and capital narrative</strong>: The potential SpaceX/xAI/Tesla stack lets Musk frame AI model demand, chips, launch, and satellite networking as a vertically integrated chain. SpaceNews reported that Musk described high-end chip production as the “missing ingredient” for orbital data centers and proposed a Terafab effort (<a href="https://spacenews.com/spacex-offers-details-on-orbital-data-center-satellites">SpaceNews</a>).</li>
+</ul>
+<p>Those strengths map to four hard constraints:</p>
+<ul>
+<li><strong>Starship must actually become low-cost, high-cadence, and reusable</strong>, otherwise the million-satellite / 100-GW narrative cannot close economically.</li>
+<li><strong>Thermal management is not free just because space is cold.</strong> AI Sat Mini’s 100-square-meter radiator is only an outline. The real variables are radiator area per watt, mass, attitude control, and long-term reliability.</li>
+<li><strong>Orbital compute cannot bypass the terrestrial chip supply chain.</strong> Even if orbit offers solar power and radiative cooling, advanced AI chips, HBM, and packaging still come from Earth. Musk’s Terafab proposal is itself evidence that chips are a bottleneck.</li>
+<li><strong>Regulation and orbital commons are major issues.</strong> FCC acceptance is not approval. A one-million-satellite proposal would raise spectrum, collision, reentry, astronomy, and international coordination concerns far beyond any existing constellation.</li>
+</ul>
+<h3>China and SpaceX may produce different outcomes</h3>
+<p>In the near term, China is more likely to deliver “space data processed in space”: remote sensing, astronomy, weather, emergency response, and low-altitude economy data filtered in orbit, with only results or high-value samples downlinked. Star-Compute is already validating this.</p>
+<p>If SpaceX progresses, its first practical step is more likely to be specialized AI inference nodes on top of the Starlink/Starship stack, not an immediate replacement for terrestrial hyperscale cloud. Large-model training requires extremely strong node-to-node coherence, sustained bandwidth, fault recovery, hardware replacement, and supply-chain support. Those are much harder than placing GPUs on satellites.</p>
+<p>Over the medium term, the two routes may converge into hybrid architectures:</p>
+<ul>
+<li>China: space-native data processing first, then space-ground collaboration and eventually “ground data, space compute.”</li>
+<li>SpaceX: communications constellation and launch stack first, then AI compute payloads added to orbital infrastructure.</li>
+<li>Google/Starcloud: dedicated validation satellites first, proving TPU/H100-class hardware can run, cool, and network in orbit.</li>
+</ul>
+<p>At the outcome level, SpaceX’s upside looks more like an orbital AI infrastructure platform, while China’s current upside looks more like an integrated space-ground information and compute network. If SpaceX succeeds, it could directly affect cloud computing and AI infrastructure markets. Even if China does not replace terrestrial cloud, it can still materially change the data chain for remote sensing, science, low-altitude economy, and emergency response.</p>
+<p>A conservative formulation is: <strong>in 2026, China leads in actual in-orbit validation; SpaceX leads in the launch and constellation stack needed for long-term scale. Real commercialization depends on who proves unit compute cost, thermal performance, links, and replenishment cadence first between 2027 and 2030.</strong></p>
+<h2>Commercialization View</h2>
+<p>The most credible near-term commercialization is not “training ChatGPT in orbit,” but:</p>
+<ul>
+<li>In-orbit cloud detection, object recognition, and change detection for remote sensing.</li>
+<li>Astronomy transient-event recognition and follow-up triggering.</li>
+<li>Weather, water, natural-resource, and disaster-monitoring data that need fast filtering.</li>
+<li>Low-altitude economy, emergency response, vessel/aircraft detection, and other latency-sensitive use cases.</li>
+</ul>
+<p>These use cases share one feature: the data source is in or near space, raw data volume is high, downlink is constrained, and results are more valuable to transmit than raw data.</p>
+<p>In the medium term, more systems will look like hybrid “compute constellation + terrestrial cloud + model service” architectures. Models are trained, compressed, compiled, and uploaded from the ground; satellites run inference, filtering, and task scheduling; inter-satellite links share compute and data; the ground receives results and high-value samples.</p>
+<p>That looks more like a space edge cloud than a fully independent orbital supercomputer.</p>
+<p>Long-term GW-scale space data centers, million-card clusters, ground-data upload for orbital training, and “space-based primary compute” still need to prove:</p>
+<ul>
+<li>Large-scale server thermal management in vacuum.</li>
+<li>Reliability and error correction for consumer/data-center-class GPUs under radiation.</li>
+<li>The economics of in-orbit maintenance, upgrades, and hardware replacement.</li>
+<li>Sustained inter-satellite and space-ground bandwidth at acceptable unit cost.</li>
+<li>Reusable launch costs low enough to support cloud-computing economics.</li>
+<li>Space debris, orbital-resource, and regulatory constraints.</li>
+</ul>
+<h2>Conclusion</h2>
+<p>Asia-Pacific space compute is not a uniform market. It is best understood as three routes at different maturity levels:</p>
+<ul>
+<li><strong>China</strong>: already has a multi-satellite in-orbit compute network, with Three-Body / Star-Compute as the strongest evidence; Beijing’s GW-scale data center roadmap is more ambitious but still higher risk and further out.</li>
+<li><strong>Japan</strong>: has completed practical in-orbit edge AI processing, focused on Earth-observation insights and terrestrial-cloud tooling.</li>
+<li><strong>India</strong>: Pixxel/Sarvam uses the “orbital data centre satellite” framing most explicitly, but Pathfinder still awaits its planned Q4 2026 launch.</li>
+<li><strong>Korea/Southeast Asia</strong>: mostly research, policy, and global trend discussion, with no first-wave deployment evidence at comparable level.</li>
+</ul>
+<p>China’s real progress is more substantial than concept-stock hype, but more conservative than “orbital cloud is already mature.” The best assessment is that China has already turned space-native AI data processing into an in-orbit constellation prototype; a general-purpose orbital cloud that replaces terrestrial data centers is still an early-stage engineering roadmap.</p>
+<h2>What to Track Next</h2>
+<ol>
+<li>Whether Chenguang-1 launches, and what orbit, payload, power, compute, and test results are disclosed.</li>
+<li>Whether Star-Compute 02/03 deploy in 2026 as planned, and whether single-satellite compute moves from TOPS/POPS to higher levels.</li>
+<li>Whether Qwen3 or other general models disclose public benchmarks, power use, latency, fault tolerance, and task types for in-orbit inference.</li>
+<li>Whether Pixxel/Sarvam Pathfinder launches in Q4 2026, and what GPU, power, thermal, and mission results it reports.</li>
+<li>Whether Space Compass moves from demonstration to a commercial orbital edge computing service.</li>
+<li>Whether SpaceX’s FCC application is approved, and whether it adds satellite mass, lifetime, radiator area, solar array area, deployment cadence, deorbit plan, and actual customer workloads.</li>
+<li>Whether Starship / Starlink V3 achieves enough launch cadence and optical-network capacity in 2026-2027, and whether AI Sat Mini gets a first mission.</li>
+<li>Whether Beijing’s project discloses stronger primary evidence on funding, consortium members, launch contracts, ground control, and in-orbit assembly.</li>
+<li>Whether public-market “space compute” companies have real orders, experimental payloads, joint labs, or only thematic exposure.</li>
+</ol>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
