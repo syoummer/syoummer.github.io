@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>世界模型不是更大的视频模型，而是 AI 的行动前模拟器</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>世界模型不是更大的视频模型，而是 AI 的行动前模拟器</h1>
+<p>日期：2026-06-05</p>
+<p>过去两年，“世界模型”突然变成 AI 领域里最拥挤的词之一。视频生成公司在讲 world simulator，机器人公司在讲 physical AI，强化学习研究者讲 learned dynamics，Yann LeCun 讲 JEPA，Fei-Fei Li 和 World Labs 讲 spatial intelligence。它们都在用同一个词，但不总是在说同一件事。</p>
+<p>最有用的理解是：<strong>世界模型不是某种固定架构，而是一种能力目标：让 AI 在行动前模拟“如果我这样做，世界会怎么变”。</strong></p>
+<p>语言模型让机器学会谈论世界。世界模型想让机器在某种内部状态里模拟世界、预测后果，并据此行动。</p>
+<h2>一句话定义</h2>
+<p>世界模型是 agent 对环境的内部可预测表征。给定当前观察、历史状态和动作，它要能回答：<strong>如果做这个动作，接下来会发生什么？</strong></p>
+<p>传统强化学习里，这通常被写成类似 <code>p(s_{t+1} | s_t, a_t)</code> 的形式：当前状态 <code>s_t</code> 下执行动作 <code>a_t</code>，下一个状态 <code>s_{t+1}</code> 会是什么。真实系统不一定显式暴露这个公式，它可能输出未来视频帧、3D 场景、latent state、reward、value、policy，甚至直接输出动作。但核心仍是状态、动作和后果。</p>
+<p>Fei-Fei Li 和 World Labs 最近把这个问题放回 agent-environment loop：agent 做动作，动作改变世界状态，agent 只能看到观察，观察再影响下一步动作。在她们的分类里，今天被叫作世界模型的东西大致有三类：renderer 输出可见画面，simulator 输出可计算和可交互的状态，planner 输出动作。她们的关键判断是，<strong>simulation 才是三者的枢纽</strong>：视觉保真不等于物理可靠，动作输出也需要可靠的后果模型支撑（<a href="https://drfeifei.substack.com/p/a-functional-taxonomy-of-world-models">Fei-Fei Li, A Functional Taxonomy of World Models</a>）。</p>
+<p>这也是为什么“世界模型”不能简单等同于“视频生成模型”。视频只是世界的观察投影，不是世界本身。</p>
+<h2>它和语言模型的区别</h2>
+<p>语言模型主要建模 token 序列：一句话、一个问题、一段代码、一个知识片段之后，最合理的下一个 token 是什么。它的强项是语义、知识、抽象推理、任务分解和语言接口。</p>
+<p>世界模型主要建模状态转移：当前局面下做某个动作，环境会怎么变化。它的强项是预测后果、反事实模拟、物理和空间一致性、规划与控制。</p>
+<p>这个区别不是架构层面的。世界模型也可以用 Transformer，也可以做 next-token prediction。Berkeley 等人的人形机器人论文甚至直接把 humanoid locomotion 表述为 next token prediction，用 causal transformer 预测 sensorimotor trajectories，让全尺寸人形机器人能在 San Francisco zero-shot 行走（<a href="https://arxiv.org/abs/2402.19469">Humanoid Locomotion as Next Token Prediction</a>）。</p>
+<p>真正的区别在于 token 代表什么，以及模型被放进什么闭环里。</p>
+<p>如果 token 主要代表语言符号，目标是回答问题，那它是语言模型。如果 token 代表视觉、动作、触觉、传感器轨迹或 latent world state，并且模型用于预测行动后果，那它就具备世界模型功能。</p>
+<h2>为什么它重要</h2>
+<p>世界模型最大的吸引力，是让 AI 在现实行动前做“脑内试错”。</p>
+<p>一个语言模型可以说“杯子被推可能会倒”。但一个足够好的世界模型应该能模拟：如果手从这个方向、用这个力度、在这个桌面摩擦条件下推杯子，杯子会滑动、旋转、翻倒，还是停住。更进一步，它还可以比较多个动作，选择风险最小或收益最高的那个。</p>
+<p>这对机器人、自动驾驶、工业控制、游戏 agent 和任何物理 AI 都很关键。真实世界试错贵、慢、危险，而且很多边缘情况不可能随便复现。世界模型提供了一个可以低成本、多次、并行运行的想象空间。</p>
+<p>Ha 和 Schmidhuber 2018 年的经典论文展示了这个思路：先用模型学习环境的压缩时空表征，再让 agent 在自己的 “dream environment” 里训练，最后迁移回真实环境（<a href="https://arxiv.org/abs/1803.10122">World Models</a>，<a href="https://worldmodels.github.io/">interactive version</a>）。</p>
+<p>MuZero 展示的是另一种路线：不用完整复刻世界，只学习对规划最有用的 reward、value 和 policy dynamics。它在不知道规则的情况下，在 Atari、Go、Chess、Shogi 上通过 learned model 加 tree search 达到强结果（<a href="https://www.nature.com/articles/s41586-020-03051-4">Nature: MuZero</a>）。</p>
+<p>DreamerV3 则把 “imagination” 直接变成强化学习机制：模型学习环境，在想象的未来场景中改进行为，并用单一配置跨 150 多个任务，甚至从零在 Minecraft 中获得钻石（<a href="https://arxiv.org/abs/2301.04104">DreamerV3</a>）。</p>
+<h2>视频模型是不是世界模型？</h2>
+<p>它们可能是世界模型的一部分，但不能因为视频真实就自动算作可靠世界模型。</p>
+<p>OpenAI 在 Sora 技术报告里说，大规模训练视频生成模型是构建物理世界通用模拟器的有希望路径，并列举了 3D consistency、object permanence、简单 world interaction、Minecraft digital world simulation 等涌现能力（<a href="https://openai.com/index/video-generation-models-as-world-simulators/">OpenAI, Video generation models as world simulators</a>）。</p>
+<p>但同一份报告也承认，Sora 仍不能准确模拟很多基础物理交互，比如玻璃破碎，或者吃东西后物体状态应该如何变化；长视频中也会出现不连贯和物体自发出现等问题。</p>
+<p>Google DeepMind 的 Genie 3 更接近“交互式世界模型”：它能从文本生成可实时导航的动态世界，24 FPS、720p，并保持几分钟一致性。但 DeepMind 也列出限制：action space 有限，复杂多 agent 交互仍困难，真实地点无法做到完美地理准确，文本渲染弱，连续交互时间目前只有几分钟（<a href="https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/">Genie 3</a>）。</p>
+<p>NVIDIA Cosmos 则把世界模型放进 physical AI 工具链，用于机器人和自动驾驶的合成数据、策略评估和多未来模拟。NVIDIA 称 Cosmos world foundation models 训练在 9,000 trillion tokens、20 million hours 数据上，并用 3D consistency 和 physics alignment 指标评估。但官方也承认 object impermanence 和违反重力等问题仍存在（<a href="https://developer.nvidia.com/blog/advancing-physical-ai-with-nvidia-cosmos-world-foundation-model-platform/">NVIDIA Cosmos</a>）。</p>
+<p>所以判断一个系统是不是有用的世界模型，不该看视频多漂亮，而该看四个问题：</p>
+<ul>
+<li>它是否 action-conditioned？</li>
+<li>它是否维护稳定状态和记忆？</li>
+<li>它是否支持反事实 rollout？</li>
+<li>它是否能让 agent 在真实或高保真环境中更可靠地完成任务？</li>
+</ul>
+<h2>最大优势：行动前规划</h2>
+<p>世界模型的核心价值可以概括为四点。</p>
+<p>第一，<strong>样本效率</strong>。agent 不必每一步都在真实环境里试错，可以在 learned simulator 中先探索。</p>
+<p>第二，<strong>反事实推演</strong>。同一个当前状态下，它可以比较多条未来路径，而不是只生成一个回答。</p>
+<p>第三，<strong>物理 grounding</strong>。语言模型可以给出合理描述，但世界模型可以用状态和动态约束计划是否可行。</p>
+<p>第四，<strong>安全评估和合成数据</strong>。自动驾驶、机器人和工业系统都需要大量极端场景，世界模型可以生成或模拟这些场景，降低真实测试成本。</p>
+<p>这就是为什么具身智能综述里会强调：MLLMs 擅长上下文任务推理，但容易忽略物理约束；world models 擅长 physics-aware simulation，但缺少高级语义。下一代 embodied AI 更可能是二者联合，而不是互相替代（<a href="https://arxiv.org/html/2509.20021v1">Embodied AI: From LLMs to World Models</a>）。</p>
+<h2>最大短板：模拟错误会被放大</h2>
+<p>世界模型最危险的地方也正来自它的优势：一旦模型错了，agent 会在错误世界里认真优化。</p>
+<p>Ha 和 Schmidhuber 的 VizDoom 实验中，agent 在 dream environment 里找到了利用模型漏洞的策略，让怪物不发射火球，或者让火球消失。这个策略在虚拟环境里高分，但迁移到真实环境会失败（<a href="https://worldmodels.github.io/">World Models interactive paper</a>）。</p>
+<p>这不是小问题，而是 learned simulator 的结构性风险：策略优化器会寻找模型中的捷径。只要模型和真实世界有差距，越强的优化越可能放大这个差距。</p>
+<p>其他短板也很现实：</p>
+<ul>
+<li>长时域 rollout 会积累误差。</li>
+<li>视觉真实不等于几何和物理正确。</li>
+<li>3D、材料、接触、流体、布料、可变形物体数据远比互联网文本和视频稀缺。</li>
+<li>sim-to-real gap 很难消除。</li>
+<li>世界模型评估比 LLM 评估难得多，因为它要同时评估视觉、几何、物理、动作、长时记忆和真实任务迁移。</li>
+</ul>
+<p>这也是为什么 CMU/MBZUAI/UCSD 的批评论文提醒：很多当前系统强调视频生成，但世界模型的核心不应是生成视频，而应是作为 purposeful reasoning and acting 的 sandbox（<a href="https://arxiv.org/html/2507.05169v1">Critiques of World Models</a>）。</p>
+<h2>它会替代 LLM 吗？</h2>
+<p>短期不会。更可能发生的是：LLM 和世界模型变成同一个 agent 系统里的不同层。</p>
+<p>LLM 负责理解目标、解释语言、拆解任务、调用工具、处理抽象约束。世界模型负责预测行动后果、检查物理可行性、生成候选未来、支持策略训练。传统模拟器、控制器和规则系统则提供可验证约束。</p>
+<p>“From Word Models to World Models” 这篇论文的方向很有代表性：用 LLM 把自然语言转成概率程序或其他可推理表示，再结合物理模拟器、图形引擎和规划算法，形成语言驱动的 commonsense thinking interface（<a href="https://arxiv.org/abs/2306.12672">arXiv</a>）。</p>
+<p>最强的系统不会只会说，也不会只会模拟。它需要能把语言目标落到状态、动作和后果上，再把模拟结果反馈回计划。</p>
+<h2>我的判断</h2>
+<p>世界模型是 LLM 之后最重要的 AI 方向之一，但不是因为它会取代 LLM，而是因为它补上了 LLM 最弱的闭环行动层。</p>
+<p>未来 2-3 年，真正落地的价值大概率先出现在受限场景：自动驾驶仿真、机器人训练数据、游戏和虚拟环境 agent、工业 digital twin、视频生成工具、策略评估。完全开放、长期稳定、物理可靠、可与现实无缝对齐的通用世界模型，还很远。</p>
+<p>所以，“世界模型”这个词需要降温使用。一个漂亮视频模型不是世界模型的终点。真正重要的是：它能否让 agent 在行动前更准确地知道，自己下一步会把世界变成什么样。</p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>World Models Are Not Bigger Video Models. They Are Pre-Action Simulators for AI.</h1>
+<p>Date: 2026-06-05</p>
+<p>Over the last two years, “world model” has become one of the most overloaded terms in AI. Video-generation labs use it to describe world simulators. Robotics teams use it for physical AI. Reinforcement learning researchers use it for learned dynamics. Yann LeCun uses it in the context of JEPA. Fei-Fei Li and World Labs frame it as a path toward spatial intelligence. These groups use the same phrase, but they are not always talking about the same thing.</p>
+<p>The most useful definition is this: <strong>a world model is not a fixed architecture. It is a capability goal: an AI system should be able to simulate what would happen if it took a particular action.</strong></p>
+<p>Language models taught machines to talk about the world. World models aim to let machines simulate the world, predict consequences, and act on those predictions.</p>
+<h2>The Short Definition</h2>
+<p>A world model is an internal predictive representation of an environment. Given the current observation, history, state, and action, it tries to answer: <strong>if I do this, what happens next?</strong></p>
+<p>In reinforcement learning, this is often written as something like <code>p(s_{t+1} | s_t, a_t)</code>: given state <code>s_t</code> and action <code>a_t</code>, what is the next state <code>s_{t+1}</code>? Real systems may not expose that formula directly. They may output future video frames, 3D scenes, latent states, rewards, values, policies, or actions. But the core remains state, action, and consequence.</p>
+<p>Fei-Fei Li and World Labs recently placed the term back inside the agent-environment loop: an agent acts, the action changes the world state, the agent only receives observations, and those observations affect the next action. Their taxonomy separates today’s so-called world models into renderers, simulators, and planners. A renderer outputs what an observer sees. A simulator outputs computable and interactable state. A planner outputs actions. Their key point is that <strong>simulation is the linchpin</strong>: visual fidelity is not the same as physical reliability, and action generation needs a reliable model of consequences (<a href="https://drfeifei.substack.com/p/a-functional-taxonomy-of-world-models">Fei-Fei Li, “A Functional Taxonomy of World Models”</a>).</p>
+<p>That is why a world model should not be reduced to a video-generation model. Video is an observation of the world. It is not the world itself.</p>
+<h2>How It Differs From a Language Model</h2>
+<p>A language model mainly models token sequences: after this sentence, question, code snippet, or fact pattern, what is the most likely or useful next token? Its strengths are semantics, knowledge, abstract reasoning, task decomposition, and language interfaces.</p>
+<p>A world model mainly models state transitions: if an agent takes an action in the current situation, how will the environment change? Its strengths are consequence prediction, counterfactual simulation, physical and spatial consistency, planning, and control.</p>
+<p>This is not an architectural distinction. A world model can use a Transformer. It can even be trained as next-token prediction. A Berkeley-led humanoid robotics paper explicitly casts humanoid locomotion as next-token prediction, using a causal transformer to model sensorimotor trajectories and enabling a full-sized humanoid to walk in San Francisco zero-shot (<a href="https://arxiv.org/abs/2402.19469">Humanoid Locomotion as Next Token Prediction</a>).</p>
+<p>The real distinction is what the tokens represent and what closed loop the model is placed inside.</p>
+<p>If the tokens mainly represent language symbols and the model is used to answer questions, it is a language model. If the tokens represent vision, action, touch, sensor trajectories, or latent world states, and the model is used to predict the consequences of action, it has world-model functionality.</p>
+<h2>Why It Matters</h2>
+<p>The central promise of world models is that they let AI systems try things in their “mind” before acting in the real world.</p>
+<p>A language model can say, “If you push the cup, it may fall.” A sufficiently good world model should simulate what happens if a hand pushes the cup from this direction, with this force, on this surface, under this friction condition. The cup may slide, rotate, topple, or remain stable. The model can then compare multiple actions and choose the one with the best risk-reward profile.</p>
+<p>This matters for robotics, autonomous driving, industrial control, game agents, and physical AI in general. Real-world trial and error is expensive, slow, risky, and often impossible to reproduce across edge cases. A world model provides a low-cost, repeatable, parallelizable imagination space.</p>
+<p>Ha and Schmidhuber’s 2018 paper showed the basic idea: learn a compressed spatial-temporal representation of the environment, train an agent inside its own “dream environment,” then transfer the policy back to the real environment (<a href="https://arxiv.org/abs/1803.10122">World Models</a>, <a href="https://worldmodels.github.io/">interactive version</a>).</p>
+<p>MuZero showed a different version of the same principle: the model does not need to reconstruct the full world. It only needs to learn the reward, value, and policy dynamics that are useful for planning. By combining a learned model with tree search, MuZero achieved strong results across Atari, Go, chess, and shogi without being given the underlying rules (<a href="https://www.nature.com/articles/s41586-020-03051-4">Nature: MuZero</a>).</p>
+<p>DreamerV3 turns imagination into the central reinforcement learning mechanism: the agent learns a model of the environment and improves its behavior by imagining future scenarios. With a single configuration, it performs across more than 150 tasks and was reported to collect diamonds in Minecraft from scratch (<a href="https://arxiv.org/abs/2301.04104">DreamerV3</a>).</p>
+<h2>Are Video Models World Models?</h2>
+<p>They can be part of a world-model stack, but visual realism does not automatically make them reliable world models.</p>
+<p>OpenAI’s Sora technical report argues that scaling video-generation models is a promising path toward building general-purpose simulators of the physical world. It lists emergent capabilities such as 3D consistency, object permanence, simple world interactions, and Minecraft-like digital world simulation (<a href="https://openai.com/index/video-generation-models-as-world-simulators/">OpenAI, “Video generation models as world simulators”</a>).</p>
+<p>But the same report also acknowledges major limitations. Sora does not accurately model many basic physical interactions, such as glass shattering or state changes after eating food. Long videos can develop incoherence or spontaneous object appearances.</p>
+<p>Google DeepMind’s Genie 3 is closer to an interactive world model. It can generate dynamic worlds from text prompts that users can navigate in real time, at 24 FPS and 720p, with several minutes of consistency. But DeepMind also lists clear limitations: the action space is limited, complex multi-agent interaction remains difficult, real-world locations are not geographically exact, text rendering is weak, and continuous interaction currently lasts only a few minutes (<a href="https://deepmind.google/discover/blog/genie-3-a-new-frontier-for-world-models/">Genie 3</a>).</p>
+<p>NVIDIA Cosmos places world models inside a physical AI workflow for robotics and autonomous driving: synthetic data, policy evaluation, foresight for action selection, and multiverse simulation. NVIDIA says Cosmos world foundation models were trained on 9,000 trillion tokens and 20 million hours of data, and evaluates them using 3D consistency and physics alignment metrics. But NVIDIA also acknowledges issues such as object impermanence and physically implausible behavior, including violations of gravity (<a href="https://developer.nvidia.com/blog/advancing-physical-ai-with-nvidia-cosmos-world-foundation-model-platform/">NVIDIA Cosmos</a>).</p>
+<p>So the question is not whether a generated video looks impressive. The better questions are:</p>
+<ul>
+<li>Is it action-conditioned?</li>
+<li>Does it maintain stable state and memory?</li>
+<li>Can it support counterfactual rollouts?</li>
+<li>Does it make agents more reliable in real or high-fidelity environments?</li>
+</ul>
+<h2>The Biggest Advantage: Planning Before Acting</h2>
+<p>The value of world models comes down to four practical advantages.</p>
+<p>First, <strong>sample efficiency</strong>. Agents do not need to test every action in the real environment. They can explore inside a learned simulator first.</p>
+<p>Second, <strong>counterfactual reasoning</strong>. From the same current state, a world model can compare many possible futures instead of producing one answer.</p>
+<p>Third, <strong>physical grounding</strong>. A language model can describe a plausible plan. A world model can help test whether the plan is dynamically possible.</p>
+<p>Fourth, <strong>safety evaluation and synthetic data</strong>. Autonomous driving, robotics, and industrial systems need large numbers of rare and extreme scenarios. World models can generate or simulate them, reducing real-world testing cost.</p>
+<p>This is why embodied AI surveys emphasize the complementarity: MLLMs are good at contextual task reasoning but often ignore physical constraints; world models are good at physics-aware simulation but lack high-level semantics. The next generation of embodied AI is more likely to combine the two than to replace one with the other (<a href="https://arxiv.org/html/2509.20021v1">Embodied AI: From LLMs to World Models</a>).</p>
+<h2>The Biggest Weakness: Simulation Errors Get Amplified</h2>
+<p>The most dangerous feature of world models comes from the same thing that makes them powerful: once the model is wrong, an agent can optimize inside the wrong world.</p>
+<p>In Ha and Schmidhuber’s VizDoom experiment, an agent trained in the dream environment found adversarial policies that exploited imperfections in the learned model. It could make monsters stop firing or make fireballs disappear. The policy scored well in the virtual environment but failed when transferred back to the real one (<a href="https://worldmodels.github.io/">World Models interactive paper</a>).</p>
+<p>This is not a minor bug. It is a structural risk of learned simulators: the optimizer searches for shortcuts in the model. If the model differs from reality, stronger optimization may amplify that gap.</p>
+<p>Other limitations are just as real:</p>
+<ul>
+<li>Long-horizon rollouts accumulate errors.</li>
+<li>Visual realism does not guarantee geometric or physical correctness.</li>
+<li>Data for 3D structure, materials, contact, fluids, cloth, and deformable objects is far scarcer than internet text or video.</li>
+<li>The sim-to-real gap is hard to close.</li>
+<li>Evaluating world models is much harder than evaluating language models because the system must be tested across vision, geometry, physics, action, long-term memory, and real task transfer.</li>
+</ul>
+<p>This is also why “Critiques of World Models” argues that many current systems overemphasize video generation. A world model should not primarily be understood as a video generator, but as a sandbox for purposeful reasoning and acting (<a href="https://arxiv.org/html/2507.05169v1">Critiques of World Models</a>).</p>
+<h2>Will World Models Replace LLMs?</h2>
+<p>Not in the near term. The more likely outcome is that language models and world models become different layers of the same agent system.</p>
+<p>LLMs understand goals, parse language, decompose tasks, call tools, and handle abstract constraints. World models predict action consequences, test physical feasibility, generate candidate futures, and support policy training. Traditional simulators, controllers, and rules provide verifiable constraints.</p>
+<p>The paper “From Word Models to World Models” is a good example of this direction: use LLMs to translate natural language into probabilistic programs or other reasoning substrates, then combine them with physics simulators, graphics engines, and planning algorithms to create a language-driven commonsense thinking interface (<a href="https://arxiv.org/abs/2306.12672">arXiv</a>).</p>
+<p>The strongest systems will not merely talk, and they will not merely simulate. They will connect language goals to states, actions, and consequences, then feed simulation results back into planning.</p>
+<h2>My Take</h2>
+<p>World models are one of the most important AI directions after LLMs, not because they will replace LLMs, but because they address the weakest part of current LLM-centric systems: closed-loop action.</p>
+<p>Over the next two to three years, the most concrete value will likely appear in constrained domains: autonomous driving simulation, robot training data, game and virtual-environment agents, industrial digital twins, video-generation tools, and policy evaluation. A fully open-ended, long-horizon, physically reliable, reality-aligned general world model is still far away.</p>
+<p>So the term “world model” needs to be used with more discipline. A beautiful video model is not the endpoint. The important question is whether the model helps an agent know, before it acts, what kind of world its next action will create.</p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
