@@ -2,329 +2,165 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>Anthropic 的 AI 暂停按钮：安全倡议，还是行业节奏控制？</title>
+  <title>Anthropic 的 AI 暂停按钮：深度调研</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="A bilingual analysis of Anthropic's AI pause button proposal, safety governance, and strategic incentives.">
-  <style>:root {
-  color-scheme: light dark;
-  --text-color: #333;
-  --bg-color: #fff;
-  --link-color: #0066cc;
-  --border-color: #ddd;
-  --code-bg: #f5f5f5;
-  --blockquote-border: #ccc;
-  --table-header-bg: #f0f0f0;
-  --muted-color: #666;
-  --switch-bg: #f7f7f7;
-  --switch-active-bg: #222;
-  --switch-active-color: #fff;
-  --focus-ring: #0066cc;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text-color: #d4d4d4;
-    --bg-color: #1a1a1a;
-    --link-color: #6db3f2;
-    --border-color: #444;
-    --code-bg: #2d2d2d;
-    --blockquote-border: #555;
-    --table-header-bg: #2d2d2d;
-    --muted-color: #999;
-    --switch-bg: #252525;
-    --switch-active-bg: #d4d4d4;
-    --switch-active-color: #1a1a1a;
-    --focus-ring: #6db3f2;
-  }
-}
-
-* { box-sizing: border-box; }
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
-  font-size: 16px;
-  line-height: 1.8;
-  color: var(--text-color);
-  background: var(--bg-color);
-  max-width: 820px;
-  margin: 0 auto;
-  padding: 24px 20px 80px;
-}
-
-[hidden] { display: none !important; }
-
-.share-index-nav {
-  margin: 0 0 1.2em;
-  font-size: 0.86em;
-  line-height: 1.3;
-}
-
-.share-index-nav a {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.3em 0.7em;
-  color: var(--muted-color);
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  background: var(--switch-bg);
-}
-
-.share-index-nav a:hover {
-  color: var(--link-color);
-  border-color: var(--link-color);
-  text-decoration: none;
-}
-
-.share-index-nav a:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
-.report-toolbar {
-  display: flex;
-  justify-content: flex-end;
-  margin: 0 0 1.5em;
-}
-
-.language-switch {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6em;
-  color: var(--muted-color);
-  font-size: 0.82em;
-  line-height: 1.2;
-}
-
-.language-switch__label {
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.language-switch__options {
-  display: inline-flex;
-  gap: 2px;
-  padding: 3px;
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  background: var(--switch-bg);
-}
-
-.language-switch button {
-  border: 0;
-  border-radius: 999px;
-  padding: 0.42em 0.85em;
-  color: var(--muted-color);
-  background: transparent;
-  font: inherit;
-  cursor: pointer;
-}
-
-.language-switch button[aria-pressed="true"] {
-  color: var(--switch-active-color);
-  background: var(--switch-active-bg);
-}
-
-.language-switch button:focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
-}
-
-h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
-h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
-h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
-p { margin: 0.8em 0; }
-a { color: var(--link-color); text-decoration: none; }
-a:hover { text-decoration: underline; }
-blockquote {
-  border-left: 3px solid var(--blockquote-border);
-  margin: 1em 0;
-  padding: 0.5em 1em;
-  color: var(--muted-color);
-}
-code { background: var(--code-bg); padding: 2px 5px; border-radius: 3px; font-size: 0.9em; }
-ul, ol { padding-left: 1.35em; }
-li { margin: 0.35em 0; }
-.note { color: var(--muted-color); font-size: 0.95em; }
-
-@media (max-width: 600px) {
-  body { font-size: 15px; padding: 16px 14px 60px; }
-  .share-index-nav { margin-bottom: 1em; }
-  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
-  .language-switch { width: 100%; justify-content: space-between; }
-  h1 { font-size: 1.5em; }
-  h2 { font-size: 1.25em; }
-}</style>
+  <meta name="description" content="A bilingual deep research survey on Anthropic's AI pause button, recursive self-improvement, RSP v3, and regulatory capture debate.">
+  <style>:root{color-scheme:light dark;--text:#333;--bg:#fff;--link:#06c;--border:#ddd;--muted:#666;--code:#f5f5f5;--switch:#f7f7f7;--active:#222;--activeText:#fff}@media(prefers-color-scheme:dark){:root{--text:#d4d4d4;--bg:#1a1a1a;--link:#6db3f2;--border:#444;--muted:#999;--code:#2d2d2d;--switch:#252525;--active:#d4d4d4;--activeText:#1a1a1a}}*{box-sizing:border-box}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.8;color:var(--text);background:var(--bg);max-width:860px;margin:0 auto;padding:24px 20px 80px}[hidden]{display:none!important}.share-index-nav{margin:0 0 1.2em;font-size:.86em}.share-index-nav a{display:inline-flex;padding:.3em .7em;color:var(--muted);border:1px solid var(--border);border-radius:999px;background:var(--switch)}.report-toolbar{display:flex;justify-content:flex-end;margin:0 0 1.5em}.language-switch{display:inline-flex;align-items:center;gap:.6em;color:var(--muted);font-size:.82em}.language-switch__label{letter-spacing:.04em;text-transform:uppercase}.language-switch__options{display:inline-flex;gap:2px;padding:3px;border:1px solid var(--border);border-radius:999px;background:var(--switch)}button{border:0;border-radius:999px;padding:.42em .85em;color:var(--muted);background:transparent;font:inherit;cursor:pointer}button[aria-pressed=true]{color:var(--activeText);background:var(--active)}h1{font-size:1.85em;margin:1.2em 0 .6em;line-height:1.3}h2{font-size:1.38em;margin:1.6em 0 .5em;padding-bottom:.3em;border-bottom:1px solid var(--border)}h3{font-size:1.12em;margin:1.2em 0 .35em}p{margin:.8em 0}a{color:var(--link);text-decoration:none}a:hover{text-decoration:underline}blockquote{border-left:3px solid var(--border);margin:1em 0;padding:.5em 1em;color:var(--muted)}code{background:var(--code);padding:2px 5px;border-radius:3px;font-size:.9em}ul,ol{padding-left:1.35em}li{margin:.35em 0}.note{color:var(--muted);font-size:.95em}.callout{border:1px solid var(--border);border-radius:10px;padding:1em;background:color-mix(in srgb,var(--code) 70%,transparent)}@media(max-width:600px){body{font-size:15px;padding:16px 14px 60px}.report-toolbar{justify-content:flex-start}.language-switch{width:100%;justify-content:space-between}h1{font-size:1.5em}h2{font-size:1.25em}}</style>
 </head>
 <body>
-<nav class="share-index-nav" aria-label="Share index">
-  <a href="index.html">← 返回</a>
-</nav>
-<header class="report-toolbar">
-  <nav class="language-switch" aria-label="Language selection">
-    <span class="language-switch__label">Language</span>
-    <span class="language-switch__options" role="group" aria-label="Choose report language">
-      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
-      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
-    </span>
-  </nav>
-</header>
+<nav class="share-index-nav" aria-label="Share index"><a href="index.html">← 返回</a></nav>
+<header class="report-toolbar"><nav class="language-switch" aria-label="Language selection"><span class="language-switch__label">Language</span><span class="language-switch__options" role="group" aria-label="Choose report language"><button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button><button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button></span></nav></header>
 
-<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
-<h1>Anthropic 的 AI 暂停按钮：安全倡议，还是行业节奏控制？</h1>
-<p class="note">日期：2026-06-05</p>
+<article id="report-zh" data-language-panel="zh" lang="zh-CN">
+<h1>Anthropic 的 AI 暂停按钮：安全治理、递归自我改进与监管俘获争议</h1>
+<p class="note">更新日期：2026-06-05</p>
 
-<h2>核心判断</h2>
-<p>Anthropic 这次所谓的 “AI pause button”，表面上是在呼吁给前沿 AI 发展加一个安全刹车：当模型能力增长太快、风险评估不清楚、或者安全措施跟不上时，公司和监管者应该能暂停训练、发布或部署，让人类有时间重新评估。</p>
-<p>但这件事不能只按“安全倡议”理解。更准确地看，它同时是安全治理、行业竞争和政策话语权争夺。</p>
-<blockquote>Anthropic 的安全叙事既有真实成分，也有明显战略利益。它不是简单“假装安全”，而是把真实的 AI 风险包装成一套对自己有利的行业治理框架。</blockquote>
+<div class="callout">
+<p><strong>核心判断：</strong>Anthropic 的 “AI pause button” 不是纯粹骗局，也不是纯粹公益。它是一个真实风险驱动、商业战略放大、政策话语包装的复合动作。安全风险值得认真对待；但由前沿模型公司自己定义风险阈值、自己评估风险、自己决定何时发布，再把这个过程包装成公共利益，天然存在利益冲突。</p>
+</div>
 
-<h2>它到底在说什么</h2>
-<p>Bloomberg 原文无法直接抓取全文，但从标题、Anthropic 公开文件和 Reuters 同日背景看，核心并不是“现在立刻全面暂停 AI”，而是推动一种制度化熔断机制：当模型能力或风险进入不确定、危险、或安全措施不足的区间时，实验室和监管者应该能暂停继续训练或发布。</p>
-<p>这个脉络延续了 Anthropic 的 <a href="https://www.anthropic.com/responsible-scaling-policy">Responsible Scaling Policy</a>。它的基本逻辑是：模型越强，安全要求越高；如果安全措施不够，就不该继续训练或部署。Anthropic 在 2026 年的 RSP 更新中还明确说，即使 RSP 没有强制要求，公司也保留在其认为合适的情况下暂停 AI 系统开发的权利。</p>
-<p>Anthropic 关注的风险主要包括：AI 辅助生物/化学武器、网络攻击、模型自主做 AI 研发导致能力进步失控、模型权重被窃取，以及高级 agent 的不可预测行为。</p>
+<h2>一、事件源头：不是 Bloomberg，而是 Anthropic 自己的长文</h2>
+<p>这次媒体报道的源头是 Anthropic Institute 的 <a href="https://www.anthropic.com/institute/recursive-self-improvement">《When AI builds itself》</a>。Bloomberg、Reuters、WSJ、Fortune、SiliconANGLE 等报道基本都围绕这篇文章展开。</p>
+<p>Anthropic 的原始说法不是“我们现在单方面停”，而是“世界应该有一个能协调、能验证的前沿 AI 暂停/减速选项”。原文说：</p>
+<blockquote>“We believe it would be good for the world to have the option to slow or temporarily pause frontier AI development...”</blockquote>
+<p>它还明确限定：</p>
+<blockquote>“If such systems existed, we expect that we would slow down or temporarily pause, if other developers at or near the frontier also did so in a verifiable manner.”</blockquote>
+<p>所以这不是立即 moratorium，而是一个多边、可验证、带触发条件的“刹车系统”设想。Reuters 的表述比较准确：前沿 AI 开发者应建立 “coordinated, verifiable way to slow down or temporarily pause development” ([Reuters](https://www.reuters.com/business/anthropic-says-ai-labs-need-coordinated-plan-halt-development-if-risks-rise-2026-06-04/))。</p>
 
-<h2>为什么怀疑它有道理</h2>
-<p>如果只把 Anthropic 看成“负责任公司”，会漏掉它的竞争激励。</p>
-<p>第一，它在试图定义“负责任发布”的行业标准。RSP、Risk Report、外部评审、pause button，本质上都在说：前沿模型发布应该经过类似 Anthropic 的流程。谁定义“什么叫安全发布”，谁就能影响其他厂商的发布节奏、监管负担和公众形象。</p>
-<p>第二，它能把自己放在道德高地上。别人发布快，就显得鲁莽；Anthropic 发布慢，就显得负责。反过来，如果 Anthropic 自己领先，也可以说“我们已经满足 safeguards，所以可以发布”。这是一种非常灵活的竞争话术。</p>
-<p>第三，它会提高进入门槛。复杂安全流程、红队、合规报告、外部审查和政府沟通，都是大公司更容易承担的成本。小公司和开源社区更难跟上。安全标准如果设计不好，很容易从公共治理工具变成大公司护城河。</p>
-<p>第四，它有资本市场和政府关系价值。Reuters 同日报道称，Anthropic 正在与美国政府修复关系，并准备 IPO；公司还和白宫、财政部、美国网络安全官员讨论先进模型和关键基础设施防护。在这个背景下，“我们是最安全、最合规的前沿 AI 公司”显然对政府、企业客户和投资者都有用。</p>
-
-<h2>这个怀疑也需要修正</h2>
-<p>把 Anthropic 描述成“纯粹假装”会过强。</p>
-<p>Anthropic 创始团队长期以来确实把 AI safety 当核心身份。它的 RSP、模型风险报告、红队、解释性研究和外部评审，不是 2026 年才突然包装出来的公关材料。</p>
-<p>更重要的是，安全风险本身不是假的。前沿模型在生物、网络攻击、自动化研发、agent 自主行动、权重泄露等方面确实存在越来越现实的高后果风险。即使 Anthropic 有私利，也不代表议题本身不重要。</p>
-<p>此外，其他前沿实验室也在做类似框架。OpenAI 有 Preparedness Framework，Google DeepMind 有 Frontier Safety Framework。也就是说，这不是 Anthropic 独有的道德绑架，而是整个前沿 AI 行业都在争夺“谁是负责任玩家”的标签。</p>
-
-<h2>真正的问题</h2>
-<p>问题不在于 Anthropic 讲安全，而在于：</p>
-<blockquote>如果由模型厂商自己定义风险阈值、自己评估模型是否安全、自己决定何时发布，再把这套标准包装成公共利益，这里面天然有利益冲突。</blockquote>
-<p>这就像食品公司自己定义食品安全标准，药企自己决定药物是否可以上市，金融机构自己判断系统性风险是否可控。不是说它们一定撒谎，而是它们不应该拥有最终解释权。</p>
-<p>Anthropic 自己也承认一个关键难点：模型是否跨过风险阈值经常处在 ambiguous zone。评估科学还不成熟，很多测试既不能强有力证明风险低，也不能强有力证明风险高。在这种情况下，“暂停按钮”很容易变成主观判断、监管游说和行业话语权的混合物。</p>
-
-<h2>更合理的治理方向</h2>
-<p>如果真的要有 AI 暂停机制，它不能只是 Anthropic 或任何一家模型公司的内部政策。更健康的机制至少需要：</p>
+<h2>二、Anthropic 给出的证据：比公关口号具体，但仍不足以证明结论</h2>
+<p>Anthropic 这次最强的部分，是它披露了内部研发流程已经被 Claude 大幅改变。</p>
 <ul>
-<li>风险阈值不能只由单家公司定义。</li>
-<li>模型评估需要独立第三方参与。</li>
-<li>不同厂商的评估口径应尽量可比。</li>
-<li>安全要求不能变成大公司压制小公司和开源社区的合规武器。</li>
-<li>暂停机制需要明确触发条件、申诉机制和透明披露。</li>
-<li>政府、学界、产业、开源社区都应参与，而不是让少数前沿实验室垄断“负责任 AI”的定义权。</li>
+<li>截至 2026 年 5 月，超过 80% 合并进 Anthropic 代码库的代码由 Claude 撰写。</li>
+<li>2026 年二季度，典型工程师每天合并代码量约为 2024 年的 8 倍。</li>
+<li>内部调查中，130 名研究团队员工对 Mythos Preview 的主观产出提升中位数约为 4 倍，但 Anthropic 自己承认真实提升可能较低。</li>
+<li>Claude 在开放式 coding 任务中的成功率 2026 年 5 月达到 76%，六个月内提升 50 个百分点；但这个成功率由 Claude judge 判定，存在自评偏差。</li>
 </ul>
+<p>这些证据能支持一个较强结论：AI 正在自动化前沿实验室里大量“执行型研发工作”。但它不能直接证明“递归自我改进已经接近不可避免”。最关键缺口仍是 research taste、目标选择、长期战略判断、真实科学发现迁移能力。</p>
+<p>外部证据也需要校准。Anthropic 引用 METR time horizon，称模型可靠完成任务的时间跨度约每四个月翻倍。但 METR 明确说明，time horizon 不是“模型能连续自主运行多久”，而是人类专家完成该任务所需时间对应的难度；任务分布也主要集中在软件工程、机器学习和网络安全 ([METR](https://metr.org/time-horizons))。</p>
+<p>METR 2025 年对有经验开源开发者的 RCT 甚至发现，允许使用 AI 工具后开发者完成任务慢了 19%，且开发者仍主观以为 AI 让自己变快 ([METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study))。这不是说 Anthropic 的数据是假，而是说明内部高度 AI-native 工作流不能直接外推到普通软件团队或整个经济。</p>
 
-<h2>一句话总结</h2>
-<p>Anthropic 的 “pause button” 不是纯粹骗局，也不是纯粹公益。它更像是把真实 AI 风险转化成一套对自己有利的行业规则：既可能提高安全性，也可能帮助 Anthropic 占据道德高地、影响监管、抬高竞争门槛，并间接控制其他厂商的发布节奏。</p>
+<h2>三、为什么 RSP v3 是理解这件事的关键</h2>
+<p>2026 年 2 月，Anthropic 重写了 Responsible Scaling Policy。旧 RSP 曾被外界理解为：如果安全措施跟不上能力阈值，Anthropic 会暂停训练或部署。v3 后，这种“硬暂停承诺”被弱化，改为 Risk Reports、Frontier Safety Roadmaps 和行业级建议。</p>
+<p>GovAI 的总结很直接：</p>
+<blockquote>“Anthropic also dropped its pause commitment.” ([GovAI](https://www.governance.ai/analysis/anthropics-rsp-v3-0-how-it-works-whats-changed-and-some-reflections))</blockquote>
+<p>但 GovAI 同时认为：承认现实约束，比保留一个未来大概率不会执行的承诺更诚实。Holden Karnofsky 在 LessWrong 上也承认，RSP v3 最大变化就是从“必要时单边暂停”的 implied unilateral commitments 转向更灵活的机制 ([LessWrong](https://www.lesswrong.com/posts/HzKuzrKfaDJvQqmjh/responsible-scaling-policy-v3))。</p>
+<p>这解释了 Anthropic 6 月长文的潜台词：<strong>我们不会做无效的单边自我牺牲，但我们希望世界建立一种让主要玩家一起停、并能互相验证的机制。</strong></p>
 
-<h2>参考背景</h2>
+<h2>四、监管俘获：怀疑有合理性，但不能简化成阴谋论</h2>
+<p>David Sacks 曾公开指控 Anthropic：</p>
+<blockquote>“Anthropic is running a sophisticated regulatory capture strategy based on fear-mongering.” ([X/Tavily excerpt](https://x.com/DavidSacks/status/1978145266269077891?lang=en))</blockquote>
+<p>开源社区也有类似担忧。r/LocalLLaMA 上的典型评论是：监管会让新创业公司更难融资，让大公司更稳固；Anthropic 这类公司可能是在“stop the competition before it can catch up” ([Reddit](https://old.reddit.com/r/LocalLLaMA/comments/1ggp2q6/anthropic_calls_for_ai_regulation_sooner/))。</p>
+<p>这个怀疑有机制基础：</p>
 <ul>
-<li><a href="https://www.anthropic.com/responsible-scaling-policy">Anthropic Responsible Scaling Policy updates</a></li>
-<li><a href="https://www.anthropic.com/news/responsible-scaling-policy-v3">Anthropic Responsible Scaling Policy Version 3.0</a></li>
-<li><a href="https://www.anthropic.com/news/core-views-on-ai-safety">Anthropic Core Views on AI Safety</a></li>
-<li><a href="https://www.reuters.com/business/aerospace-defense/blacklisted-ai-company-anthropic-white-house-ease-tensions-ahead-ipo-sources-say-2026-06-05/">Reuters: Anthropic and White House ease tensions ahead of IPO</a></li>
+<li>安全评估、红队、风险报告、外部审查、政府沟通，都是大公司更容易承担的固定成本。</li>
+<li>Anthropic 接近 IPO，Reuters 报道其近期融资后估值约 9650 亿美元，并已 confidentially filed for U.S. IPO。</li>
+<li>Reuters 同日报道 Anthropic 正与白宫、财政部、网络安全官员修复关系，并参与前沿模型与关键基础设施安全讨论 ([Reuters](https://www.reuters.com/business/aerospace-defense/blacklisted-ai-company-anthropic-white-house-ease-tensions-ahead-ipo-sources-say-2026-06-05/))。</li>
+<li>“可验证暂停”如果进入政策，会天然影响其他厂商的发布节奏和合规负担。</li>
 </ul>
-</article>
+<p>但“纯粹是假装”又过头。Anthropic 从成立起就以 AI safety 为核心身份；递归自我改进、模型权重安全、生物/网络滥用、AI R&D 自动化，也确实是严肃风险议题。OpenAI 和 Google DeepMind 也有类似 Preparedness / Frontier Safety Framework，说明这是整个前沿 AI 行业在争夺“负责任玩家”的合法性，而不是 Anthropic 单独发明的话术 ([OpenAI](https://openai.com/safety/), [Google DeepMind](https://deepmind.google/discover/blog/introducing-the-frontier-safety-framework/))。</p>
 
-<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
-<h1>Anthropic's AI Pause Button: Safety Proposal or Industry Tempo Control?</h1>
-<p class="note">Date: 2026-06-05</p>
+<h2>五、意见领袖和社区反应</h2>
+<p>AI safety 社区的批评重点不是“不要安全”，而是“Anthropic 的承诺还值不值得信”。Zvi Mowshowitz 写道：</p>
+<blockquote>“From this point, there are no commitments, only statements of intent.” ([Zvi](https://thezvi.substack.com/p/anthropic-responsible-scaling-policy))</blockquote>
+<p>Yudkowsky 和 Max Tegmark 所在的 pause 阵营，本来就更支持暂停。Future of Life Institute 2023 年公开信呼吁所有 AI labs 暂停至少 6 个月训练强于 GPT-4 的系统，并要求 public and verifiable pause ([FLI](https://futureoflife.org/open-letter/pause-giant-ai-experiments/))。Yudkowsky 甚至认为 6 个月还不够，应该 indefinite and worldwide ([TIME](https://time.com/6266923/ai-eliezer-yudkowsky-open-letter-not-enough/))。</p>
+<p>反监管/加速派则担心 pause 不可执行且伤害创新。Yann LeCun 和 Andrew Ng 在 2023 年关于 6 个月暂停的讨论中就认为暂停不现实、不可实施、会伤害人类进步 ([LessWrong transcript](https://www.lesswrong.com/posts/fKfNTkdqsckdMusTb/ng-and-lecun-on-the-6-month-pause-transcript))。a16z/Marc Andreessen 的政策主张也倾向于“regulate AI use, not AI development”，认为监管模型开发会伤害 startups ([a16z](https://a16z.com/regulate-ai-use-not-ai-development/))。</p>
+<p>Hacker News 和 Reddit 的工程师/开源社区反应更现实主义：很多人怀疑这是 IPO roadshow，也有人指出 >80% AI-written code 可能只是更多 verbose code，真正要看代码质量、review bottleneck 和实际事故率 ([HN](https://news.ycombinator.com/item?id=48400842))。</p>
 
-<h2>Core View</h2>
-<p>Anthropic's proposed “AI pause button” is framed as a safety brake for frontier AI: when model capabilities advance too quickly, when risk evaluation is unclear, or when safeguards lag behind, companies and regulators should be able to pause training, release, or deployment so society can reassess.</p>
-<p>But this should not be read only as a safety proposal. It is also a move in safety governance, industry competition, and policy agenda-setting.</p>
-<blockquote>Anthropic's safety narrative has both real substance and clear strategic value. It is not simply pretending to care about safety; it is turning real AI risks into an industry governance framework that also benefits Anthropic.</blockquote>
+<h2>六、最终判断</h2>
+<p>把这件事拆开看，会更清楚：</p>
+<ol>
+<li><strong>真实风险层：</strong>AI 已经在前沿实验室里自动化大量执行型研发工作，研发组织形态正在变化。</li>
+<li><strong>证据外推层：</strong>从“AI 写很多代码、能跑实验”到“完整递归自我改进即将到来”之间仍有重要缺口。</li>
+<li><strong>治理设计层：</strong>单边暂停大概率无效；真正难题是多国、多公司、可验证、可触发、可解除的暂停机制。</li>
+<li><strong>战略利益层：</strong>Anthropic 的安全框架也服务于它的商业地位：抬高合规门槛、影响对手节奏、增强政府/企业客户信任，并在 IPO 前强化“负责任前沿 AI 公司”形象。</li>
+</ol>
+<p>所以更准确的结论是：<strong>Anthropic 把真实 AI 风险转化为一套对自己有利的治理语言。</strong>这不等于它在撒谎；但也不能天真地把它当作纯粹公共利益。</p>
 
-<h2>What It Is Saying</h2>
-<p>The Bloomberg article itself was not directly accessible, but based on the headline, Anthropic's public materials, and same-day Reuters reporting, the point is not “pause all AI now.” The proposal is closer to an institutional circuit breaker: when model capability or risk enters an uncertain or dangerous zone, or when safeguards are inadequate, labs and regulators should be able to pause further training or release.</p>
-<p>This follows Anthropic's <a href="https://www.anthropic.com/responsible-scaling-policy">Responsible Scaling Policy</a>. The logic is simple: more capable models require stronger safeguards; if safeguards are not adequate, the model should not continue to be trained or deployed. Anthropic's 2026 RSP updates also clarify that the company may pause development whenever it considers that appropriate, even if the RSP does not strictly require it.</p>
-<p>The risks Anthropic emphasizes include AI-assisted biological and chemical weapons, cyberattacks, autonomous AI R&D acceleration, model-weight theft, and unpredictable behavior from advanced agents.</p>
-
-<h2>Why The Skepticism Is Reasonable</h2>
-<p>If we see Anthropic only as a “responsible company,” we miss its competitive incentives.</p>
-<p>First, Anthropic is trying to define what “responsible release” means. RSPs, Risk Reports, external review, and pause buttons all imply that frontier model releases should follow a process resembling Anthropic's own. Whoever defines safe release can influence competitors' release cadence, regulatory burden, and public reputation.</p>
-<p>Second, this places Anthropic on moral high ground. If others release faster, they can be portrayed as reckless. If Anthropic releases more slowly, it can be portrayed as responsible. If Anthropic happens to be ahead, it can say that it has satisfied the safeguards and therefore can release. That is a flexible competitive narrative.</p>
-<p>Third, it can raise entry barriers. Complex safety processes, red-teaming, compliance reports, external review, and government engagement are easier for large companies to absorb. Startups and open-source communities have a harder time matching them. If designed poorly, safety standards can become incumbent moats.</p>
-<p>Fourth, it has capital-market and government-relations value. Reuters reported the same day that Anthropic is repairing relations with the U.S. government and preparing for an IPO. The company has also discussed advanced models and critical infrastructure protection with White House, Treasury, and cyber officials. In that context, being perceived as the safest and most compliant frontier AI company is valuable to governments, enterprise customers, and investors.</p>
-
-<h2>Where The Skepticism Needs Correction</h2>
-<p>Calling Anthropic's position “purely fake” goes too far.</p>
-<p>Anthropic's founding team has treated AI safety as a core identity for years. Its RSP, model risk reports, red-teaming, interpretability research, and external review efforts are not a sudden 2026 PR invention.</p>
-<p>More importantly, the underlying risks are real. Frontier models are increasingly relevant to biosecurity, cybersecurity, automated R&D, autonomous agents, and model-weight security. Even if Anthropic has strategic interests, that does not make the safety issue fake.</p>
-<p>Other frontier labs are also building similar frameworks. OpenAI has its Preparedness Framework, and Google DeepMind has its Frontier Safety Framework. This is not only Anthropic's moral leverage. It is a broader contest among frontier AI companies over who gets recognized as the responsible actor.</p>
-
-<h2>The Real Problem</h2>
-<p>The problem is not that Anthropic talks about safety. The problem is this:</p>
-<blockquote>If model developers define the risk thresholds, evaluate their own models, decide when they are safe to release, and then package that process as public interest, there is an unavoidable conflict of interest.</blockquote>
-<p>This is similar to food companies defining food safety standards, pharmaceutical companies deciding whether their own drugs should be approved, or financial institutions judging whether their own activities pose systemic risk. They are not necessarily lying, but they should not hold final interpretive authority.</p>
-<p>Anthropic itself has acknowledged a key difficulty: models often sit in an ambiguous zone around risk thresholds. The science of evaluation is still immature. Many tests cannot strongly prove that risks are low, but they also cannot strongly prove that risks are high. Under those conditions, a pause button can easily become a mixture of subjective judgment, regulatory lobbying, and industry narrative control.</p>
-
-<h2>A Better Governance Direction</h2>
-<p>If AI pause mechanisms are needed, they cannot be merely internal policies at Anthropic or any other model lab. A healthier system would require:</p>
+<h2>参考来源</h2>
 <ul>
-<li>Risk thresholds that are not defined by one company alone.</li>
-<li>Independent third-party participation in model evaluation.</li>
-<li>Comparable evaluation standards across developers.</li>
-<li>Safety requirements that do not become compliance weapons against startups and open source.</li>
-<li>Clear pause triggers, appeal mechanisms, and transparent disclosure.</li>
-<li>Participation from government, academia, industry, and open-source communities, rather than letting a few frontier labs monopolize the definition of “responsible AI.”</li>
-</ul>
-
-<h2>Bottom Line</h2>
-<p>Anthropic's “pause button” is neither a pure scam nor pure public service. It is better understood as an attempt to translate real AI risks into an industry rulebook that also benefits Anthropic. It may improve safety, but it may also help Anthropic occupy moral high ground, shape regulation, raise barriers to entry, and indirectly influence the release tempo of other AI labs.</p>
-
-<h2>References</h2>
-<ul>
-<li><a href="https://www.anthropic.com/responsible-scaling-policy">Anthropic Responsible Scaling Policy updates</a></li>
-<li><a href="https://www.anthropic.com/news/responsible-scaling-policy-v3">Anthropic Responsible Scaling Policy Version 3.0</a></li>
-<li><a href="https://www.anthropic.com/news/core-views-on-ai-safety">Anthropic Core Views on AI Safety</a></li>
-<li><a href="https://www.reuters.com/business/aerospace-defense/blacklisted-ai-company-anthropic-white-house-ease-tensions-ahead-ipo-sources-say-2026-06-05/">Reuters: Anthropic and White House ease tensions ahead of IPO</a></li>
+<li><a href="https://www.anthropic.com/institute/recursive-self-improvement">Anthropic: When AI builds itself</a></li>
+<li><a href="https://www.reuters.com/business/anthropic-says-ai-labs-need-coordinated-plan-halt-development-if-risks-rise-2026-06-04/">Reuters: coordinated plan to halt development</a></li>
+<li><a href="https://news.bloomberglaw.com/tech-and-telecom-law/anthropic-calls-for-ai-pause-button-to-let-humans-take-stock">Bloomberg Law: AI pause button</a></li>
+<li><a href="https://siliconangle.com/2026/06/04/anthropic-calls-global-pause-ai-development-humans-lose-control/">SiliconANGLE: global pause and regulatory capture debate</a></li>
+<li><a href="https://www.governance.ai/analysis/anthropics-rsp-v3-0-how-it-works-whats-changed-and-some-reflections">GovAI: Anthropic RSP v3 analysis</a></li>
+<li><a href="https://www.lesswrong.com/posts/HzKuzrKfaDJvQqmjh/responsible-scaling-policy-v3">Holden Karnofsky: RSP v3</a></li>
+<li><a href="https://thezvi.substack.com/p/anthropic-responsible-scaling-policy">Zvi: A Matter of Trust</a></li>
+<li><a href="https://futureoflife.org/open-letter/pause-giant-ai-experiments/">Future of Life Institute: Pause Giant AI Experiments</a></li>
+<li><a href="https://metr.org/time-horizons">METR time horizons</a></li>
+<li><a href="https://news.ycombinator.com/item?id=48400842">Hacker News discussion</a></li>
 </ul>
 </article>
 
-<script>(function () {
-  var storageKey = "workspace-share-report-language";
-  var buttons = document.querySelectorAll("[data-language-choice]");
-  var panels = document.querySelectorAll("[data-language-panel]");
+<article id="report-en" data-language-panel="en" lang="en" hidden>
+<h1>Anthropic's AI Pause Button: Safety Governance, Recursive Self-Improvement, and the Regulatory Capture Debate</h1>
+<p class="note">Updated: 2026-06-05</p>
 
-  function preferredLanguage() {
-    try {
-      return localStorage.getItem(storageKey) || "zh";
-    } catch (error) {
-      return "zh";
-    }
-  }
+<div class="callout"><p><strong>Bottom line:</strong> Anthropic's “AI pause button” is neither a simple scam nor pure public service. It is a compound move: driven by real technical risk, amplified by commercial strategy, and packaged as policy language. The risks deserve attention, but letting frontier AI companies define risk thresholds, evaluate themselves, and decide when to release systems creates an unavoidable conflict of interest.</p></div>
 
-  function saveLanguage(language) {
-    try {
-      localStorage.setItem(storageKey, language);
-    } catch (error) {
-      return;
-    }
-  }
+<h2>1. The Source Is Anthropic, Not Bloomberg</h2>
+<p>The real source is Anthropic Institute's <a href="https://www.anthropic.com/institute/recursive-self-improvement">“When AI builds itself”</a>. Bloomberg, Reuters, WSJ, Fortune, and SiliconANGLE are all reacting to that post.</p>
+<p>Anthropic is not saying “we are unilaterally stopping now.” It is saying the world should have a coordinated and verifiable option to slow or pause frontier AI development:</p>
+<blockquote>“We believe it would be good for the world to have the option to slow or temporarily pause frontier AI development...”</blockquote>
+<p>And it qualifies its own willingness to pause:</p>
+<blockquote>“If such systems existed, we expect that we would slow down or temporarily pause, if other developers at or near the frontier also did so in a verifiable manner.”</blockquote>
+<p>Reuters captured this more carefully than many headlines: Anthropic wants a “coordinated, verifiable way to slow down or temporarily pause development” ([Reuters](https://www.reuters.com/business/anthropic-says-ai-labs-need-coordinated-plan-halt-development-if-risks-rise-2026-06-04/)).</p>
 
-  function setLanguage(language) {
-    var resolvedLanguage = language === "en" ? "en" : "zh";
-    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+<h2>2. The Evidence Is Concrete, But Not Conclusive</h2>
+<p>Anthropic's strongest contribution is not abstract doom rhetoric. It disclosed internal evidence that Claude is already reshaping Anthropic's own R&D workflow.</p>
+<ul>
+<li>As of May 2026, more than 80% of code merged into Anthropic's codebase was authored by Claude.</li>
+<li>In Q2 2026, the typical engineer merged about 8x as much code per day as in 2024.</li>
+<li>An internal poll of 130 research staff estimated a median 4x output uplift with Mythos Preview, though Anthropic says the true uplift is likely lower.</li>
+<li>Claude's success rate on open-ended coding tasks reached 76% in May 2026, though the success metric is judged by Claude, creating possible evaluator bias.</li>
+</ul>
+<p>This supports a strong claim: AI is automating much of the execution layer of frontier AI R&D. It does not yet prove that full recursive self-improvement is imminent. The missing pieces are research taste, goal selection, long-horizon judgment, and transfer to genuinely novel scientific work.</p>
+<p>METR's time-horizon metric also needs care. It measures task difficulty in terms of how long a human expert takes to complete a task; it is not a direct measure of how long an agent can autonomously operate. METR also notes that the task distribution is mainly software engineering, ML, and cybersecurity ([METR](https://metr.org/time-horizons)).</p>
+<p>External productivity evidence is mixed. A 2025 METR RCT found experienced open-source developers were 19% slower when allowed to use AI tools, while still believing AI had sped them up ([METR](https://metr.org/blog/2025-07-10-early-2025-ai-experienced-os-dev-study)). Anthropic may be a highly optimized AI-native environment, not a representative software organization.</p>
 
-    panels.forEach(function (panel) {
-      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
-    });
+<h2>3. RSP v3 Is The Key Background</h2>
+<p>In February 2026, Anthropic rewrote its Responsible Scaling Policy. The old RSP was widely read as a commitment to pause training or deployment if safeguards lagged behind capability thresholds. RSP v3 weakened that hard-pause interpretation and shifted toward Risk Reports, Frontier Safety Roadmaps, and industry-wide recommendations.</p>
+<blockquote>“Anthropic also dropped its pause commitment.” ([GovAI](https://www.governance.ai/analysis/anthropics-rsp-v3-0-how-it-works-whats-changed-and-some-reflections))</blockquote>
+<p>GovAI also argued that being honest about constraints may be better than keeping commitments that will not be followed in practice. Holden Karnofsky similarly acknowledged that the biggest RSP v3 shift was moving away from implied unilateral commitments to pause AI development or deployment ([LessWrong](https://www.lesswrong.com/posts/HzKuzrKfaDJvQqmjh/responsible-scaling-policy-v3)).</p>
+<p>This is the subtext of the June post: Anthropic is not offering unilateral self-sacrifice. It is saying that if society wants a pause, it needs a mechanism that makes major labs stop together and verify one another.</p>
 
-    buttons.forEach(function (button) {
-      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
-      button.setAttribute("aria-pressed", String(isActive));
-    });
+<h2>4. Regulatory Capture: Reasonable Concern, Not A Complete Explanation</h2>
+<p>David Sacks's accusation is the blunt version:</p>
+<blockquote>“Anthropic is running a sophisticated regulatory capture strategy based on fear-mongering.” ([X/Tavily excerpt](https://x.com/DavidSacks/status/1978145266269077891?lang=en))</blockquote>
+<p>Open-source communities make a similar argument: every new compliance burden makes it harder for startups and open-source projects, while incumbents absorb the cost. A r/LocalLLaMA discussion summarized the suspicion as “stop the competition before it can catch up” ([Reddit](https://old.reddit.com/r/LocalLLaMA/comments/1ggp2q6/anthropic_calls_for_ai_regulation_sooner/)).</p>
+<p>This concern has a real mechanism. Safety evaluations, red teams, risk reports, external reviews, and government relationships are fixed costs that favor large labs. Reuters also reported that Anthropic is near IPO, valued around $965B, and is repairing relations with the U.S. government while discussing frontier model security and critical infrastructure ([Reuters](https://www.reuters.com/business/aerospace-defense/blacklisted-ai-company-anthropic-white-house-ease-tensions-ahead-ipo-sources-say-2026-06-05/)).</p>
+<p>But “it is all fake” is too simplistic. Anthropic has had a safety-centered identity from its founding. Recursive self-improvement, model-weight security, bio/cyber misuse, and automated AI R&D are real issues. OpenAI and Google DeepMind have their own preparedness and frontier safety frameworks, so this is an industry-wide contest over who gets to be seen as the responsible actor ([OpenAI](https://openai.com/safety/), [Google DeepMind](https://deepmind.google/discover/blog/introducing-the-frontier-safety-framework/)).</p>
 
-    saveLanguage(resolvedLanguage);
-  }
+<h2>5. Expert And Community Reactions</h2>
+<p>The AI safety community's critique is not “safety is bad.” It is that Anthropic's commitments may no longer be credible. Zvi Mowshowitz writes:</p>
+<blockquote>“From this point, there are no commitments, only statements of intent.” ([Zvi](https://thezvi.substack.com/p/anthropic-responsible-scaling-policy))</blockquote>
+<p>The stronger pause camp, including Future of Life Institute, Max Tegmark, and Eliezer Yudkowsky, has historically wanted more aggressive pauses, not fewer. FLI's 2023 open letter called for a public and verifiable six-month pause on training systems more powerful than GPT-4 ([FLI](https://futureoflife.org/open-letter/pause-giant-ai-experiments/)); Yudkowsky argued that even this was not enough and called for an indefinite worldwide moratorium ([TIME](https://time.com/6266923/ai-eliezer-yudkowsky-open-letter-not-enough/)).</p>
+<p>Accelerationist and anti-regulatory voices worry that pauses are impractical and harmful. Yann LeCun and Andrew Ng argued against the 2023 six-month pause as unrealistic and damaging to progress ([LessWrong transcript](https://www.lesswrong.com/posts/fKfNTkdqsckdMusTb/ng-and-lecun-on-the-6-month-pause-transcript)). a16z's policy view is closer to “regulate AI use, not AI development,” warning that model-development regulation harms startups ([a16z](https://a16z.com/regulate-ai-use-not-ai-development/)).</p>
+<p>Developer communities are more skeptical and operational: is this an IPO roadshow, is 80% AI-written code just verbose code, what happens to code quality, review bottlenecks, and incident rates? Hacker News captured this practical skepticism well ([HN](https://news.ycombinator.com/item?id=48400842)).</p>
 
-  buttons.forEach(function (button) {
-    button.addEventListener("click", function () {
-      setLanguage(button.getAttribute("data-language-choice"));
-    });
-  });
+<h2>6. Final Assessment</h2>
+<ol>
+<li><strong>Real risk:</strong> AI is already automating a large share of execution-level R&D inside frontier labs.</li>
+<li><strong>Extrapolation gap:</strong> Current evidence does not yet prove near-term full recursive self-improvement.</li>
+<li><strong>Governance challenge:</strong> A unilateral pause is probably ineffective; a multilateral, verifiable, trigger-based pause is extremely hard.</li>
+<li><strong>Strategic value:</strong> Anthropic's safety framework also helps its competitive position by raising compliance costs, shaping release norms, strengthening government/enterprise trust, and supporting its responsible-lab brand before IPO.</li>
+</ol>
+<p>The best one-sentence version: <strong>Anthropic is converting real AI risk into governance language that also benefits Anthropic.</strong> That does not mean it is lying. It does mean we should not treat its preferred governance framework as neutral public interest.</p>
 
-  setLanguage(preferredLanguage());
-})();</script>
+<h2>Sources</h2>
+<ul>
+<li><a href="https://www.anthropic.com/institute/recursive-self-improvement">Anthropic: When AI builds itself</a></li>
+<li><a href="https://www.reuters.com/business/anthropic-says-ai-labs-need-coordinated-plan-halt-development-if-risks-rise-2026-06-04/">Reuters: coordinated plan to halt development</a></li>
+<li><a href="https://news.bloomberglaw.com/tech-and-telecom-law/anthropic-calls-for-ai-pause-button-to-let-humans-take-stock">Bloomberg Law: AI pause button</a></li>
+<li><a href="https://siliconangle.com/2026/06/04/anthropic-calls-global-pause-ai-development-humans-lose-control/">SiliconANGLE: global pause and regulatory capture debate</a></li>
+<li><a href="https://www.governance.ai/analysis/anthropics-rsp-v3-0-how-it-works-whats-changed-and-some-reflections">GovAI: Anthropic RSP v3 analysis</a></li>
+<li><a href="https://www.lesswrong.com/posts/HzKuzrKfaDJvQqmjh/responsible-scaling-policy-v3">Holden Karnofsky: RSP v3</a></li>
+<li><a href="https://thezvi.substack.com/p/anthropic-responsible-scaling-policy">Zvi: A Matter of Trust</a></li>
+<li><a href="https://futureoflife.org/open-letter/pause-giant-ai-experiments/">Future of Life Institute: Pause Giant AI Experiments</a></li>
+<li><a href="https://metr.org/time-horizons">METR time horizons</a></li>
+<li><a href="https://news.ycombinator.com/item?id=48400842">Hacker News discussion</a></li>
+</ul>
+</article>
+
+<script>(function(){var k="workspace-share-report-language";var b=document.querySelectorAll("[data-language-choice]");var p=document.querySelectorAll("[data-language-panel]");function g(){try{return localStorage.getItem(k)||"zh"}catch(e){return"zh"}}function s(l){try{localStorage.setItem(k,l)}catch(e){}}function set(l){var r=l==="en"?"en":"zh";document.documentElement.lang=r==="en"?"en":"zh-CN";p.forEach(function(x){x.hidden=x.getAttribute("data-language-panel")!==r});b.forEach(function(x){x.setAttribute("aria-pressed",String(x.getAttribute("data-language-choice")===r))});s(r)}b.forEach(function(x){x.addEventListener("click",function(){set(x.getAttribute("data-language-choice"))})});set(g())})();</script>
 </body>
 </html>
