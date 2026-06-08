@@ -1,0 +1,461 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Fivetran 与 dbt Labs 合并：数据栈整合的机会，以及 dbt Core 的真正风险</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>Fivetran 与 dbt Labs 合并：数据栈整合的机会，以及 dbt Core 的真正风险</h1>
+<p>Fivetran 和 dbt Labs 的交易不应该被简单理解成“Fivetran 收购 dbt”。更准确地说，这是两家现代数据栈核心公司在公开市场窗口不确定、AI 叙事重塑软件估值、数据平台竞争加剧的背景下，用全股票方式合并成一个更大的数据基础设施平台。</p>
+<p>这笔交易的短期重点是规模和产品拼图：数据移动、转换、元数据、语义上下文、激活和质量控制被放进同一个 “Open Data Infrastructure for AI agents” 叙事。长期真正要看的，是它会不会把 dbt 的开放生态升级成更强的开放标准，还是把开放叙事变成一个更大的商业控制面。</p>
+<h2>交易事实</h2>
+<p>Fivetran 在 2025 年 10 月 13 日宣布与 dbt Labs 签署 definitive agreement，以全股票方式合并。官方公告称，合并后 George Fraser 将担任 CEO，dbt Labs CEO Tristan Handy 将担任 co-founder and President，合并公司 ARR 接近 6 亿美元。来源：<a href="https://www.fivetran.com/press/fivetran-and-dbt-labs-unite-to-set-the-standard-for-open-data-infrastructure-2025">Fivetran 官方公告</a>。</p>
+<p>Reuters 的报道补充了交易结构：换股比例与收入和增长率相关；Fivetran 最近一次公开估值是 2021 年 56 亿美元，dbt Labs 最近一轮是 2022 年 42 亿美元；双方共同投资人包括 Andreessen Horowitz。来源：<a href="https://finance.yahoo.com/news/a16z-backed-data-firms-fivetran-140301503.html">Reuters via Yahoo Finance</a>。</p>
+<blockquote>
+<p>“The deal is structured as an all-stock exchange based on an agreed ratio tied to revenues and growth rates...”</p>
+</blockquote>
+<p>2026 年 6 月 1 日，Fivetran 宣布合并完成。合并后初期以 <code>Fivetran + dbt Labs</code> 运营，并称服务全球超过 100,000 个数据团队。来源：<a href="https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents">Fivetran 完成合并公告</a>。</p>
+<h2>为什么这笔交易发生</h2>
+<p>最直接的商业逻辑是客户和工作流高度重叠。Fivetran 管数据进入仓库或湖仓，dbt 管数据转换、测试、文档和语义建模。Reuters 引用 George Fraser 的说法，估计 Fivetran 客户中 80% 到 90% 使用 dbt 工具。来源：<a href="https://finance.yahoo.com/news/a16z-backed-data-firms-fivetran-140301503.html">Reuters via Yahoo Finance</a>。</p>
+<blockquote>
+<p>“Fraser estimated that 80% to 90% of Fivetran's customers use dbt's tools.”</p>
+</blockquote>
+<p>如果这个比例接近真实，合并就不只是横向规模扩张，而是把企业数据管道中最常一起出现的两个层合并成一个销售和产品平台。</p>
+<p>更深一层，是现代数据栈正在从 “best-of-breed 工具拼装” 转向更少 vendor、更强集成和更清晰责任边界。过去几年，企业数据团队往往用 Fivetran/Airbyte 做 ingestion，用 dbt 做 transformation，用 Airflow/Dagster 做 orchestration，用 Monte Carlo/Great Expectations 做 quality，用 Census/Hightouch 做 activation。这个组合灵活，但也带来合同、权限、lineage、incident ownership 和成本归因的复杂度。</p>
+<p>Fivetran 的新叙事是：企业 AI agents 需要一个可靠、新鲜、治理过、带语义上下文的数据基础层。合并完成公告中，Fivetran 明确说 AI agents 正在成为企业数据的主要消费者，它们连续、并行、以机器速度运行，因此底层数据必须 reliable、fresh、governed、accessible。来源：<a href="https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents">Fivetran 完成合并公告</a>。</p>
+<blockquote>
+<p>“AI agents are quickly becoming the primary consumers of enterprise data... requiring it to be reliable, fresh, governed, and accessible across every system in the enterprise.”</p>
+</blockquote>
+<p>这让 Fivetran + dbt 的故事从“帮你做 analytics pipeline”升级成“帮 AI agents 可信地使用企业数据”。</p>
+<h2>Fivetran 在补完整个数据生命周期</h2>
+<p>这笔合并不是孤立事件。Fivetran 在 2025-2026 年连续扩张到数据栈其他层：Census 代表 activation / reverse ETL，Tobiko 代表 SQLMesh / SQLGlot 和高级 transformation，Great Expectations / GX Core steward 计划代表 data quality，dbt Labs 则代表 transformation 标准和 analytics engineering 社区。</p>
+<p>Gradient/MarTech 把这称为 Fivetran 五个月内第三笔并购或合并，并指出此前包括 Census 和 Tobiko Data。来源：<a href="https://gradientgroup.com/data-infrastructure-consolidation-continues-as-fivetran-dbt-labs-merge">Gradient Group / MarTech</a>。</p>
+<p>从战略上看，Fivetran 不再满足于只做 ELT 里的 E 和 L。它想控制从数据进入、变换、校验、解释、激活到 AI context 的完整控制面。</p>
+<p>这也解释了为什么它反复强调 “open”。如果 Fivetran 只是做一个封闭套件，它会直接撞上 Snowflake、Databricks、Google、AWS 和 Microsoft 的平台控制力。它必须把自己包装成跨云、跨引擎、跨 catalog、跨 BI 和 AI 工具的中立基础设施层。Fivetran 官方博客强调 open table formats、shared metadata、decoupling storage from compute，以及 across clouds, engines, catalogs 的互操作。来源：<a href="https://www.fivetran.com/blog/the-era-of-open-data-infrastructure">Fivetran 产品博客</a>。</p>
+<blockquote>
+<p>“Open standards have matured... decoupling storage from compute and enabling reliable interoperability across clouds, engines, and catalogs.”</p>
+</blockquote>
+<h2>dbt Core 的风险不是明天改许可证</h2>
+<p>交易宣布时，Fivetran 承诺保持 dbt Core 在当前许可证下开放，并与社区一起维护。来源：<a href="https://www.fivetran.com/press/fivetran-and-dbt-labs-unite-to-set-the-standard-for-open-data-infrastructure-2025">Fivetran 官方公告</a>。</p>
+<blockquote>
+<p>“the company is committed to keeping dbt Core open under its current license and maintaining it with and for the community”</p>
+</blockquote>
+<p>Fivetran 同日产品博客说得更明确：dbt Core 将继续按当前许可证开源并无限期支持维护；dbt Fusion engine 也会继续 source-available；SQLMesh 和 SQLGlot 继续开源。来源：<a href="https://www.fivetran.com/blog/the-era-of-open-data-infrastructure">Fivetran 产品博客</a>。</p>
+<blockquote>
+<p>“dbt Core will remain open source under its current license and will continue to be supported and maintained indefinitely.”</p>
+</blockquote>
+<p>更重要的是，合并完成当天 dbt 发布 <code>dbt Core v2.0 alpha</code>，称已经把大量 Fusion runtime 代码放进 <code>dbt-core</code>，并以 Apache 2.0 开源。来源：<a href="https://docs.getdbt.com/blog/dbt-core-v2-is-here">dbt Developer Blog</a>。</p>
+<blockquote>
+<p>“Today, we published the first alpha release of dbt Core version 2.0... dbt Core's code is completely open source under the Apache 2.0 license.”</p>
+</blockquote>
+<p>这是一个很强的正面信号。它说明 Fivetran + dbt 没有只做 “旧 Core 维持不死” 的低配承诺，而是把新的 Rust/Fusion runtime 核心部分给了开源 Core。</p>
+<p>但这不等于风险消失。真正的风险从 “dbt Core 明天会不会改许可证” 变成了三个更慢、更实际的问题：</p>
+<ol>
+<li>Core 是否会继续得到实质创新，还是只保留为合规和社区信任的基础层？</li>
+<li>最好的开发体验、agent workflow、metadata/context 和 cost optimization 是否逐渐集中到 Fusion / dbt platform / Fivetran bundle？</li>
+<li>dbt Core 的治理是否仍是 company-controlled OSS，还是会走向更中立、更可参与的治理？</li>
+</ol>
+<p>dbt 自己的 v2.0 文章也承认，官方认为大多数用户应该安装 Fusion，因为它是更好的免费本地和生产 CLI，并且有更多能力；部分高级功能需要免费登录或付费账号解锁。来源：<a href="https://docs.getdbt.com/blog/dbt-core-v2-is-here">dbt Developer Blog</a>。</p>
+<blockquote>
+<p>“For the best free dbt CLI you can use locally and in production environments, install Fusion... some are totally free to use, and other premium features are unlocked with a free login or payment method.”</p>
+</blockquote>
+<p>所以要看的不是许可证口号，而是未来两年 Core、Fusion、Cloud 和 Fivetran 平台之间的功能分配。</p>
+<h2>外部批评的合理部分</h2>
+<p>Nexla 的批评是，Apache 2.0 只能保护已经发布的代码，不能保证未来创新、品牌、社区空间和 roadmap。来源：<a href="https://nexla.com/blog/open-source-vs-saas-fivetran-dbt-merger">Nexla</a>。</p>
+<blockquote>
+<p>“The license protects what's already released. It doesn't guarantee future innovation.”</p>
+</blockquote>
+<p>这句话是对的。开源许可证不是产品路线图，也不是治理机制。Fivetran 现在控制的不只是代码，还有 dbt 品牌、主仓库、文档、社区入口、商业销售路径和产品默认分发。</p>
+<p>Datacoves 的观点更克制：它相信 dbt Core 许可证不会改变，因为改许可证会造成社区分裂和 goodwill 损失；但它也认为未来重心不是 dbt Core，而是 Fusion。来源：<a href="https://datacoves.com/post/dbt-fivetran">Datacoves</a>。</p>
+<blockquote>
+<p>“dbt Labs and Fivetran have both stated that dbt Core's license would not change, and I believe them... The future vision for dbt is not dbt Core, but instead dbt Fusion.”</p>
+</blockquote>
+<p>我更接近这个判断：短期 license panic 可能过度了，但长期商业重心偏移是真问题。</p>
+<h2>第一批联合产品透露了方向</h2>
+<p>合并完成时，Fivetran + dbt Labs 同时发布了几类新东西：</p>
+<ol>
+<li><code>dbt Core v2.0 alpha</code>：Fusion runtime 进入 Apache 2.0 Core。</li>
+<li><code>dbt State</code>：只 build 发生变化的部分，官方称可降低底层基础设施成本 30% 或更多。</li>
+<li><code>dbt Wizard</code>：面向 dbt 项目的 agent，做模型编写、重构和调试。</li>
+<li><code>Agents Schema</code>：把 metric definitions、semantic models、dbt lineage 和业务文档放进 SQL tables，作为 AI agents 的共享上下文层。</li>
+</ol>
+<p>来源：<a href="https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents">Fivetran 完成合并公告</a>、<a href="https://www.fivetran.com/blog/fivetran-dbt-an-open-agent-ready-future-for-data-teams">Fivetran 产品博客</a>。</p>
+<p>这些产品说明，Fivetran + dbt 不是只想把 EL 和 T 接起来。它想把 “数据如何被 agent 理解、验证、跳过重复计算、生成 SQL、追踪 lineage” 做成新的控制面。</p>
+<p>这就是机会，也是风险。机会是数据团队真的需要更少 glue code 和更好的上下文层。风险是上下文层一旦变成 vendor-controlled，迁移成本会比 connector 或 SQL model 高得多。</p>
+<h2>谁受益，谁承压</h2>
+<p>短期受益最明显的是已经同时使用 Fivetran 和 dbt 的企业。它们可能得到更顺的合同、更紧的产品集成、更少的责任扯皮，以及一个更清晰的 AI data foundation 采购故事。</p>
+<p>Fivetran 和 dbt 自己也受益。合并后的 ARR 规模更接近未来 IPO 候选体；Fivetran 获得 dbt 的品牌、社区和 transformation 标准；dbt 获得更强的企业销售、数据移动能力和平台资源。</p>
+<p>承压的是独立工具生态。Airbyte、dlt、Hightouch、Dagster、Kestra、Dataform、SQLMesh、各类 data quality 和 semantic layer 工具，都要面对一个更完整、更有销售资源的 Fivetran + dbt。与此同时，它们也会拿 “保持开放、避免锁定” 作为反击点。</p>
+<p>Snowflake、Databricks 和云厂商的关系更复杂。Fivetran + dbt 既是它们的生态伙伴，也是潜在控制面竞争者。如果 Fivetran + dbt 成为跨平台 business logic 和 agent context 层，warehouse/lakehouse 的差异化就会被部分抽象掉；但如果云厂商把更多 ingestion、transformation、governance 和 AI agent 功能内建进去，Fivetran + dbt 也会被挤压。</p>
+<h2>给数据团队的实际建议</h2>
+<p>短期不用恐慌迁移。dbt Core 没有消失，v2.0 alpha 反而是积极信号。现有 Fivetran + dbt 工作流也不会因为合并立刻变坏。</p>
+<p>但采购和架构上要更清醒：</p>
+<ol>
+<li>观察 Core release 节奏、社区 PR 响应、Fusion / Cloud 独占功能比例、bundle pricing，而不是只看 “open” 的口号。</li>
+<li>把关键业务逻辑保留在 Git、标准 SQL、开放表格式和可替换 orchestration 里。</li>
+<li>如果购买 Fivetran + dbt bundle，要问清楚功能边界、价格保护、metadata 导出、合同结束后的运行权利。</li>
+<li>不要把 agent context、semantic layer、lineage 和 quality signals 全部锁进单一 SaaS 控制面，除非商业收益足够明确。</li>
+<li>关注 dbt Core 是否出现更中立的 governance。如果长期仍完全 company-controlled，fork 权利虽然存在，但实际社区迁移成本会很高。</li>
+</ol>
+<h2>最终判断</h2>
+<p>这笔合并是现代数据栈的一次重要拐点。Fivetran 买到的不只是 dbt 的技术，而是 transformation 标准、社区、品牌和客户入口；dbt 得到的也不只是一个新母体，而是更强的企业分发和 AI data infrastructure 叙事。</p>
+<p>最可能的 base case 是：Fivetran + dbt 会继续维持 dbt Core 的开源合法性和基本活跃度，同时把最强商业化能力放到 Fusion、dbt platform、Fivetran managed services 和 AI/agent 产品上。</p>
+<p>所以真正值得盯的不是 “dbt Core 明天会不会改许可证”。更重要的问题是：两年后，最好的 dbt 体验、最完整的 metadata/context、最低的运行成本和最强的 agent workflow，是否仍然能在开放、可替换、可自托管的架构中实现？</p>
+<p>如果答案逐渐变成 “必须买 Fivetran + dbt 的商业栈”，这笔交易就是开放叙事下的平台锁定。如果 <code>dbt Core v2</code>、<code>Agents Schema</code>、Iceberg/SQL 标准和第三方 managed Fusion 真的繁荣，它才可能成为数据基础设施开放标准的一次整合升级。</p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Fivetran and dbt Labs Merge: The Opportunity in Data Stack Consolidation, and the Real Risk for dbt Core</h1>
+<p>The Fivetran and dbt Labs transaction should not be reduced to “Fivetran bought dbt.” A more accurate reading is that two core modern data stack companies merged through an all-stock transaction at a moment when the IPO window remains uncertain, AI is reshaping software valuations, and data platform competition is intensifying.</p>
+<p>The near-term story is scale and product completeness: data movement, transformation, metadata, semantic context, activation, and quality are being pulled into one “Open Data Infrastructure for AI agents” narrative. The long-term question is whether this turns dbt's open ecosystem into a stronger open standard, or whether the open narrative becomes a larger commercial control plane.</p>
+<h2>The Transaction</h2>
+<p>On October 13, 2025, Fivetran announced that it had signed a definitive agreement to merge with dbt Labs in an all-stock deal. The company said George Fraser would serve as CEO, dbt Labs CEO Tristan Handy would become co-founder and President, and the combined company would approach $600 million in ARR. Source: <a href="https://www.fivetran.com/press/fivetran-and-dbt-labs-unite-to-set-the-standard-for-open-data-infrastructure-2025">Fivetran announcement</a>.</p>
+<p>Reuters added more detail on the transaction structure: the stock exchange ratio was tied to revenue and growth rates; Fivetran was last publicly valued at $5.6 billion in 2021, while dbt Labs was valued at $4.2 billion in 2022; and the companies share investors including Andreessen Horowitz. Source: <a href="https://finance.yahoo.com/news/a16z-backed-data-firms-fivetran-140301503.html">Reuters via Yahoo Finance</a>.</p>
+<blockquote>
+<p>“The deal is structured as an all-stock exchange based on an agreed ratio tied to revenues and growth rates...”</p>
+</blockquote>
+<p>On June 1, 2026, Fivetran announced that the merger had closed. The combined company will initially operate as <code>Fivetran + dbt Labs</code> and says it serves more than 100,000 data teams globally. Source: <a href="https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents">Fivetran merger completion announcement</a>.</p>
+<h2>Why the Deal Happened</h2>
+<p>The most direct logic is workflow overlap. Fivetran moves data into warehouses and lakehouses; dbt transforms, tests, documents, and models that data. Reuters quoted George Fraser saying he estimated that 80% to 90% of Fivetran customers use dbt tools. Source: <a href="https://finance.yahoo.com/news/a16z-backed-data-firms-fivetran-140301503.html">Reuters via Yahoo Finance</a>.</p>
+<blockquote>
+<p>“Fraser estimated that 80% to 90% of Fivetran's customers use dbt's tools.”</p>
+</blockquote>
+<p>If that estimate is close, the merger is not only about horizontal scale. It combines two layers that already show up together in enterprise data pipelines into one product and sales platform.</p>
+<p>The deeper reason is that the modern data stack is moving away from a pure best-of-breed assembly model toward fewer vendors, tighter integration, and clearer responsibility boundaries. Over the past few years, data teams commonly used Fivetran or Airbyte for ingestion, dbt for transformation, Airflow or Dagster for orchestration, Monte Carlo or Great Expectations for quality, and Census or Hightouch for activation. That stack is flexible, but it also creates complexity around contracts, permissions, lineage, incident ownership, and cost attribution.</p>
+<p>Fivetran's new narrative is that enterprise AI agents need a reliable, fresh, governed, semantically rich data foundation. In the merger completion announcement, Fivetran said AI agents are becoming primary consumers of enterprise data and operate continuously, in parallel, and at machine speed; therefore the underlying data must be reliable, fresh, governed, and accessible. Source: <a href="https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents">Fivetran merger completion announcement</a>.</p>
+<blockquote>
+<p>“AI agents are quickly becoming the primary consumers of enterprise data... requiring it to be reliable, fresh, governed, and accessible across every system in the enterprise.”</p>
+</blockquote>
+<p>That reframes Fivetran + dbt from an analytics pipeline vendor into a trusted data layer for enterprise AI agents.</p>
+<h2>Fivetran Is Filling Out the Data Lifecycle</h2>
+<p>The dbt Labs merger is not an isolated move. In 2025 and 2026, Fivetran expanded into multiple other parts of the data stack: Census for activation and reverse ETL, Tobiko for SQLMesh / SQLGlot and advanced transformation, Great Expectations / GX Core stewardship for data quality, and dbt Labs for the transformation standard and analytics engineering community.</p>
+<p>Gradient / MarTech described the dbt transaction as Fivetran's third merger or acquisition in five months, after Census and Tobiko Data. Source: <a href="https://gradientgroup.com/data-infrastructure-consolidation-continues-as-fivetran-dbt-labs-merge">Gradient Group / MarTech</a>.</p>
+<p>Strategically, Fivetran is no longer trying to own only the E and L in ELT. It wants to control the broader plane from ingestion to transformation, validation, explanation, activation, and AI context.</p>
+<p>That also explains why it keeps emphasizing “open.” If Fivetran were simply building a closed suite, it would run directly into Snowflake, Databricks, Google, AWS, and Microsoft. It has to position itself as a cross-cloud, cross-engine, cross-catalog, cross-BI and AI-neutral infrastructure layer. Fivetran's product blog emphasized open table formats, shared metadata, decoupling storage from compute, and interoperability across clouds, engines, and catalogs. Source: <a href="https://www.fivetran.com/blog/the-era-of-open-data-infrastructure">Fivetran product blog</a>.</p>
+<blockquote>
+<p>“Open standards have matured... decoupling storage from compute and enabling reliable interoperability across clouds, engines, and catalogs.”</p>
+</blockquote>
+<h2>The Real dbt Core Risk Is Not a License Change Tomorrow</h2>
+<p>When the deal was announced, Fivetran committed to keeping dbt Core open under its current license and maintaining it with the community. Source: <a href="https://www.fivetran.com/press/fivetran-and-dbt-labs-unite-to-set-the-standard-for-open-data-infrastructure-2025">Fivetran announcement</a>.</p>
+<blockquote>
+<p>“the company is committed to keeping dbt Core open under its current license and maintaining it with and for the community”</p>
+</blockquote>
+<p>Fivetran's same-day product blog was even more explicit: dbt Core would remain open source under its current license and continue to be supported and maintained indefinitely; the dbt Fusion engine would remain source-available; SQLMesh and SQLGlot would remain open source. Source: <a href="https://www.fivetran.com/blog/the-era-of-open-data-infrastructure">Fivetran product blog</a>.</p>
+<blockquote>
+<p>“dbt Core will remain open source under its current license and will continue to be supported and maintained indefinitely.”</p>
+</blockquote>
+<p>More importantly, on the day the merger closed, dbt announced <code>dbt Core v2.0 alpha</code>, saying it had moved a large amount of Fusion runtime code into <code>dbt-core</code> under Apache 2.0. Source: <a href="https://docs.getdbt.com/blog/dbt-core-v2-is-here">dbt Developer Blog</a>.</p>
+<blockquote>
+<p>“Today, we published the first alpha release of dbt Core version 2.0... dbt Core's code is completely open source under the Apache 2.0 license.”</p>
+</blockquote>
+<p>That is a strong positive signal. It shows Fivetran + dbt did not merely promise to keep the old Core alive. They moved important new Rust / Fusion runtime code into the open source Core.</p>
+<p>But that does not remove the risk. It changes the risk from “will dbt Core's license change tomorrow?” to three slower, more practical questions:</p>
+<ol>
+<li>Will Core keep receiving real innovation, or will it become the compliance and community-trust baseline?</li>
+<li>Will the best developer experience, agent workflows, metadata/context, and cost optimization move toward Fusion, dbt platform, and Fivetran bundles?</li>
+<li>Will dbt Core remain company-controlled open source, or move toward more neutral, participatory governance?</li>
+</ol>
+<p>dbt's own v2.0 post also says the company expects most users to install Fusion because it is the best free local and production CLI, includes more capabilities, and can unlock some advanced features through free login or paid accounts. Source: <a href="https://docs.getdbt.com/blog/dbt-core-v2-is-here">dbt Developer Blog</a>.</p>
+<blockquote>
+<p>“For the best free dbt CLI you can use locally and in production environments, install Fusion... some are totally free to use, and other premium features are unlocked with a free login or payment method.”</p>
+</blockquote>
+<p>So the issue to watch is not the license slogan. It is how features are allocated across Core, Fusion, Cloud, and the Fivetran platform over the next two years.</p>
+<h2>The Valid Part of the External Criticism</h2>
+<p>Nexla's criticism is that Apache 2.0 protects already-released code, but does not guarantee future innovation, the brand, community spaces, or the roadmap. Source: <a href="https://nexla.com/blog/open-source-vs-saas-fivetran-dbt-merger">Nexla</a>.</p>
+<blockquote>
+<p>“The license protects what's already released. It doesn't guarantee future innovation.”</p>
+</blockquote>
+<p>That point is correct. An open source license is not a product roadmap or a governance model. Fivetran now controls not only the code, but also the dbt brand, main repositories, documentation, community entry points, commercial sales motion, and default distribution path.</p>
+<p>Datacoves takes a more measured view. It says it believes dbt Core's license will not change because doing so would fragment the community and destroy goodwill, but also argues that the future vision for dbt is not Core, but Fusion. Source: <a href="https://datacoves.com/post/dbt-fivetran">Datacoves</a>.</p>
+<blockquote>
+<p>“dbt Labs and Fivetran have both stated that dbt Core's license would not change, and I believe them... The future vision for dbt is not dbt Core, but instead dbt Fusion.”</p>
+</blockquote>
+<p>That is close to my view. Short-term license panic is probably overdone. Long-term commercial center-of-gravity drift is real.</p>
+<h2>The First Joint Products Show the Direction</h2>
+<p>When the merger closed, Fivetran + dbt Labs announced several products:</p>
+<ol>
+<li><code>dbt Core v2.0 alpha</code>: Fusion runtime enters Apache 2.0 Core.</li>
+<li><code>dbt State</code>: builds only what changed; Fivetran says it can reduce underlying infrastructure cost by 30% or more.</li>
+<li><code>dbt Wizard</code>: an agent for dbt projects that helps with model authoring, refactoring, and debugging.</li>
+<li><code>Agents Schema</code>: a SQL-table-based context layer for metric definitions, semantic models, dbt lineage, and business documentation.</li>
+</ol>
+<p>Sources: <a href="https://www.fivetran.com/press/fivetran-dbt-labs-complete-merger-to-create-the-data-infrastructure-for-trusted-ai-agents">Fivetran merger completion announcement</a>, <a href="https://www.fivetran.com/blog/fivetran-dbt-an-open-agent-ready-future-for-data-teams">Fivetran product blog</a>.</p>
+<p>These products show that Fivetran + dbt is not merely connecting EL and T. It is trying to define a new control plane for how agents understand, validate, skip redundant compute, generate SQL, and trace lineage.</p>
+<p>That is both the opportunity and the risk. Data teams do need less glue code and a better context layer. But if that context layer becomes vendor-controlled, the switching cost may be much higher than the switching cost of a connector or a SQL model.</p>
+<h2>Who Benefits, Who Comes Under Pressure</h2>
+<p>The most obvious near-term beneficiaries are enterprises already using both Fivetran and dbt. They may get cleaner contracting, tighter product integration, less incident finger-pointing, and a clearer AI data foundation procurement story.</p>
+<p>Fivetran and dbt also benefit. The combined ARR base looks more like a future IPO candidate; Fivetran gets dbt's brand, community, and transformation standard; dbt gets stronger enterprise distribution, data movement capabilities, and a larger platform narrative.</p>
+<p>The pressure falls on the independent tool ecosystem. Airbyte, dlt, Hightouch, Dagster, Kestra, Dataform, SQLMesh, data quality vendors, and semantic layer vendors now face a more complete and better-resourced Fivetran + dbt. At the same time, they will use “stay open and avoid lock-in” as their counter-positioning.</p>
+<p>The relationship with Snowflake, Databricks, and cloud vendors is more complex. Fivetran + dbt is both ecosystem partner and potential control-plane competitor. If it becomes the cross-platform layer for business logic and agent context, some warehouse and lakehouse differentiation gets abstracted away. But if cloud data platforms keep building ingestion, transformation, governance, and AI-agent features natively, Fivetran + dbt will face pressure from below and above.</p>
+<h2>Practical Advice for Data Teams</h2>
+<p>There is no need to panic-migrate in the short term. dbt Core is not disappearing, and v2.0 alpha is a positive signal. Existing Fivetran + dbt workflows will not break just because the merger closed.</p>
+<p>But procurement and architecture decisions should become more deliberate:</p>
+<ol>
+<li>Watch Core release cadence, community PR response, the ratio of Fusion / Cloud-exclusive features, and bundle pricing, not just “open” messaging.</li>
+<li>Keep critical business logic in Git, standard SQL, open table formats, and replaceable orchestration.</li>
+<li>If buying a Fivetran + dbt bundle, ask about feature boundaries, price protection, metadata export, and runtime rights after contract expiration.</li>
+<li>Do not lock all agent context, semantic layer, lineage, and quality signals into a single SaaS control plane unless the business value is clearly worth it.</li>
+<li>Watch whether dbt Core develops more neutral governance. If it remains fully company-controlled, fork rights exist in theory, but the practical community migration cost will be high.</li>
+</ol>
+<h2>Final View</h2>
+<p>This merger is an important turning point for the modern data stack. Fivetran did not only get dbt's technology. It got the transformation standard, the community, the brand, and the customer entry point. dbt did not only get a new parent company. It got stronger enterprise distribution and a larger AI data infrastructure narrative.</p>
+<p>The most likely base case is that Fivetran + dbt will keep dbt Core open and reasonably active, while putting the strongest commercial energy into Fusion, dbt platform, Fivetran managed services, and AI/agent products.</p>
+<p>So the question to watch is not “will dbt Core's license change tomorrow?” The better question is: two years from now, can the best dbt experience, the richest metadata/context layer, the lowest operating cost, and the strongest agent workflow still be achieved in an open, replaceable, self-hostable architecture?</p>
+<p>If the answer gradually becomes “you need to buy the Fivetran + dbt commercial stack,” then this deal becomes platform lock-in under an open narrative. If <code>dbt Core v2</code>, <code>Agents Schema</code>, Iceberg / SQL standards, and third-party managed Fusion all thrive, then it could become a genuine consolidation upgrade for open data infrastructure.</p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
