@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Loop Engineering 是 hype 吗？</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>Loop Engineering 是 hype 吗？</h1>
+<p>最近 <code>Loop Engineering</code> 突然变成 AI coding 圈的热词。我的判断是：<strong>名字有明显 hype，方向不是空的。</strong></p>
+<p>它不是一个全新的底层技术，而是把过去几年已有的 agent loop、反馈闭环、自动化调度、工具调用、持久状态、验证/评估、sub-agents、worktree 隔离、skills 和 context engineering 重新包装成一句更容易传播的话：开发者不再只是写 prompt，而是在写会自动 prompt agent 的 loop。</p>
+<p>更实用的定义是：</p>
+<blockquote>
+<p>Loop engineering = 给 AI agent 设计一个可重复运行的闭环系统：触发条件 + 上下文获取 + 行动 + 观察/验证 + 状态记录 + retry/stop 规则 + 人类升级路径。</p>
+</blockquote>
+<p>如果去掉包装，它更像 agent workflow / control loop / feedback loop engineering。真正有价值的部分不是 <code>loop</code> 这个词，而是你是否把验证、状态、权限、停止条件和成本控制设计清楚。</p>
+<h2>为什么现在突然火</h2>
+<p>直接导火索是 Claude Code 负责人 Boris Cherny 的一句话。Rohan Paul 在 X 上传播的片段被 Digg 归档，原帖显示 2026 年 6 月 6 日，约 230 万 views。Boris 说：</p>
+<blockquote>
+<p>"I don't prompt Claude anymore. I have loops running that prompt Claude and figuring out what to do. My job is to write loops. And this is transition we're going to see for the rest of the year."</p>
+</blockquote>
+<p>来源：<a href="https://digg.com/ai/v1igoqs7">Digg / Rohan Paul 对 X 帖的归档</a>。</p>
+<p>这句话很适合传播，因为它把“prompt engineering 过时了吗？”转成了更高一层的“系统设计才是新工作”。</p>
+<p>第二个放大器是 Addy Osmani 2026 年 6 月 7 日的文章《Loop Engineering》。他开篇定义：</p>
+<blockquote>
+<p>"Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead."</p>
+</blockquote>
+<p>来源：<a href="https://addyosmani.com/blog/loop-engineering">Addy Osmani, Loop Engineering</a>。</p>
+<p>Addy 同时引用 Peter Steinberger：</p>
+<blockquote>
+<p>“You shouldn’t be prompting coding agents anymore. You should be designing loops that prompt your agents.”</p>
+</blockquote>
+<p>然后他把 loop 拆成几个产品化 primitive：automations、worktrees、skills、plugins/connectors、sub-agents、state。一个松散现象因此变成了可讨论的工程类别。</p>
+<p>第三个背景是 Peter Steinberger / OpenClaw 的故事已经给了一个样板。Pragmatic Engineer 在 2026 年 1 月 28 日访谈 Peter，标题就是《The creator of Clawd: "I ship code I don't read"》。文章总结 Peter 的方法：</p>
+<blockquote>
+<p>“Close the loop: AI agents must be able to verify their own work. Peter designs systems so agents can compile, lint, execute, and validate output themselves.”</p>
+</blockquote>
+<p>来源：<a href="https://newsletter.pragmaticengineer.com/p/the-creator-of-clawd-i-ship-code">The Pragmatic Engineer</a>。</p>
+<p>这条线比这几天更早。6 月真正发生的是 Boris 的表达、Addy 的命名、X 的传播和工具产品成熟度在同一时间碰到了一起。</p>
+<h2>它到底是什么</h2>
+<p>Prompt engineering 是“我这一次怎么问模型”。Loop engineering 是“我设计一个系统，让它定期或持续地决定该问什么、拿什么上下文、执行什么动作、怎么验证、什么时候停”。</p>
+<p>一个可工作的 loop 至少包含：</p>
+<ol>
+<li>Trigger：cron、automation、事件、CI failure、PR update、Slack/GitHub/Linear 变化。</li>
+<li>Context：repo、issue、日志、测试结果、历史状态、skills、<code>AGENTS.md</code> / <code>CLAUDE.md</code> / <code>CODEX.md</code>。</li>
+<li>Action：让 agent 搜索、改代码、开 PR、更新 ticket、生成报告、调用工具。</li>
+<li>Verification：测试、lint、build、browser check、API call、LLM reviewer、人工审批。</li>
+<li>State：markdown、Linear、数据库、Triage inbox、session notes。</li>
+<li>Stop / retry rules：通过条件、最大迭代、成本预算、无进展检测、升级给人。</li>
+</ol>
+<p>底层的 <code>agent loop</code> 不是新东西。Oracle 对 agent loop 的解释是：</p>
+<blockquote>
+<p>“The AI agent loop is the iterative execution cycle at the core of every agentic AI system... This process repeats until the task is complete or a defined stopping condition is reached.”</p>
+</blockquote>
+<p>来源：<a href="https://blogs.oracle.com/developers/what-is-the-ai-agent-loop-the-core-architecture-behind-autonomous-ai-systems">Oracle Developers</a>。</p>
+<p>Loop engineering 更偏应用层：不是只写一个 agent while-loop，而是在真实工程环境里设计这个循环如何触发、如何拿信息、如何验收、如何留下状态、如何控制风险。</p>
+<p>Anthropic 早在 2024 年的《Building effective agents》就说：</p>
+<blockquote>
+<p>“Agents can handle sophisticated tasks, but their implementation is often straightforward. They are typically just LLMs using tools based on environmental feedback in a loop.”</p>
+</blockquote>
+<p>并且建议：</p>
+<blockquote>
+<p>“find the simplest solution possible, and only increasing complexity when needed.”</p>
+</blockquote>
+<p>来源：<a href="https://www.anthropic.com/research/building-effective-agents">Anthropic, Building effective agents</a>。</p>
+<p>Anthropic 2025 年的 context engineering 文章又把 agents 定义为：</p>
+<blockquote>
+<p>“LLMs autonomously using tools in a loop.”</p>
+</blockquote>
+<p>来源：<a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic, Effective context engineering for AI agents</a>。</p>
+<p>Martin Fowler / Thoughtworks 的 Kief Morris 在 2026 年 3 月提出“humans on the loop”：</p>
+<blockquote>
+<p>“The right place for us humans is to build and manage the working loop rather than either leaving the agents to it or micromanaging what they produce.”</p>
+</blockquote>
+<p>来源：<a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">Humans and Agents in Software Engineering Loops</a>。</p>
+<p>所以 <code>Loop Engineering</code> 不是凭空出现的革命词，而是 agent/harness/context/eval/observability 讨论的一个更口语、更适合传播的包装。</p>
+<h2>两个具体例子</h2>
+<h3>例子一：PR / CI babysitter loop</h3>
+<p>这是最合理、最不玄学的一类 loop。</p>
+<p>目标：让 agent 自动盯一个 PR 或某个 repo 的 CI 状态，处理低风险反馈，把需要人判断的事升级。</p>
+<p>它可以这样运行：</p>
+<ol>
+<li>Trigger：每 20 分钟或每次 GitHub PR 更新触发。</li>
+<li>Context：读取 PR diff、review comments、CI logs、最近提交、项目 skill。</li>
+<li>Action：如果是格式、测试快照、类型错误、明显 lint 问题，开 worktree 修改。</li>
+<li>Verification：跑最小相关 test/lint/build；必要时让 reviewer subagent 检查 diff。</li>
+<li>State：在 PR comment 或 <code>pr_babysitter.md</code> 记录已尝试动作和未解决问题。</li>
+<li>Stop：CI 绿了就停；重复失败 2 次或涉及架构、安全、产品语义就标记给人。</li>
+</ol>
+<p>OpenAI Codex Automations docs 给了很接近的官方用途：thread automations 适合 “checking a long-running command until it finishes”、“polling Slack, GitHub, or another connected source”、“running a skill-driven workflow that uses plugins, such as checking PR status and addressing new feedback”。来源：<a href="https://developers.openai.com/codex/app/automations">OpenAI Codex Automations</a>。</p>
+<p>这不是“让 AI 自己写完整产品”，而是把工程师平时会做的 PR babysitting 变成可审计、可停止、可复用的后台工作流。</p>
+<h3>例子二：每日 issue / CI / bug triage loop</h3>
+<p>目标：每天早上 agent 扫一遍项目，找出值得处理的问题，并只对低风险事项自动修复。</p>
+<p>它可以这样运行：</p>
+<ol>
+<li>Trigger：每天 8:00。</li>
+<li>Context：昨天 CI 失败、open issues、最近 commits、error logs、release notes。</li>
+<li>Action：分类成“可自动修”、“需要人判断”、“噪音/重复”。对可自动修的 bug 开 worktree 生成 patch。</li>
+<li>Verification：跑 targeted test，失败则记录原因并放弃，不无限 retry。</li>
+<li>State：写入 Linear board 或 repo 内 markdown，标记今天做过什么、哪些留给人。</li>
+<li>Stop：当天任务完成或 token/time budget 到达。</li>
+</ol>
+<p>Addy Osmani 文中给的示例非常接近：</p>
+<blockquote>
+<p>“An automation runs every morning on the repo. Its prompt calls a triage skill that reads yesterdays CI failures, the open issues, the recent commits, and writes the findings into a markdown file or a Linear board.”</p>
+</blockquote>
+<p>来源：<a href="https://addyosmani.com/blog/loop-engineering">Addy Osmani, Loop Engineering</a>。</p>
+<p>这个例子说明 loop 的价值不在“模型更聪明”，而在“重复性维护工作有了闭环”：发现问题、尝试修、验证、记录、升级。</p>
+<h2>哪些部分是 hype</h2>
+<p>第一，术语本身有包装感。很多内容早就叫 agent loop、workflow automation、feedback loop、harness engineering、eval/observability。</p>
+<p>第二，“不用 prompt 了”有夸张成分。loop 里面仍然有 prompt，只是 prompt 被模板化、调度化、状态化了。</p>
+<p>第三，社交媒体叙事容易过头。Boris 的 viral clip、Peter 的“我不读代码也 ship”、OpenClaw 的热度都天然适合制造 FOMO。</p>
+<p>第四，成功案例有强者偏差。Peter 这类人本来就是强工程师、强架构判断、强产品 taste；他的 loop 能跑，不代表普通团队复制同样 autonomy 就安全。</p>
+<h2>哪些部分是真的</h2>
+<p>第一，从单次 prompt 到长期工作流，是实际范式变化。当 agent 能调用工具、读日志、跑测试、开 PR、跨 session 留状态，工程师确实从“每一步都手动问”转向“设计可验证的自动化”。</p>
+<p>第二，产品能力已经支持。OpenAI Codex 有 Automations、Worktrees、Skills、Subagents；Claude Code 生态也有 hooks、skills、MCP、记忆和工具调用。这不是纯 PPT。</p>
+<p>OpenAI Codex 官方文档对 Automations 的描述是：</p>
+<blockquote>
+<p>“Automate recurring tasks in the background. Codex adds findings to the inbox, or automatically archives the task if there’s nothing to report. You can combine automations with skills for more complex tasks.”</p>
+</blockquote>
+<p>来源：<a href="https://developers.openai.com/codex/app/automations">OpenAI Codex Automations</a>。</p>
+<p>对 subagents 的描述是：</p>
+<blockquote>
+<p>“Codex can run subagent workflows by spawning specialized agents in parallel and then collecting their results in one response.”</p>
+</blockquote>
+<p>来源：<a href="https://developers.openai.com/codex/subagents">OpenAI Codex Subagents</a>。</p>
+<p>第三，反馈闭环对 coding agent 特别重要。Anthropic 明确指出 coding agents 有价值，因为代码可通过 tests 验证，agent 可用测试结果迭代。来源：<a href="https://www.anthropic.com/research/building-effective-agents">Anthropic, Building effective agents</a>。</p>
+<p>第四，即使 AI 热度下降，投资 feedback loop 也不浪费。Daniel Demmel 的观点很中肯：observability、structured logging、browser testing、database verification、clear CLI interfaces 本来就是好工程实践，只是现在也让 agent 更好用。来源：<a href="https://www.danieldemmel.me/blog/feedback-loop-engineering">Feedback loop engineering</a>。</p>
+<h2>风险和边界</h2>
+<p>第一，成本会失控。Oracle 的 agent loop 文章估算：agent 大约消耗标准 chat 4x tokens，多 agent 系统可到 15x，并强调需要 token/cost budgets、max iteration、no-progress detection。来源：<a href="https://blogs.oracle.com/developers/what-is-the-ai-agent-loop-the-core-architecture-behind-autonomous-ai-systems">Oracle Developers</a>。</p>
+<p>所以 loop engineering 的第一条不是“让它一直跑”，而是“让它知道什么时候停”。</p>
+<p>第二，错误会复利。MojoTech 警告 unchecked AI feedback loops 会让小错误沉淀为系统性脆弱性、架构漂移、技能退化。来源：<a href="https://www.mojotech.com/blog/ai-feedback-loops-when-faster-software-development-quietly-turns-against-you">MojoTech</a>。如果 loop 的验证只是“模型觉得自己做完了”，那它不是工程闭环，是自动化幻觉。</p>
+<p>第三，人不是消失，而是位置上移。Addy Osmani 自己也提醒：</p>
+<blockquote>
+<p>“The loop changes the work, it does not delete you from it.”</p>
+</blockquote>
+<p>来源：<a href="https://addyosmani.com/blog/loop-engineering">Addy Osmani, Loop Engineering</a>。</p>
+<p>更准确的说法是，人从 inner coding loop 里逐行检查，移动到“on the loop”：设计和管理工作闭环。</p>
+<p>第四，不适合所有任务。Anthropic 的建议很明确：能用简单 prompt、workflow、deterministic pipeline 解决，就不要上复杂 autonomous agent。只有任务步数不可预知、需要根据中间结果调整、且 latency/cost 可接受时，loop 才值得。来源：<a href="https://www.anthropic.com/research/building-effective-agents">Anthropic, Building effective agents</a>。</p>
+<h2>什么时候值得做 loop</h2>
+<p>值得做：</p>
+<ol>
+<li>任务重复发生，且每次上下文类似。</li>
+<li>有明确验收条件，比如 tests/lint/build/CI/HTTP check/browser check。</li>
+<li>失败可安全回滚或隔离，比如 worktree、draft PR、staging 环境。</li>
+<li>人类判断只需要处理少数升级事件。</li>
+<li>有状态记录，下一次运行能知道上次做了什么。</li>
+</ol>
+<p>不值得做：</p>
+<ol>
+<li>一次性任务，手动 prompt 更快。</li>
+<li>需求还没想清楚，验收条件模糊。</li>
+<li>错误代价高，比如生产写操作、权限/安全变更、财务动作。</li>
+<li>没有测试、日志、observability，agent 无法看到真实反馈。</li>
+<li>loop 的运行成本高于人工处理成本。</li>
+</ol>
+<h2>最终判断</h2>
+<p><code>Loop Engineering</code> 这个词会有一段 hype，因为它抓住了开发者从 prompt 到 agent workflow 的焦虑。但它背后的方向是真问题：当 coding agent 变得更强，工程瓶颈从“怎么写一句好 prompt”移动到“怎么设计一个可验证、可停止、可审计、可复用的工作闭环”。</p>
+<p>我会把它看成一个实用但需要降噪的概念：不要把它当新宗教，不要让 loop 替代工程判断，可以从很小、很 boring 的 loop 开始，比如 PR babysitter、CI triage、daily bug scan。</p>
+<p>真正要投资的是 tests、observability、CLI-accessible tools、state/memory、permissions、stop conditions。</p>
+<p>一句话：<strong>名字是 hype，做法是工程化 agent 的自然下一步。</strong></p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Is Loop Engineering Just Hype?</h1>
+<p><code>Loop Engineering</code> has suddenly become a hot term in AI coding circles. My view: <strong>the name is clearly hype, but the direction is real.</strong></p>
+<p>It is not a brand-new primitive. It repackages several things that have already been developing for years: agent loops, feedback loops, automation schedules, tool use, persistent state, verification and evaluation, sub-agents, worktree isolation, skills, and context engineering. What changed is the framing: developers are no longer just writing prompts; they are writing loops that prompt agents automatically.</p>
+<p>A more useful definition is:</p>
+<blockquote>
+<p>Loop engineering = designing a repeatable closed-loop system for AI agents: trigger + context retrieval + action + observation/verification + state + retry/stop rules + human escalation.</p>
+</blockquote>
+<p>Strip away the branding and it looks more like agent workflow engineering, control-loop design, or feedback-loop engineering. The valuable part is not the word <code>loop</code>; it is whether verification, state, permissions, stopping conditions, and cost controls are designed well.</p>
+<h2>Why It Became Hot Now</h2>
+<p>The immediate spark was a quote from Boris Cherny, the head of Claude Code. Digg archived Rohan Paul's X post from June 6, 2026, which showed about 2.3 million views. Boris said:</p>
+<blockquote>
+<p>"I don't prompt Claude anymore. I have loops running that prompt Claude and figuring out what to do. My job is to write loops. And this is transition we're going to see for the rest of the year."</p>
+</blockquote>
+<p>Source: <a href="https://digg.com/ai/v1igoqs7">Digg archive of Rohan Paul's X post</a>.</p>
+<p>The line spread because it turns a familiar anxiety, “is prompt engineering already obsolete?”, into a higher-level claim: system design is the new work.</p>
+<p>The second amplifier was Addy Osmani's June 7, 2026 essay, “Loop Engineering.” He opens with this definition:</p>
+<blockquote>
+<p>"Loop engineering is replacing yourself as the person who prompts the agent. You design the system that does it instead."</p>
+</blockquote>
+<p>Source: <a href="https://addyosmani.com/blog/loop-engineering">Addy Osmani, Loop Engineering</a>.</p>
+<p>Addy also cites Peter Steinberger:</p>
+<blockquote>
+<p>“You shouldn’t be prompting coding agents anymore. You should be designing loops that prompt your agents.”</p>
+</blockquote>
+<p>Then he breaks the loop into product primitives: automations, worktrees, skills, plugins/connectors, sub-agents, and state. That turned a loose phenomenon into something that feels like an engineering category.</p>
+<p>The third background factor is that Peter Steinberger and OpenClaw had already provided a working story. On January 28, 2026, The Pragmatic Engineer published an interview titled “The creator of Clawd: ‘I ship code I don't read.’” The article summarizes Peter's approach this way:</p>
+<blockquote>
+<p>“Close the loop: AI agents must be able to verify their own work. Peter designs systems so agents can compile, lint, execute, and validate output themselves.”</p>
+</blockquote>
+<p>Source: <a href="https://newsletter.pragmaticengineer.com/p/the-creator-of-clawd-i-ship-code">The Pragmatic Engineer</a>.</p>
+<p>That thread predates the recent spike. What happened in June is that Boris's line, Addy's naming, X distribution, and product readiness all collided at the same time.</p>
+<h2>What It Actually Is</h2>
+<p>Prompt engineering is “how do I ask the model this time?” Loop engineering is “how do I design a system that periodically or continuously decides what to ask, what context to gather, what action to take, how to verify it, and when to stop?”</p>
+<p>A working loop usually has at least six parts:</p>
+<ol>
+<li>Trigger: cron, automation, event, CI failure, PR update, Slack/GitHub/Linear change.</li>
+<li>Context: repo, issue, logs, test results, historical state, skills, <code>AGENTS.md</code> / <code>CLAUDE.md</code> / <code>CODEX.md</code>.</li>
+<li>Action: search, edit code, open PRs, update tickets, generate reports, call tools.</li>
+<li>Verification: tests, lint, build, browser checks, API calls, LLM reviewer, human approval.</li>
+<li>State: markdown, Linear, database, triage inbox, session notes.</li>
+<li>Stop / retry rules: success criteria, max iterations, cost budget, no-progress detection, human escalation.</li>
+</ol>
+<p>The underlying <code>agent loop</code> is not new. Oracle describes it this way:</p>
+<blockquote>
+<p>“The AI agent loop is the iterative execution cycle at the core of every agentic AI system... This process repeats until the task is complete or a defined stopping condition is reached.”</p>
+</blockquote>
+<p>Source: <a href="https://blogs.oracle.com/developers/what-is-the-ai-agent-loop-the-core-architecture-behind-autonomous-ai-systems">Oracle Developers</a>.</p>
+<p>Loop engineering is more of an application-layer practice. It is not just writing an agent while-loop. It is designing how that loop is triggered in a real engineering environment, how it gets information, how it proves its work, how it records state, and how it controls risk.</p>
+<p>Anthropic was already saying this in its 2024 essay “Building effective agents”:</p>
+<blockquote>
+<p>“Agents can handle sophisticated tasks, but their implementation is often straightforward. They are typically just LLMs using tools based on environmental feedback in a loop.”</p>
+</blockquote>
+<p>Anthropic also recommends:</p>
+<blockquote>
+<p>“find the simplest solution possible, and only increasing complexity when needed.”</p>
+</blockquote>
+<p>Source: <a href="https://www.anthropic.com/research/building-effective-agents">Anthropic, Building effective agents</a>.</p>
+<p>In 2025, Anthropic's context engineering article described agents as:</p>
+<blockquote>
+<p>“LLMs autonomously using tools in a loop.”</p>
+</blockquote>
+<p>Source: <a href="https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents">Anthropic, Effective context engineering for AI agents</a>.</p>
+<p>Kief Morris, writing on Martin Fowler's site in March 2026, framed the human role as being “on the loop”:</p>
+<blockquote>
+<p>“The right place for us humans is to build and manage the working loop rather than either leaving the agents to it or micromanaging what they produce.”</p>
+</blockquote>
+<p>Source: <a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">Humans and Agents in Software Engineering Loops</a>.</p>
+<p>So <code>Loop Engineering</code> is not a revolution that appeared from nowhere. It is a more conversational, viral wrapper around agent, harness, context, evaluation, and observability practices that were already converging.</p>
+<h2>Two Concrete Examples</h2>
+<h3>Example 1: A PR / CI Babysitter Loop</h3>
+<p>This is probably the most practical and least mystical kind of loop.</p>
+<p>Goal: let an agent watch a PR or repository CI state, handle low-risk feedback, and escalate judgment calls to a human.</p>
+<p>It could run like this:</p>
+<ol>
+<li>Trigger: every 20 minutes or on every GitHub PR update.</li>
+<li>Context: read the PR diff, review comments, CI logs, recent commits, and project skill.</li>
+<li>Action: for formatting issues, snapshot updates, type errors, or obvious lint failures, create an isolated worktree and patch the issue.</li>
+<li>Verification: run the smallest relevant test/lint/build; optionally ask a reviewer subagent to inspect the diff.</li>
+<li>State: record attempted actions and unresolved issues in a PR comment or <code>pr_babysitter.md</code>.</li>
+<li>Stop: stop when CI is green; escalate after two repeated failures or whenever architecture, security, or product semantics are involved.</li>
+</ol>
+<p>OpenAI's Codex Automations docs describe very similar uses: thread automations are useful for “checking a long-running command until it finishes,” “polling Slack, GitHub, or another connected source,” and “running a skill-driven workflow that uses plugins, such as checking PR status and addressing new feedback.” Source: <a href="https://developers.openai.com/codex/app/automations">OpenAI Codex Automations</a>.</p>
+<p>This is not “AI builds the whole product alone.” It is turning PR babysitting into a reviewable, stoppable, reusable background workflow.</p>
+<h3>Example 2: A Daily Issue / CI / Bug Triage Loop</h3>
+<p>Goal: every morning, an agent scans the project, identifies issues worth handling, and only auto-fixes low-risk items.</p>
+<p>It could run like this:</p>
+<ol>
+<li>Trigger: every day at 8:00.</li>
+<li>Context: yesterday's CI failures, open issues, recent commits, error logs, and release notes.</li>
+<li>Action: classify items as “safe to auto-fix,” “needs human judgment,” or “noise/duplicate.” For safe bugs, open a worktree and draft a patch.</li>
+<li>Verification: run targeted tests; if they fail, record the reason and stop rather than retry forever.</li>
+<li>State: write to a Linear board or repo markdown file, recording what was attempted and what remains for a human.</li>
+<li>Stop: finish the day's run or stop when the token/time budget is reached.</li>
+</ol>
+<p>Addy Osmani gives a similar example:</p>
+<blockquote>
+<p>“An automation runs every morning on the repo. Its prompt calls a triage skill that reads yesterdays CI failures, the open issues, the recent commits, and writes the findings into a markdown file or a Linear board.”</p>
+</blockquote>
+<p>Source: <a href="https://addyosmani.com/blog/loop-engineering">Addy Osmani, Loop Engineering</a>.</p>
+<p>The point is not that the model is magically smarter. The point is that repetitive maintenance work now has a closed loop: discover, attempt, verify, record, escalate.</p>
+<h2>What Is Hype</h2>
+<p>First, the term itself is packaged. Much of this was already called agent loops, workflow automation, feedback loops, harness engineering, evaluation, and observability.</p>
+<p>Second, “I don't prompt anymore” is exaggerated. The prompts still exist inside the loop. They have just been templated, scheduled, stateful, and wrapped in control logic.</p>
+<p>Third, the social-media narrative is easy to overstate. Boris's viral clip, Peter's “I ship code I don't read,” and OpenClaw's momentum are all FOMO-friendly stories.</p>
+<p>Fourth, the success cases have strong selection bias. Someone like Peter Steinberger is already an unusually strong engineer with architecture judgment and product taste. The fact that his loops work does not mean an average team can safely copy the same autonomy level.</p>
+<h2>What Is Real</h2>
+<p>First, the shift from one-off prompts to long-running workflows is real. Once agents can call tools, read logs, run tests, open PRs, and preserve state across sessions, the engineer's job does move from “ask every step manually” toward “design a verifiable automation.”</p>
+<p>Second, the product capabilities now exist. OpenAI Codex has Automations, Worktrees, Skills, and Subagents. The Claude Code ecosystem has hooks, skills, MCP, memory, and tool use. This is not just slideware.</p>
+<p>OpenAI describes Codex Automations as:</p>
+<blockquote>
+<p>“Automate recurring tasks in the background. Codex adds findings to the inbox, or automatically archives the task if there’s nothing to report. You can combine automations with skills for more complex tasks.”</p>
+</blockquote>
+<p>Source: <a href="https://developers.openai.com/codex/app/automations">OpenAI Codex Automations</a>.</p>
+<p>OpenAI describes subagents as:</p>
+<blockquote>
+<p>“Codex can run subagent workflows by spawning specialized agents in parallel and then collecting their results in one response.”</p>
+</blockquote>
+<p>Source: <a href="https://developers.openai.com/codex/subagents">OpenAI Codex Subagents</a>.</p>
+<p>Third, feedback loops matter especially for coding agents. Anthropic notes that coding agents are useful because code can be verified through automated tests and agents can iterate on test results. Source: <a href="https://www.anthropic.com/research/building-effective-agents">Anthropic, Building effective agents</a>.</p>
+<p>Fourth, investment in feedback loops is not wasted even if AI hype cools. Daniel Demmel makes the practical point that observability, structured logging, browser testing, database verification, and clear CLI interfaces were already good engineering practices; they just also make agents more effective. Source: <a href="https://www.danieldemmel.me/blog/feedback-loop-engineering">Feedback loop engineering</a>.</p>
+<h2>Risks and Boundaries</h2>
+<p>First, cost can run away. Oracle estimates that agents consume around 4x the tokens of standard chat, and multi-agent systems can reach 15x. The same article emphasizes token/cost budgets, max iterations, and no-progress detection. Source: <a href="https://blogs.oracle.com/developers/what-is-the-ai-agent-loop-the-core-architecture-behind-autonomous-ai-systems">Oracle Developers</a>.</p>
+<p>So the first rule of loop engineering is not “let it run forever.” It is “make it know when to stop.”</p>
+<p>Second, mistakes can compound. MojoTech warns that unchecked AI feedback loops can turn small errors into systemic fragility, architecture drift, and skill decay. Source: <a href="https://www.mojotech.com/blog/ai-feedback-loops-when-faster-software-development-quietly-turns-against-you">MojoTech</a>. If the loop's verification is only “the model thinks it is done,” it is not an engineering loop; it is automated wishful thinking.</p>
+<p>Third, humans do not disappear. They move up a layer. Addy Osmani puts it plainly:</p>
+<blockquote>
+<p>“The loop changes the work, it does not delete you from it.”</p>
+</blockquote>
+<p>Source: <a href="https://addyosmani.com/blog/loop-engineering">Addy Osmani, Loop Engineering</a>.</p>
+<p>A better phrasing is that humans move from inspecting every line inside the inner coding loop to designing and managing the loop itself.</p>
+<p>Fourth, loops are not right for every task. Anthropic's advice is clear: if a simple prompt, workflow, or deterministic pipeline solves the problem, do not jump to a complex autonomous agent. Loops are most justified when the number of steps is hard to predict, the system must adapt to intermediate results, and the latency/cost tradeoff is acceptable. Source: <a href="https://www.anthropic.com/research/building-effective-agents">Anthropic, Building effective agents</a>.</p>
+<h2>When a Loop Is Worth Building</h2>
+<p>A loop is worth building when:</p>
+<ol>
+<li>The task repeats and the context is similar each time.</li>
+<li>There are clear acceptance checks, such as tests, lint, build, CI, HTTP checks, or browser checks.</li>
+<li>Failure can be safely isolated or rolled back, such as through worktrees, draft PRs, or staging environments.</li>
+<li>Human judgment is only needed for a small number of escalations.</li>
+<li>There is state, so the next run knows what the previous run tried.</li>
+</ol>
+<p>A loop is usually not worth building when:</p>
+<ol>
+<li>It is a one-off task and manual prompting is faster.</li>
+<li>The requirement is not clear and the success condition is fuzzy.</li>
+<li>The downside of errors is high, such as production writes, security changes, permissions, or financial actions.</li>
+<li>There are no tests, logs, or observability signals for the agent to see real feedback.</li>
+<li>The loop costs more to run than a human would cost to handle the work.</li>
+</ol>
+<h2>Final Judgment</h2>
+<p><code>Loop Engineering</code> will have a hype cycle because it captures developers' anxiety about moving from prompts to agent workflows. But the underlying direction is real: as coding agents become stronger, the bottleneck shifts from “how do I write a good prompt?” to “how do I design a verifiable, stoppable, auditable, reusable work loop?”</p>
+<p>I would treat it as a useful concept that needs deflation. Do not make it a religion. Do not let loops replace engineering judgment. Start with small, boring loops: PR babysitting, CI triage, daily bug scans.</p>
+<p>The real investments are tests, observability, CLI-accessible tools, state/memory, permissions, and stop conditions.</p>
+<p>In one sentence: <strong>the name is hype; the practice is the natural next step in engineering agents.</strong></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
