@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>美国股市今天为什么盘中急跌又反弹？</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>美国股市今天为什么盘中急跌又反弹？</h1>
+<p>日期：2026-06-09<br />
+范围：美国股市，重点是 S&amp;P 500、Nasdaq、Dow、AI/半导体、VIX、油价、利率与宏观预期<br />
+说明：本文是市场研究与观点整理，不构成投资建议。</p>
+<h2>核心结论</h2>
+<p>今天的走势不应被理解成“开盘直接崩盘”。更准确的说法是：<strong>美股开盘先涨，随后科技和半导体反弹失败，盘中出现急跌，尾盘又收复一部分跌幅</strong>。AP 报道称，S&amp;P 500 曾在早盘上涨 1%，随后一度转为盘中下跌 2.3%，最后收跌 0.3%；Nasdaq 收跌 1%，Dow 小涨 0.2%（<a href="https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html">Yahoo/AP</a>）。Yahoo 盘中报道也显示，三大指数开盘为正，随后 Nasdaq 一度跌超 3%、S&amp;P 500 一度跌约 2.7%，尾盘明显收窄跌幅（<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>）。</p>
+<p>今天真正的主线不是“整个市场失控”，而是<strong>拥挤的 AI/半导体动量交易发生去风险和获利了结</strong>。半导体指数盘中曾从早盘上涨约 3%转为一度下跌 8.6%，收盘仍跌 1.9%；S&amp;P 500 科技板块盘中一度跌超 4%，收跌 1.8%（<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>）。这类盘中振幅说明卖压集中在高 beta、高估值、高动量资产，而不是所有风险资产同步崩塌。</p>
+<p>后面的反弹也不是因为风险消失，而是因为<strong>跌得太快后的抄底、价值/防御/非科技板块支撑、油价没有走向最坏路径、市场广度并没有崩坏</strong>。Reuters 报道显示，NYSE 上涨股票多于下跌股票，比例约 1.33:1；Nasdaq 上涨股也略多于下跌股，比例约 1.05:1（<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>）。这和系统性恐慌抛售不一致。</p>
+<p>我对美国股市的整体看法是：<strong>短期偏脆弱，中期取决于油价、通胀、Fed 和 AI 盈利兑现，长期仍看多美国权益，但必须接受更高波动和更低的估值容错</strong>。今天不像“崩盘前夜”，但市场的脆弱性已经上升。如果未来几周出现 CPI 高于预期、油价重新上破并维持高位、Fed 明确转鹰、AI 龙头继续放量下跌，那市场会更像进入 10%-20% 调整的环境。</p>
+<h2>今天到底发生了什么</h2>
+<p>AP 收盘数据（<a href="https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html">Yahoo/AP</a>）：</p>
+<ul>
+<li>S&amp;P 500：收 7,386.65，跌 19.08 点，跌 0.3%。</li>
+<li>Dow Jones：收 50,872.11，涨 86.10 点，涨 0.2%。</li>
+<li>Nasdaq Composite：收 25,678.82，跌 250.84 点，跌 1.0%。</li>
+<li>Russell 2000：收 2,867.02，涨 11.60 点，涨 0.4%。</li>
+</ul>
+<p>这组数据很重要，因为它说明今天不是“所有股票同步崩”。Dow 和 Russell 2000 都收涨，S&amp;P 500 小跌，Nasdaq 明显弱。也就是说，市场内部在轮动：成长、AI、半导体被卖，价值、小盘、部分金融、医疗、地产等相对有支撑。</p>
+<p>盘中路径更能解释情绪变化。AP 的描述是：S&amp;P 500 在早盘上涨 1% 和盘中下跌 2.3% 之间剧烈震荡，最后收跌 0.3%（<a href="https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html">Yahoo/AP</a>）。Yahoo 盘中报道显示，美股开盘上涨：S&amp;P 500 涨 0.3%，Nasdaq 涨 0.7%，Dow 涨 0.6%；随后上午转弱，下午 Nasdaq 一度跌超 3%，S&amp;P 500 一度跌 2.7%，之后抄底资金进入，尾盘收窄跌幅（<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>）。</p>
+<p>我的理解：这不是“坏消息一出来市场直接崩”，而是典型的<strong>反弹失败</strong>。市场本来试图延续周一的科技股反弹，油价也因伊朗/以色列暂时停火而回落，开盘情绪并不差。但当半导体、AI、成长股的买盘无法维持，短线资金发现“昨天的反弹不是新一轮上攻，而只是 oversold bounce”，卖压就开始扩散。</p>
+<h2>为什么盘中跌得那么多</h2>
+<p>第一，AI/半导体交易太拥挤，反弹失败后容易形成踩踏。Reuters 报道称，S&amp;P 500 科技指数盘中跌超 4%，半导体指数一度跌 8.6%，而此前早盘半导体指数曾上涨 3%；收盘科技指数跌 1.8%，半导体指数跌 1.9%（<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>）。半导体指数今年仍上涨 78.7%（同一 Reuters 报道），所以即使基本面没有立刻恶化，仓位本身也会变成风险。涨得越多，越容易出现“好消息已经在价格里，任何瑕疵都要被放大”的阶段。</p>
+<p>第二，地缘风险给了卖方一个宏观理由。Reuters 报道称，特朗普表示美国必须回应伊朗击落美国 Apache 直升机事件，这加剧了市场对中东停火前景的怀疑；VIX 盘中触及 4 月 7 日以来最高水平（<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>）。Yahoo 盘中报道也提到，油价在特朗普发帖后收窄跌幅，Brent 一度仍跌但回到约 91.50 美元，WTI 约 88 美元附近（<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>）。地缘风险未必是最深层原因，但它把市场从“科技股估值调整”推向了“宏观风险重新定价”。</p>
+<p>第三，CPI 前夕，通胀和利率风险压制成长股估值。Yahoo 盘中报道称，市场等待周三 CPI，经济学家预计 5 月 CPI 环比 0.5%、同比 4.2%，高于前一个月 3.8%（<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>）。Reuters 报道也称，周五强于预期的就业报告提高了市场对 Fed 年内加息的押注（<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>）。成长股估值依赖较远期现金流，利率上行或降息预期消失时，折现率压力会直接打到估值倍数。</p>
+<p>第四，SpaceX 巨型 IPO 和 AI IPO 队列加剧了高成长资产的“泡沫感”。Reuters 报道称，SpaceX 计划融资 750 亿美元，目标估值 1.75 万亿美元，可能成为史上最大 IPO；市场担心高增长科技股过度亢奋（<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>）。Yahoo 还报道 OpenAI 已秘密提交 IPO 文件，Anthropic 也已采取类似步骤（<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>）。这不一定是今天的主因，但它强化了一个背景：高成长资产的供给正在增加，而估值要求也越来越高。</p>
+<h2>为什么后面又反弹</h2>
+<p>反弹的第一个原因是市场广度没有崩。Reuters 数据显示，NYSE 上涨股多于下跌股，比例 1.33:1；Nasdaq 上涨股也略多于下跌股，比例 1.05:1。S&amp;P 500 有 31 个 52 周新高、8 个新低；Nasdaq 有 151 个新高、181 个新低（<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>）。这支持一个重要判断：今天是指数被大型科技/芯片拖累，而不是所有股票被无差别抛售。</p>
+<p>第二个原因是价值、小盘、非科技相对抗跌。Reuters 报道称，Russell 1000 Value 上涨 0.4%，跑赢下跌 0.7% 的 Russell 1000 Growth（<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>）。AP 数据显示 Russell 2000 收涨 0.4%，Dow 收涨 0.2%（<a href="https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html">Yahoo/AP</a>）。这意味着今天的反弹驱动不是“大家重新拥抱同一个 AI 叙事”，而是市场内部在重新分配风险：卖高估值成长，买相对便宜或受利率、周期、价值因子支撑的板块。</p>
+<p>第三个原因是油价仍低于最恐慌路径。开盘时油价因为以色列和伊朗暂停攻击而下跌，Brent 曾跌约 2% 到 92 美元，WTI 跌约 2.6% 到 88 美元（<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>）。特朗普发帖后油价跌幅收窄，但没有直接暴涨到市场最恐惧的路径。如果油价突然突破并站上 100 美元以上，股债可能都承压；但今天没有走出这种极端路径，所以一部分资金愿意把盘中下跌视为交易性机会。</p>
+<p>第四个原因是 AI 基本面叙事没有被完全破坏。Fidelity 的 2026 年中展望认为，AI 支出和盈利增长仍在支撑牛市，S&amp;P 500 收入增长约 10%、利润增长更快、经营利润率约 16% 达历史高位；Alphabet、Amazon、Meta、Microsoft 预计 2026 年 AI 数据中心建设支出约 7000 亿美元（<a href="https://www.fidelity.com/learning-center/trading-investing/stock-market-outlook">Fidelity</a>）。只要投资者相信 AI capex 是真实周期，而不是纯概念泡沫，那么半导体每一次急跌都会吸引长期资金或短线资金尝试接住。</p>
+<h2>恐慌程度：是不是快崩盘了</h2>
+<p>Yahoo 数据显示，VIX 收于 19.87，上涨 0.95 点或 5.02%，日内区间 17.52-23.34，52 周区间 13.38-35.30（<a href="https://finance.yahoo.com/quote/%5EVIX">Yahoo VIX</a>）。这个水平通常可以理解为“波动上升、市场有保护需求”，但还不是崩盘式恐慌。典型危机环境里，VIX 往往会持续突破 30，严重危机可上 40、50 甚至更高。今天盘中有恐慌买保护，但收盘回到 20 附近，说明市场没有进入“只要能卖就卖”的状态。</p>
+<p>如果是系统性崩盘，通常会看到所有主要指数大幅收跌，Dow、小盘、价值股也很难收涨；市场广度极差；VIX 高位收盘并继续扩张；信用市场和流动性指标恶化；避险交易极端化。今天看到的是 Dow 和 Russell 2000 收涨，NYSE 上涨股多于下跌股，VIX 收在 20 附近，科技和半导体显著拖累指数。这更像是<strong>领导板块的剧烈修正</strong>，不是全市场信用或流动性崩塌。</p>
+<p>但这不代表风险小。一个更危险的信号是：市场对坏消息的容忍度正在下降。高估值市场最怕的不是单一坏消息，而是多个“还没坏透但都不舒服”的变量一起出现：油价、CPI、Fed、就业、地缘、IPO 泡沫感、AI 盈利兑现压力。</p>
+<h2>短期、中期、长期展望</h2>
+<h3>短期：数日到数周</h3>
+<p>短期我偏谨慎。原因不是今天跌了多少，而是市场目前处在“高估值 + 高仓位 + 重大数据前 + 地缘不确定”的组合里。周三 CPI 是第一道关。如果 CPI 高于预期，尤其能源传导到核心通胀或服务通胀仍粘，市场会进一步定价 Fed 不能降息甚至可能加息，成长股估值会继续被压。</p>
+<p>短期关键观察点包括：CPI 是否接近或高于市场预期的 4.2% 同比；10 年期美债收益率是否持续站在 4.5% 上方；Brent/WTI 是否重新上破并维持在高位；半导体指数是否继续放量下跌；VIX 是否只是盘中冲高，还是收盘连续站上 25、30。Fidelity 也提到，如果基准利率保持在 4.5% 以上，市场会持续关注利率压力（<a href="https://www.fidelity.com/learning-center/trading-investing/stock-market-outlook">Fidelity</a>）。</p>
+<p>我的短期判断：<strong>不是立刻崩盘，但追高 AI/半导体的性价比明显变差；更合理的是等待波动释放，降低杠杆和拥挤仓位，避免把盘中反弹误判为风险已经解除</strong>。</p>
+<h3>中期：3-12 个月</h3>
+<p>中期我不是悲观，而是认为市场会进入更挑剔的阶段。2025-2026 的美国股市牛市并非纯泡沫，因为盈利确实强，AI capex 也是真实支出。Fidelity 指出，企业盈利强、估值相对过去科技泡沫并非无盈利支撑，S&amp;P 500 利润率约 16% 创历史高位（<a href="https://www.fidelity.com/learning-center/trading-investing/stock-market-outlook">Fidelity</a>）。J.P. Morgan 2026 outlook 也提到，股票乐观情景由强劲盈利、较低利率、政策阻力下降和 AI 持续发展支撑；但也给出 2026 年美国和全球衰退概率 35%，并指出劳动力需求走弱、通胀仍是主题（<a href="https://www.jpmorgan.com/insights/global-research/outlook/market-outlook">J.P. Morgan Global Research</a>）。</p>
+<p>我的中期基本情景是：如果油价回落、CPI 不失控、Fed 保持中性或略偏宽松，AI 盈利和 capex 能支撑美股继续走高，但涨幅会更集中、更依赖盈利兑现；如果油价维持高位、通胀重新加速、Fed 转鹰，市场很可能从高位震荡变成 10%-20% 的估值压缩调整；如果 AI 龙头开始出现订单、利润率或 capex 回报的连续负面证据，那么调整会更深，因为这会直接打破当前市场最核心的盈利叙事。</p>
+<p>中期我更看好现金流强、盈利兑现清晰、估值没有完全透支的科技基础设施公司；受益于能源、电力、工业、金融、国防/安全支出的板块；以及部分非美市场作为分散。J.P. Morgan 指出，S&amp;P 500 约 22.5 倍未来 12 个月市盈率，接近 1990 年代末/2000 年水平；美国前 10 大股票占 S&amp;P 500 约 40% 市值和 35% 盈利，领导力较窄，因此国际分散更重要（<a href="https://www.jpmorgan.com/insights/markets-and-economy/top-market-takeaways/tmt-after-the-rate-cut-investing-beyond-us-markets">J.P. Morgan Wealth Management</a>）。</p>
+<h3>长期：3-10 年</h3>
+<p>长期我仍然偏看多美国股市，尤其是美国在 AI、软件、半导体设计、云、资本市场、企业盈利能力上的结构性优势。但长期看多不等于任何价格都合理。未来几年最重要的问题不是“AI 有没有用”，而是 AI 价值是否能从 capex 转化成真实利润，当前估值是否已经提前吃掉太多未来收益，市场集中度是否过高，以及美国财政、利率和通胀制度是否允许长期估值继续高企。</p>
+<p>长期我的判断是：<strong>美国股市仍是全球最值得长期持有的权益市场之一，但未来 5-10 年的回报可能比过去 AI 起涨阶段更依赖买入价格和组合结构</strong>。如果一直无脑买市值加权指数，也许仍然能赚钱，但承受的集中度和估值波动会更高。更好的长期框架是：核心持有美国优质权益，同时避免过度集中在单一叙事；在估值极端时再平衡到现金流、国际、能源/工业/金融、短债或其他低相关资产。</p>
+<h2>我的主观判断</h2>
+<p>今天不是崩盘，而是一个很典型的牛市中后段波动：领导板块太拥挤，宏观变量突然不给面子，于是高 beta 资产先被砍。</p>
+<p>市场真正的危险不是今天跌 2%-3% 后反弹，而是如果未来几周证明通胀再次抬头、Fed 不能宽松、油价风险持续、AI 盈利兑现不够快，那么估值会被系统性重估。</p>
+<p>我不会在这种环境里恐慌清仓，但也不会追涨高估值 AI 龙头。更倾向于保留长期核心仓位、降低杠杆，把现金和短债当作期权，等待更好的风险收益点。</p>
+<p>如果用概率表达：</p>
+<ul>
+<li>50%-55%：高位震荡后继续慢牛，AI 盈利和资金流仍能托住市场，但波动显著增加。</li>
+<li>30%-35%：出现 10%-20% 调整，原因是 CPI/油价/Fed 或 AI 估值压力触发系统性估值压缩。</li>
+<li>10%-15%：进入真正崩盘或熊市，通常需要油价冲击、政策失误、信用压力、盈利下修同时发生，目前证据还不够。</li>
+</ul>
+<p>我的结论：<strong>当前美国股市不是“快崩了”，而是从单边 AI 乐观进入“要用数据证明自己”的阶段。市场恐慌不大，但脆弱性上升。短期要尊重波动，中期要看通胀和 AI 盈利兑现，长期仍不要低估美国优质公司和资本市场的复利能力。</strong></p>
+<h2>主要来源</h2>
+<ul>
+<li>Reuters via Yahoo Finance: S&amp;P 500, Nasdaq fall as tech selling resumes, Trump vows to respond to downed US helicopter: https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html</li>
+<li>AP via Yahoo Finance: How major US stock indexes fared Tuesday 6/9/2026: https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html</li>
+<li>Yahoo Finance live market coverage, June 9, 2026: https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html</li>
+<li>Yahoo Finance VIX page: https://finance.yahoo.com/quote/%5EVIX</li>
+<li>Fidelity 2026 midyear stock market outlook: https://www.fidelity.com/learning-center/trading-investing/stock-market-outlook</li>
+<li>J.P. Morgan Global Research 2026 market outlook: https://www.jpmorgan.com/insights/global-research/outlook/market-outlook</li>
+<li>J.P. Morgan Wealth Management diversification note: https://www.jpmorgan.com/insights/markets-and-economy/top-market-takeaways/tmt-after-the-rate-cut-investing-beyond-us-markets</li>
+</ul>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Why Did the U.S. Stock Market Plunge Intraday and Then Rebound Today?</h1>
+<p>Date: 2026-06-09<br />
+Scope: U.S. equities, with a focus on the S&amp;P 500, Nasdaq, Dow, AI/semiconductors, VIX, oil, rates, and macro expectations<br />
+Note: This is market research and opinion, not investment advice.</p>
+<h2>Core Conclusions</h2>
+<p>Today should not be framed as a market that “crashed right at the open.” A more accurate description is: <strong>stocks opened higher, the technology and semiconductor rebound failed, the market sold off sharply intraday, and then recovered part of the losses into the close</strong>. AP reported that the S&amp;P 500 swung from an early gain of 1% to a midday loss of 2.3%, before closing down 0.3%; the Nasdaq fell 1%, while the Dow rose 0.2% (<a href="https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html">Yahoo/AP</a>). Yahoo’s live coverage also showed the major indexes opening in positive territory before the Nasdaq fell more than 3% and the S&amp;P 500 dropped about 2.7%, with both later paring losses (<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>).</p>
+<p>The real story was not a broad market breakdown. It was <strong>de-risking and profit-taking in a crowded AI/semiconductor momentum trade</strong>. The Philadelphia Semiconductor Index swung from an early gain of about 3% to an intraday loss of as much as 8.6%, and still closed down 1.9%; the S&amp;P 500 technology index fell more than 4% intraday and closed down 1.8% (<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>). That kind of intraday move points to selling concentrated in high-beta, high-valuation, high-momentum assets, not a synchronized collapse across all risk assets.</p>
+<p>The rebound was not because the risks disappeared. It was driven by <strong>dip-buying after an unusually fast selloff, support from value/defensive/non-tech areas, oil not following the worst-case path, and market breadth that did not break down</strong>. Reuters reported that advancing stocks outnumbered decliners by about 1.33-to-1 on the NYSE and 1.05-to-1 on the Nasdaq (<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>). That is not consistent with indiscriminate panic selling.</p>
+<p>My overall view on U.S. equities: <strong>short term, the market is fragile; medium term, the path depends on oil, inflation, the Fed, and AI earnings delivery; long term, I remain constructive on U.S. equities, but with higher volatility and less room for valuation error</strong>. Today does not look like the eve of a crash. But market fragility has clearly increased. If the next few weeks bring an upside CPI surprise, oil breaks higher and stays there, the Fed turns explicitly hawkish, and AI leaders continue to sell off on heavy volume, the environment would start to look more like a 10%-20% correction setup.</p>
+<h2>What Actually Happened Today</h2>
+<p>AP closing data (<a href="https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html">Yahoo/AP</a>):</p>
+<ul>
+<li>S&amp;P 500: 7,386.65, down 19.08 points, or 0.3%.</li>
+<li>Dow Jones Industrial Average: 50,872.11, up 86.10 points, or 0.2%.</li>
+<li>Nasdaq Composite: 25,678.82, down 250.84 points, or 1.0%.</li>
+<li>Russell 2000: 2,867.02, up 11.60 points, or 0.4%.</li>
+</ul>
+<p>This matters because it shows the market did not move as one. The Dow and Russell 2000 both finished higher, the S&amp;P 500 fell modestly, and the Nasdaq was clearly weaker. Internally, the market rotated: growth, AI, and semiconductors were sold, while value, small caps, and parts of financials, health care, and real estate held up better.</p>
+<p>The intraday path is even more important. AP described the S&amp;P 500 as swinging between an early gain of 1% and a midday loss of 2.3%, before closing down 0.3% (<a href="https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html">Yahoo/AP</a>). Yahoo’s live coverage showed stocks opening higher, with the S&amp;P 500 up 0.3%, Nasdaq up 0.7%, and Dow up 0.6%; the market then weakened in late morning, the Nasdaq fell more than 3% in the afternoon, the S&amp;P 500 fell 2.7%, and dip buyers later stepped in (<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>).</p>
+<p>My read: this was not a market that collapsed immediately on bad news. It was a classic <strong>failed rebound</strong>. The market initially tried to extend Monday’s tech-led recovery, and oil was falling after Israel and Iran paused attacks. The open was not bad. But once semiconductors, AI, and growth stocks failed to hold their bid, short-term traders realized that the prior bounce might have been only an oversold bounce rather than the start of a new leg higher. Selling then broadened.</p>
+<h2>Why the Intraday Selloff Was So Sharp</h2>
+<p>First, the AI/semiconductor trade had become too crowded, so a failed rebound could quickly turn into a mini-stampede. Reuters reported that the S&amp;P 500 technology index fell more than 4% intraday, while the semiconductor index dropped as much as 8.6% after rising 3% earlier; the tech index closed down 1.8% and the semiconductor index closed down 1.9% (<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>). The semiconductor index was still up 78.7% year to date, according to the same Reuters report, so even if fundamentals had not suddenly deteriorated, positioning itself had become a risk. The more an asset has rallied, the more any imperfection gets magnified.</p>
+<p>Second, geopolitical risk gave sellers a macro rationale. Reuters reported that President Trump said the U.S. must respond after Iran allegedly shot down a U.S. Apache helicopter, adding doubts about a Middle East truce; the VIX hit its highest level since April 7 intraday (<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>). Yahoo also reported that oil pared losses after Trump’s post, with Brent around $91.50 and WTI near $88 (<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>). Geopolitics was not necessarily the deepest cause, but it turned a technology valuation adjustment into a broader macro risk repricing.</p>
+<p>Third, the market was sitting just ahead of CPI, and inflation/rate risk directly pressured growth valuations. Yahoo reported that economists expected May CPI to rise 0.5% month over month and 4.2% year over year, up from 3.8% the prior month (<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>). Reuters also noted that a stronger-than-expected jobs report on Friday increased bets that the Fed could hike rates this year (<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>). Growth stocks are long-duration assets. If rates move higher, or if expected cuts disappear, the discount-rate pressure hits valuation multiples directly.</p>
+<p>Fourth, the SpaceX mega-IPO and the broader AI IPO pipeline added to the sense that high-growth assets were getting frothy. Reuters reported that SpaceX was aiming to raise $75 billion at a $1.75 trillion valuation, potentially the largest IPO ever, and that investors were worried about overexuberance in high-growth technology stocks (<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>). Yahoo also reported that OpenAI had confidentially filed IPO paperwork, following a similar move by Anthropic (<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>). This was probably not the main cause of today’s selloff, but it reinforced the background concern: supply of high-growth assets is rising, and valuation expectations are getting more demanding.</p>
+<h2>Why the Market Rebounded</h2>
+<p>The first reason is that breadth did not collapse. Reuters reported that advancing stocks outnumbered decliners by 1.33-to-1 on the NYSE and 1.05-to-1 on the Nasdaq. The S&amp;P 500 posted 31 new 52-week highs and 8 new lows, while the Nasdaq recorded 151 new highs and 181 new lows (<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>). That supports an important point: the indexes were dragged lower by large technology and chip stocks, not by indiscriminate liquidation across all stocks.</p>
+<p>The second reason is that value, small caps, and non-tech areas held up relatively well. Reuters reported that the Russell 1000 Value Index rose 0.4%, outperforming the Russell 1000 Growth Index, which fell 0.7% (<a href="https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html">Reuters via Yahoo</a>). AP data showed the Russell 2000 up 0.4% and the Dow up 0.2% (<a href="https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html">Yahoo/AP</a>). The rebound was not simply investors re-embracing the same AI narrative. It was internal risk redistribution: selling high-valuation growth and buying areas supported by valuation, cyclicality, or rates.</p>
+<p>The third reason is that oil stayed below the market’s worst-case path. At the open, oil fell after Israel and Iran paused attacks, with Brent down about 2% to $92 and WTI down about 2.6% to $88 (<a href="https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html">Yahoo Finance live</a>). After Trump’s post, oil pared losses, but it did not immediately explode higher. If oil had broken above $100 and stayed there, both stocks and bonds would likely have come under heavier pressure. Since that extreme path did not materialize today, some investors were willing to treat the intraday selloff as a trading opportunity.</p>
+<p>The fourth reason is that the AI fundamentals narrative has not been fully broken. Fidelity’s 2026 midyear outlook argues that AI spending and earnings growth are still supporting the bull market, with S&amp;P 500 revenue growing about 10%, profits rising faster, operating margins around an all-time high of 16%, and Alphabet, Amazon, Meta, and Microsoft projected to spend roughly $700 billion on AI data center buildouts in 2026 (<a href="https://www.fidelity.com/learning-center/trading-investing/stock-market-outlook">Fidelity</a>). As long as investors believe AI capex is a real cycle rather than a purely speculative bubble, every sharp semiconductor selloff will attract some dip-buying.</p>
+<h2>Fear Level: Is This Close to a Crash?</h2>
+<p>Yahoo data showed the VIX closing at 19.87, up 0.95 points or 5.02%, with an intraday range of 17.52-23.34 and a 52-week range of 13.38-35.30 (<a href="https://finance.yahoo.com/quote/%5EVIX">Yahoo VIX</a>). That level implies rising volatility and higher demand for protection, but not crash-level fear. In typical crisis environments, VIX often sustains a move above 30, and in severe crises it can move above 40 or 50. Today there was intraday demand for protection, but the close near 20 suggests the market did not enter “sell whatever you can” mode.</p>
+<p>In a systemic crash, one would usually expect all major indexes to close sharply lower; the Dow, small caps, and value stocks would struggle too; breadth would be extremely poor; VIX would close high and keep expanding; credit and liquidity indicators would deteriorate; and haven trades would become extreme. Today, the Dow and Russell 2000 closed higher, NYSE advancers outnumbered decliners, VIX closed near 20, and technology/semiconductors were the main drag. That looks more like a <strong>violent correction in the leadership group</strong> than a broad credit or liquidity breakdown.</p>
+<p>That does not mean risk is small. The more important warning is that the market’s tolerance for bad news is falling. High-valuation markets are not usually derailed by one isolated headline. They become vulnerable when several uncomfortable variables appear at once: oil, CPI, the Fed, employment, geopolitics, IPO froth, and pressure on AI earnings delivery.</p>
+<h2>Short-, Medium-, and Long-Term Outlook</h2>
+<h3>Short Term: Days to Weeks</h3>
+<p>I am cautious in the short term. The reason is not just the size of today’s move. It is the combination of high valuations, heavy positioning, major data risk, and geopolitical uncertainty. Wednesday’s CPI is the first key test. If CPI comes in hotter than expected, especially if energy passes through into core or services inflation, the market may further price in a Fed that cannot cut and might even hike. That would keep pressure on growth-stock valuations.</p>
+<p>Key short-term variables include whether CPI is near or above the expected 4.2% year-over-year rate; whether the 10-year Treasury yield stays above 4.5%; whether Brent or WTI breaks higher and remains elevated; whether the semiconductor index keeps falling on heavy volume; and whether VIX merely spikes intraday or starts closing above 25-30. Fidelity also noted that if benchmark rates stay above 4.5%, the market is likely to keep paying attention to rate pressure (<a href="https://www.fidelity.com/learning-center/trading-investing/stock-market-outlook">Fidelity</a>).</p>
+<p>My short-term view: <strong>this is not an immediate crash setup, but the risk/reward of chasing AI and semiconductor leaders has clearly worsened; it is more sensible to let volatility clear, reduce leverage and crowded exposure, and avoid mistaking an intraday rebound for an all-clear signal</strong>.</p>
+<h3>Medium Term: 3-12 Months</h3>
+<p>I am not bearish in the medium term, but I think the market is entering a more selective phase. The 2025-2026 U.S. equity bull market is not a pure bubble, because earnings are strong and AI capex is real. Fidelity notes that earnings are strong, valuations are not unsupported in the way earlier tech manias were, and S&amp;P 500 operating margins are around an all-time high of 16% (<a href="https://www.fidelity.com/learning-center/trading-investing/stock-market-outlook">Fidelity</a>). J.P. Morgan’s 2026 outlook also says the bullish equity case is supported by robust earnings growth, lower rates, reduced policy headwinds, and the continued rise of AI; but it also assigns a 35% probability to a U.S. and global recession in 2026 and highlights weakening labor demand and persistent inflation as key risks (<a href="https://www.jpmorgan.com/insights/global-research/outlook/market-outlook">J.P. Morgan Global Research</a>).</p>
+<p>My medium-term base case: if oil falls back, CPI does not break higher, and the Fed stays neutral or mildly accommodative, AI earnings and capex can still support U.S. equities, though gains will be narrower and more dependent on delivery. If oil stays high, inflation reaccelerates, and the Fed turns hawkish, the market could shift from high-level consolidation into a 10%-20% valuation-compression correction. If AI leaders start showing repeated negative evidence on orders, margins, or capex returns, the correction would likely be deeper because it would directly challenge the market’s core earnings narrative.</p>
+<p>Medium term, I prefer companies with strong cash flow, clearer earnings delivery, and valuations that are not fully priced for perfection; sectors tied to energy, power, industrials, financials, and defense/security spending; and some non-U.S. exposure for diversification. J.P. Morgan notes that the S&amp;P 500 trades at about 22.5 times next-12-month earnings, near levels last seen in the late 1990s and 2000, while the top 10 stocks account for about 40% of S&amp;P 500 market cap and 35% of earnings, making international diversification more important (<a href="https://www.jpmorgan.com/insights/markets-and-economy/top-market-takeaways/tmt-after-the-rate-cut-investing-beyond-us-markets">J.P. Morgan Wealth Management</a>).</p>
+<h3>Long Term: 3-10 Years</h3>
+<p>Long term, I remain constructive on U.S. equities, especially given America’s structural advantages in AI, software, semiconductor design, cloud infrastructure, capital markets, and corporate profitability. But being long-term bullish does not mean every price is reasonable. The key question over the next few years is not “does AI matter?” It is whether AI value can translate from capex into actual profits, whether current valuations have already pulled forward too much future return, whether market concentration is excessive, and whether the U.S. fiscal/rate/inflation regime can support elevated valuations.</p>
+<p>My long-term view: <strong>U.S. equities remain one of the most attractive equity markets globally, but 5-10 year returns may depend much more on entry price and portfolio construction than they did during the initial AI melt-up</strong>. A passive market-cap-weighted U.S. equity position may still work over time, but it carries higher concentration and valuation risk. A better long-term framework is to keep a core allocation to high-quality U.S. equities, avoid excessive concentration in one narrative, and rebalance at valuation extremes into cash-flow assets, international exposure, energy/industrials/financials, short-duration bonds, or other lower-correlation assets.</p>
+<h2>My Subjective View</h2>
+<p>Today was not a crash. It was a typical mid-to-late bull-market volatility event: the leadership trade was too crowded, macro variables stopped cooperating, and high-beta assets were cut first.</p>
+<p>The real danger is not that the market fell 2%-3% intraday and rebounded. The danger is that if the next few weeks show inflation reaccelerating, the Fed unable to ease, oil risk persisting, and AI earnings not arriving fast enough, valuations could be systematically repriced.</p>
+<p>I would not panic-sell in this environment. But I also would not chase high-valuation AI leaders. I would rather keep long-term core exposure, reduce leverage, treat cash and short-duration Treasurys as optionality, and wait for better risk/reward.</p>
+<p>If I had to express the distribution in probabilities:</p>
+<ul>
+<li>50%-55%: high-level consolidation followed by a slower bull market, with AI earnings and capital flows still supporting equities but with meaningfully higher volatility.</li>
+<li>30%-35%: a 10%-20% correction triggered by CPI/oil/Fed pressure or AI valuation compression.</li>
+<li>10%-15%: a true crash or bear market, which would likely require an oil shock, policy mistake, credit stress, and earnings downgrades to occur together. The evidence is not there yet.</li>
+</ul>
+<p>My bottom line: <strong>the U.S. stock market is not “about to crash,” but it is moving from one-way AI optimism into a phase where the story must be proven by data. Fear is not extreme, but fragility is higher. Respect volatility in the short term, watch inflation and AI earnings delivery in the medium term, and do not underestimate the long-term compounding power of high-quality U.S. companies and capital markets.</strong></p>
+<h2>Main Sources</h2>
+<ul>
+<li>Reuters via Yahoo Finance: S&amp;P 500, Nasdaq fall as tech selling resumes, Trump vows to respond to downed US helicopter: https://finance.yahoo.com/markets/stocks/articles/wall-st-futures-tick-chips-102318327.html</li>
+<li>AP via Yahoo Finance: How major US stock indexes fared Tuesday 6/9/2026: https://finance.yahoo.com/markets/stocks/articles/major-us-stock-indexes-fared-201519938.html</li>
+<li>Yahoo Finance live market coverage, June 9, 2026: https://finance.yahoo.com/markets/live/stock-market-today-tuesday-june-9-dow-sp-500-nasdaq-rise-ai-225640870.html</li>
+<li>Yahoo Finance VIX page: https://finance.yahoo.com/quote/%5EVIX</li>
+<li>Fidelity 2026 midyear stock market outlook: https://www.fidelity.com/learning-center/trading-investing/stock-market-outlook</li>
+<li>J.P. Morgan Global Research 2026 market outlook: https://www.jpmorgan.com/insights/global-research/outlook/market-outlook</li>
+<li>J.P. Morgan Wealth Management diversification note: https://www.jpmorgan.com/insights/markets-and-economy/top-market-takeaways/tmt-after-the-rate-cut-investing-beyond-us-markets</li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
