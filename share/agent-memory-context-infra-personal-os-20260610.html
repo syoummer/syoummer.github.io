@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>AI Agent 长期记忆与个人 OS：真正重要的是上下文基础设施</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>AI Agent 长期记忆与个人 OS：真正重要的是上下文基础设施</h1>
+<p>日期：2026-06-10</p>
+<h2>核心判断</h2>
+<p>长期 agent 的关键瓶颈不是“更长的 context window”，而是一个可编辑、可检索、可审计、可治理的上下文基础设施。真正有复利的个人 OS，不应该只是保存聊天记录，而应该把人的偏好、项目约束、工作流、研究成果、失败教训和权限边界沉淀成 agent 可以稳定使用的 context substrate。</p>
+<p>换句话说，未来个人 AI 系统的核心不一定是某个 chatbot，而是一个持续更新的“上下文操作系统”。</p>
+<h2>为什么现在值得关注</h2>
+<p>主流 agent 产品正在把 memory 变成一等公民。</p>
+<p>OpenAI 的 Memory FAQ 描述了一个更主动的记忆系统：ChatGPT 可以从 chats、files、connected apps 中自动记住有用上下文，并用 memory summary、memory sources、Temporary Chats 和删除机制给用户控制权 (<a href="https://help.openai.com/en/articles/8590148-memory-faq">OpenAI Help</a>)。</p>
+<blockquote>
+<p>“When enabled, memory helps ChatGPT automatically remember useful context from your chats, files, and connected apps to personalize your experience, so you don’t have to repeat yourself as often.”</p>
+</blockquote>
+<p>但 ChatGPT 与 Codex 的上下文仍然割裂。OpenAI Developer Community 上有用户明确提出，希望 ChatGPT Projects 与 Codex workspace 能 opt-in 共享项目级上下文，因为很多人先在 ChatGPT 做规划和架构，再到 Codex 实现，不想反复复制 goals、constraints 和 decisions。OpenAI Support 回复称这个 request “makes a lot of sense”，并认可选择性访问、透明展示、随时撤销、摘要级 project context layer 等方向 (<a href="https://community.openai.com/t/feature-request-opt-in-shared-context-between-chatgpt-and-codex-including-memory-and-reference-chat-history/1382529">OpenAI Community</a>)。</p>
+<p>Claude Code 的路线更工程化。它明确说每个 session 都从 fresh context window 开始，跨 session 知识靠两类机制：用户写的 <code>CLAUDE.md</code> 和 Claude 自动写的 auto memory (<a href="https://docs.anthropic.com/en/docs/claude-code/memory">Claude Code memory</a>)。</p>
+<blockquote>
+<p>“Each Claude Code session begins with a fresh context window. Two mechanisms carry knowledge across sessions: CLAUDE.md files ... Auto memory ...”</p>
+</blockquote>
+<p>它还给出了一条很实用的原则：</p>
+<blockquote>
+<p>“Treat CLAUDE.md as the place you write down what you'd otherwise re-explain.”</p>
+</blockquote>
+<p>这句话基本就是个人 OS 的核心设计原则。</p>
+<h2>MCP 是连接层，不是可信上下文层</h2>
+<p>MCP 官方把自己定义为连接 AI apps 与外部 data sources、tools、workflows 的开放标准，类似“AI 应用的 USB-C port” (<a href="https://modelcontextprotocol.io/docs/getting-started/intro">MCP docs</a>)。</p>
+<p>它很重要，因为它降低了工具集成成本。但 MCP 解决的是“怎么连”，不是“连到的东西是否正确、当前、可信、可授权”。</p>
+<p>DataHub 对 MCP 的评价很准确：MCP 是 activation layer，不是完整的 context management stack (<a href="https://datahub.com/blog/mcp-context-management">DataHub</a>)。</p>
+<blockquote>
+<p>“MCP is a protocol, not a platform.”</p>
+<p>“You’re standardizing access to chaos.”</p>
+</blockquote>
+<p>这也是个人 OS 的关键陷阱：如果 memory、capture、calendar、Gmail、project notes、research reports 都是混乱的，MCP 只会让 agent 更快地访问混乱。</p>
+<h2>长期记忆不等于向量库</h2>
+<p>现在市场上有几类不同路线。</p>
+<p><strong>Mem0 / Zep 类：pluggable memory API。</strong> Mem0 把 agent memory 定义成 persistent storage layer，并强调 2026 年 memory 已是独立架构组件，而不是更长 prompt。它强调 multi-scope memory、multi-signal retrieval、async write、metadata filtering 和 open problems，比如 temporal abstraction、cross-session identity、memory staleness、privacy/consent (<a href="https://mem0.ai/blog/state-of-ai-agent-memory-2026">Mem0</a>)。</p>
+<p><strong>Letta / MemGPT 类：OS-like agent runtime。</strong> Letta 更接近 agent 操作系统，让 agent 自己管理 core memory、archival memory、filesystem 和工具。Letta 也提醒我们：memory 工具本身不够，agent 是否知道何时检索、如何搜索、何时写入，可能更重要 (<a href="https://www.letta.com/blog/benchmarking-ai-agent-memory">Letta</a>)。</p>
+<blockquote>
+<p>“The quality of an agent's memory often depends more on the underlying agentic system's ability to manage context and call tools than on the memory tools themselves.”</p>
+</blockquote>
+<p><strong>Codified context：把文档当基础设施。</strong> 一篇 <code>Codified Context</code> 论文描述了一个 108,000 行 C# 项目的三层上下文架构：hot-memory constitution、19 个 specialized agents、34 个 cold-memory specs；总 context infrastructure 约 26,200 行，占代码行数 24.2% (<a href="https://arxiv.org/html/2602.20478v1">arXiv</a>)。</p>
+<blockquote>
+<p>“This paper addresses the gap with a codified context infrastructure that treats documentation as infrastructure — load-bearing artifacts that AI agents depend on to produce correct output.”</p>
+</blockquote>
+<p>这条路线对个人 OS 最有启发：很多时候，最强的 memory 不是黑盒数据库，而是人能看、能改、能审计的 Markdown、rules、plans、skills 和索引。</p>
+<h2>哪些判断比较可靠</h2>
+<ul>
+<li>Context/memory 已经成为 agent stack 的独立层。OpenAI、Claude Code、Mem0、Letta、Atlan、DataHub 都在不同层面确认了这一点。</li>
+<li>MCP 是连接层，不是可信上下文层。MCP 官方、Atlan、DataHub 都支持这个判断。</li>
+<li>文件和 Markdown 仍然非常强。Claude Code 的 <code>CLAUDE.md</code>、Letta filesystem benchmark、Codified Context 论文都说明 plain text + retrieval + human maintenance 是高性价比方案。</li>
+<li>Staleness 是核心风险。旧记忆、旧规格、旧项目说明会让 agent 生成看似正确但实际错误的结果。</li>
+</ul>
+<h2>哪些还不确定</h2>
+<ul>
+<li>Memory benchmark 排名还不能直接相信。Mem0 和 Letta 的评价方法不同，LoCoMo 分数不能直接推导到真实长期工程任务。</li>
+<li>Graph memory 是否必要取决于场景。企业 lineage 和 temporal relationships 可能需要图；个人 workspace 可能先用 Markdown + semantic search + explicit routing 就够。</li>
+<li>Agent memory SaaS 是否会成为独立大品类还没完全验证。</li>
+</ul>
+<h2>对个人 OS 的设计建议</h2>
+<p>第一，不要把个人 OS 设计成 chat history 仓库。它应该是 context substrate。</p>
+<p>第二，明确五种记忆：identity/preferences memory、project memory、research memory、procedural memory、session memory。它们不应该全部混在同一个文件里。</p>
+<p>第三，MCP/工具层应该暴露任务级操作，而不是原始文件 API。Agent 不应该只会“读某个文件”，而应该能调用类似 <code>search_memory</code>、<code>get_active_project_state</code>、<code>save_capture</code>、<code>list_relevant_surveys</code>、<code>check_context_drift</code> 这样的能力。</p>
+<p>第四，保留人工可编辑性。OpenAI 的 memory summary、Claude 的 Markdown memory、Letta 的 filesystem benchmark 都指向同一点：用户需要能看、删、改、审计记忆。</p>
+<h2>最终结论</h2>
+<p>最值得押注的不是“买一个 memory framework”，而是把个人 workspace 打造成一个可审计、可编辑、可检索、可执行的上下文操作系统。</p>
+<p>Agent 越强，越需要长期上下文；但真正有复利的不是存更多，而是把上下文做成可靠基础设施。</p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>AI Agent Long-Term Memory and the Personal OS: The Real Layer Is Context Infrastructure</h1>
+<p>Date: 2026-06-10</p>
+<h2>Core Thesis</h2>
+<p>The bottleneck for long-running agents is not a larger context window. It is editable, searchable, auditable, governed context infrastructure. A useful personal OS should not merely archive chat history. It should turn preferences, project constraints, workflows, research outputs, lessons from failures, and permission boundaries into a durable context substrate that agents can reliably use.</p>
+<p>In other words, the future personal AI system may not be a chatbot. It may be a continuously maintained context operating system.</p>
+<h2>Why This Matters Now</h2>
+<p>Mainstream agent products are making memory a first-class feature.</p>
+<p>OpenAI's Memory FAQ describes a more active memory system: ChatGPT can automatically remember useful context from chats, files, and connected apps, while giving users controls through memory summaries, memory sources, Temporary Chats, and deletion tools (<a href="https://help.openai.com/en/articles/8590148-memory-faq">OpenAI Help</a>).</p>
+<blockquote>
+<p>“When enabled, memory helps ChatGPT automatically remember useful context from your chats, files, and connected apps to personalize your experience, so you don’t have to repeat yourself as often.”</p>
+</blockquote>
+<p>But ChatGPT and Codex context is still fragmented. In the OpenAI Developer Community, users have explicitly requested opt-in shared project context between ChatGPT Projects and Codex workspaces, because many workflows start with planning and architecture in ChatGPT and then move to implementation in Codex. OpenAI Support replied that the request “makes a lot of sense,” especially with selective access, transparency, revocation, and summarized project-level context (<a href="https://community.openai.com/t/feature-request-opt-in-shared-context-between-chatgpt-and-codex-including-memory-and-reference-chat-history/1382529">OpenAI Community</a>).</p>
+<p>Claude Code takes a more engineering-oriented path. Its docs state that every session starts with a fresh context window, and cross-session knowledge is carried by two mechanisms: user-authored <code>CLAUDE.md</code> files and Claude-authored auto memory (<a href="https://docs.anthropic.com/en/docs/claude-code/memory">Claude Code memory</a>).</p>
+<blockquote>
+<p>“Each Claude Code session begins with a fresh context window. Two mechanisms carry knowledge across sessions: CLAUDE.md files ... Auto memory ...”</p>
+</blockquote>
+<p>It also offers a very practical rule:</p>
+<blockquote>
+<p>“Treat CLAUDE.md as the place you write down what you'd otherwise re-explain.”</p>
+</blockquote>
+<p>That sentence is close to the core design principle of a personal OS.</p>
+<h2>MCP Is a Connectivity Layer, Not a Trust Layer</h2>
+<p>The MCP docs define MCP as an open standard for connecting AI applications to external data sources, tools, and workflows, similar to a “USB-C port for AI applications” (<a href="https://modelcontextprotocol.io/docs/getting-started/intro">MCP docs</a>).</p>
+<p>MCP matters because it reduces integration cost. But it answers “how does the agent connect?” not “is the context current, trustworthy, authorized, and safe to use?”</p>
+<p>DataHub makes this distinction clearly: MCP is an activation layer, not a full context management stack (<a href="https://datahub.com/blog/mcp-context-management">DataHub</a>).</p>
+<blockquote>
+<p>“MCP is a protocol, not a platform.”</p>
+<p>“You’re standardizing access to chaos.”</p>
+</blockquote>
+<p>This is the key trap for a personal OS. If memory, captures, calendar entries, emails, project notes, and research reports are messy, MCP only lets agents access the mess faster.</p>
+<h2>Long-Term Memory Is Not Just a Vector Database</h2>
+<p>The market is splitting into several architectural paths.</p>
+<p><strong>Mem0 / Zep-style pluggable memory APIs.</strong> Mem0 defines agent memory as a persistent storage layer and argues that by 2026 memory has become a first-class architectural component, not just a longer prompt. It emphasizes multi-scope memory, multi-signal retrieval, async writes, metadata filtering, and open problems such as temporal abstraction, cross-session identity, memory staleness, and privacy/consent (<a href="https://mem0.ai/blog/state-of-ai-agent-memory-2026">Mem0</a>).</p>
+<p><strong>Letta / MemGPT-style OS-like agent runtimes.</strong> Letta is closer to an agent operating system: agents manage core memory, archival memory, filesystem access, and tools. Letta also warns that memory should not be evaluated only as an isolated retrieval tool; the agent's ability to decide when and how to retrieve or write context may matter more (<a href="https://www.letta.com/blog/benchmarking-ai-agent-memory">Letta</a>).</p>
+<blockquote>
+<p>“The quality of an agent's memory often depends more on the underlying agentic system's ability to manage context and call tools than on the memory tools themselves.”</p>
+</blockquote>
+<p><strong>Codified context: documentation as infrastructure.</strong> A paper on <code>Codified Context</code> describes a three-tier context architecture for a 108,000-line C# system: a hot-memory constitution, 19 specialized agents, and 34 cold-memory specs. The context infrastructure totaled about 26,200 lines, or 24.2% of the codebase size (<a href="https://arxiv.org/html/2602.20478v1">arXiv</a>).</p>
+<blockquote>
+<p>“This paper addresses the gap with a codified context infrastructure that treats documentation as infrastructure — load-bearing artifacts that AI agents depend on to produce correct output.”</p>
+</blockquote>
+<p>This path is especially relevant for a personal OS. Often the strongest memory is not a black-box database; it is human-readable, editable, auditable Markdown, rules, plans, skills, and indexes.</p>
+<h2>High-Confidence Findings</h2>
+<ul>
+<li>Context and memory are becoming independent layers in the agent stack. OpenAI, Claude Code, Mem0, Letta, Atlan, and DataHub all point in this direction.</li>
+<li>MCP is a connectivity layer, not a trustworthy-context layer. MCP's own positioning and DataHub/Atlan's analysis support this distinction.</li>
+<li>Files and Markdown remain powerful. <code>CLAUDE.md</code>, Letta's filesystem benchmark, and the Codified Context paper all suggest that plain text plus retrieval plus human maintenance is still a very strong default.</li>
+<li>Staleness is one of the central risks. Old memories, outdated specs, and stale project notes can make agents produce outputs that look correct but are wrong.</li>
+</ul>
+<h2>Open Questions</h2>
+<ul>
+<li>Memory benchmark rankings are not yet fully reliable. Mem0 and Letta use different evaluation setups, and LoCoMo scores do not directly translate into real long-horizon engineering tasks.</li>
+<li>Graph memory is workload-dependent. Enterprise lineage and temporal relationships may require graph structures; a personal workspace may get far with Markdown, semantic search, and explicit routing.</li>
+<li>Agent memory SaaS may become a major category, but the commercial form is not settled.</li>
+</ul>
+<h2>Design Implications for a Personal OS</h2>
+<p>First, do not design the personal OS as a chat-history archive. Design it as a context substrate.</p>
+<p>Second, separate at least five memory types: identity/preferences memory, project memory, research memory, procedural memory, and session memory. They should not all live in the same bucket.</p>
+<p>Third, MCP and local tools should expose task-level operations, not raw file APIs. Instead of only reading files, an agent should be able to call capabilities such as <code>search_memory</code>, <code>get_active_project_state</code>, <code>save_capture</code>, <code>list_relevant_surveys</code>, and <code>check_context_drift</code>.</p>
+<p>Fourth, preserve human editability. OpenAI's memory summary, Claude's Markdown memory, and Letta's filesystem results all point to the same requirement: users need to inspect, delete, edit, and audit what the system remembers.</p>
+<h2>Final Takeaway</h2>
+<p>The highest-leverage bet is not to buy a memory framework. It is to turn the personal workspace into an auditable, editable, searchable, executable context operating system.</p>
+<p>The stronger agents become, the more they need long-term context. But the compounding advantage does not come from storing more. It comes from making context reliable infrastructure.</p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>

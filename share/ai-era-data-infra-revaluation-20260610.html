@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>AI 时代数据基础设施公司重估：谁会真正受益？</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>AI 时代数据基础设施公司重估：谁会真正受益？</h1>
+<p>日期：2026-06-10</p>
+<h2>核心判断</h2>
+<p>AI 没有削弱数据基础设施，反而把“可信、实时、可治理、可应用化的数据层”推到了更高价值位置。但不是所有讲 AI story 的软件公司都会受益。真正被重估的公司，是那些能让企业把 proprietary data 变成 AI apps、agents 和 governed context 的平台。</p>
+<p>Snowflake、Databricks、MongoDB、dbt/Fivetran 都在受益，但受益路径不同。</p>
+<h2>AI 改变了数据层的工作负载</h2>
+<p>传统数据平台的核心需求是 BI、reporting、governed analytics。AI workloads 增加了几类新需求：</p>
+<ul>
+<li>RAG / semantic search：需要 chunking、embedding、vector/hybrid retrieval、reranking。</li>
+<li>Agent memory / context：需要 session、user、project、org scoped memory。</li>
+<li>Fresh operational data：agent 做决策不能只看昨天的 warehouse snapshot。</li>
+<li>Governance / lineage / certification：agent 访问的数据需要可解释、可审计、可权限控制。</li>
+<li>Application serving：AI apps 需要低延迟读写和 transactional state，不只是离线分析。</li>
+<li>Tool/protocol activation：MCP/API 让 agent 接触数据，但底层 context 质量决定可靠性。</li>
+</ul>
+<p>DataHub 对 MCP 的判断可以直接迁移到数据基础设施：MCP 是 activation layer，不是 context management stack；没有 integration、curation、governance、quality，就只是“standardizing access to chaos” (<a href="https://datahub.com/blog/mcp-context-management">DataHub</a>)。Atlan 也把 context infrastructure 拆成 protocol、delivery、governed data substrate，并强调生产瓶颈不是模型而是上下文质量 (<a href="https://atlan.com/know/context-infrastructure-for-ai-agents">Atlan</a>)。</p>
+<p>这意味着数据基础设施公司的价值不再只是“存储 + SQL 查询”，而是能否成为 agentic AI 的可信数据 substrate。</p>
+<h2>Snowflake：公开财务验证最强</h2>
+<p>Reuters 2026-02 报道，Snowflake 预计 FY2027 product revenue 高于华尔街预期，原因是企业 AI 工具需求推动客户使用其云数据分析平台 (<a href="https://www.reuters.com/business/snowflake-expects-annual-product-revenue-above-estimates-ai-boosts-demand-2026-02-25">Reuters</a>)。</p>
+<p>关键数据：</p>
+<ul>
+<li>FY2027 product revenue 指引：<code>$5.66B</code>，高于 LSEG 平均预期 <code>$5.50B</code>。</li>
+<li>Q1 product revenue 指引：<code>$1.26B-$1.27B</code>，中点高于预期 <code>$1.23B</code>。</li>
+<li>Q4 product revenue：约 <code>$1.23B</code>，同比约 <code>30%</code>，高于 <code>$1.18B</code> 预期。</li>
+<li>Snowflake Intelligence agentic platform 2025-11 可用后，CEO 称已有 <code>2,500+</code> customers adopted。</li>
+<li>Snowflake 签下史上最大 <code>&gt;$400M</code> deal。</li>
+<li>与 OpenAI 和 Anthropic 各有 multi-year <code>$200M</code> deal，把 advanced models 集成进平台。</li>
+</ul>
+<p>Snowflake 的 newsroom 也显示 2026 年产品方向高度围绕 agentic enterprise：CoWork、CoCo、Horizon Catalog、open framework for interoperable enterprise data and AI、与 Anthropic 的 governed AI 合作、AWS <code>$6B</code> commitment 等 (<a href="https://www.snowflake.com/en/news/press-releases/">Snowflake press releases</a>)。</p>
+<p>Snowflake 的优势是 enterprise trust、governance、data sharing、SQL/BI 存量和公开财务可验证性。风险是投资者仍担心 AI 会侵蚀传统软件需求。Reuters 同篇报道提到，Snowflake 盘后仍跌约 2%，原因正是市场对传统软件被 AI 压缩的担忧。</p>
+<p>结论：Snowflake 是公开市场里最清晰的 governed AI data cloud 受益者，但需要继续证明 AI workloads 能带来持续 consumption，而不是只带来产品发布热度。</p>
+<h2>Databricks：战略期权最强</h2>
+<p>Databricks 2026-02 官方 press release 称，公司 revenue run-rate 超过 <code>$5.4B</code>，Q4 同比增长 <code>&gt;65%</code>，融资/投资总额超过 <code>$7B</code>，包括约 <code>$5B</code> equity financing，估值 <code>$134B</code>，另有约 <code>$2B</code> debt capacity (<a href="https://www.databricks.com/company/newsroom/press-releases/databricks-grows-65-yoy-surpasses-5-4-billion-revenue-run-rate">Databricks</a>)。</p>
+<p>关键数据：</p>
+<ul>
+<li>Revenue run-rate：<code>&gt;$5.4B</code>。</li>
+<li>YoY growth：<code>&gt;65%</code>。</li>
+<li>AI products revenue run-rate：<code>&gt;$1.4B</code>。</li>
+<li>Net retention：<code>&gt;140%</code>。</li>
+<li><code>&gt;800</code> customers consuming over <code>$1M</code> ARR run-rate。</li>
+<li><code>&gt;70</code> customers consuming over <code>$10M</code> ARR run-rate。</li>
+<li><code>20,000+</code> organizations，<code>60%+</code> Fortune 500。</li>
+</ul>
+<p>Databricks 的重要动作是 Lakebase。2025-06 press release 把 Lakebase 定义为 “fully-managed Postgres database built for AI”，目标是把 operational database 层加入 Data Intelligence Platform，让 developers 和 enterprises 在同一多云平台上构建 data applications and AI agents (<a href="https://www.databricks.com/company/newsroom/press-releases/databricks-launches-lakebase-new-class-operational-database-ai-apps">Databricks Lakebase</a>)。</p>
+<blockquote>
+<p>“AI is introducing a new set of requirements. Now, every data application, agent, recommendation and automated workflow needs fast, reliable data at the speed and scale of AI agents.”</p>
+</blockquote>
+<p>Databricks 的优势是 AI/ML 原生、lakehouse 心智、Unity Catalog、Lakebase、Genie、Agent Bricks 和 Apps。它正在把竞争范围从 lakehouse 扩展到 operational database、agent workflow 和应用开发。</p>
+<p>风险也明显：<code>$134B</code> 私募估值已经很高，Lakebase 虽然逻辑强，但 operational DB 市场需要极高可靠性、生态兼容和迁移信任。</p>
+<p>结论：Databricks 是战略期权最强的 AI data platform。如果 AI apps/agents 真的需要 operational + analytical convergence，它的位置很好；但估值已经提前计入大量成功。</p>
+<h2>MongoDB：机会在 operational AI apps</h2>
+<p>MongoDB 的 AI 叙事不是传统 BI，而是 operational AI apps。</p>
+<p>MongoDB 官方 AI integrations 文档显示，它接入 LangChain、LlamaIndex、Semantic Kernel、Haystack、Spring AI、Feast、LangGraph、CrewAI、Bedrock、Vertex AI、MongoDB MCP Server、n8n、Mastra 等框架和平台，用于 RAG、agentic RAG、agent memory、vector search (<a href="https://www.mongodb.com/docs/atlas/ai-integrations">MongoDB docs</a>)。</p>
+<p>MongoDB AI solution page 把它定位为 AI apps 的 unified operational data platform：document model、distributed architecture、run anywhere、text search、vector search、Voyage embedding/reranking、real-time operational queries、Queryable Encryption (<a href="https://www.mongodb.com/solutions/use-cases/artificial-intelligence">MongoDB AI</a>)。</p>
+<blockquote>
+<p>“MongoDB delivers every capability you need for modern AI apps in one unified platform: text search, vector search, best-in-class embedding models from Voyage AI, and real-time operational queries.”</p>
+</blockquote>
+<p>Tavily case study 也支持这个方向。Tavily CEO 认为 “not everything is semantic, and vector search alone cannot be the only solution for RAG”；MongoDB Atlas 的 vector search、hybrid search、autoscaling、monitoring 被用于低延迟和 agent context (<a href="https://www.mongodb.com/company/blog/innovation/how-tavily-uses-mongodb-to-enhance-agentic-workflows">MongoDB Tavily</a>)。</p>
+<p>MongoDB 的优势是应用数据库心智、document model、semi-structured AI data、vector/hybrid search、Voyage、agent framework integrations。风险是需要证明这些 AI workloads 会转化成 Atlas consumption，而不是只停留在“也有 vector search”。</p>
+<p>结论：MongoDB 是 operational AI apps 的可选赢家。如果 AI agent 应用大量落在 customer-facing workflow apps、low-latency state 和 agent memory，它会被重新看作 AI app backend。</p>
+<h2>dbt + Fivetran：数据工具链正在整合</h2>
+<p>Reuters/Yahoo 报道，Fivetran 与 dbt Labs 将以 all-stock deal 合并，形成接近 <code>$600M</code> annual revenue 的数据基础设施公司；Fivetran CEO George Fraser 说，这个组合强调 open infrastructure and interoperability，因为大家都在研究如何在 AI 语境下使用 business data (<a href="https://finance.yahoo.com/news/a16z-backed-data-firms-fivetran-140301503.html">Yahoo/Reuters</a>)。</p>
+<p>关键事实：</p>
+<ul>
+<li>Combined annual revenue：近 <code>$600M</code>。</li>
+<li>Fivetran 上次公开估值：<code>$5.6B</code>（2021）。</li>
+<li>dbt Labs Series D 估值：<code>$4.2B</code>（2022）。</li>
+<li>Fraser 称 <code>80%-90%</code> Fivetran customers use dbt tools。</li>
+<li>dbt Core 会保留当前 license。</li>
+</ul>
+<p>这件事的意义不是简单的 ETL + transformation 打包，而是 AI 时代企业发现：模型要用 business data，前提是数据能被持续抽取、转换、建模、测试、文档化、治理、暴露给 AI。分散工具链会增加 latency、成本和上下文不一致。</p>
+<p>结论：dbt/Fivetran 是行业整合信号。AI 会提高对数据准备、semantic model、lineage、freshness、quality 的要求；单点工具会被平台吞并或主动合并。</p>
+<h2>横向框架</h2>
+<p><strong>确定性收入受益：</strong> Snowflake 最清晰，Databricks 披露强但仍是私有口径，MongoDB 需要更多收入转化证据，dbt/Fivetran 是整合信号。</p>
+<p><strong>战略控制点：</strong> Snowflake 是 governed enterprise data cloud；Databricks 是 lakehouse + AI/ML + apps + Lakebase；MongoDB 是 operational AI app database；dbt/Fivetran 是 data movement + transformation + interoperability。</p>
+<p><strong>AI workload fit：</strong> BI/SQL/reporting/security sharing 偏 Snowflake；ML/feature engineering/lakehouse/AI platform 偏 Databricks；AI apps/user state/agent memory/low-latency operational data 偏 MongoDB；data prep/semantic transformation/pipeline standardization 偏 dbt/Fivetran。</p>
+<p><strong>风险折扣：</strong> AI 可能增加 data consumption，也可能压缩传统 SaaS budgets；平台都在做 catalog、agents、apps 和 operational DB，边界重叠会加剧竞争；没有 lineage/certification/audit 的 AI 数据平台很难进入生产。</p>
+<h2>最终结论</h2>
+<p>AI 时代数据基础设施的重估主线不是“谁加了 vector search”，而是谁能成为企业 AI 的可信数据与上下文控制平面。</p>
+<p>如果只选主线：Snowflake 是公开市场里最清晰的 governed AI data cloud 受益者；Databricks 是私有市场里最激进的 data + AI platform 扩张者；MongoDB 的机会在 operational AI apps；dbt/Fivetran 说明中间层工具链会继续整合。</p>
+<p>后续最值得跟踪的不是发布了多少 AI feature，而是三个指标：AI workloads 是否带来新增 consumption，是否进入 production governance 流程，是否让客户把 operational、analytical、agent context 放到同一个平台上。</p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Revaluing Data Infrastructure in the AI Era: Who Actually Benefits?</h1>
+<p>Date: 2026-06-10</p>
+<h2>Core Thesis</h2>
+<p>AI is not weakening data infrastructure. It is pushing trusted, real-time, governed, application-ready data layers into a more valuable position. But not every software company with an AI story will benefit. The companies that matter are the ones that can turn proprietary enterprise data into AI apps, agents, and governed context.</p>
+<p>Snowflake, Databricks, MongoDB, and the dbt/Fivetran combination all benefit from this shift, but in different ways.</p>
+<h2>AI Changes the Shape of Data Workloads</h2>
+<p>Traditional data platforms were built around BI, reporting, and governed analytics. AI workloads add several new requirements:</p>
+<ul>
+<li>RAG and semantic search: chunking, embeddings, vector/hybrid retrieval, and reranking.</li>
+<li>Agent memory and context: session-, user-, project-, and org-scoped memory.</li>
+<li>Fresh operational data: agents cannot make decisions only from yesterday's warehouse snapshot.</li>
+<li>Governance, lineage, and certification: agent-accessed data must be explainable, auditable, and permissioned.</li>
+<li>Application serving: AI apps need low-latency reads/writes and transactional state, not just offline analytics.</li>
+<li>Tool and protocol activation: MCP/API layers let agents access data, but the quality of the underlying context determines reliability.</li>
+</ul>
+<p>DataHub's framing of MCP applies directly to data infrastructure: MCP is an activation layer, not a context management stack. Without integration, curation, governance, and quality, it is just “standardizing access to chaos” (<a href="https://datahub.com/blog/mcp-context-management">DataHub</a>). Atlan similarly breaks context infrastructure into protocol, delivery, and governed data substrate, and argues that the production bottleneck is context quality rather than model quality (<a href="https://atlan.com/know/context-infrastructure-for-ai-agents">Atlan</a>).</p>
+<p>The value of data infrastructure is no longer just storage plus SQL. The question is whether a platform can become the trusted data substrate for agentic AI.</p>
+<h2>Snowflake: The Clearest Public-Market Validation</h2>
+<p>Reuters reported in February 2026 that Snowflake expected FY2027 product revenue above Wall Street estimates, driven by enterprise demand for AI tools and Snowflake's cloud data analytics platform (<a href="https://www.reuters.com/business/snowflake-expects-annual-product-revenue-above-estimates-ai-boosts-demand-2026-02-25">Reuters</a>).</p>
+<p>Key figures:</p>
+<ul>
+<li>FY2027 product revenue guidance: <code>$5.66B</code>, above the LSEG estimate of <code>$5.50B</code>.</li>
+<li>Q1 product revenue guidance: <code>$1.26B-$1.27B</code>, above the midpoint estimate of <code>$1.23B</code>.</li>
+<li>Q4 product revenue: about <code>$1.23B</code>, up roughly <code>30%</code> year over year and above the <code>$1.18B</code> estimate.</li>
+<li>Snowflake Intelligence, made available in November 2025, had been adopted by <code>2,500+</code> customers according to the CEO.</li>
+<li>Snowflake signed the largest deal in its history, over <code>$400M</code>.</li>
+<li>It struck separate multi-year <code>$200M</code> deals with OpenAI and Anthropic to integrate advanced models into its platform.</li>
+</ul>
+<p>Snowflake's own newsroom shows that its 2026 product direction is heavily centered on the agentic enterprise: CoWork, CoCo, Horizon Catalog, interoperable enterprise data and AI frameworks, governed AI with Anthropic, and an AWS <code>$6B</code> commitment (<a href="https://www.snowflake.com/en/news/press-releases/">Snowflake press releases</a>).</p>
+<p>Snowflake's strengths are enterprise trust, governance, data sharing, SQL/BI footprint, and public financial verification. The risk is investor concern that AI may compress traditional software demand. Reuters noted that the stock still dropped about 2% after hours, reflecting skepticism toward traditional software in the AI era.</p>
+<p>Conclusion: Snowflake is the clearest public-market beneficiary of the governed AI data cloud theme, but it still needs to prove that AI workloads create durable consumption, not just product-launch momentum.</p>
+<h2>Databricks: The Strongest Strategic Option Value</h2>
+<p>Databricks announced in February 2026 that it had crossed a <code>$5.4B</code> revenue run-rate, growing <code>&gt;65%</code> year over year in Q4. It also announced more than <code>$7B</code> of investment in the company, including about <code>$5B</code> of equity financing at a <code>$134B</code> valuation and about <code>$2B</code> of additional debt capacity (<a href="https://www.databricks.com/company/newsroom/press-releases/databricks-grows-65-yoy-surpasses-5-4-billion-revenue-run-rate">Databricks</a>).</p>
+<p>Key figures:</p>
+<ul>
+<li>Revenue run-rate: <code>&gt;$5.4B</code>.</li>
+<li>YoY growth: <code>&gt;65%</code>.</li>
+<li>AI products revenue run-rate: <code>&gt;$1.4B</code>.</li>
+<li>Net retention: <code>&gt;140%</code>.</li>
+<li><code>&gt;800</code> customers consuming over <code>$1M</code> annual revenue run-rate.</li>
+<li><code>&gt;70</code> customers consuming over <code>$10M</code> annual revenue run-rate.</li>
+<li><code>20,000+</code> organizations and <code>60%+</code> of the Fortune 500.</li>
+</ul>
+<p>The important strategic move is Lakebase. In June 2025, Databricks launched Lakebase as a “fully-managed Postgres database built for AI,” adding an operational database layer to the Data Intelligence Platform so developers and enterprises can build data applications and AI agents on one multi-cloud platform (<a href="https://www.databricks.com/company/newsroom/press-releases/databricks-launches-lakebase-new-class-operational-database-ai-apps">Databricks Lakebase</a>).</p>
+<blockquote>
+<p>“AI is introducing a new set of requirements. Now, every data application, agent, recommendation and automated workflow needs fast, reliable data at the speed and scale of AI agents.”</p>
+</blockquote>
+<p>Databricks' strengths are AI/ML-native positioning, the lakehouse architecture, Unity Catalog, Lakebase, Genie, Agent Bricks, and Databricks Apps. It is expanding the competitive surface from lakehouse into operational databases, agent workflows, and application development.</p>
+<p>The risks are also clear: a <code>$134B</code> private valuation already prices in a lot of success, and operational databases require very high reliability, ecosystem compatibility, and migration trust.</p>
+<p>Conclusion: Databricks has the strongest strategic option value among AI data platforms. If AI apps and agents require operational + analytical convergence, Databricks is well positioned. But much of that success is already priced in.</p>
+<h2>MongoDB: The Operational AI Apps Path</h2>
+<p>MongoDB's AI story is not traditional BI. It is operational AI apps.</p>
+<p>MongoDB's AI integrations documentation shows integrations with LangChain, LlamaIndex, Semantic Kernel, Haystack, Spring AI, Feast, LangGraph, CrewAI, Bedrock, Vertex AI, MongoDB MCP Server, n8n, and Mastra for RAG, agentic RAG, agent memory, and vector search (<a href="https://www.mongodb.com/docs/atlas/ai-integrations">MongoDB docs</a>).</p>
+<p>MongoDB's AI solution page positions it as a unified operational data platform for AI apps, combining the document model, distributed architecture, run-anywhere deployment, text search, vector search, Voyage embedding/reranking, real-time operational queries, and Queryable Encryption (<a href="https://www.mongodb.com/solutions/use-cases/artificial-intelligence">MongoDB AI</a>).</p>
+<blockquote>
+<p>“MongoDB delivers every capability you need for modern AI apps in one unified platform: text search, vector search, best-in-class embedding models from Voyage AI, and real-time operational queries.”</p>
+</blockquote>
+<p>The Tavily case study supports this direction. Tavily's CEO argues that “not everything is semantic, and vector search alone cannot be the only solution for RAG.” Tavily uses MongoDB Atlas vector search, hybrid search, autoscaling, and monitoring for low-latency agent context (<a href="https://www.mongodb.com/company/blog/innovation/how-tavily-uses-mongodb-to-enhance-agentic-workflows">MongoDB Tavily</a>).</p>
+<p>MongoDB's strengths are its application database mindshare, document model, fit for semi-structured AI data, vector/hybrid search, Voyage models, and agent framework integrations. The risk is that it still needs to prove that these AI workloads translate into meaningful Atlas consumption rather than just a “we also have vector search” narrative.</p>
+<p>Conclusion: MongoDB is a potential winner for operational AI apps. If agent applications concentrate around customer-facing workflow apps, low-latency state, and agent memory, MongoDB can be re-understood as an AI app backend.</p>
+<h2>dbt + Fivetran: The Toolchain Is Consolidating</h2>
+<p>Reuters/Yahoo reported that Fivetran and dbt Labs will merge in an all-stock deal, creating a data infrastructure company with nearly <code>$600M</code> in annual revenue. Fivetran CEO George Fraser said the combination emphasizes open infrastructure and interoperability as companies figure out how to use business data in the context of AI (<a href="https://finance.yahoo.com/news/a16z-backed-data-firms-fivetran-140301503.html">Yahoo/Reuters</a>).</p>
+<p>Key facts:</p>
+<ul>
+<li>Combined annual revenue: nearly <code>$600M</code>.</li>
+<li>Fivetran's last public valuation: <code>$5.6B</code> in 2021.</li>
+<li>dbt Labs' Series D valuation: <code>$4.2B</code> in 2022.</li>
+<li>Fraser estimated that <code>80%-90%</code> of Fivetran customers use dbt tools.</li>
+<li>dbt Core will remain under its current license.</li>
+</ul>
+<p>The significance is not simply ETL plus transformation. In the AI era, models can only use business data well if that data can be continuously extracted, transformed, modeled, tested, documented, governed, and exposed to AI systems. A fragmented toolchain creates latency, cost, and context inconsistency.</p>
+<p>Conclusion: dbt/Fivetran is a consolidation signal. AI raises the bar for data preparation, semantic models, lineage, freshness, and quality. Point tools will either be absorbed by platforms or proactively combine.</p>
+<h2>Cross-Company Framework</h2>
+<p><strong>Confirmed revenue benefit:</strong> Snowflake is the clearest public-market case. Databricks' disclosures are strong but private. MongoDB needs more evidence of revenue conversion from AI workloads. dbt/Fivetran is a consolidation signal rather than a directly observable public-market trade.</p>
+<p><strong>Strategic control points:</strong> Snowflake is governed enterprise data cloud; Databricks is lakehouse + AI/ML + apps + Lakebase; MongoDB is operational AI app database; dbt/Fivetran is data movement + transformation + interoperability.</p>
+<p><strong>AI workload fit:</strong> BI, SQL, reporting, and secure sharing lean Snowflake. ML, feature engineering, lakehouse, and AI platform lean Databricks. AI apps, user state, agent memory, and low-latency operational data lean MongoDB. Data prep, semantic transformation, and pipeline standardization lean dbt/Fivetran.</p>
+<p><strong>Risk discount:</strong> AI may increase data consumption, but it may also compress traditional SaaS budgets. Platforms are all moving into catalogs, agents, apps, and operational databases, so competitive boundaries will blur. AI data platforms without lineage, certification, and auditability will struggle to enter production.</p>
+<h2>Final Takeaway</h2>
+<p>The AI-era revaluation of data infrastructure is not about who added vector search. It is about who becomes the trusted data and context control plane for enterprise AI.</p>
+<p>Snowflake is the clearest public-market governed AI data cloud beneficiary. Databricks is the most aggressive private data + AI platform expansion story. MongoDB's opportunity is operational AI apps. dbt/Fivetran shows that the middle-layer toolchain will continue to consolidate.</p>
+<p>The three metrics to watch are not how many AI features get announced. They are whether AI workloads create incremental consumption, whether they enter production governance workflows, and whether customers consolidate operational, analytical, and agent context on the same platform.</p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
