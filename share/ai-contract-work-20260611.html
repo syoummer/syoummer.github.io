@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>AI 正在把工作变成更小的合同</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>AI 正在把工作变成更小的合同：企业得到灵活性，工人承担波动</h1>
+<p>Forbes 4 月那篇关于 AI、工作和退休的文章，真正重要的不是“公司开始用更多 contractor”这个表面结论，而是它指出了一种更深的变化：AI 正在改变公司和 worker 之间的契约。</p>
+<p>文章里有一句话非常直接：</p>
+<blockquote>
+<p>“The companies get flexibility. The workers get invoices.”</p>
+<p>来源：<a href="https://www.forbes.com/sites/josephcoughlin/2026/04/06/ai-jobs-and-retirement-rethinking-the-new-work-contract">Forbes</a></p>
+</blockquote>
+<p>这句话解释了为什么这个趋势值得认真看。AI 不只是让某些任务自动化，它还让公司更容易把工作拆成更小的单元：一个项目、一段流程、一批数据、一套评估、一轮自动化改造。公司不一定要长期雇一个完整岗位，而是可以买一段专项能力。</p>
+<h2>不是简单的“AI 替代人”，而是劳动关系被拆碎</h2>
+<p>Upwork 2026 年报告称，77% 的 business leaders 认为 AI 正在增加他们对 specialized, fractional talent 的需求，而不是传统全职岗位。报告还显示，AI 相关技能需求同比增长 109%，其中 AI integration 增长 178%，AI data annotation and labeling 增长 154%。来源：<a href="https://investors.upwork.com/news-releases/news-release-details/upworks-demand-skills-2026-demand-top-ai-skills-more-doubles-ai">Upwork</a>。</p>
+<p>这类数据有平台方视角，不能当作中立统计。但方向很清楚：企业现在更愿意买“短周期、专项化、能和 AI 协作”的能力。</p>
+<p>Robert Half 的 2026 技术招聘趋势也支持这个判断：61% 的 tech leaders 计划增加 permanent headcount，同时 55% 计划增加 contract or temporary hiring。来源：<a href="https://www.roberthalf.com/us/en/insights/salary-hiring-trends/demand-for-skilled-talent/tech-it">Robert Half</a>。</p>
+<p>所以更准确的描述不是“全职员工消失”，而是公司变成了一个分层结构：</p>
+<ul>
+<li>更小的核心全职团队</li>
+<li>更多 AI 工具和 AI agents</li>
+<li>一层 flexible contractor / fractional expert</li>
+<li>外部供应商和平台化劳动力</li>
+</ul>
+<p>这个结构对公司很诱人。它降低 official headcount，提高扩缩速度，也让预算从固定工资转向可变成本。</p>
+<h2>AI 也在制造新的 contractor 工作</h2>
+<p>很多人以为 AI 会直接减少人力，但现实更复杂。Upwork 2024 年研究显示，96% 的 C-suite leaders 期待 AI 提高生产率，但 77% 使用 AI 的员工反而说 AI 增加了工作量。来源：<a href="https://investors.upwork.com/news-releases/news-release-details/upwork-study-finds-employee-workloads-rising-despite-increased-c">Upwork 2024 study</a>。</p>
+<p>这解释了一个悖论：AI 工具越多，公司越需要一批人来做“AI 翻译层”。这些人负责把模型能力变成业务流程，搭建 prompt / RAG / evals，审查输出质量，处理 hallucination，重构客服、销售、数据处理和内部运营流程。</p>
+<p>这类工作很适合 contractor：项目清晰、周期有限、技能更新快、公司内部未必有现成人才。</p>
+<p>高技能 contractor 因此可能受益。AI integrator、workflow designer、model evaluator、AI data quality specialist、domain expert annotator、AI security consultant 都可能有更强议价权。</p>
+<h2>但 AI contractor 化是双向冲击</h2>
+<p>问题在于，AI 并不是只创造高价值 contractor 工作。它也在挤压低端、标准化、容易拆成任务的 freelance work。</p>
+<p>Brookings 对 freelance market 的研究发现，高 generative AI 暴露职业的 freelancers 合同数下降 2%，收入下降 5%。来源：<a href="https://www.brookings.edu/articles/is-generative-ai-a-job-killer-evidence-from-the-freelance-market">Brookings</a>。</p>
+<p>Ramp 的企业支出分析也发现，一些公司正在把 freelance marketplace spend 转向 AI provider spend。来源：<a href="https://ramp.com/leading-indicators/ai-labor-market-impact-freelancers">Ramp</a>。</p>
+<blockquote>
+<p>“First, businesses are shifting spend from freelancers to AI.”</p>
+</blockquote>
+<p>这意味着 AI contractor 化会分层：</p>
+<ul>
+<li>能负责判断、集成、质量、风险和业务上下文的人，可能变贵</li>
+<li>只做可替代的原子任务的人，可能被压价、替代或平台化</li>
+</ul>
+<p>所以“做 contractor”本身不是护城河。护城河是你是否掌握 AI 不能轻易替代的上下文、判断和责任。</p>
+<h2>最隐蔽的一层：AI 背后的数据工人</h2>
+<p>AI 看起来像自动化，但许多系统背后仍依赖大量人类劳动：数据标注、RLHF、模型输出比较、内容审核、安全测试、错误修正。</p>
+<p>NYMag 对 AI factory 的报道解释了 RLHF 的基本机制：人类给模型提示，比较两个回答，选出更好的回答，形成 human-feedback data。来源：<a href="https://nymag.com/intelligencer/article/ai-artificial-intelligence-humans-technology-business-factory.html">NYMag</a>。</p>
+<blockquote>
+<p>“Each time Anna prompts Sparrow, it delivers two responses and she picks the best one, thereby creating something called ‘human-feedback data.’”</p>
+</blockquote>
+<p>这类劳动往往通过 Scale AI / Outlier / Remotasks、Surge AI、Sama、GlobalLogic、Covalen 等供应商或平台完成。终端用户看到的是“模型变聪明了”，但看不到是谁在标注、过滤、评分和修正。</p>
+<p>这里的风险非常具体：</p>
+<ul>
+<li>工人被归类为 independent contractor，缺少员工福利</li>
+<li>培训、会议和等待任务时间可能不付费</li>
+<li>任务审核、封号、付款规则缺少申诉机制</li>
+<li>有害内容审核可能造成心理创伤</li>
+<li>NDA 和项目代号让工人很难证明自己到底服务了哪家 AI 公司</li>
+</ul>
+<p>LA Times 报道，Surge AI 被起诉，指控其 deliberately 把数据标注员分类为 independent contractors，从而避免员工福利和工资责任。来源：<a href="https://www.latimes.com/business/story/2025-05-21/surge-ai-is-latest-san-francisco-start-up-to-face-lawsuit-for-allegedly-misclassifying-data-labeling-workers">Los Angeles Times</a>。</p>
+<p>TIME 也报道过 Sama 肯尼亚工人为 OpenAI 标注有害内容，实得约 1.32 到 2 美元每小时。来源：<a href="https://time.com/6247678/openai-chatgpt-kenya-workers/">TIME</a>。</p>
+<blockquote>
+<p>“OpenAI used outsourced Kenyan laborers earning less than $2 per hour...”</p>
+</blockquote>
+<p>这些案例不能说明所有 AI 数据工作都是 sweatshop。也有高薪的 domain-expert annotation。但它们说明了一个结构性问题：AI 公司可以通过多层供应链把劳动风险转移出去。</p>
+<h2>“Disposable”说的不是工人没价值，而是关系被设计成可替换</h2>
+<p>TechEquity 2025 年报告把 AI layoffs、contract work 和 disposable worker 的感受连在一起。来源：<a href="https://techequity.us/2025/11/19/ai-workforce-development-november-2025-report">TechEquity</a>。</p>
+<blockquote>
+<p>“With the shadow of AI-related layoffs hanging over many tech workers’ heads, they can be made to feel disposable and without job security.”</p>
+</blockquote>
+<p>这里的 disposable 不是说 worker 没有价值，而是说劳动关系被设计成低承诺、低保障、可替换。公司保留弹性，worker 承担波动。</p>
+<p>这也是为什么只谈 upskilling 不够。worker 当然需要学习 AI，但如果制度仍然把医保、退休、失业保险、晋升路径和组织权绑定在 full-time employment 上，那么 contractor 化越深入，保障缺口就越大。</p>
+<p>Brookings 建议把福利从 full-time employment 中解耦，让保障更可携带。来源：<a href="https://www.brookings.edu/articles/workforce-ecosystems-and-ai">Brookings</a>。</p>
+<blockquote>
+<p>“workers receive equal protection and benefits based on the value they create, not the employment status they hold.”</p>
+</blockquote>
+<p>这可能是 AI 时代劳动政策最关键的问题之一：如果工作越来越项目化，福利也必须更可携带。</p>
+<h2>AI 裁员是真的，但不能被过度简化</h2>
+<p>2025 年企业确实越来越常把 AI 写进裁员理由。Challenger 数据显示，2025 年前 11 个月美国雇主宣布 1,170,821 个裁员计划，其中 AI 被引用为 54,694 个裁员计划的原因。来源：<a href="https://www.challengergray.com/blog/challenger-report-71321-job-cuts-on-restructurings-closings-economy">Challenger</a>。</p>
+<p>但这不等于 AI 是所有裁员的真实单一原因。SHRM 指出，一些裁员可能是疫情后过度招聘修正、成本削减、资本开支转向 AI，只是被包装成 AI transformation。来源：<a href="https://www.shrm.org/topics-tools/news/technology/ai-layoffs-transformation-scapegoat">SHRM</a>。</p>
+<p>Anthropic 2026 年研究也提醒，目前还没有发现高 AI 暴露职业失业率系统性上升，但年轻 workers 的 hiring 可能放缓。来源：<a href="https://www.anthropic.com/research/labor-market-impacts">Anthropic</a>。</p>
+<blockquote>
+<p>“We find no systematic increase in unemployment for highly exposed workers since late 2022, though we find suggestive evidence that hiring of younger workers has slowed in exposed occupations.”</p>
+</blockquote>
+<p>所以更准确的判断是：AI 已经改变任务、招聘结构和组织设计，但“AI 已经造成全经济范围大规模净失业”还不是一个被充分证明的事实。</p>
+<h2>真正的问题：生产率归谁，风险归谁</h2>
+<p>这场变化的核心不是 contractor 好不好，也不是 AI 会不会替代所有人。核心问题是：AI 提高的生产率由谁获得，风险由谁承担。</p>
+<p>对企业来说，AI + contractor 是一种非常漂亮的组合：低 headcount、快扩缩、按项目付费、按需购买技能。</p>
+<p>对高技能 worker 来说，这也可能是机会：如果你能把 AI 落地成业务结果，你可以比普通全职岗位更灵活、更高收入。</p>
+<p>但对底层数据工人、内容审核员、普通 freelancer、早期职业白领来说，这可能意味着更不稳定的工作、更少的福利、更弱的申诉权，以及更高的替代压力。</p>
+<p>Forbes 那句话之所以重要，是因为它没有把问题伪装成纯技术故事。企业得到 flexibility，worker 得到 invoices。下一步要问的是：invoice 之外，worker 还能得到什么？</p>
+<p>如果答案只是“自己学 AI”，那是不够的。AI 时代真正需要的是新的劳动契约：可携带福利、透明供应链、合理分类、worker voice、心理健康保护，以及对 AI 部署影响的问责。</p>
+<p>否则，AI 不只是提高生产率，也会把更多人推向一种更聪明、更数字化、更难看见的 disposable work。</p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>AI Is Turning Work Into Smaller Contracts: Companies Get Flexibility, Workers Get Volatility</h1>
+<p>The important part of the April Forbes piece on AI, jobs, and retirement is not simply that companies are using more contractors. The deeper point is that AI is changing the contract between companies and workers.</p>
+<p>The article puts it bluntly:</p>
+<blockquote>
+<p>“The companies get flexibility. The workers get invoices.”</p>
+<p>Source: <a href="https://www.forbes.com/sites/josephcoughlin/2026/04/06/ai-jobs-and-retirement-rethinking-the-new-work-contract">Forbes</a></p>
+</blockquote>
+<p>That sentence captures why this trend matters. AI does not only automate tasks. It also makes it easier for companies to break work into smaller units: a project, a workflow, a batch of data, an evaluation pass, an automation migration. Instead of hiring a full-time role, companies can buy a slice of specialized capability.</p>
+<h2>This Is Not Just AI Replacing People. It Is Work Being Broken Apart</h2>
+<p>Upwork’s 2026 report says 77% of business leaders believe AI is increasing their need for specialized, fractional talent rather than traditional full-time roles. The same report says AI-related skills grew 109% year over year, with AI integration up 178% and AI data annotation and labeling up 154%. Source: <a href="https://investors.upwork.com/news-releases/news-release-details/upworks-demand-skills-2026-demand-top-ai-skills-more-doubles-ai">Upwork</a>.</p>
+<p>Upwork is not a neutral observer; it benefits from the growth of flexible talent markets. But the direction of travel is still clear. Companies increasingly want short-cycle, specialized, AI-capable labor.</p>
+<p>Robert Half’s 2026 technology hiring outlook points in the same direction: 61% of tech leaders plan to increase permanent headcount, while 55% plan to increase contract or temporary hiring. Source: <a href="https://www.roberthalf.com/us/en/insights/salary-hiring-trends/demand-for-skilled-talent/tech-it">Robert Half</a>.</p>
+<p>So the better description is not “full-time employees disappear.” It is that companies are becoming layered systems:</p>
+<ul>
+<li>a smaller core of full-time employees</li>
+<li>more AI tools and AI agents</li>
+<li>a flexible layer of contractors and fractional experts</li>
+<li>external vendors and platform-mediated labor</li>
+</ul>
+<p>This structure is attractive to companies. It lowers official headcount, speeds up scaling, and converts fixed labor costs into variable spending.</p>
+<h2>AI Is Also Creating New Contractor Work</h2>
+<p>The common story is that AI reduces labor. The reality is more complicated. Upwork’s 2024 study found that while 96% of C-suite leaders expected AI to improve productivity, 77% of employees using AI said it had increased their workload. Source: <a href="https://investors.upwork.com/news-releases/news-release-details/upwork-study-finds-employee-workloads-rising-despite-increased-c">Upwork 2024 study</a>.</p>
+<p>That helps explain the paradox. More AI tools often create more demand for people who can act as the translation layer between AI capability and real operations. These workers build prompts, RAG systems, evals, quality review processes, automation workflows, and practical governance around hallucinations and errors.</p>
+<p>This kind of work fits contracting well. It is project-shaped, time-bound, skill-intensive, and changes quickly. Many companies do not already have the talent internally.</p>
+<p>High-skill contractors may benefit. AI integrators, workflow designers, model evaluators, AI data quality specialists, domain expert annotators, and AI security consultants may gain pricing power.</p>
+<h2>But AI Contracting Cuts Both Ways</h2>
+<p>AI does not only create high-value contractor work. It also compresses lower-end freelance work that is standardized, repetitive, or easy to split into tasks.</p>
+<p>Brookings found that freelancers in occupations more exposed to generative AI experienced a 2% decline in contracts and a 5% decline in earnings. Source: <a href="https://www.brookings.edu/articles/is-generative-ai-a-job-killer-evidence-from-the-freelance-market">Brookings</a>.</p>
+<p>Ramp’s analysis of business spending also found that some companies are shifting spend from freelance marketplaces to AI providers. Source: <a href="https://ramp.com/leading-indicators/ai-labor-market-impact-freelancers">Ramp</a>.</p>
+<blockquote>
+<p>“First, businesses are shifting spend from freelancers to AI.”</p>
+</blockquote>
+<p>This means AI contracting will stratify the labor market:</p>
+<ul>
+<li>workers who provide judgment, integration, quality control, risk management, and business context may become more valuable</li>
+<li>workers who perform replaceable atomic tasks may be compressed, automated, or pushed further into platforms</li>
+</ul>
+<p>Being a contractor is not itself a moat. The moat is owning context, judgment, and responsibility that AI cannot easily absorb.</p>
+<h2>The Most Hidden Layer: The Data Workers Behind AI</h2>
+<p>AI looks automated, but many systems still depend on human labor: data annotation, RLHF, output comparison, content moderation, safety testing, and error correction.</p>
+<p>NYMag’s reporting on the AI factory explains the basic mechanism of RLHF: humans prompt models, compare two answers, and choose the better one, creating human-feedback data. Source: <a href="https://nymag.com/intelligencer/article/ai-artificial-intelligence-humans-technology-business-factory.html">NYMag</a>.</p>
+<blockquote>
+<p>“Each time Anna prompts Sparrow, it delivers two responses and she picks the best one, thereby creating something called ‘human-feedback data.’”</p>
+</blockquote>
+<p>This work is often routed through vendors and platforms such as Scale AI, Outlier, Remotasks, Surge AI, Sama, GlobalLogic, and Covalen. Users see a smarter model. They do not see the people labeling, filtering, rating, and correcting the system.</p>
+<p>The risks are specific:</p>
+<ul>
+<li>workers may be classified as independent contractors and lose employee benefits</li>
+<li>training, meetings, and waiting time may be unpaid</li>
+<li>payment rules, account suspensions, and task review may have weak appeal mechanisms</li>
+<li>harmful content moderation may cause psychological harm</li>
+<li>NDAs and project code names may prevent workers from proving which AI company they actually served</li>
+</ul>
+<p>The Los Angeles Times reported that Surge AI was sued over allegations that it deliberately classified data annotators as independent contractors to avoid employee benefits and wage obligations. Source: <a href="https://www.latimes.com/business/story/2025-05-21/surge-ai-is-latest-san-francisco-start-up-to-face-lawsuit-for-allegedly-misclassifying-data-labeling-workers">Los Angeles Times</a>.</p>
+<p>TIME reported that Sama workers in Kenya labeled harmful content for OpenAI and took home roughly $1.32 to $2 per hour. Source: <a href="https://time.com/6247678/openai-chatgpt-kenya-workers/">TIME</a>.</p>
+<blockquote>
+<p>“OpenAI used outsourced Kenyan laborers earning less than $2 per hour...”</p>
+</blockquote>
+<p>These cases do not prove that all AI data work is a sweatshop. There is also higher-paid domain-expert annotation. But they expose a structural problem: AI companies can push labor risk outward through layered supply chains.</p>
+<h2>“Disposable” Does Not Mean Workers Have No Value. It Means the Relationship Is Designed to Be Replaceable</h2>
+<p>TechEquity’s 2025 report links AI layoffs, contract work, and the feeling of disposability. Source: <a href="https://techequity.us/2025/11/19/ai-workforce-development-november-2025-report">TechEquity</a>.</p>
+<blockquote>
+<p>“With the shadow of AI-related layoffs hanging over many tech workers’ heads, they can be made to feel disposable and without job security.”</p>
+</blockquote>
+<p>Disposable does not mean the worker has no value. It means the employment relationship is designed to be low-commitment, low-protection, and replaceable. The company keeps flexibility. The worker absorbs volatility.</p>
+<p>That is why “upskilling” is not enough. Workers do need to learn AI. But if health insurance, retirement savings, unemployment insurance, career progression, and worker voice remain tied to full-time employment, then deeper contracting creates a larger protection gap.</p>
+<p>Brookings argues that benefits need to become more portable and less dependent on full-time status. Source: <a href="https://www.brookings.edu/articles/workforce-ecosystems-and-ai">Brookings</a>.</p>
+<blockquote>
+<p>“workers receive equal protection and benefits based on the value they create, not the employment status they hold.”</p>
+</blockquote>
+<p>This may be one of the central labor-policy questions of the AI era: if work becomes more project-based, benefits must become more portable.</p>
+<h2>AI Layoffs Are Real, But the Story Is Easy to Overstate</h2>
+<p>Companies are increasingly citing AI in layoff announcements. Challenger data shows that U.S. employers announced 1,170,821 job cuts in the first 11 months of 2025, with AI cited as the reason for 54,694 of them. Source: <a href="https://www.challengergray.com/blog/challenger-report-71321-job-cuts-on-restructurings-closings-economy">Challenger</a>.</p>
+<p>But that does not mean AI is the sole true cause of these cuts. SHRM notes that some layoffs may be post-pandemic corrections, cost-cutting, or capital reallocation toward AI, wrapped in the language of AI transformation. Source: <a href="https://www.shrm.org/topics-tools/news/technology/ai-layoffs-transformation-scapegoat">SHRM</a>.</p>
+<p>Anthropic’s 2026 research also cautions that it has not found a systematic increase in unemployment for highly AI-exposed workers, though it finds suggestive evidence that hiring of younger workers has slowed in exposed occupations. Source: <a href="https://www.anthropic.com/research/labor-market-impacts">Anthropic</a>.</p>
+<blockquote>
+<p>“We find no systematic increase in unemployment for highly exposed workers since late 2022, though we find suggestive evidence that hiring of younger workers has slowed in exposed occupations.”</p>
+</blockquote>
+<p>The better conclusion is that AI is already changing tasks, hiring structures, and organizational design. But “AI has already caused broad economy-wide net job loss” is not yet well proven.</p>
+<h2>The Real Question: Who Gets the Productivity, and Who Gets the Risk?</h2>
+<p>The core issue is not whether contracting is good or bad. It is not even whether AI will replace everyone. The real question is: who captures AI-driven productivity, and who absorbs the risk?</p>
+<p>For companies, AI plus contractors is a powerful combination: lower headcount, faster scaling, project-based spending, and on-demand skills.</p>
+<p>For high-skill workers, it can also be an opportunity. If you can turn AI into business outcomes, you may have more flexibility and income upside than in a standard full-time role.</p>
+<p>But for data workers, content moderators, ordinary freelancers, and early-career white-collar workers, the same shift can mean less stability, fewer benefits, weaker appeal rights, and more substitution pressure.</p>
+<p>The Forbes line matters because it refuses to disguise the issue as a pure technology story. Companies get flexibility. Workers get invoices. The next question is: beyond the invoice, what else does the worker get?</p>
+<p>If the answer is only “learn AI,” that is not enough. The AI era needs a new labor contract: portable benefits, transparent supply chains, proper classification, worker voice, mental-health protections, and accountability for AI deployment.</p>
+<p>Otherwise AI will not only raise productivity. It will also push more people into a smarter, more digital, and harder-to-see form of disposable work.</p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
