@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>AI 会让离岸外包失去成本优势吗？</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>AI 会让离岸外包失去成本优势吗？</h1>
+<p>日期：2026-06-11</p>
+<h2>核心判断</h2>
+<p>AI 对离岸外包的影响，不是“外包会不会消失”这么简单。更准确的说法是：<strong>AI 正在摧毁低端离岸外包的旧定价逻辑，但还没有、也不太可能很快摧毁所有外包需求。</strong></p>
+<p>旧逻辑是 labor arbitrage：把标准化、可拆分、低上下文的工作搬到印度、菲律宾等低成本地区，用更便宜的人力完成。AI 直接攻击的正是这类工作：客服、chat support、数据录入、L1/L2 support、QA 抽检、手工测试、重复性编码、简单 back-office 流程。</p>
+<p>但外包不是一个单一市场。低端 BPO 已经开始被 AI 替代或压价；复杂软件工程、系统集成、AI 落地、合规治理、客户上下文密集型运营仍然需要人，只是团队会更小、更高技能、更靠近结果负责。</p>
+<p>一句话结论：<strong>AI 已经足够便宜，可以 justify 少买一部分低端离岸人力；但还不足以 justify 完全不用离岸外包。接下来发生的是“人月外包缩小，结果外包上升”。</strong></p>
+<h2>Opendoor 是信号，不是单一因果</h2>
+<p>Kaz Nejatian 在 X 上称，Opendoor 开始关闭印度运营：“Today we began to say goodbye to our colleagues in India as we wind down our India operations. Our customers are in America, and that's where our operational work belongs.” (<a href="https://x.com/nejatian/status/2064734707497996543?s=46">X</a>)</p>
+<p>这条帖子没有直接说“因为 AI”。所以不能把它当成 AI 替代离岸团队的单一因果证据。更稳妥的解释是：它是一个买方重新评估离岸运营边界的信号。</p>
+<p>过去企业默认：只要流程足够标准化，就可以离岸。现在这个假设被重新计算。AI 可以让一部分标准流程由软件和 agent 执行；剩下的人类工作更偏例外处理、客户体验、合规、现场判断和跨部门协调。</p>
+<h2>AI 成本现在能不能 justify 不用离岸外包？</h2>
+<p>答案分场景。</p>
+<p>对低复杂度客服和 BPO：<strong>很多场景已经可以 justify。</strong></p>
+<p>Retell AI 的公开定价显示，AI voice agent 为 <code>0.07-0.31 美元/分钟</code>，页面估算常见配置约 <code>0.11 美元/分钟</code> (<a href="https://www.retellai.com/pricing">Retell pricing</a>)。多家呼叫中心价格指南给出的离岸人工区间大致在 <code>0.45-0.80 美元/分钟</code> 或 <code>5-16 美元/agent-hour</code>，菲律宾、印度通常处在最低成本带。</p>
+<p>粗略算一通 5 分钟标准客服电话：</p>
+<ul>
+<li>AI 语音 agent 的直接分钟成本约 <code>0.35-1.55 美元/通</code>。</li>
+<li>离岸人工按 <code>0.45-0.80 美元/分钟</code> 算，约 <code>2.25-4.00 美元/通</code>。</li>
+<li>如果把集成、监控、知识库、人类 fallback、QA、合规都算进去，AI 可能变成 <code>1-3 美元/resolve</code>。</li>
+</ul>
+<p>这意味着，对 FAQ、订单状态、预约、地址修改、基础 billing inquiry、简单售后、通话质检、ticket 分类等高频低复杂度流程，AI 成本已经低到足以替代一部分离岸人力。</p>
+<p>但这不是无脑替代。Gartner 预测，到 2030 年，customer service 中 GenAI 的 cost per resolution 可能超过 <code>3 美元</code>，高于许多离岸 B2C 人工 agent。CMSWire 对这条预测的解读是：企业级 AI 成本不只是模型调用，还包括 RAG、编排、治理、监控、合规和人类 fallback (<a href="https://www.cmswire.com/contact-center/will-ai-cost-more-than-offshore-human-agents-in-customer-service/">CMSWire/Gartner</a>)。</p>
+<p>所以真正的结论是：<strong>简单问题 AI 更便宜，复杂问题 AI 未必更便宜；混合模式通常比全自动更现实。</strong></p>
+<p>对软件开发外包：<strong>现在还不能用“AI 更便宜”来完全替代离岸团队。</strong></p>
+<p>Bain 估算，生成式 AI 在真实软件工程组织里通常节省 <code>10%-15%</code> 的总工程时间；如果系统性重构流程、指标和资源配置，才可能达到 <code>30%+</code> (<a href="https://www.bain.com/insights/beyond-code-generation-more-efficient-software-development-tech-report-2024/">Bain</a>)。这足以压缩低端编码、脚本、手工测试和 junior-heavy 外包，但不足以替代复杂系统工程。</p>
+<p>OpenText/Capgemini/Sogeti 的 World Quality Report 2024 显示，<code>68%</code> 组织已经主动使用 GenAI 或完成试点后制定路线图，<code>72%</code> 受访者称 GenAI 加速了测试自动化 (<a href="https://www.opentext.com/about/press-releases/world-quality-report-2024-shows-68-of-organizations-now-utilizing-gen-ai-to-advance-quality-engineering">OpenText</a>)。这说明 QA/测试外包正在被重写，但不是完全消失，而是从人肉测试转向自动化、质量工程和 AI 生成代码治理。</p>
+<h2>这件事已经在发生了吗？</h2>
+<p>已经在发生。证据不是“某家公司宣布裁掉外包团队”，而是多个行业指标同时指向同一件事：<strong>收入还在增长，但人头增速放慢；单位人力收入上升；AI 成为头部采用技术；合同从工时转向结果。</strong></p>
+<h3>菲律宾：人均收入上升，人头增速放慢</h3>
+<p>BusinessWorld 报道，菲律宾 Customer Xperience Association of the Philippines 预计，CC-BPM 行业 revenue per FTE 将从 2025 年约 <code>$20,000</code> 提高到 2026 年 <code>$21,000-$22,000</code>，增幅最高约 <code>10%</code>。与此同时，workforce 增速预计从 2025 年 <code>4%</code> 放慢到 2026 年 <code>2.8%</code>，总 FTE 从 <code>1.68M</code> 增至 <code>1.73M</code> (<a href="https://bworldonline.com/economy/2026/06/08/755385/cxap-sees-revenue-growing-up-to-10-on-per-employee-basis/">BusinessWorld</a>)。</p>
+<p>这就是 AI 对外包行业影响的典型早期形态：不是收入塌了，而是每个人要创造更多收入，新增人头不再按旧速度增长。</p>
+<p>AMRO 数据显示，菲律宾 IT-BPM 行业 2024 年雇佣 <code>1.8M</code> workers，创造 <code>$38B</code> revenue，相当于 GDP <code>8.2%</code>，贡献约 <code>64%</code> 服务出口 (<a href="https://amro-asia.org/can-the-philippines-it-bpm-industry-stay-ahead-amid-the-ai-wave">AMRO</a>)。</p>
+<p>但 AMRO 同时指出，contact center 占 2024 年行业收入 <code>83%</code>、就业 <code>89%</code>：</p>
+<blockquote>
+<p>“The services were concentrated on contact center provision which accounted for 83 percent of industry revenue and 89 percent of employment in 2024, revealing the industry’s vulnerability to automation.”</p>
+</blockquote>
+<p>这说明菲律宾 BPO 不是马上崩溃，而是暴露面很集中。越是 voice/chat support、规则型 back-office，越容易被 AI 先打到。</p>
+<h3>印度：收入与 headcount 脱钩</h3>
+<p>BBC 报道，印度外包行业规模约 <code>$300B</code>，2025 年 AI project revenue 约 <code>$10B</code>，总行业收入约 <code>$315B</code>；AI 收入还小，但 hiring 已经显著放缓，2026 年 net employee strength 预计仅增长 <code>2.3%</code> (<a href="https://www.bbc.com/news/articles/c5yrq1090p8o">BBC</a>)。</p>
+<p>BBC 还引用 NASSCOM 称，IT 公司计费方式正在从 hours clocked 转向 outcome-driven。这是核心变化：过去印度 IT services 的收入增长和 headcount 增长高度绑定；AI 让客户开始要求“同样结果，少一点人，少一点工时，按结果付费”。</p>
+<p>NASSCOM/BCG/NITI 的报告称，AI 在 IT services 的 SDLC 中释放 <code>10%-20%</code> 生产率提升，并给出到 2031 年的分岔：逆风情景可能损失 <code>1.5M</code> jobs，顺风情景可能新增 <code>2.5M</code> jobs，取决于战略行动 (<a href="https://nasscom.in/knowledge-center/publications/roadmap-job-creation-ai-economy">NASSCOM</a>)。</p>
+<p>这不是“印度 IT 完了”，而是“旧的 fresher 金字塔和人月计费模型承压”。</p>
+<h2>大概什么时候会发生？</h2>
+<h3>2024-2026：已经发生</h3>
+<p>这一阶段的关键词是 augmentation、deflection、AI QA、agent assist。</p>
+<p>企业不是直接裁掉整个外包中心，而是先把 AI 放进客服、QA、知识检索、ticket routing、call summary、测试自动化、代码生成。低复杂度工作量开始减少，新增 headcount 放慢，外包供应商被要求证明 AI maturity。</p>
+<h3>2026-2028：合同重谈加速</h3>
+<p>这一阶段的关键词是 outcome pricing、step-down clause、automation-rate KPI、hybrid delivery。</p>
+<p>买方会问：如果 AI 已经减少人工 effort，为什么还按 FTE 或 ticket volume 付同样的钱？合同会从纯 T&amp;M/FTE 转向 base managed service fee + automation KPI + gainshare + step-down clause。被自动化掉的人力节省，要么返还给客户，要么通过更高价值服务重新包装。</p>
+<h3>2028-2030：结构性重排</h3>
+<p>这一阶段会看到更清晰的组织形态变化：大型低端外包团队变小，AI-native service vendors 和有强治理能力的外包商变强；离岸中心从执行人力池变成 AI operations、exception handling、data/QA/governance hub。</p>
+<p>但到 2030，AI 未必在所有场景都比离岸人工便宜。Gartner 的 <code>$3+ per resolution</code> 预测提醒我们：复杂、监管强、个性化、多轮推理的服务场景，AI 全自动可能成本很高。因此更可能出现的是 hybrid operating model，而不是“AI 替代所有 offshore agents”。</p>
+<h2>哪些外包会被最先替代</h2>
+<p>高风险工作有三个特征：高频、规则化、低情感/低责任、可度量。</p>
+<p>最危险的类别：</p>
+<ul>
+<li>L1 客服、FAQ、订单状态、预约、基础 billing。</li>
+<li>Chat support 和 email support 的标准回复。</li>
+<li>数据录入、文档抽取、表单校验、invoice reconciliation。</li>
+<li>QA 抽检、call scoring、call summary、合规关键词检查。</li>
+<li>手工回归测试、测试脚本生成、低复杂度 bug reproduction。</li>
+<li>低上下文 CRUD、脚本、简单 internal tools。</li>
+</ul>
+<p>相对安全甚至更值钱的类别：</p>
+<ul>
+<li>复杂客户升级、投诉处理、需授权或责任承担的服务。</li>
+<li>受监管行业的合规解释、医疗/金融/保险复杂流程。</li>
+<li>系统集成、遗留系统现代化、数据工程、安全工程、SRE。</li>
+<li>AI workflow design、RAG/agent implementation、AI evaluation、governance。</li>
+<li>需要业务上下文、产品判断、跨团队协调的工程和运营。</li>
+</ul>
+<h2>外包供应商会怎么变</h2>
+<p>旧供应商卖的是人数、时区覆盖和低工资。新供应商必须卖自动化率、结果、质量、治理和持续优化。</p>
+<p>a16z 对 BPO 的判断很尖锐：大多数 BPO 的商业模式依赖 time-and-materials billing，再在人力上加 <code>20%-30%</code> markup；这与 AI-native product/service model 有结构性冲突 (<a href="https://a16z.com/unbundling-the-bpo-how-ai-will-disrupt-outsourced-work/">a16z</a>)。</p>
+<p>FTI Consulting 给出的利润率对比也说明问题：传统 BPO gross margin 约 <code>20%-30%</code>，revenue per head 约 <code>$35K-$44K</code>；投资 digital/automation platform 的公司可达到 <code>35%+</code> gross margin 和 <code>$80K-$90K</code> revenue per head (<a href="https://www.fticonsulting.com/insights/articles/intelligent-automation-imperative-shared-services-outsourcing-providers">FTI Consulting</a>)。</p>
+<p>这意味着供应商分化会很明显：</p>
+<ul>
+<li>只卖人头的供应商会被压价。</li>
+<li>能用 AI 提高 revenue per head 的供应商会变强。</li>
+<li>能把流程产品化、按结果收费的 AI-native 公司会直接抢 BPO budget。</li>
+<li>大型 incumbent 仍有客户关系和流程知识，但要主动 cannibalize 自己的人力收入。</li>
+</ul>
+<h2>买方应该怎么判断 ROI</h2>
+<p>不要问“AI 能不能替代 offshore”。这个问题太粗。</p>
+<p>更好的问题是：</p>
+<ol>
+<li>这个流程的 cost per resolution 是多少？</li>
+<li>其中多少比例是高频、规则化、低风险问题？</li>
+<li>AI 能自动 resolve 多少？能 deflect 多少？会不会增加 repeat contact？</li>
+<li>人类 fallback 成本是多少？升级率是多少？</li>
+<li>质量指标是否变好：CSAT、FCR、AHT、MTTR、SLA、churn、conversion？</li>
+<li>如果 AI 节省了人力，合同是否自动降价，还是供应商把 savings 留在自己 margin 里？</li>
+</ol>
+<p>一个简单判断：如果一个流程能被清楚定义、能被指标衡量、失败风险低、重复量大，AI 替代的 ROI 很可能已经成立。如果一个流程需要判断、授权、责任承担、复杂客户情绪或系统级上下文，AI 更适合做 copilot，而不是全自动替代。</p>
+<h2>最终结论</h2>
+<p>AI 对离岸外包的冲击已经开始，但表现为“旧均衡松动”，不是“外包市场归零”。</p>
+<p>短期，最明显的变化是客服、QA、数据处理、L1 support 的自动化和人头增速放慢。中期，合同从人月/FTE 转向 outcome、usage、automation KPI 和 gainshare。长期，离岸中心会从低价执行人力池，变成更小、更高技能的 AI-augmented operations hub。</p>
+<p>所以，AI 的 cost 现在已经足够 justify 企业少用一部分低端离岸外包。这个过程已经发生，证据体现在菲律宾 CC-BPM 的 per-FTE revenue 上升、印度 IT services 的 headcount 增速放慢、AI QA 和测试自动化 adoption 上升、以及计费模式从 hours 向 outcomes 转移。</p>
+<p>但 AI 还没有便宜到可以完全替代复杂外包。未来几年真正发生的，不是“没有外包”，而是“没有那么多按小时卖的低端离岸人力”。</p>
+<p>最值得记住的一句话：<strong>AI 不会消灭所有外包，但会让便宜人力不再足够便宜。</strong></p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Will AI Destroy the Cost Advantage of Offshore Outsourcing?</h1>
+<p>Date: 2026-06-11</p>
+<h2>Core Thesis</h2>
+<p>The impact of AI on offshore outsourcing is not a simple “outsourcing dies” story. A better framing is this: <strong>AI is breaking the old pricing logic of low-end offshore outsourcing, but it has not, and probably will not soon, eliminate all outsourcing demand.</strong></p>
+<p>The old logic was labor arbitrage: move standardized, decomposable, low-context work to lower-cost countries such as India and the Philippines. AI attacks exactly this category of work: customer support, chat support, data entry, L1/L2 support, QA sampling, manual testing, repetitive coding, and simple back-office processes.</p>
+<p>But outsourcing is not one market. Low-end BPO is already being automated or repriced. Complex software engineering, systems integration, AI implementation, compliance, governance, and context-heavy operations still require people. Those teams will be smaller, more skilled, and more accountable for outcomes.</p>
+<p>One-sentence conclusion: <strong>AI is already cheap enough to justify buying less low-end offshore labor, but not cheap or reliable enough to justify eliminating offshore outsourcing altogether. What comes next is less body-shopping and more outcome-based delivery.</strong></p>
+<h2>Opendoor Is a Signal, Not a Single-Cause Proof</h2>
+<p>Kaz Nejatian wrote on X that Opendoor was winding down its India operations: “Today we began to say goodbye to our colleagues in India as we wind down our India operations. Our customers are in America, and that's where our operational work belongs.” (<a href="https://x.com/nejatian/status/2064734707497996543?s=46">X</a>)</p>
+<p>The post did not say “because of AI.” It should not be treated as a clean causal proof that AI replaced an offshore team. It is better read as a signal that buyers are reassessing the boundary of offshore operations.</p>
+<p>For years, the default assumption was that standardized work could be offshored. That assumption is now being recalculated. AI can absorb part of the standardized workflow; the remaining human work shifts toward exception handling, customer experience, compliance, judgment, and cross-functional coordination.</p>
+<h2>Is AI Cheap Enough to Justify Not Using Offshore Outsourcing?</h2>
+<p>It depends on the workflow.</p>
+<p>For low-complexity customer support and BPO, <strong>many use cases already clear the cost bar.</strong></p>
+<p>Retell AI publicly prices AI voice agents at <code>US$0.07-$0.31 per minute</code>, with a common configuration estimate around <code>US$0.11 per minute</code> (<a href="https://www.retellai.com/pricing">Retell pricing</a>). Several call-center pricing guides put offshore human labor roughly around <code>US$0.45-$0.80 per minute</code> or <code>US$5-$16 per agent-hour</code>, with the Philippines and India usually near the low-cost end.</p>
+<p>For a rough five-minute standard support call:</p>
+<ul>
+<li>AI voice agent direct minute cost: roughly <code>US$0.35-$1.55 per call</code>.</li>
+<li>Offshore human agent at <code>US$0.45-$0.80 per minute</code>: roughly <code>US$2.25-$4.00 per call</code>.</li>
+<li>Including integration, monitoring, knowledge bases, human fallback, QA, and compliance, AI may land closer to <code>US$1-$3 per resolution</code>.</li>
+</ul>
+<p>For high-volume, low-complexity workflows such as FAQs, order status, appointment changes, address updates, basic billing inquiries, simple after-sales support, call QA, and ticket classification, AI is already cheap enough to replace part of the offshore labor stack.</p>
+<p>But this is not a blanket replacement case. Gartner predicts that by 2030, GenAI cost per resolution in customer service may exceed <code>US$3</code>, higher than many offshore B2C human agents. CMSWire’s interpretation is that enterprise AI cost is not just model usage; it includes RAG, orchestration, governance, monitoring, compliance, and human fallback (<a href="https://www.cmswire.com/contact-center/will-ai-cost-more-than-offshore-human-agents-in-customer-service/">CMSWire/Gartner</a>).</p>
+<p>The real conclusion is: <strong>AI is cheaper for simple issues; AI is not necessarily cheaper for complex issues; hybrid models are usually more realistic than full automation.</strong></p>
+<p>For software development outsourcing, <strong>it is not yet reasonable to say AI can fully replace offshore teams on cost alone.</strong></p>
+<p>Bain estimates that generative AI typically saves <code>10%-15%</code> of total software engineering time in real organizations; <code>30%+</code> is possible only with broader changes to workflows, metrics, and resource allocation (<a href="https://www.bain.com/insights/beyond-code-generation-more-efficient-software-development-tech-report-2024/">Bain</a>). That is enough to compress low-end coding, scripting, manual testing, and junior-heavy outsourcing, but not enough to replace complex systems engineering.</p>
+<p>The OpenText/Capgemini/Sogeti World Quality Report 2024 found that <code>68%</code> of organizations are already actively using GenAI or have roadmaps after successful pilots, and <code>72%</code> of respondents said GenAI accelerated test automation (<a href="https://www.opentext.com/about/press-releases/world-quality-report-2024-shows-68-of-organizations-now-utilizing-gen-ai-to-advance-quality-engineering">OpenText</a>). QA and testing outsourcing is being rewritten, not erased: from manual testing toward automation, quality engineering, and governance of AI-generated code.</p>
+<h2>Is This Already Happening?</h2>
+<p>Yes. The evidence is not one clean announcement of an outsourced team being replaced. The evidence is a set of industry indicators pointing in the same direction: <strong>revenue is still growing, but headcount growth is slowing; revenue per employee is rising; AI is becoming a top adopted technology; contracts are moving from hours toward outcomes.</strong></p>
+<h3>The Philippines: Revenue per Employee Is Rising While Headcount Growth Slows</h3>
+<p>BusinessWorld reported that the Customer Xperience Association of the Philippines expects CC-BPM revenue per FTE to rise from around <code>US$20,000</code> in 2025 to <code>US$21,000-$22,000</code> in 2026, an increase of up to <code>10%</code>. Workforce growth is expected to slow from <code>4%</code> in 2025 to <code>2.8%</code> in 2026, with total FTE rising from <code>1.68M</code> to <code>1.73M</code> (<a href="https://bworldonline.com/economy/2026/06/08/755385/cxap-sees-revenue-growing-up-to-10-on-per-employee-basis/">BusinessWorld</a>).</p>
+<p>This is the early shape of AI’s impact on outsourcing: revenue does not collapse, but each worker is expected to generate more revenue, and incremental headcount no longer grows at the old rate.</p>
+<p>AMRO reported that the Philippine IT-BPM industry employed <code>1.8M</code> workers in 2024, generated <code>US$38B</code> in revenue, equaled <code>8.2%</code> of GDP, and contributed about <code>64%</code> of services exports (<a href="https://amro-asia.org/can-the-philippines-it-bpm-industry-stay-ahead-amid-the-ai-wave">AMRO</a>).</p>
+<p>But AMRO also noted that contact centers accounted for <code>83%</code> of industry revenue and <code>89%</code> of employment in 2024:</p>
+<blockquote>
+<p>“The services were concentrated on contact center provision which accounted for 83 percent of industry revenue and 89 percent of employment in 2024, revealing the industry’s vulnerability to automation.”</p>
+</blockquote>
+<p>This does not mean Philippine BPO collapses tomorrow. It means the exposure is concentrated. Voice support, chat support, and rules-based back-office work are the first to be hit.</p>
+<h3>India: Revenue Is Decoupling from Headcount</h3>
+<p>BBC reported that India’s outsourcing industry is worth roughly <code>US$300B</code>; AI project revenue was only about <code>US$10B</code> out of <code>US$315B</code> total industry revenue in 2025. AI revenue is still small, but hiring has already slowed, with net employee strength expected to rise only <code>2.3%</code> in 2026 (<a href="https://www.bbc.com/news/articles/c5yrq1090p8o">BBC</a>).</p>
+<p>BBC also cited Nasscom saying that IT company billing is shifting from hours clocked to outcome-driven models. That is the key change. Historically, Indian IT services revenue and headcount were tightly linked. AI lets clients demand the same outcome with fewer people, fewer hours, and more outcome-based pricing.</p>
+<p>NASSCOM/BCG/NITI estimate that AI can unlock <code>10%-20%</code> productivity improvement across the SDLC in IT services, and frame India’s 2031 path as a fork: <code>1.5M</code> potential job losses under headwinds, or <code>2.5M</code> potential job gains under tailwinds, depending on strategic action (<a href="https://nasscom.in/knowledge-center/publications/roadmap-job-creation-ai-economy">NASSCOM</a>).</p>
+<p>This is not “Indian IT is over.” It is “the old fresher pyramid and time-and-materials billing model are under pressure.”</p>
+<h2>When Does This Happen?</h2>
+<h3>2024-2026: Already Happening</h3>
+<p>The keywords are augmentation, deflection, AI QA, and agent assist.</p>
+<p>Enterprises are not usually shutting down entire offshore centers overnight. They are inserting AI into support, QA, knowledge retrieval, ticket routing, call summaries, test automation, and code generation. Low-complexity workload begins to shrink, headcount growth slows, and vendors are asked to prove AI delivery maturity.</p>
+<h3>2026-2028: Contract Renegotiation Accelerates</h3>
+<p>The keywords are outcome pricing, step-down clauses, automation-rate KPIs, and hybrid delivery.</p>
+<p>Buyers will ask: if AI has reduced human effort, why should we keep paying the same FTE or ticket-volume price? Contracts will move from pure T&amp;M/FTE toward base managed service fees plus automation KPIs, gainsharing, and step-down clauses. Labor savings from automation will either be returned to the customer or repackaged into higher-value services.</p>
+<p>This will keep pressuring the margins of low-end offshore providers.</p>
+<h3>2028-2030: Structural Reallocation</h3>
+<p>By this stage, the operating model should be more visible: large low-end offshore teams shrink; AI-native service vendors and governance-heavy providers become stronger; offshore centers shift from execution labor pools into AI operations, exception handling, data, QA, and governance hubs.</p>
+<p>But by 2030, AI may still not be cheaper than offshore labor in every scenario. Gartner’s <code>US$3+ per resolution</code> forecast is a warning: complex, regulated, personalized, multi-turn service can make full automation expensive. The likely end state is a hybrid operating model, not “AI replaces every offshore agent.”</p>
+<h2>Which Outsourcing Categories Get Replaced First?</h2>
+<p>High-risk work has three traits: high volume, rule-based flow, low emotional or liability load, and measurable outcomes.</p>
+<p>The most exposed categories:</p>
+<ul>
+<li>L1 customer support, FAQs, order status, appointment changes, basic billing.</li>
+<li>Standardized chat and email support replies.</li>
+<li>Data entry, document extraction, form validation, invoice reconciliation.</li>
+<li>QA sampling, call scoring, call summaries, compliance keyword checks.</li>
+<li>Manual regression testing, test script generation, low-complexity bug reproduction.</li>
+<li>Low-context CRUD work, scripts, and simple internal tools.</li>
+</ul>
+<p>The safer, and often more valuable, categories:</p>
+<ul>
+<li>Complex customer escalations, complaints, and services requiring authority or accountability.</li>
+<li>Regulated workflows in healthcare, finance, and insurance.</li>
+<li>Systems integration, legacy modernization, data engineering, security engineering, and SRE.</li>
+<li>AI workflow design, RAG/agent implementation, AI evaluation, and governance.</li>
+<li>Engineering and operations requiring business context, product judgment, and cross-team coordination.</li>
+</ul>
+<h2>How Outsourcing Vendors Change</h2>
+<p>Old vendors sold headcount, time-zone coverage, and lower wages. New vendors have to sell automation rates, outcomes, quality, governance, and continuous optimization.</p>
+<p>a16z’s critique of BPO is sharp: most BPOs rely on time-and-materials billing and add a <code>20%-30%</code> markup on labor, which creates a structural mismatch with AI-native product and service models (<a href="https://a16z.com/unbundling-the-bpo-how-ai-will-disrupt-outsourced-work/">a16z</a>).</p>
+<p>FTI Consulting gives a useful margin comparison: traditional BPO gross margins are roughly <code>20%-30%</code>, with revenue per head around <code>US$35K-$44K</code>; companies investing in digital and automation platforms can reach <code>35%+</code> gross margins and <code>US$80K-$90K</code> revenue per head (<a href="https://www.fticonsulting.com/insights/articles/intelligent-automation-imperative-shared-services-outsourcing-providers">FTI Consulting</a>).</p>
+<p>This points to clear vendor divergence:</p>
+<ul>
+<li>Vendors that only sell headcount get repriced downward.</li>
+<li>Vendors that use AI to raise revenue per head get stronger.</li>
+<li>AI-native companies that productize workflows and charge by outcome can capture BPO budget directly.</li>
+<li>Large incumbents still have customer relationships and process knowledge, but they must be willing to cannibalize their own labor revenue.</li>
+</ul>
+<h2>How Buyers Should Think About ROI</h2>
+<p>Do not ask, “Can AI replace offshore?” That question is too broad.</p>
+<p>Ask instead:</p>
+<ol>
+<li>What is the current cost per resolution?</li>
+<li>What share of the workflow is high-volume, rule-based, and low-risk?</li>
+<li>What share can AI resolve or deflect, and will it increase repeat contacts?</li>
+<li>What is the human fallback cost and escalation rate?</li>
+<li>Do quality metrics improve: CSAT, FCR, AHT, MTTR, SLA, churn, conversion?</li>
+<li>If AI saves labor, does the contract automatically step down, or does the vendor keep the savings as margin?</li>
+</ol>
+<p>A simple rule: if a process is clearly defined, measurable, low-risk, and high-volume, AI replacement ROI is probably already viable. If a process requires judgment, authority, accountability, customer emotion, or system-level context, AI is better as a copilot than a full replacement.</p>
+<h2>Final Conclusion</h2>
+<p>AI’s impact on offshore outsourcing has already started, but it looks like the loosening of an old equilibrium, not the disappearance of outsourcing.</p>
+<p>In the short term, the clearest shifts are automation of customer support, QA, data processing, and L1 support, plus slower headcount growth. In the medium term, contracts move from FTE and time-and-materials toward outcomes, usage, automation KPIs, and gainsharing. In the long term, offshore centers become smaller, more skilled AI-augmented operations hubs rather than low-cost execution pools.</p>
+<p>AI is already cheap enough to justify using less low-end offshore outsourcing. The evidence is visible in rising revenue per FTE in Philippine CC-BPM, slower headcount growth in Indian IT services, rising AI QA and test automation adoption, and the shift from hours toward outcomes.</p>
+<p>But AI is not yet cheap or reliable enough to replace complex outsourcing entirely. The future is not “no outsourcing.” It is “fewer low-end offshore hours sold by the seat.”</p>
+<p>The line worth remembering: <strong>AI will not eliminate all outsourcing, but it will make cheap labor no longer cheap enough.</strong></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
