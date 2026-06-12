@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>SpaceX IPO: Market Reaction and What Comes Next</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>SpaceX 上市首日：强劲反应、极高估值与未来趋势</h1>
+<p>SpaceX 今天上市不是普通航天公司 IPO，而是一次“稀缺超级资产 + AI 叙事 + Musk 溢价 + 被动资金预期”的混合交易。市场首日反应很强，但价格里已经预付了多个未来成功：Starlink 继续高速增长、Starship 降本兑现、xAI/AI infrastructure 真正变成收入和利润。</p>
+<p>我的核心判断是：<strong>短期不要低估动量，中期要盯指数纳入、财报和解禁，长期只看 Starlink、Starship、AI/xAI 三条兑现曲线。</strong> 这家公司质量可能很高，但当前估值也已经非常激进。</p>
+<h2>上市事实与首日表现</h2>
+<p>SEC 定价文件显示，Space Exploration Technologies Corp. 本次发行 <code>555,555,555</code> 股 Class A 普通股，发行价 <code>135 美元/股</code>，募资约 <code>750 亿美元</code>，交易代码 <code>SPCX</code>，上市地点为 Nasdaq 与 Nasdaq Texas。来源：<a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026042466/spaceexplorationtechnologi.htm">SEC 定价文件</a>。</p>
+<blockquote>
+<p><code>555,555,555 Shares of Class A Common Stock</code></p>
+<p><code>Size: $74,999,999,925</code></p>
+<p><code>Price to Public: $135.00 per share</code></p>
+<p><code>Symbol: SPCX (Nasdaq and Nasdaq Texas)</code></p>
+</blockquote>
+<p>首日交易数据也互相印证。CNBC 报道 SpaceX 开盘 <code>150 美元</code>，日内高点 <code>176.52 美元</code>，收盘约 <code>161 美元</code>，市值约 <code>2.1 万亿美元</code>。来源：<a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html">CNBC live updates</a>。Yahoo Finance 行情页显示 <code>SPCX 160.95 +25.95 (+19.22%)</code>，<code>Open 150.00</code>，<code>Day's Range 150.00 - 176.52</code>，<code>Market Cap 2.105T</code>。来源：<a href="https://finance.yahoo.com/quote/SPCX/">Yahoo Finance SPCX</a>。</p>
+<p>这说明首日需求非常强：发行价 <code>135 美元</code>，开盘已经高出约 <code>11%</code>，收盘较发行价上涨约 <code>19%</code>。</p>
+<h2>市场反应：强买盘，但不是航天板块普涨</h2>
+<p>SpaceX 自身上涨，但相关航天股并没有一起上涨，反而普遍下跌。Yahoo Finance 报道，SpaceX 上市当天 Redwire、Satellogic、AST SpaceMobile 跌超 11%，EchoStar 和 Rocket Lab 跌约 10%，Procure Space ETF 跌约 7%，Virgin Galactic 跌约 31%。来源：<a href="https://finance.yahoo.com/markets/stocks/article/space-stocks-drop-as-spacex-soars-in-debut-122907387.html">Yahoo Finance</a>。CNBC 也报道 Firefly Aerospace 跌超 18%，Rocket Lab、Redwire、Intuitive Machines 跌至少 10%，Virgin Galactic 跌约 34%。来源：<a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html">CNBC live updates</a>。</p>
+<p>这个反应很关键。它说明市场并不是简单买入“太空经济”主题，而是在重新配置风险预算：既然可以直接买 SpaceX，就不必再通过二三线航天股做替代敞口。</p>
+<p>更准确地说，SpaceX 上市可能压低了一批 space proxy 的稀缺性溢价。小型火箭、卫星和太空概念股需要证明自己不是“买不到 SpaceX 时的替代品”，而是有独立商业价值。</p>
+<h2>需求来自哪里</h2>
+<p>散户参与明显强于普通 IPO。CNBC 报道，SpaceX 的 retail allocation 在 low 20% range，而普通 IPO 面向散户通常只有 5%-10%；Nasdaq President Nelson Griggs 估计约 <code>150 亿美元</code>募资来自散户。来源：<a href="https://www.cnbc.com/2026/06/12/small-investors-scrambled-to-get-in-on-the-spacex-ipo-even-as-some-believe-the-valuation-is-stupid.html">CNBC retail report</a>、<a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html">CNBC live updates</a>。</p>
+<p>机构需求也很强，但部分数字需要打折看。Forbes 引用 Reuters 称 SpaceX IPO 需求约 <code>2500 亿美元</code>，约为计划发行规模近 4 倍；还引用 WSJ/Bloomberg 报道 BlackRock 和散户订单规模很大。来源：<a href="https://www.forbes.com/sites/tylerroush/2026/06/12/spacex-opens-at-150-surging-17-after-largest-ipo-ever-live-updates/">Forbes live updates</a>。这些方向可信，但因为本轮核验未直接抓取 Reuters、WSJ、Bloomberg 原文，最好把它们视作中等强度证据。</p>
+<h2>估值：最大争议点</h2>
+<p>CNBC 报道 SpaceX 2025 年收入约 <code>187 亿美元</code>，净亏损约 <code>49 亿美元</code>，累计亏损约 <code>413 亿美元</code>，并称当前唯一盈利部分是 Starlink satellite internet division。来源：<a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html">CNBC live updates</a>。</p>
+<p>按这些数字计算：</p>
+<table>
+<thead>
+<tr>
+<th>口径</th>
+<th style="text-align: right;">市值/估值</th>
+<th style="text-align: right;">2025 收入</th>
+<th style="text-align: right;">市销率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPO 定价</td>
+<td style="text-align: right;">约 1.77 万亿美元</td>
+<td style="text-align: right;">187 亿美元</td>
+<td style="text-align: right;">约 95x</td>
+</tr>
+<tr>
+<td>首日收盘</td>
+<td style="text-align: right;">约 2.1 万亿美元</td>
+<td style="text-align: right;">187 亿美元</td>
+<td style="text-align: right;">约 112x</td>
+</tr>
+</tbody>
+</table>
+<p>这个市销率非常高。CompaniesMarketCap 显示 Nvidia TTM P/S 约 <code>23x</code>，Microsoft 约 <code>9x</code>，Alphabet 约 <code>10x</code>，Amazon 约 <code>3.4x</code>，Tesla 约 <code>15.5x</code>。来源：<a href="https://companiesmarketcap.com/nvidia/ps-ratio/">Nvidia</a>、<a href="https://companiesmarketcap.com/microsoft/ps-ratio/">Microsoft</a>、<a href="https://companiesmarketcap.com/alphabet-google/ps-ratio/">Alphabet</a>、<a href="https://companiesmarketcap.com/amazon/ps-ratio/">Amazon</a>、<a href="https://companiesmarketcap.com/tesla/ps-ratio/">Tesla</a>。</p>
+<p>这意味着市场不是在给现有收入定价，而是在给未来垄断级增长期权定价。</p>
+<h2>业务叙事：Starlink 是底座，AI 是放大器</h2>
+<p>SpaceX 现在的故事可以拆成三层。</p>
+<p>第一层是 Starlink。它是当前最可验证的收入与盈利基础。如果 CNBC 关于“only profitable part”的说法准确，Starlink 是估值底部最重要的支撑。</p>
+<p>第二层是发射与 Starship。Falcon、Dragon、Starship 的价值不只是发射收入，而是低成本入轨能力、政府合同、Starlink 自供发射和未来太空基础设施的控制权。问题在于，当前估值已经提前计入 Starship 成功和规模化。</p>
+<p>第三层是 xAI/AI infrastructure。SpaceX 通过并入 xAI/X，把故事从“火箭 + 卫星互联网”扩成“太空基础设施 + AI 模型 + 数据中心 + 企业应用”。Forbes 报道 SpaceX 把总可服务市场估为 <code>28.5 万亿美元</code>，包括 broadband <code>8700 亿美元</code>、Starlink mobile <code>7400 亿美元</code>、X ads <code>6000 亿美元</code>、AI infrastructure <code>2.4 万亿美元</code>、enterprise applications <code>22.7 万亿美元</code>。来源：<a href="https://www.forbes.com/sites/tylerroush/2026/06/12/spacex-opens-at-150-surging-17-after-largest-ipo-ever-live-updates/">Forbes live updates</a>。</p>
+<p>这里最需要打折的是 <code>22.7 万亿美元</code> enterprise applications。它是 TAM 最大部分，但和 SpaceX 当前已验证业务距离最远。</p>
+<h2>治理与监管风险</h2>
+<p>SpaceX 的治理结构对普通股东并不友好。最终招股书显示，Class A 每股 1 票，Class B 每股 10 票；Musk 上市后约持有 <code>82.4%</code> 投票权，可控制需要股东批准的事项。SpaceX 还是 Nasdaq 规则下的 <code>controlled company</code>，可依赖部分公司治理豁免。来源：<a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/0001628280-26-042639-index.htm">SEC 424B4</a>。</p>
+<p>这意味着公开投资者买到的是经济敞口，不是实质治理权。Musk 生态中的 SpaceX、xAI、X、Tesla 和其他关联实体可能有协同，也可能有资本配置、关联交易和管理注意力冲突。</p>
+<p>监管风险也会比普通科技公司高。Elizabeth Warren 等议员已经围绕 SpaceX 的中国资本潜在影响、FOCI/CFIUS、EchoStar 频谱交易、政府合同依赖和 Starlink 政治争议提出质疑。来源包括：<a href="https://www.warren.senate.gov/newsroom/press-releases/warren-kim-warn-that-undisclosed-investments-in-spacex-by-chinese-interests-may-threaten-national-security-raise-questions-about-compliance-with-national-security-law">Warren/Kim 中国投资与国家安全</a>、<a href="https://www.warren.senate.gov/oversight/letters/warren-casar-warn-doj-fcc-of-potential-competition-cost-issues-involving-atandt-and-spacex-deals-with-echostar">Warren/Casar EchoStar 频谱交易</a>、<a href="https://www.warren.senate.gov/newsroom/press-releases/amid-trump-musk-fight-warren-presses-rubio-on-national-security-contingency-plans-for-musk-linked-government-contracts">Warren/Rubio 政府合同依赖</a>、<a href="https://www.warren.senate.gov/newsroom/press-releases/warren-warner-shaheen-lawmakers-push-for-corruption-investigation-into-trump-administration-favors-for-elon-musks-starlink">Warren/Warner/Shaheen Starlink 调查</a>。</p>
+<p>这些材料证明监管压力真实存在，但不等于证明违法事实已经成立。</p>
+<h2>解禁与指数纳入</h2>
+<p>招股书披露，Musk 股份有 366 天锁定，约 <code>78 亿股</code>超过一年锁定，其余大部分股份有 180 天锁定；约 <code>122 亿股</code>拥有注册权或未来 Rule 144 转售路径。来源：<a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/0001628280-26-042639-index.htm">SEC 424B4</a>。</p>
+<p>这会形成一个典型节奏：上市初期流通盘稀缺，价格容易被需求推高；但 90 天、180 天、366 天附近，市场会开始提前交易潜在供给。</p>
+<p>指数纳入是另一个关键变量。Nasdaq-100 方法论允许 IPO fast entry，且没有最低 free float 标准；如果公司全市值进入前 40，有快速纳入路径。来源：<a href="https://indexes.nasdaqomx.com/docs/Methodology_NDX.pdf">Nasdaq-100 methodology</a>。Russell 美国指数也有 IPO 纳入机制，但会关注 free float 和 public voting rights。来源：<a href="https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/russell-us-indexes-construction-and-methodology.pdf">Russell US Indexes methodology</a>。</p>
+<p>所以，被动资金可能是短期利好，但不是无条件利好。低流通、投票权结构、权重限制和纳入时间都会影响实际买盘。</p>
+<h2>未来趋势</h2>
+<h3>1-4 周：动量和新闻流主导</h3>
+<p>短期价格大概率由 IPO 供需、散户热度、媒体叙事、Musk 表态、机构持仓披露和指数纳入预期驱动。这个阶段不适合只用传统估值做空，因为交易力量可能明显强于基本面约束。</p>
+<h3>1-3 个月：市场开始追问财报</h3>
+<p>市场会从“历史级 IPO”转向追问收入增长、Starlink ARPU、发射毛利、AI capex、xAI 整合、订单和现金流。若公司能证明 Starlink 与 AI infrastructure 高速增长，估值可维持；否则 <code>100x</code> 以上 P/S 会变得很难解释。</p>
+<h3>3-12 个月：解禁和监管成为主线</h3>
+<p>90 天、180 天、366 天附近的转售与锁定期节点会影响供给预期。FAA、FCC、CFIUS、国防合同、频谱交易、AI/数据监管和关联交易披露也会逐步进入市场定价。</p>
+<h3>1-3 年：看三条兑现曲线</h3>
+<p>长期胜负取决于三件事：Starlink 是否能成为高利润全球通信平台；Starship 是否能把入轨成本和发射频率推到足以支撑下一代 Starlink 与太空基础设施；xAI/AI infrastructure 是否能从叙事变成真实收入和利润。</p>
+<p>如果三条曲线至少两条兑现，SpaceX 可能成为真正的超级平台公司；如果只有 Starlink 稳定盈利，而 AI 和 Starship 进展慢，当前 <code>2 万亿美元</code>以上估值会面临很强的再定价压力。</p>
+<h2>最后判断</h2>
+<p>SpaceX 首日上市是历史级市场事件。首日强势是真实的，稀缺性也是真实的。但估值里的假设同样极端。</p>
+<p>最好的框架不是简单看多或看空，而是分层看：短线承认动量，中线盯指数和解禁，长线只看收入、毛利、自由现金流和 Starlink/Starship/AI 的兑现。<strong>这家公司可能非常优秀，但好公司不自动等于任何价格都合理。</strong></p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>SpaceX's IPO Debut: Strong Demand, Extreme Valuation, and What Comes Next</h1>
+<p>SpaceX's IPO is not a normal aerospace listing. It is a hybrid trade built on scarce super-asset status, an AI narrative, the Elon Musk premium, and expectations for passive index demand. The first-day market reaction was very strong, but the price already assumes several future successes at once: Starlink keeps compounding, Starship materially lowers launch costs, and xAI / AI infrastructure turns into real revenue and profit.</p>
+<p>My core view: <strong>do not underestimate near-term momentum, but watch index inclusion, earnings, and lockups over the medium term. Over the long term, only three execution curves really matter: Starlink, Starship, and AI/xAI.</strong> SpaceX may be an exceptional company, but the valuation is already very aggressive.</p>
+<h2>IPO Facts and First-Day Trading</h2>
+<p>The SEC pricing document shows that Space Exploration Technologies Corp. offered <code>555,555,555</code> shares of Class A common stock at <code>135 dollars per share</code>, raising roughly <code>75 billion dollars</code>. The ticker is <code>SPCX</code>, listed on Nasdaq and Nasdaq Texas. Source: <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026042466/spaceexplorationtechnologi.htm">SEC pricing document</a>.</p>
+<blockquote>
+<p><code>555,555,555 Shares of Class A Common Stock</code></p>
+<p><code>Size: $74,999,999,925</code></p>
+<p><code>Price to Public: $135.00 per share</code></p>
+<p><code>Symbol: SPCX (Nasdaq and Nasdaq Texas)</code></p>
+</blockquote>
+<p>The first-day trading data lines up across sources. CNBC reported that SpaceX opened at <code>150 dollars</code>, reached an intraday high of <code>176.52 dollars</code>, closed around <code>161 dollars</code>, and was valued at about <code>2.1 trillion dollars</code>. Source: <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html">CNBC live updates</a>. Yahoo Finance showed <code>SPCX 160.95 +25.95 (+19.22%)</code>, <code>Open 150.00</code>, <code>Day's Range 150.00 - 176.52</code>, and <code>Market Cap 2.105T</code>. Source: <a href="https://finance.yahoo.com/quote/SPCX/">Yahoo Finance SPCX</a>.</p>
+<p>That is a very strong demand signal: the stock opened roughly <code>11%</code> above the IPO price and closed about <code>19%</code> above it.</p>
+<h2>Market Reaction: Strong for SpaceX, Not for the Whole Space Sector</h2>
+<p>SpaceX rose, but many related space stocks fell sharply. Yahoo Finance reported that Redwire, Satellogic, and AST SpaceMobile fell more than 11%; EchoStar and Rocket Lab fell about 10%; the Procure Space ETF fell about 7%; and Virgin Galactic fell about 31%. Source: <a href="https://finance.yahoo.com/markets/stocks/article/space-stocks-drop-as-spacex-soars-in-debut-122907387.html">Yahoo Finance</a>. CNBC also reported that Firefly Aerospace fell more than 18%, Rocket Lab, Redwire, and Intuitive Machines dropped at least 10%, and Virgin Galactic fell about 34%. Source: <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html">CNBC live updates</a>.</p>
+<p>This is important. The market was not simply buying the “space economy” theme. It was reallocating risk budget toward the dominant asset. Once investors can own SpaceX directly, they have less need to express the theme through second-tier space proxies.</p>
+<p>In that sense, SpaceX's listing may compress the scarcity premium in many smaller space names. They now need to prove they are not just “what investors bought when they could not buy SpaceX.”</p>
+<h2>Where the Demand Came From</h2>
+<p>Retail participation was unusually strong. CNBC reported that SpaceX's retail allocation was in the low 20% range, compared with a typical 5%-10% retail allocation for IPOs. Nasdaq President Nelson Griggs estimated that roughly <code>15 billion dollars</code> of the raise came from retail investors. Sources: <a href="https://www.cnbc.com/2026/06/12/small-investors-scrambled-to-get-in-on-the-spacex-ipo-even-as-some-believe-the-valuation-is-stupid.html">CNBC retail report</a>, <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html">CNBC live updates</a>.</p>
+<p>Institutional demand also appears strong, but some numbers should be treated with caution. Forbes cited Reuters saying the IPO drew about <code>250 billion dollars</code> of demand, nearly four times the planned offering size. It also cited WSJ and Bloomberg reporting large orders from BlackRock and retail investors. Source: <a href="https://www.forbes.com/sites/tylerroush/2026/06/12/spacex-opens-at-150-surging-17-after-largest-ipo-ever-live-updates/">Forbes live updates</a>. These claims are directionally useful, but because the underlying Reuters, WSJ, and Bloomberg articles were not directly verified here, they should be treated as medium-confidence evidence.</p>
+<h2>Valuation: The Main Debate</h2>
+<p>CNBC reported that SpaceX generated about <code>18.7 billion dollars</code> of revenue in 2025, lost about <code>4.9 billion dollars</code>, had accumulated losses of about <code>41.3 billion dollars</code>, and that the only profitable part of the business today is the Starlink satellite internet division. Source: <a href="https://www.cnbc.com/2026/06/12/spacex-ipo-spcx-live-updates.html">CNBC live updates</a>.</p>
+<p>Using those figures:</p>
+<table>
+<thead>
+<tr>
+<th>Basis</th>
+<th style="text-align: right;">Market value / valuation</th>
+<th style="text-align: right;">2025 revenue</th>
+<th style="text-align: right;">Price-to-sales</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>IPO price</td>
+<td style="text-align: right;">about $1.77T</td>
+<td style="text-align: right;">$18.7B</td>
+<td style="text-align: right;">about 95x</td>
+</tr>
+<tr>
+<td>First-day close</td>
+<td style="text-align: right;">about $2.1T</td>
+<td style="text-align: right;">$18.7B</td>
+<td style="text-align: right;">about 112x</td>
+</tr>
+</tbody>
+</table>
+<p>That is extremely high. CompaniesMarketCap shows Nvidia at about <code>23x</code> TTM sales, Microsoft about <code>9x</code>, Alphabet about <code>10x</code>, Amazon about <code>3.4x</code>, and Tesla about <code>15.5x</code>. Sources: <a href="https://companiesmarketcap.com/nvidia/ps-ratio/">Nvidia</a>, <a href="https://companiesmarketcap.com/microsoft/ps-ratio/">Microsoft</a>, <a href="https://companiesmarketcap.com/alphabet-google/ps-ratio/">Alphabet</a>, <a href="https://companiesmarketcap.com/amazon/ps-ratio/">Amazon</a>, <a href="https://companiesmarketcap.com/tesla/ps-ratio/">Tesla</a>.</p>
+<p>The market is not pricing current revenue. It is pricing future monopoly-like growth options.</p>
+<h2>The Business Story: Starlink Is the Base, AI Is the Amplifier</h2>
+<p>SpaceX's public-market story has three layers.</p>
+<p>The first layer is Starlink. It is the most verifiable revenue and profit base today. If CNBC's “only profitable part” description is accurate, Starlink is the most important support for the valuation floor.</p>
+<p>The second layer is launch and Starship. The value of Falcon, Dragon, and Starship is not just launch revenue. It is low-cost access to orbit, government contracts, internal launch capacity for Starlink, and control over future space infrastructure. The problem is that the current valuation already prices in successful Starship scaling.</p>
+<p>The third layer is xAI / AI infrastructure. By folding in xAI and X-related assets, SpaceX's story expands from “rockets plus satellite internet” into “space infrastructure plus AI models plus data centers plus enterprise applications.” Forbes reported that SpaceX estimated its total addressable market at <code>28.5 trillion dollars</code>, including <code>870 billion dollars</code> for broadband, <code>740 billion dollars</code> for Starlink mobile, <code>600 billion dollars</code> for X advertising, <code>2.4 trillion dollars</code> for AI infrastructure, and <code>22.7 trillion dollars</code> for enterprise applications. Source: <a href="https://www.forbes.com/sites/tylerroush/2026/06/12/spacex-opens-at-150-surging-17-after-largest-ipo-ever-live-updates/">Forbes live updates</a>.</p>
+<p>The most questionable piece is the <code>22.7 trillion dollar</code> enterprise applications TAM. It is the largest part of the story, but it is also the farthest from SpaceX's currently proven business.</p>
+<h2>Governance and Regulatory Risk</h2>
+<p>SpaceX's governance structure is not friendly to ordinary public shareholders. The final prospectus shows a dual-class structure: Class A has one vote per share, while Class B has 10 votes per share. After the offering, Musk holds about <code>82.4%</code> of the voting power and can control matters requiring shareholder approval. SpaceX will also be a <code>controlled company</code> under Nasdaq rules and can rely on certain governance exemptions. Source: <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/0001628280-26-042639-index.htm">SEC 424B4</a>.</p>
+<p>Public investors are buying economic exposure, not meaningful governance power. The broader Musk ecosystem, including SpaceX, xAI, X, Tesla, and other affiliated entities, may create synergies, but it may also create capital allocation, related-party, and management-attention conflicts.</p>
+<p>Regulatory risk is also higher than for a normal technology company. Senator Elizabeth Warren and others have raised concerns around potential Chinese investment exposure, FOCI/CFIUS, the EchoStar spectrum transaction, dependence on government contracts, and political controversy around Starlink. Sources include <a href="https://www.warren.senate.gov/newsroom/press-releases/warren-kim-warn-that-undisclosed-investments-in-spacex-by-chinese-interests-may-threaten-national-security-raise-questions-about-compliance-with-national-security-law">Warren/Kim on Chinese investment and national security</a>, <a href="https://www.warren.senate.gov/oversight/letters/warren-casar-warn-doj-fcc-of-potential-competition-cost-issues-involving-atandt-and-spacex-deals-with-echostar">Warren/Casar on EchoStar spectrum</a>, <a href="https://www.warren.senate.gov/newsroom/press-releases/amid-trump-musk-fight-warren-presses-rubio-on-national-security-contingency-plans-for-musk-linked-government-contracts">Warren/Rubio on Musk-linked government contracts</a>, and <a href="https://www.warren.senate.gov/newsroom/press-releases/warren-warner-shaheen-lawmakers-push-for-corruption-investigation-into-trump-administration-favors-for-elon-musks-starlink">Warren/Warner/Shaheen on Starlink</a>.</p>
+<p>These sources prove that regulatory pressure exists. They do not prove that any alleged violation has occurred.</p>
+<h2>Lockups and Index Inclusion</h2>
+<p>The prospectus discloses that Musk's shares are subject to a 366-day lockup, roughly <code>7.8 billion</code> shares are locked for more than one year, most remaining shares face a 180-day lockup, and about <code>12.2 billion</code> shares have registration rights or future Rule 144 resale paths, subject to lockup restrictions. Source: <a href="https://www.sec.gov/Archives/edgar/data/1181412/000162828026042639/0001628280-26-042639-index.htm">SEC 424B4</a>.</p>
+<p>That creates a familiar pattern: early float scarcity can amplify upside, but the market will eventually begin pricing potential supply around 90-day, 180-day, and 366-day milestones.</p>
+<p>Index inclusion is another important variable. Nasdaq-100 methodology allows IPO fast entry and has no minimum free-float criterion; a company whose full market cap ranks within the top 40 current constituents has a fast-entry path. Source: <a href="https://indexes.nasdaqomx.com/docs/Methodology_NDX.pdf">Nasdaq-100 methodology</a>. Russell US indexes also have IPO inclusion mechanisms, but they consider free float and public voting rights. Source: <a href="https://www.lseg.com/content/dam/ftse-russell/en_us/documents/ground-rules/russell-us-indexes-construction-and-methodology.pdf">Russell US Indexes methodology</a>.</p>
+<p>Passive demand may become a near-term tailwind, but it is not unconditional. Low float, voting power, weight limits, and timing all matter.</p>
+<h2>What Comes Next</h2>
+<h3>1-4 Weeks: Momentum and News Flow</h3>
+<p>Near-term price action will likely be driven by IPO supply and demand, retail excitement, media narrative, Musk comments, institutional position disclosures, and index-inclusion speculation. This is not a phase where traditional valuation alone is enough to fight the tape.</p>
+<h3>1-3 Months: The Market Starts Asking for Numbers</h3>
+<p>The focus should shift from “historic IPO” to revenue growth, Starlink ARPU, launch margins, AI capex, xAI integration, backlog, and cash flow. If SpaceX can show rapid growth in Starlink and AI infrastructure, the valuation can hold. If not, a price-to-sales ratio above <code>100x</code> becomes hard to justify.</p>
+<h3>3-12 Months: Lockups and Regulation Matter More</h3>
+<p>Resale and lockup milestones around 90, 180, and 366 days will shape supply expectations. FAA, FCC, CFIUS, defense contracts, spectrum transactions, AI/data regulation, and related-party disclosures should increasingly enter the valuation.</p>
+<h3>1-3 Years: Three Execution Curves Decide the Outcome</h3>
+<p>The long-term outcome depends on whether Starlink becomes a high-margin global connectivity platform, whether Starship lowers launch cost and increases cadence enough to support next-generation Starlink and space infrastructure, and whether xAI / AI infrastructure becomes real revenue and profit rather than a capital-expenditure sink.</p>
+<p>If at least two of those three curves work, SpaceX could become a true super-platform. If only Starlink is profitable while AI and Starship lag, a valuation above <code>2 trillion dollars</code> will face serious pressure.</p>
+<h2>Bottom Line</h2>
+<p>SpaceX's IPO debut is a historic market event. The first-day strength is real, and so is the scarcity. But the assumptions embedded in the valuation are also extreme.</p>
+<p>The right framework is not a simple bull or bear call. Near term, respect the momentum. Medium term, watch indexes and lockups. Long term, ignore the TAM theater and focus on revenue, gross margin, free cash flow, and the execution of Starlink, Starship, and AI. <strong>This may be an outstanding company, but an outstanding company is not automatically a good investment at any price.</strong></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
