@@ -263,14 +263,153 @@ img { max-width: 100%; height: auto; }
 <p>Anjney 把这些都归到 <code>alignment</code> 问题：系统越大，分工越细，抽象层越多，接口处的信息损耗越严重。真正难的是既能 scale up，又不因为 API、组织边界、商业激励和信任边界而丢失太多信息。</p>
 <h2>对 AI 投资的启发</h2>
 <p>这篇访谈对投资最有价值的地方，是它提示我们：AI 基础设施的下一轮机会，不只在硬件供给，而在有效吞吐。</p>
-<p>值得重点看的方向包括：</p>
+<p>先要分清两类公司：</p>
 <ol>
-<li>GPU 调度和多租户资源池化。</li>
-<li>MFU、goodput、straggler、NCCL、数据管道的全栈可观测性。</li>
-<li>网络拓扑、collective communication、RoCE/InfiniBand 诊断。</li>
-<li>checkpoint、故障恢复、坏卡隔离和可靠性自动化。</li>
-<li>跨云、跨供应商、跨芯片的 compute market 或 compute grid。</li>
-<li>AI 数据中心的电力、许可、社区收益分配和长期运营能力。</li>
+<li><strong>卖算力的人</strong>：CoreWeave、Nebius、Lambda、RunPod、Crusoe、Fluidstack、IREN、Applied Digital 等。</li>
+<li><strong>提高算力有效输出的人</strong>：调度、观测、网络、可靠性、checkpoint、compute market。真正对应 Anjney <code>output maxing</code> 的是后者，或者前者内部自带强优化能力。</li>
+</ol>
+<h3>公司地图</h3>
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>公司/项目</th>
+<th>投资含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPU 调度/编排</td>
+<td>NVIDIA + Run:ai、ScaleOps、CAST AI、Kueue、Volcano、CoreWeave Kubernetes</td>
+<td>把 GPU 从“静态分配”变成“动态池化”。Run:ai 被 NVIDIA 收购说明这层很关键，但也说明纯调度容易被平台吃掉。</td>
+</tr>
+<tr>
+<td>GPU 观测/FinOps</td>
+<td>Datadog、CoreWeave Mission Control、ScaleOps、CAST AI、Virtana、Dynatrace、New Relic</td>
+<td>最容易卖给企业。Datadog 已推出 GPU Monitoring，明确把 GPU fleet health、cost、performance 关联到 workload。</td>
+</tr>
+<tr>
+<td>训练可靠性/goodput</td>
+<td>CoreWeave Mission Control、Nebius、Lambda、Crusoe、Datadog、VAST、WEKA、DDN、Hammerspace</td>
+<td>价值在减少 job failure、straggler、坏卡、checkpoint/restart 损耗。越大规模训练越重要。</td>
+</tr>
+<tr>
+<td>AI 网络/collective</td>
+<td>NVIDIA Spectrum-X/NVLink/NCCL、Arista、Broadcom、Marvell、Cisco、Astera Labs、Credo、Coherent、Enfabrica</td>
+<td>如果 MFU 低是通信瓶颈，网络和 collective 诊断就是核心。Arista 是公开市场里最直接的 AI Ethernet 受益者之一。</td>
+</tr>
+<tr>
+<td>Compute grid/市场</td>
+<td>AMP、SF Compute、Vast.ai、RunPod、Hyperbolic、Fluidstack</td>
+<td>对应 Anjney 的“FLOPs flow like megawatts”。潜力大，但 compute 不像电力那么同质，执行难。</td>
+</tr>
+<tr>
+<td>Inference 优化</td>
+<td>Modal、Baseten、Fireworks、Together AI、Anyscale/Ray、BentoML、Predibase</td>
+<td>推理阶段的 output maxing：batching、autoscaling、KV cache、模型路由、serverless GPU 利用率。</td>
+</tr>
+</tbody>
+</table>
+<h3>最值得优先看的公开公司</h3>
+<table>
+<thead>
+<tr>
+<th>公司</th>
+<th>为什么相关</th>
+<th>风险</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVIDIA</td>
+<td>不只是 GPU，正在把 Run:ai、NCCL、Spectrum-X、DGX Cloud、NVLink、CUDA 都做成 AI factory 控制面。</td>
+<td>已经很大，效率层增量容易被整体 GPU 周期淹没。</td>
+</tr>
+<tr>
+<td>Datadog</td>
+<td>GPU Monitoring 是非常直接的 AI infra observability/FinOps wedge。它能把 GPU 成本、健康、workload、团队责任串起来。</td>
+<td>GPU Monitoring 短期收入占比可能小；竞争来自云厂商和 CoreWeave/NVIDIA 原生工具。</td>
+</tr>
+<tr>
+<td>CoreWeave</td>
+<td>Mission Control 已明确包含 node lifecycle、fleet health、observability、GPU straggler detection，直接瞄准 goodput。</td>
+<td>资本密集、客户集中、GPU 折旧和融资成本风险高。</td>
+</tr>
+<tr>
+<td>Arista</td>
+<td>AI cluster 正从 InfiniBand 扩展到 Ethernet，Arista 是高端 AI data center networking 代表。</td>
+<td>不是软件优化纯标的；高度依赖 hyperscaler capex。</td>
+</tr>
+<tr>
+<td>Broadcom / Marvell</td>
+<td>AI networking、custom ASIC、switch silicon 都与 effective throughput 相关。</td>
+<td>更偏半导体周期和 hyperscaler 定制芯片，不是“算力调度软件”。</td>
+</tr>
+<tr>
+<td>Astera Labs / Credo / Coherent</td>
+<td>连接、retimer、光互连、SerDes 这类瓶颈会影响大集群有效吞吐。</td>
+<td>弹性大但周期性强，容易被供应链估值波动主导。</td>
+</tr>
+</tbody>
+</table>
+<h3>私有公司里更像 <code>output maxing</code> 的</h3>
+<table>
+<thead>
+<tr>
+<th>公司</th>
+<th>方向</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AMP</td>
+<td>Compute grid / independent system operator</td>
+<td>最贴 Anjney thesis。核心问题是能否真的跨云、跨芯片、跨供应商调度，而不只是大型采购中介。</td>
+</tr>
+<tr>
+<td>ScaleOps</td>
+<td>Kubernetes + GPU 自动优化</td>
+<td>产品已经覆盖 fractional GPUs、GPU memory optimization、batch inference optimization、AI inference observability。很贴企业 Kubernetes AI infra。</td>
+</tr>
+<tr>
+<td>CAST AI</td>
+<td>Kubernetes cost/resource optimization</td>
+<td>其 2026 report 称非优化 Kubernetes cluster GPU utilization 只有 5%，非常适合讲企业 GPU 浪费。</td>
+</tr>
+<tr>
+<td>Modal / RunPod / Baseten / Fireworks</td>
+<td>Serverless GPU / inference 平台</td>
+<td>如果它们能显著提高推理 batch、scale、utilization，就是推理侧算力优化。</td>
+</tr>
+<tr>
+<td>VAST / WEKA / DDN / Hammerspace</td>
+<td>AI 数据与 checkpoint 存储</td>
+<td>不是 GPU 公司，但数据加载和 checkpoint 是大训练有效吞吐瓶颈。</td>
+</tr>
+<tr>
+<td>Enfabrica</td>
+<td>AI networking silicon</td>
+<td>更偏硬科技早期/成长，赌 AI cluster fabric 架构变化。</td>
+</tr>
+</tbody>
+</table>
+<h3>投资优先级</h3>
+<ol>
+<li><strong>最清晰 public software angle：Datadog。</strong> GPU Monitoring 把“GPU 浪费”翻译成企业可买单的 observability + FinOps 问题。</li>
+<li><strong>最强平台受益者：NVIDIA。</strong> Run:ai 收购说明调度/利用率会被 NVIDIA 吸进平台。它是效率层平台化的最大受益者。</li>
+<li><strong>最高 beta 运营杠杆：CoreWeave / Nebius。</strong> 如果 Mission Control 这类能力真的带来更高 goodput，它会直接体现在毛利率、SLA、客户留存上。</li>
+<li><strong>最被低估的瓶颈层：AI networking，尤其 Arista + Broadcom/Marvell。</strong> 如果大集群 MFU 上不去，网络/collective 往往是核心原因之一。</li>
+<li><strong>最适合早期投资：ScaleOps、CAST AI、AMP 类公司。</strong> 但要严查：它们到底能不能证明提升 GPU utilization/MFU/goodput，而不是只做 dashboard 或采购撮合。</li>
+</ol>
+<h3>尽调时问的硬问题</h3>
+<ol>
+<li>能否直接证明 GPU utilization、MFU 或 goodput 提升？</li>
+<li>是 device-level metrics，还是能关联到 job、rank、pod、model、team？</li>
+<li>能否定位 straggler、NCCL error、bad GPU、network congestion、checkpoint bottleneck？</li>
+<li>是否需要深度接入 NVIDIA/云厂商，还是跨平台可用？</li>
+<li>客户 ROI 是减少 GPU 购买、缩短训练时间、降低推理成本，还是减少人工排障？</li>
+<li>护城河是数据、控制面、工作负载语义，还是只是 Kubernetes wrapper？</li>
 </ol>
 <p>但也要警惕两点。</p>
 <p>第一，很多效率层会被 NVIDIA、云厂商和大模型实验室内建。单纯做 dashboard 或调度壳，护城河不够。</p>
@@ -327,14 +466,153 @@ img { max-width: 100%; height: auto; }
 <p>Anjney frames all of these as alignment problems. As systems scale, labor divides, abstractions multiply, and information loss appears at interfaces. The hard problem is scaling up without losing too much information across APIs, organizational boundaries, commercial incentives, and trust boundaries.</p>
 <h2>What This Means for AI Investing</h2>
 <p>The investment takeaway is that the next AI infrastructure opportunity is not only hardware supply. It is effective throughput.</p>
-<p>The areas worth watching include:</p>
+<p>Start by separating two categories:</p>
 <ol>
-<li>GPU scheduling and multi-tenant resource pooling.</li>
-<li>Full-stack observability for MFU, goodput, stragglers, NCCL, and data pipelines.</li>
-<li>Network topology, collective communication, and RoCE/InfiniBand diagnostics.</li>
-<li>Checkpointing, recovery, bad-node isolation, and reliability automation.</li>
-<li>Cross-cloud, cross-vendor, cross-silicon compute markets or compute grids.</li>
-<li>AI data center power, permitting, community benefit sharing, and long-term operations.</li>
+<li><strong>Companies that sell compute</strong>: CoreWeave, Nebius, Lambda, RunPod, Crusoe, Fluidstack, IREN, Applied Digital, and others.</li>
+<li><strong>Companies that increase effective compute output</strong>: scheduling, observability, networking, reliability, checkpointing, and compute-market layers. The latter category is the cleaner expression of Anjney's <code>output maxing</code> thesis, unless the compute provider itself has a strong internal optimization layer.</li>
+</ol>
+<h3>Company Map</h3>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Companies / Projects</th>
+<th>Investment Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPU scheduling / orchestration</td>
+<td>NVIDIA + Run:ai, ScaleOps, CAST AI, Kueue, Volcano, CoreWeave Kubernetes</td>
+<td>Turns GPUs from static allocations into dynamic pools. NVIDIA's Run:ai acquisition validates the layer, but also shows that pure scheduling can be absorbed by platforms.</td>
+</tr>
+<tr>
+<td>GPU observability / FinOps</td>
+<td>Datadog, CoreWeave Mission Control, ScaleOps, CAST AI, Virtana, Dynatrace, New Relic</td>
+<td>The easiest enterprise wedge. Datadog's GPU Monitoring explicitly connects GPU fleet health, cost, and performance to workloads.</td>
+</tr>
+<tr>
+<td>Training reliability / goodput</td>
+<td>CoreWeave Mission Control, Nebius, Lambda, Crusoe, Datadog, VAST, WEKA, DDN, Hammerspace</td>
+<td>Reduces job failures, stragglers, bad nodes, checkpoint/restart loss. The larger the training run, the more valuable this becomes.</td>
+</tr>
+<tr>
+<td>AI networking / collective communication</td>
+<td>NVIDIA Spectrum-X/NVLink/NCCL, Arista, Broadcom, Marvell, Cisco, Astera Labs, Credo, Coherent, Enfabrica</td>
+<td>If low MFU is caused by communication bottlenecks, networking and collective diagnostics are central. Arista is one of the clearest public AI Ethernet beneficiaries.</td>
+</tr>
+<tr>
+<td>Compute grid / markets</td>
+<td>AMP, SF Compute, Vast.ai, RunPod, Hyperbolic, Fluidstack</td>
+<td>Maps directly to Anjney's “FLOPs flow like megawatts” idea. The upside is large, but compute is not as fungible as electricity.</td>
+</tr>
+<tr>
+<td>Inference optimization</td>
+<td>Modal, Baseten, Fireworks, Together AI, Anyscale/Ray, BentoML, Predibase</td>
+<td>Output maxing for inference: batching, autoscaling, KV cache, model routing, and serverless GPU utilization.</td>
+</tr>
+</tbody>
+</table>
+<h3>Public Companies Worth Watching First</h3>
+<table>
+<thead>
+<tr>
+<th>Company</th>
+<th>Why It Matters</th>
+<th>Risk</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVIDIA</td>
+<td>Not just GPUs. It is turning Run:ai, NCCL, Spectrum-X, DGX Cloud, NVLink, and CUDA into an AI factory control plane.</td>
+<td>The company is already huge, and the efficiency-layer upside can be buried inside the broader GPU cycle.</td>
+</tr>
+<tr>
+<td>Datadog</td>
+<td>GPU Monitoring is a direct AI infrastructure observability / FinOps wedge. It links GPU cost, health, workload, and team accountability.</td>
+<td>GPU Monitoring may be a small near-term revenue contributor; cloud-native tools and CoreWeave/NVIDIA-native tooling are competitors.</td>
+</tr>
+<tr>
+<td>CoreWeave</td>
+<td>Mission Control includes node lifecycle, fleet health, observability, and GPU straggler detection, directly targeting goodput.</td>
+<td>Capital intensity, customer concentration, GPU depreciation, and financing cost.</td>
+</tr>
+<tr>
+<td>Arista</td>
+<td>AI clusters are expanding from InfiniBand into Ethernet; Arista is a key high-end AI data center networking name.</td>
+<td>Not a pure software optimization stock; heavily dependent on hyperscaler capex.</td>
+</tr>
+<tr>
+<td>Broadcom / Marvell</td>
+<td>AI networking, custom ASICs, and switch silicon all affect effective throughput.</td>
+<td>More semiconductor-cycle and hyperscaler-custom-silicon exposure than compute scheduling software.</td>
+</tr>
+<tr>
+<td>Astera Labs / Credo / Coherent</td>
+<td>Connectivity, retimers, optical links, and SerDes can all become bottlenecks for large-cluster throughput.</td>
+<td>High beta and cyclical; valuation can be driven by supply-chain sentiment.</td>
+</tr>
+</tbody>
+</table>
+<h3>Private Companies That Look More Like <code>Output Maxing</code></h3>
+<table>
+<thead>
+<tr>
+<th>Company</th>
+<th>Direction</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AMP</td>
+<td>Compute grid / independent system operator</td>
+<td>The closest fit to Anjney's thesis. The key question is whether it can truly coordinate across clouds, chips, and suppliers rather than becoming a large procurement intermediary.</td>
+</tr>
+<tr>
+<td>ScaleOps</td>
+<td>Kubernetes + automated GPU optimization</td>
+<td>Covers fractional GPUs, GPU memory optimization, batch inference optimization, and AI inference observability. Strong fit for enterprise Kubernetes AI infrastructure.</td>
+</tr>
+<tr>
+<td>CAST AI</td>
+<td>Kubernetes cost / resource optimization</td>
+<td>Its 2026 report says non-optimized Kubernetes clusters show only 5% GPU utilization, making it a natural enterprise GPU waste story.</td>
+</tr>
+<tr>
+<td>Modal / RunPod / Baseten / Fireworks</td>
+<td>Serverless GPU / inference platforms</td>
+<td>If they can materially improve inference batching, scaling, and utilization, they are output-maxing platforms on the inference side.</td>
+</tr>
+<tr>
+<td>VAST / WEKA / DDN / Hammerspace</td>
+<td>AI data and checkpoint storage</td>
+<td>Not GPU companies, but data loading and checkpointing are critical bottlenecks for effective training throughput.</td>
+</tr>
+<tr>
+<td>Enfabrica</td>
+<td>AI networking silicon</td>
+<td>More of a hard-tech growth bet on changes in AI cluster fabric architecture.</td>
+</tr>
+</tbody>
+</table>
+<h3>Investment Priority</h3>
+<ol>
+<li><strong>Clearest public software angle: Datadog.</strong> GPU Monitoring translates “GPU waste” into an enterprise observability + FinOps problem.</li>
+<li><strong>Strongest platform beneficiary: NVIDIA.</strong> The Run:ai acquisition shows that scheduling and utilization will be pulled into NVIDIA's platform. It is the largest beneficiary of efficiency-layer platformization.</li>
+<li><strong>Highest-beta operating leverage: CoreWeave / Nebius.</strong> If Mission Control-like capabilities improve goodput, the effect should show up in gross margin, SLA, and customer retention.</li>
+<li><strong>Most underappreciated bottleneck layer: AI networking, especially Arista + Broadcom/Marvell.</strong> If large-cluster MFU does not improve, networking and collective communication are often central reasons.</li>
+<li><strong>Best early-stage hunting ground: ScaleOps, CAST AI, AMP-like companies.</strong> But diligence must prove they improve GPU utilization, MFU, or goodput, not just provide dashboards or procurement matching.</li>
+</ol>
+<h3>Hard Diligence Questions</h3>
+<ol>
+<li>Can the product directly prove GPU utilization, MFU, or goodput improvement?</li>
+<li>Is it only device-level metrics, or can it connect signals to jobs, ranks, pods, models, and teams?</li>
+<li>Can it identify stragglers, NCCL errors, bad GPUs, network congestion, and checkpoint bottlenecks?</li>
+<li>Does it require deep NVIDIA/cloud-provider integration, or is it meaningfully cross-platform?</li>
+<li>Is customer ROI from buying fewer GPUs, shortening training time, lowering inference cost, or reducing human debugging time?</li>
+<li>Is the moat data, control-plane ownership, workload semantics, or just a Kubernetes wrapper?</li>
 </ol>
 <p>There are two risks.</p>
 <p>First, much of the efficiency layer may be absorbed by NVIDIA, cloud providers, and frontier labs. A shallow dashboard or scheduler wrapper is unlikely to be durable.</p>
