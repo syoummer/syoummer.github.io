@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Anjney Midha：AI 算力竞赛的下一阶段是 Output Maxing</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>Anjney Midha：AI 算力竞赛的下一阶段是 Output Maxing</h1>
+<p>日期：2026-06-22</p>
+<p>原始访谈：<a href="https://www.latent.space/p/anj">Latent Space: The Professor of Outputmaxxing — Anjney Midha, AMP</a></p>
+<h2>核心判断</h2>
+<p>AI 基础设施的主线正在从“谁能买到更多 GPU”转向“谁能把已有 GPU 变成更多有效输出”。Anjney Midha 在 Latent Space 的访谈里，把这个问题概括成一个很好的词：<code>output maxing</code>。</p>
+<p>这不是一句漂亮话。它背后有几个很硬的系统问题：算力利用率、调度、网络、kernel、数据管道、并行策略、集群可靠性、能源和社区许可。GPU 仍然稀缺，但 GPU 数量已经不是唯一瓶颈。真正昂贵的是理论 FLOPs 没有变成真实训练进展。</p>
+<h2>最重要的数字：MFU 与 Node Utilization 不是一回事</h2>
+<p>Anjney 在访谈开头先区分了两种利用率：</p>
+<ol>
+<li><code>Node utilization</code>：数据中心里有多少卡被分配或使用。</li>
+<li><code>MFU</code>，也就是 Model FLOPs Utilization：模型训练实际用上的 FLOPs 相对理论峰值的比例。</li>
+</ol>
+<p>他提到，在 Google 内部，<code>95%</code> node utilization 会被视为类似 outage 的状态，<code>96%</code> 才应该是正常标准。也就是说，成熟的超大规模调度系统，不应该容忍大量卡闲置。</p>
+<p>但 MFU 是另一件事。Latent Space 文章提到，xAI 这类前沿实验室可能处于 <code>sub-10% MFU</code>；Anjney 在 transcript 中说，今天 best-in-class MFU 大约在 <code>60%-70%</code>。文章也列出历史参考：GPT-3 约 <code>21% MFU</code>，Gopher 约 <code>32%</code>，Megatron-Turing NLG 约 <code>30%</code>，PaLM 约 <code>46%</code>。</p>
+<p>这说明“GPU 忙不忙”和“GPU 是否在有效推进模型训练”是两件事。一个集群可以看起来很忙，但由于通信、同步、数据、故障、straggler 或 kernel 低效，真正的模型 FLOPs 利用率仍然很差。</p>
+<h2>为什么算力浪费会在前沿实验室放大</h2>
+<p>Anjney 的核心解释不是“某家公司工程差”，而是“规模放大后，组织和系统的轻微错位会变成巨大损耗”。</p>
+<p>在小规模集群里，调度、网络和硬件问题可以靠少数工程师手工修。但到了万卡、十万卡、GW 级数据中心，任何几度偏差都会沿着组织链条和技术链条不断放大：资本提供方、数据中心建设方、集群运营方、模型训练团队、业务负责人之间只要没有完全对齐，浪费就会快速复利。</p>
+<p>所以他的答案不是“更激进地买 GPU”，而是更朴素的基础设施常识：逐步 bring-up、稳定调度、可观测性、可靠的供应商、不要把 <code>move fast and break things</code> 迁移到 AI 数据中心。</p>
+<h2>AMP 想做的不是 NeoCloud，而是 Compute Grid</h2>
+<p>访谈里最值得注意的商业设想，是 AMP 不把自己定义为一个新云厂商，而是一个 compute grid。</p>
+<p>Anjney 用电网类比计算市场：早期工厂各自运行发电机，利用率低；后来大家把发电、输电和需求池化，需要一个中立的 independent system operator 来协调。AMP 想对 compute 做类似的事，让 FLOPs 像 megawatts 一样流动。</p>
+<p>这个想法有几个关键点：</p>
+<ol>
+<li>AMP 不一定拥有所有资产，而是连接供应和需求。</li>
+<li>NeoCloud 是供应方，AI labs、大学、研究团队和资金方是需求方。</li>
+<li>核心能力先从 scheduling 开始，但长期目标是跨云、跨芯片、跨供应商的 compute fungibility。</li>
+<li>不同团队有 base load，也能在关键训练或研究阶段 spike up。</li>
+<li>这需要动态优先级、interruptible demand 和类似内部市场的调度机制。</li>
+</ol>
+<p>这解释了为什么他反复讲 <code>pooling and utilization</code>。垂直整合能减少接口损耗，但水平池化能提高全局利用率。AMP 押注的是后者。</p>
+<h2>AI 数据中心不能只“快”，还要“负责”</h2>
+<p>Anjney 对数据中心建设的态度很现实。他认为 AI 数据中心不能继续套用“move fast and break things”的互联网心态，因为数据中心涉及电网、土地、许可、社区、电价和环境影响。</p>
+<p>他提到，美国今年可能有相当比例的数据中心面临社区反对，虽然这个数字可能被过度报道，但方向很清楚：如果 AI 基础设施给当地社区带来的只是电价压力、噪音、用水和电网拥堵，而不是可见收益，反弹会越来越强。</p>
+<p>他认可一种思路：如果算力每小时成本是 <code>$4</code>，不如向客户收 <code>$4.50</code>，把增量直接返还给本地社区。对算力买家来说，多付一点钱换来更稳定的供给、更少的许可和政治风险，可能是理性的。</p>
+<p>这也是 AMP 作为 public benefit corporation 的叙事基础：AI scaling 不只是买卡和拉电，而是要构造一个能长期被社会接受的基础设施系统。</p>
+<h2>“Output Maxing” 是一种系统工程哲学</h2>
+<p>访谈中，Swyx 问 Anjney 这个方向到底叫什么。Anjney 的回答是：从工程角度看，它很简单，就是 <code>output maxing</code>。</p>
+<p>这个词很有用，因为它把几个看似分散的问题放到同一个框架里：</p>
+<ol>
+<li>GPU 浪费是 output 没有最大化。</li>
+<li>医疗 end-of-life care 中大量无效支出，也是 output 没有最大化。</li>
+<li>DeepMind 等实验室研究成果被内部 embargo，也是一种社会层面的 output 没有最大化。</li>
+<li>芯片公司和模型公司之间缺乏 co-design trust boundary，会让新芯片无法及时适配未来模型架构，也是一种 output 损耗。</li>
+</ol>
+<p>Anjney 把这些都归到 <code>alignment</code> 问题：系统越大，分工越细，抽象层越多，接口处的信息损耗越严重。真正难的是既能 scale up，又不因为 API、组织边界、商业激励和信任边界而丢失太多信息。</p>
+<h2>对 AI 投资的启发</h2>
+<p>这篇访谈对投资最有价值的地方，是它提示我们：AI 基础设施的下一轮机会，不只在硬件供给，而在有效吞吐。</p>
+<p>值得重点看的方向包括：</p>
+<ol>
+<li>GPU 调度和多租户资源池化。</li>
+<li>MFU、goodput、straggler、NCCL、数据管道的全栈可观测性。</li>
+<li>网络拓扑、collective communication、RoCE/InfiniBand 诊断。</li>
+<li>checkpoint、故障恢复、坏卡隔离和可靠性自动化。</li>
+<li>跨云、跨供应商、跨芯片的 compute market 或 compute grid。</li>
+<li>AI 数据中心的电力、许可、社区收益分配和长期运营能力。</li>
+</ol>
+<p>但也要警惕两点。</p>
+<p>第一，很多效率层会被 NVIDIA、云厂商和大模型实验室内建。单纯做 dashboard 或调度壳，护城河不够。</p>
+<p>第二，compute grid 听起来像电网，但 compute 不是完全同质商品。芯片架构、网络拓扑、驱动、框架、模型并行方式、数据位置、信任边界都会影响 fungibility。AMP 的愿景很大，但执行难度也非常高。</p>
+<h2>一句话总结</h2>
+<p>Anjney Midha 这次访谈的核心不是“xAI 利用率低”这个八卦，而是一个更大的判断：AI 竞赛已经进入系统工程阶段。未来的赢家，不只是能买到最多 GPU 的人，而是能把 GPU、能源、调度、网络、模型、研究团队和社会许可对齐起来，最大化真实输出的人。</p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Anjney Midha: The Next Phase of the AI Compute Race Is Output Maxing</h1>
+<p>Date: 2026-06-22</p>
+<p>Original interview: <a href="https://www.latent.space/p/anj">Latent Space: The Professor of Outputmaxxing — Anjney Midha, AMP</a></p>
+<h2>Core Thesis</h2>
+<p>AI infrastructure is shifting from “who can buy more GPUs?” to “who can turn existing GPUs into more real output?” In his Latent Space interview, Anjney Midha gives this problem a useful name: <code>output maxing</code>.</p>
+<p>That is not just a catchy phrase. It points to a hard systems problem: utilization, scheduling, networking, kernels, data pipelines, parallelism, cluster reliability, energy, and community permission. GPUs are still scarce, but GPU count is no longer the only bottleneck. The expensive failure mode is theoretical FLOPs not turning into actual training progress.</p>
+<h2>The Key Distinction: MFU Is Not Node Utilization</h2>
+<p>Anjney begins by separating two kinds of utilization:</p>
+<ol>
+<li><code>Node utilization</code>: what percentage of cards in a data center are allocated or used.</li>
+<li><code>MFU</code>, or Model FLOPs Utilization: what fraction of theoretical peak FLOPs actually becomes useful model computation.</li>
+</ol>
+<p>He says that inside Google, <code>95%</code> node utilization would have been treated almost like an outage; <code>96%</code> should be the normal standard. In other words, a mature hyperscale scheduler should not tolerate large amounts of idle hardware.</p>
+<p>MFU is different. The Latent Space article says a frontier lab like xAI could be at <code>sub-10% MFU</code>; in the transcript, Anjney says best-in-class MFU today is roughly <code>60%-70%</code>. The article also gives historical reference points: GPT-3 around <code>21% MFU</code>, Gopher around <code>32%</code>, Megatron-Turing NLG around <code>30%</code>, and PaLM around <code>46%</code>.</p>
+<p>The important point is that “are the GPUs busy?” and “are the GPUs producing useful training progress?” are different questions. A cluster can look busy while real model FLOPs utilization remains poor because of communication, synchronization, data loading, failures, stragglers, or inefficient kernels.</p>
+<h2>Why Compute Waste Compounds at Frontier Scale</h2>
+<p>Anjney's explanation is not that one specific lab is incompetent. It is that small misalignments compound when systems scale.</p>
+<p>In small clusters, scheduling, networking, and hardware issues can often be handled manually by a small team. At 10,000 GPUs, 100,000 GPUs, or gigawatt-scale data centers, small deviations across the capital provider, data center builder, cluster operator, model team, and business owner can compound rapidly.</p>
+<p>His answer is not “buy GPUs more aggressively.” It is a more basic infrastructure discipline: iterative bring-up, stable scheduling, observability, reliable suppliers, and not applying <code>move fast and break things</code> to AI data centers.</p>
+<h2>AMP Wants to Be a Compute Grid, Not a NeoCloud</h2>
+<p>The most interesting business idea in the interview is that AMP does not define itself as another cloud provider. It wants to be a compute grid.</p>
+<p>Anjney uses the electric grid as the analogy. Early factories each ran their own generators, often at poor utilization. Later, generation, transmission, and demand were pooled, and the system needed an independent system operator to coordinate participants. AMP wants to do something similar for compute: make FLOPs flow like megawatts.</p>
+<p>The model has several important pieces:</p>
+<ol>
+<li>AMP does not necessarily need to own all the assets; it connects supply and demand.</li>
+<li>NeoClouds are suppliers; AI labs, universities, research teams, and capital providers are demand-side participants.</li>
+<li>The first technical layer is scheduling, but the long-term goal is cross-cloud, cross-silicon, cross-supplier compute fungibility.</li>
+<li>Teams get base-load capacity and can spike up for important training or research periods.</li>
+<li>The system needs dynamic priority, interruptible demand, and something like an internal market for compute.</li>
+</ol>
+<p>This is why he keeps returning to <code>pooling and utilization</code>. Vertical integration reduces interface loss, but horizontal pooling can improve global utilization. AMP is betting on the latter.</p>
+<h2>AI Data Centers Need Responsible Infrastructure</h2>
+<p>Anjney is also blunt about data center development. AI data centers cannot simply inherit the internet-era mentality of “move fast and break things,” because data centers touch the power grid, land use, permitting, local electricity prices, water, noise, and community trust.</p>
+<p>He says a meaningful share of U.S. data centers could face community backlash this year, while noting that the number may be overstated. The direction is clear either way: if AI infrastructure only brings higher electricity pressure, noise, water usage, and grid congestion to local communities, resistance will grow.</p>
+<p>He likes one proposed mechanism: if compute costs <code>$4</code> per hour, charge <code>$4.50</code> and return the marginal increase directly to the local community. For compute buyers, paying slightly more in exchange for more reliable supply, less permitting risk, and less political risk can be rational.</p>
+<p>This is also part of AMP's public-benefit framing. AI scaling is not just about buying accelerators and securing electricity. It is about building an infrastructure system that society will tolerate over time.</p>
+<h2>Output Maxing as a Systems Philosophy</h2>
+<p>When Swyx asks what this broader discipline should be called, Anjney's answer is simple: from an engineering perspective, it is <code>output maxing</code>.</p>
+<p>The phrase is useful because it unifies several problems:</p>
+<ol>
+<li>Wasted GPUs are a failure to maximize output.</li>
+<li>Wasteful end-of-life medical spending is also a failure to maximize output.</li>
+<li>Research locked inside DeepMind or other labs through internal embargoes is a social-level output loss.</li>
+<li>Chip startups lacking trusted visibility into future model architectures suffer from a co-design trust-boundary problem, which also reduces output.</li>
+</ol>
+<p>Anjney frames all of these as alignment problems. As systems scale, labor divides, abstractions multiply, and information loss appears at interfaces. The hard problem is scaling up without losing too much information across APIs, organizational boundaries, commercial incentives, and trust boundaries.</p>
+<h2>What This Means for AI Investing</h2>
+<p>The investment takeaway is that the next AI infrastructure opportunity is not only hardware supply. It is effective throughput.</p>
+<p>The areas worth watching include:</p>
+<ol>
+<li>GPU scheduling and multi-tenant resource pooling.</li>
+<li>Full-stack observability for MFU, goodput, stragglers, NCCL, and data pipelines.</li>
+<li>Network topology, collective communication, and RoCE/InfiniBand diagnostics.</li>
+<li>Checkpointing, recovery, bad-node isolation, and reliability automation.</li>
+<li>Cross-cloud, cross-vendor, cross-silicon compute markets or compute grids.</li>
+<li>AI data center power, permitting, community benefit sharing, and long-term operations.</li>
+</ol>
+<p>There are two risks.</p>
+<p>First, much of the efficiency layer may be absorbed by NVIDIA, cloud providers, and frontier labs. A shallow dashboard or scheduler wrapper is unlikely to be durable.</p>
+<p>Second, a compute grid sounds like the electric grid, but compute is not fully fungible. Chip architecture, network topology, drivers, frameworks, parallelism strategies, data location, and trust boundaries all affect whether capacity can actually be shared. AMP's vision is large, but the execution challenge is large too.</p>
+<h2>One-Sentence Summary</h2>
+<p>The most important point in Anjney Midha's interview is not the gossip that xAI may have low utilization. It is the larger claim that AI competition has entered a systems-engineering phase. The winners will not simply be those with the most GPUs, but those who can align GPUs, energy, scheduling, networks, models, research teams, and social permission into maximum real output.</p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
