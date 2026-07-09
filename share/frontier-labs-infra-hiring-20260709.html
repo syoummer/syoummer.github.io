@@ -1,0 +1,423 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Frontier AI Labs 正在变成基础设施公司吗？</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>Frontier AI Labs 正在变成基础设施公司吗？从 Anthropic、OpenAI、xAI、DeepMind 和 Meta 的招聘看</h1>
+<p>日期：2026-07-09</p>
+<h2>核心判断</h2>
+<p>Anthropic 招很多 infrastructure 人不是孤例。OpenAI、xAI、Google DeepMind 和 Meta 都在用不同方式显示同一个趋势：frontier AI lab 不再只是研究科学家的集合，而越来越像“研究实验室 + hyperscale infrastructure company”的混合体。</p>
+<p>最直接的证据来自公开招聘页。Anthropic 和 OpenAI 当前开放岗位中，compute / infrastructure / inference / platform / data center 相关岗位都在 20% 多这个量级。xAI 的比例略低，但岗位更集中在从零建设超算、数据中心、网络、能源和 GPU kernel。Google DeepMind 和 Meta 因为背靠 Google / Meta 既有 hyperscaler 基础设施，独立招聘页不完全可比，但公开叙事同样把算力和基础设施作为核心优势。</p>
+<h2>Anthropic：从“研究实验室”到基础设施密集型工程组织</h2>
+<p>最初引发讨论的文章来自 Sebastian Cuadros 的 LinkedIn Pulse：<strong>“I looked at 1,680 Anthropic resumes. Here's who they actually hire.”</strong> (<a href="https://www.linkedin.com/pulse/i-looked-1680-anthropic-resumes-heres-who-actually-hire-cuadros-f34qe">LinkedIn</a>)。TechTimes 后来用 <strong>“Anthropic Engineering Team Is an Infrastructure Army”</strong> 做了二次报道 (<a href="https://www.techtimes.com/articles/318396/20260615/anthropic-engineering-team-infrastructure-army-new-analysis-1680-engineers.htm">TechTimes</a>)。</p>
+<p>Cuadros 的核心说法是：他抓取了 5,306 个 LinkedIn 上列 Anthropic 为 current employer 的 profile，筛出 1,680 个工程角色，并分析了 7,986 条过往岗位描述。他发现 40% 的工程师有 infrastructure 背景，而 reinforcement learning 背景只有 3.3%。TechTimes 引述的关键句是：</p>
+<blockquote>
+<p>“Forty percent of the 1,680 engineers have backgrounds in infrastructure — backend systems, distributed computing, databases, or security. Only 3.3 percent have prior experience in reinforcement learning...”</p>
+</blockquote>
+<p>这个数字不是官方 HR 统计，也不可完全复现，因为它依赖 LinkedIn 自报数据和作者分类。但方向上和 Anthropic 当前招聘非常一致。</p>
+<p>截至 2026-07-09，Anthropic 官方招聘 API 快照显示约 402 个开放岗位，其中按标题关键词粗筛，infrastructure / compute / platform 相关岗位约 92 个，约 23%。Anthropic careers 页面还单列 <code>Software Engineering - Infrastructure</code> 类目，并显示 34 个开放岗位；<code>Compute</code> 类目显示 12 个开放岗位 (<a href="https://www.anthropic.com/careers/jobs">Anthropic Jobs</a>)。</p>
+<p>代表岗位 <strong>Senior Staff+ Infrastructure Engineer, Cluster Infrastructure</strong> 写得很直白 (<a href="https://job-boards.greenhouse.io/anthropic/jobs/5206978008">Greenhouse</a>)：</p>
+<blockquote>
+<p>“Cluster Infra owns the full lifecycle of compute clusters at Anthropic.”</p>
+<p>“...across all major cloud providers and our own datacenters.”</p>
+<p>“...the scale of that compute is growing faster than at almost any company in the world.”</p>
+</blockquote>
+<p>独立背景也支持这一点。Google Cloud 官方宣布 Anthropic 将扩展使用 Google Cloud TPU，最多可获得 100 万 TPU，并在 2026 年上线超过 1GW 容量 (<a href="https://www.googlecloudpresscorner.com/2025-10-23-Anthropic-to-Expand-Use-of-Google-Cloud-TPUs-and-Services">Google Cloud</a>)。Anthropic 与 Amazon / AWS Trainium 的合作也提到低层 kernel 工作 (<a href="https://www.anthropic.com/news/anthropic-amazon-trainium">Anthropic</a>)：</p>
+<blockquote>
+<p>“we’re writing low-level kernels that allow us to directly interface with the Trainium silicon”</p>
+</blockquote>
+<p>所以更准确的判断是：Anthropic 不是“绝大多数岗位都是 infra”，但 compute / infrastructure 已经是非常显著的招聘主线。</p>
+<h2>OpenAI：同样明显，而且更偏 Scaling、Stargate 和自建硬件</h2>
+<p>OpenAI 的情况和 Anthropic 非常类似。截至 2026-07-09，OpenAI careers 页面和 Ashby job board API 显示 718 个开放岗位。按标题和部门关键词粗筛，infrastructure / compute / platform 相关岗位约 154 个，约 21%。其中 <code>Scaling</code> 部门单独有 91 个岗位。</p>
+<p>OpenAI 的 <strong>Software Engineer, Compute Infrastructure</strong> 岗位几乎可以看作 Anthropic cluster infrastructure 岗位的对应物 (<a href="https://openai.com/careers/software-engineer-compute-infrastructure-san-francisco">OpenAI</a>)：</p>
+<blockquote>
+<p>“Compute Infrastructure builds the platform that turns enormous amounts of compute into a reliable engine for frontier AI.”</p>
+<p>“We design, provision, schedule, operate, and optimize the systems that connect accelerators, CPUs, networks, storage, data centers, orchestration software, agent infrastructure, developer tools, and observability...”</p>
+</blockquote>
+<p>另一个 <strong>Software Engineer, Frontier Clusters Infrastructure</strong> 更直接 (<a href="https://openai.com/careers/software-engineer-frontier-clusters-infrastructure-san-francisco">OpenAI</a>)：</p>
+<blockquote>
+<p>“The Frontier Systems team at OpenAI builds, launches, and supports the largest supercomputers in the world that OpenAI uses for its most cutting edge model training.”</p>
+<p>“This role blends distributed systems engineering with hands-on infrastructure work on our largest datacenters.”</p>
+</blockquote>
+<p>OpenAI 和 Anthropic 的比例接近，但方向略有不同。Anthropic 更明显是多云、TPU / Trainium、外部数据中心和 procurement；OpenAI 更明显是 Scaling、Stargate、自建/定制硬件、数据中心设计和 frontier supercomputer。</p>
+<h2>xAI：更像“从零建设超算和数据中心”</h2>
+<p>xAI 当前 Greenhouse 快照显示约 214 个开放岗位，其中标题关键词命中 infrastructure / compute / data center / GPU / network 等约 36 个，约 17%。比例低于 OpenAI 和 Anthropic，但信号更偏物理基础设施。</p>
+<p>xAI 的 <strong>Software Engineer - Kernels/CUDA (C++)</strong> 岗位写道 (<a href="https://job-boards.greenhouse.io/xai/jobs/5052040007">Greenhouse</a>)：</p>
+<blockquote>
+<p>“We are building one of the world’s largest AI supercomputers from the ground up.”</p>
+<p>“As part of the Compute Infrastructure team, you will own both the raw GPU supercomputer and the platform layer that runs on top of it.”</p>
+<p>“from low-level GPU kernel optimizations and Linux kernel internals to massive-scale orchestration and virtualization...”</p>
+</blockquote>
+<p>xAI 的招聘里能看到 data center operations、physical infrastructure、energy storage、network engineer、high-speed interconnects、CUDA / kernels、training / inference 等岗位。它不像 OpenAI 和 Anthropic 那样主要表现为软件平台招聘，而更像把 supercomputer、data center、power infrastructure 一起拉起来。</p>
+<h2>Google DeepMind：基础设施藏在 Google full-stack 体系里</h2>
+<p>Google DeepMind 不适合和 OpenAI / Anthropic 直接按独立招聘页量化对比，因为 DeepMind 依附 Google 的 TPU、data center、Google Cloud 和全球 serving 基础设施。</p>
+<p>Google DeepMind careers 页面把这一点写成核心优势 (<a href="https://deepmind.google/careers">Google DeepMind Careers</a>)：</p>
+<blockquote>
+<p>“Our groundbreaking research underpins our cutting-edge models, which are trained on Google’s state-of-the-art infrastructure – which, in turn, is built on chips that we design.”</p>
+<p>“And our models are deployed via the same global infrastructure, to rapidly reach billions of users.”</p>
+</blockquote>
+<p>同一页面对 Research Engineer 的职责也包括：</p>
+<blockquote>
+<p>“Building robust infrastructure for distributed computing.”</p>
+</blockquote>
+<p>这意味着 DeepMind 的 infrastructure hiring 信号不一定集中在 DeepMind 独立岗位里，而是分布在 Google 的 AI and Infrastructure、TPU、networking、data center 和 cloud 组织中。</p>
+<h2>Meta：hyperscaler 基础设施本身就是招聘筹码</h2>
+<p>Meta 的情况也不同。它不是从零搭 infra 的 frontier lab，而是已有全球级 hyperscaler 基础设施。Meta AI / Superintelligence 的公开招聘叙事把 “compute per researcher” 当成核心卖点。</p>
+<p>更硬的证据来自 Meta 工程博客 <strong>“Building Meta’s GenAI Infrastructure”</strong> (<a href="https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure">Engineering at Meta</a>)：</p>
+<blockquote>
+<p>“we are announcing two 24k GPU clusters”</p>
+<p>“By the end of 2024, we’re aiming to continue to grow our infrastructure build-out that will include 350,000 NVIDIA H100 GPUs as part of a portfolio that will feature compute power equivalent to nearly 600,000 H100s.”</p>
+<p>“To lead in developing AI means leading investments in hardware infrastructure.”</p>
+</blockquote>
+<p>Meta 的模式是：基础设施组织本来就大，AI 团队把 GPU 集群、networking、storage、PyTorch 和 data center 能力作为模型研发和人才招聘的核心筹码。</p>
+<h2>第三方横向观察：不同 lab 的 compute strategy 正在分化</h2>
+<p>Epoch AI 在 <strong>“What do frontier AI companies' job postings reveal about their plans?”</strong> 中分析了 OpenAI、Anthropic、xAI 和 Google DeepMind 的招聘页面 (<a href="https://epoch.ai/gradient-updates/ai-lab-job-postings">Epoch AI</a>)。它的一个关键判断是：</p>
+<blockquote>
+<p>“Open roles at the labs also give insight into how each company approaches its raw inputs: compute and data.”</p>
+<p>“The clearest divide is between labs that are building their own compute infrastructure and labs that are contracting for it.”</p>
+</blockquote>
+<p>Epoch AI 还指出 OpenAI 有 21 个与内部芯片开发相关的开放岗位，而 Anthropic 没有明显内部芯片开发路线，更多是监督外部伙伴的数据中心设计、建设、合同和交付。这和公开岗位数据相互印证。</p>
+<h2>最终结论</h2>
+<p>Anthropic 的 infrastructure-heavy 招聘不是异常，而是 frontier AI 行业的结构性变化。</p>
+<p>OpenAI 最像 Anthropic，但更偏 Scaling、Stargate、自建硬件和数据中心。xAI 更偏从零建设物理超算和数据中心。Google DeepMind 的 infrastructure 能力藏在 Google full-stack 体系里。Meta 则直接把既有 hyperscaler 基础设施转化成 AI 研发和招聘优势。</p>
+<p>一句话：越靠近 frontier model，竞争瓶颈就越不只是算法和论文，而是能否把海量算力变成可靠、低延迟、低成本、高利用率的训练和推理系统。因此 systems、distributed infrastructure、networking、GPU / TPU / kernel、storage、data center 和 reliability 人才，正在成为 frontier labs 的核心资产。</p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Are Frontier AI Labs Becoming Infrastructure Companies? Hiring Signals from Anthropic, OpenAI, xAI, DeepMind, and Meta</h1>
+<p>Date: 2026-07-09</p>
+<h2>Core Takeaway</h2>
+<p>Anthropic's infrastructure-heavy hiring is not an isolated case. OpenAI, xAI, Google DeepMind, and Meta all show the same broad pattern in different ways: frontier AI labs are no longer just collections of research scientists. They increasingly look like hybrids of research labs and hyperscale infrastructure companies.</p>
+<p>The clearest evidence comes from public job postings. At both Anthropic and OpenAI, compute / infrastructure / inference / platform / data center roles appear to be in the low-20% range of current open roles. xAI's share is somewhat lower, but its roles are even more directly tied to building supercomputers, data centers, networks, power infrastructure, and GPU kernels. Google DeepMind and Meta are harder to compare through standalone job counts because they sit inside Google and Meta's existing hyperscale infrastructure, but their public narratives also make compute and infrastructure central strategic advantages.</p>
+<h2>Anthropic: From Research Lab to Infrastructure-Heavy Engineering Organization</h2>
+<p>The article that started the discussion was most likely Sebastian Cuadros's LinkedIn Pulse post, <strong>“I looked at 1,680 Anthropic resumes. Here's who they actually hire.”</strong> (<a href="https://www.linkedin.com/pulse/i-looked-1680-anthropic-resumes-heres-who-actually-hire-cuadros-f34qe">LinkedIn</a>). TechTimes later repackaged the same underlying analysis as <strong>“Anthropic Engineering Team Is an Infrastructure Army”</strong> (<a href="https://www.techtimes.com/articles/318396/20260615/anthropic-engineering-team-infrastructure-army-new-analysis-1680-engineers.htm">TechTimes</a>).</p>
+<p>Cuadros's core claim was that he pulled 5,306 LinkedIn profiles listing Anthropic as a current employer, filtered them down to 1,680 engineering roles, and analyzed 7,986 prior-role descriptions. He found that 40% of engineers had infrastructure backgrounds, while only 3.3% had reinforcement learning backgrounds. TechTimes summarized the point this way:</p>
+<blockquote>
+<p>“Forty percent of the 1,680 engineers have backgrounds in infrastructure — backend systems, distributed computing, databases, or security. Only 3.3 percent have prior experience in reinforcement learning...”</p>
+</blockquote>
+<p>This is not official HR data and it is not fully reproducible, since it depends on LinkedIn self-reporting and the author's classification method. But the direction is consistent with Anthropic's current job postings.</p>
+<p>As of 2026-07-09, Anthropic's official Greenhouse jobs snapshot showed roughly 402 open roles. A title-keyword screen found about 92 roles related to infrastructure / compute / platform, or roughly 23%. Anthropic's careers page also separately listed a <code>Software Engineering - Infrastructure</code> category with 34 open roles and a <code>Compute</code> category with 12 open roles (<a href="https://www.anthropic.com/careers/jobs">Anthropic Jobs</a>).</p>
+<p>One representative role, <strong>Senior Staff+ Infrastructure Engineer, Cluster Infrastructure</strong>, is explicit (<a href="https://job-boards.greenhouse.io/anthropic/jobs/5206978008">Greenhouse</a>):</p>
+<blockquote>
+<p>“Cluster Infra owns the full lifecycle of compute clusters at Anthropic.”</p>
+<p>“...across all major cloud providers and our own datacenters.”</p>
+<p>“...the scale of that compute is growing faster than at almost any company in the world.”</p>
+</blockquote>
+<p>Independent context supports the same conclusion. Google Cloud announced that Anthropic would expand its use of Google Cloud TPUs, with access to up to one million TPUs and more than one gigawatt of capacity coming online in 2026 (<a href="https://www.googlecloudpresscorner.com/2025-10-23-Anthropic-to-Expand-Use-of-Google-Cloud-TPUs-and-Services">Google Cloud</a>). Anthropic's AWS Trainium collaboration also explicitly mentions low-level kernel work (<a href="https://www.anthropic.com/news/anthropic-amazon-trainium">Anthropic</a>):</p>
+<blockquote>
+<p>“we’re writing low-level kernels that allow us to directly interface with the Trainium silicon”</p>
+</blockquote>
+<p>The more precise conclusion is not that most Anthropic roles are infrastructure roles. Rather, compute and infrastructure have become one of Anthropic's most visible hiring themes.</p>
+<h2>OpenAI: Similar Pattern, with More Emphasis on Scaling, Stargate, and Custom Hardware</h2>
+<p>OpenAI shows a very similar pattern. As of 2026-07-09, OpenAI's careers page and Ashby job board API showed 718 open roles. A title-and-department keyword screen found about 154 infrastructure / compute / platform-related roles, or roughly 21%. The <code>Scaling</code> department alone had 91 roles.</p>
+<p>OpenAI's <strong>Software Engineer, Compute Infrastructure</strong> role reads like the OpenAI counterpart to Anthropic's cluster infrastructure roles (<a href="https://openai.com/careers/software-engineer-compute-infrastructure-san-francisco">OpenAI</a>):</p>
+<blockquote>
+<p>“Compute Infrastructure builds the platform that turns enormous amounts of compute into a reliable engine for frontier AI.”</p>
+<p>“We design, provision, schedule, operate, and optimize the systems that connect accelerators, CPUs, networks, storage, data centers, orchestration software, agent infrastructure, developer tools, and observability...”</p>
+</blockquote>
+<p>Another role, <strong>Software Engineer, Frontier Clusters Infrastructure</strong>, is even more direct (<a href="https://openai.com/careers/software-engineer-frontier-clusters-infrastructure-san-francisco">OpenAI</a>):</p>
+<blockquote>
+<p>“The Frontier Systems team at OpenAI builds, launches, and supports the largest supercomputers in the world that OpenAI uses for its most cutting edge model training.”</p>
+<p>“This role blends distributed systems engineering with hands-on infrastructure work on our largest datacenters.”</p>
+</blockquote>
+<p>The ratios for OpenAI and Anthropic are close, but the emphasis differs. Anthropic's public signals point more toward multi-cloud compute, TPU / Trainium, external data center partners, and procurement. OpenAI's signals point more toward Scaling, Stargate, custom or internal hardware, data center design, and frontier supercomputers.</p>
+<h2>xAI: More Like Building the Supercomputer and Data Center from Scratch</h2>
+<p>xAI's current Greenhouse snapshot showed around 214 open roles. A title-keyword screen found about 36 infrastructure / compute / data center / GPU / network-related roles, or roughly 17%. The percentage is lower than OpenAI's and Anthropic's, but the roles are more directly tied to physical infrastructure.</p>
+<p>xAI's <strong>Software Engineer - Kernels/CUDA (C++)</strong> role says (<a href="https://job-boards.greenhouse.io/xai/jobs/5052040007">Greenhouse</a>):</p>
+<blockquote>
+<p>“We are building one of the world’s largest AI supercomputers from the ground up.”</p>
+<p>“As part of the Compute Infrastructure team, you will own both the raw GPU supercomputer and the platform layer that runs on top of it.”</p>
+<p>“from low-level GPU kernel optimizations and Linux kernel internals to massive-scale orchestration and virtualization...”</p>
+</blockquote>
+<p>xAI's postings include data center operations, physical infrastructure, energy storage, network engineering, high-speed interconnects, CUDA / kernels, and training / inference. Compared with OpenAI and Anthropic, xAI looks more like an effort to bring up the supercomputer, data center, and power infrastructure together.</p>
+<h2>Google DeepMind: Infrastructure Is Embedded in Google's Full-Stack System</h2>
+<p>Google DeepMind is harder to compare directly with OpenAI and Anthropic through standalone job postings because it is embedded inside Google's TPU, data center, Google Cloud, and global serving infrastructure.</p>
+<p>Google DeepMind's careers page frames this as a core advantage (<a href="https://deepmind.google/careers">Google DeepMind Careers</a>):</p>
+<blockquote>
+<p>“Our groundbreaking research underpins our cutting-edge models, which are trained on Google’s state-of-the-art infrastructure – which, in turn, is built on chips that we design.”</p>
+<p>“And our models are deployed via the same global infrastructure, to rapidly reach billions of users.”</p>
+</blockquote>
+<p>The same page describes Research Engineer responsibilities as including:</p>
+<blockquote>
+<p>“Building robust infrastructure for distributed computing.”</p>
+</blockquote>
+<p>So DeepMind's infrastructure hiring signal may not show up cleanly in a standalone DeepMind job count. Much of it is distributed across Google's AI and Infrastructure, TPU, networking, data center, and cloud organizations.</p>
+<h2>Meta: Hyperscale Infrastructure as a Recruiting Advantage</h2>
+<p>Meta is different again. It is not a frontier lab building infrastructure from scratch; it already has hyperscale infrastructure. Meta AI / Superintelligence uses compute per researcher and GPU cluster scale as a core recruiting and strategy signal.</p>
+<p>The hard evidence is Meta's engineering post <strong>“Building Meta’s GenAI Infrastructure”</strong> (<a href="https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure">Engineering at Meta</a>):</p>
+<blockquote>
+<p>“we are announcing two 24k GPU clusters”</p>
+<p>“By the end of 2024, we’re aiming to continue to grow our infrastructure build-out that will include 350,000 NVIDIA H100 GPUs as part of a portfolio that will feature compute power equivalent to nearly 600,000 H100s.”</p>
+<p>“To lead in developing AI means leading investments in hardware infrastructure.”</p>
+</blockquote>
+<p>Meta's pattern is that the infrastructure organization already exists at hyperscale, and AI teams convert GPU clusters, networking, storage, PyTorch, and data center capacity into a research and recruiting advantage.</p>
+<h2>Third-Party Cross-Check: Compute Strategy Is Diverging Across Labs</h2>
+<p>Epoch AI analyzed job postings from OpenAI, Anthropic, xAI, and Google DeepMind in <strong>“What do frontier AI companies' job postings reveal about their plans?”</strong> (<a href="https://epoch.ai/gradient-updates/ai-lab-job-postings">Epoch AI</a>). Its relevant observation was:</p>
+<blockquote>
+<p>“Open roles at the labs also give insight into how each company approaches its raw inputs: compute and data.”</p>
+<p>“The clearest divide is between labs that are building their own compute infrastructure and labs that are contracting for it.”</p>
+</blockquote>
+<p>Epoch AI also noted that OpenAI had 21 open roles associated with internal chip development, while Anthropic did not show the same internal chip path and instead had roles focused on external data center design, construction, contracts, and partner delivery. That matches the job-posting evidence above.</p>
+<h2>Final Conclusion</h2>
+<p>Anthropic's infrastructure-heavy hiring is not an anomaly. It is a structural shift across frontier AI.</p>
+<p>OpenAI is the closest parallel to Anthropic, but with more emphasis on Scaling, Stargate, custom hardware, and data centers. xAI is more focused on building physical supercompute and data center infrastructure from the ground up. Google DeepMind's infrastructure advantage is embedded in Google's full-stack TPU and serving ecosystem. Meta turns existing hyperscale infrastructure into a research and recruiting advantage.</p>
+<p>The short version: the closer a lab is to frontier model development, the less the bottleneck is only algorithms and papers. The bottleneck is whether the lab can turn enormous compute into reliable, low-latency, cost-efficient, high-utilization training and inference systems. That is why systems, distributed infrastructure, networking, GPU / TPU / kernel, storage, data center, and reliability talent are becoming core assets for frontier AI labs.</p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
