@@ -1,0 +1,1069 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Databricks 从 DBRX 转向 Agent：战略收敛还是追逐 AI 热点？ / Databricks From DBRX to Agents: Strategic Focus or a Bid to Stay Relevant?</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>Databricks 从 DBRX 转向 Agent：战略收敛还是追逐 AI 热点？</h1>
+<p>日期：2026-07-17</p>
+<p>Databricks 过去三年的 AI 路线看起来像一连串快速换挡：Dolly、13 亿美元收购 MosaicML、DBRX、Mosaic AI，再到 Agent Bricks 和 Omnigent。</p>
+<p>最尖锐的解释是，Databricks 没能建立持续的通用模型业务，于是不断上移产品叙事，以保持自己在最新 AI 热点中的相关性。</p>
+<p>这个 bear case 有真实基础，但最强版本说过头了。综合评分约为 <strong>6.5/10</strong>。</p>
+<p>更准确的判断是：Databricks 已让通用自研 foundation model 从战略主角退场，但没有退出 AI training 或 serving；它正在把价值控制点移到模型之上的 data、context、evaluation、runtime 和 governance。</p>
+<p>这既是对市场重心变化的追赶，也是符合 Databricks 既有资产结构的战略收敛。“追逐 relevance”可以解释发布节奏和品牌变化的一部分，但它是外部解释，不是可以从公开材料验证的管理层动机。</p>
+<h2>六个名称，六种不同对象</h2>
+<p>把 Dolly、MosaicML、DBRX、Mosaic AI、Agent Bricks 和 Omnigent 串成一条“模型产品失败史”，首先会犯分类错误。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>它是什么</th>
+<th>是否为自研 foundation model</th>
+<th>战略作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dolly 2.0</td>
+<td>基于 EleutherAI Pythia-12B 微调的开放模型与数据集</td>
+<td>否，不是从零预训练</td>
+<td>展示低成本、可商用的开放 instruction tuning</td>
+</tr>
+<tr>
+<td>MosaicML</td>
+<td>被收购的训练平台、研究团队、MPT 模型和训练软件</td>
+<td>团队具备从零训练能力</td>
+<td>补齐大模型训练、系统优化和产品能力</td>
+</tr>
+<tr>
+<td>DBRX</td>
+<td>Databricks/Mosaic 团队从零训练的 132B MoE 开放权重模型</td>
+<td>是</td>
+<td>证明训练、数据和 serving 栈能支撑大模型</td>
+</tr>
+<tr>
+<td>Mosaic AI</td>
+<td>训练、serving、vector search、gateway、agent 等产品的总品牌</td>
+<td>否</td>
+<td>统一包装 Databricks 的 AI 产品线</td>
+</tr>
+<tr>
+<td>Agent Bricks</td>
+<td>从自动评测和优化 builder 扩展出的企业 agent 平台</td>
+<td>否</td>
+<td>控制模型之上的 context、evaluation、runtime 和 governance</td>
+</tr>
+<tr>
+<td>Omnigent</td>
+<td>位于 Claude Code、Codex、Cursor、Pi 等 harness 之上的 meta-harness</td>
+<td>否</td>
+<td>统一不同 harness，并加入 policy、sandbox、协作和组合能力</td>
+</tr>
+</tbody>
+</table>
+<p>因此，Dolly 不是 DBRX 的前代通用模型，Mosaic AI 也不是 Agent Bricks 的同类替代品。真正发生的变化是：<strong>通用 first-party model 的重要性下降，模型之上的 control plane 重要性上升。</strong></p>
+<h2>关键时间线</h2>
+<table>
+<thead>
+<tr>
+<th>日期</th>
+<th>事件</th>
+<th>战略含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2023-04-12</td>
+<td>发布 Dolly 2.0：12B Pythia 模型，以 15,000 条员工生成数据微调</td>
+<td>重点是开放、商用许可和微调示范，不是从零训练或追求 SOTA</td>
+</tr>
+<tr>
+<td>2023-06-26</td>
+<td>签署 MosaicML 收购协议，交易约 13 亿美元，包含 retention packages</td>
+<td>高价买入训练人才、MPT、训练软件和客户平台</td>
+</tr>
+<tr>
+<td>2023-07-19</td>
+<td>收购完成，MosaicML 产品继续直接销售并逐步整合进 Lakehouse</td>
+<td>当时明确押注企业训练、拥有和保护自己的模型</td>
+</tr>
+<tr>
+<td>2024-03-27</td>
+<td>发布 DBRX：132B 总参数、36B active、12T tokens、3,072 张 H100</td>
+<td>Databricks 最明确的一次通用 foundation-model 展示</td>
+</tr>
+<tr>
+<td>2025-04-30</td>
+<td>DBRX Instruct 退出按 token 计费 API，DBRX family 退出旧 fine-tuning 产品</td>
+<td>DBRX 作为官方托管模型的产品生命结束</td>
+</tr>
+<tr>
+<td>2025-06-11</td>
+<td>Agent Bricks beta 发布</td>
+<td>价值重心转向 compound AI system 的自动评测和优化</td>
+</tr>
+<tr>
+<td>2025-09</td>
+<td>MosaicML 联合创始人 Naveen Rao 离职</td>
+<td>一位关键领导者退出，但不能据此推断整个团队消失</td>
+</tr>
+<tr>
+<td>2026-03-11</td>
+<td>收购 Quotient AI</td>
+<td>继续投资 continuous evaluation、trace analysis 和 reinforcement learning</td>
+</tr>
+<tr>
+<td>2026-03-19</td>
+<td>AI Runtime Public Preview</td>
+<td>训练仍在，但成为客户使用的 serverless GPU runtime</td>
+</tr>
+<tr>
+<td>2026-06-13</td>
+<td>Omnigent 开源，标为 alpha</td>
+<td>进入跨 harness 的 meta-harness 层，成熟度仍早</td>
+</tr>
+<tr>
+<td>2026-06-16</td>
+<td>Agent Bricks 扩为完整 developer agent platform</td>
+<td>从自动优化产品扩成覆盖整个 agent stack 的总平台</td>
+</tr>
+<tr>
+<td>2026-07-17</td>
+<td>托管 Omnigent 文档仍标为 Beta</td>
+<td>已有产品集成，但还不能按成熟 GA 平台评价</td>
+</tr>
+<tr>
+<td>2026-08-14</td>
+<td>旧 Foundation Model Fine-tuning 计划移除</td>
+<td>封装式入口结束，能力迁往 AI Runtime</td>
+</tr>
+</tbody>
+</table>
+<h2>从 Dolly 到 DBRX：真正退场的是什么</h2>
+<h3>Dolly 本来就不是通用模型护城河</h3>
+<p><a href="https://www.databricks.com/blog/2023/04/12/dolly-first-open-commercially-viable-instruction-tuned-llm">Dolly 2.0 的发布文</a>明确说，它是基于 EleutherAI Pythia 的 12B 模型，并用新建的人类指令数据集微调：</p>
+<blockquote>
+<p>“Dolly 2.0 is a 12B parameter language model based on the EleutherAI Pythia model family and fine-tuned exclusively on a new, high-quality human generated instruction following dataset.”</p>
+</blockquote>
+<p>官方还主动限定了目标：</p>
+<blockquote>
+<p>“As a technical and research artifact, we don't expect Dolly to be state-of-the-art in terms of effectiveness.”</p>
+</blockquote>
+<p>Dolly 的意义是开放数据、商业许可和 instruction tuning 示范。它后来没有成为旗舰模型，不足以证明一次 foundation-model strategy failure。</p>
+<h3>MosaicML 收购确实押注过“企业自己训练模型”</h3>
+<p><a href="https://www.prnewswire.com/news-releases/databricks-signs-definitive-agreement-to-acquire-mosaicml-a-leading-generative-ai-platform-301863046.html">收购协议</a>将交易估值写为约 13 亿美元，包含留任安排，并给出清楚的战略承诺：</p>
+<blockquote>
+<p>“Together, Databricks and MosaicML will enable any company to build, own and secure best-in-class generative AI models while maintaining control of their data.”</p>
+</blockquote>
+<p><a href="https://www.databricks.com/company/newsroom/press-releases/databricks-completes-acquisition-mosaicml">收购完成公告</a>继续强调 bespoke LLM 的训练和部署，并表示 MosaicML 产品会继续直接销售。</p>
+<p>这与 2026 年以第三方 frontier models、任意 harness 和企业 agent 为中心的叙事确实不同。收购 thesis 后来发生了变化，不能用品牌连续性掩盖这一点。</p>
+<h3>DBRX 是 first-party foundation model 的高点</h3>
+<p><a href="https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm">DBRX 发布文</a>显示，它不是一次简单微调：模型有 132B 总参数、36B active parameters，以 12T text/code tokens 预训练，使用 3,072 张 NVIDIA H100，主要构建过程约三个月，并开放 base 和 instruct weights。</p>
+<p>官方当时写道：</p>
+<blockquote>
+<p>“DBRX is a central pillar of our next generation of GenAI products.”</p>
+<p>“This is also just the beginning of our work on DBRX, and you should expect much more to come.”</p>
+</blockquote>
+<p>但仅 13 个月后，<a href="https://docs.databricks.com/aws/en/release-notes/product/2025/april">2025 年 4 月 release notes</a>记录 DBRX Instruct 从 Foundation Model APIs 的按 token 服务中退役。到 2026-07-17，<a href="https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/supported-models">当前模型目录</a>已包含多家供应商的模型，却没有 DBRX；现有公开材料中也未找到 DBRX 2 或通用后继模型。</p>
+<p>这是 bear case 最硬的证据：DBRX 退出官方按 token 服务，而公开材料中未找到替代它的同系列新版本。它支持“通用 first-party model ambition 收缩”，但负面检索不能证明 Databricks 内部已停止所有通用模型研究。</p>
+<h2>Training 和 serving 没消失，只是商业形态变了</h2>
+<p>“DBRX 退场”不等于“Databricks 退出 AI infrastructure”。training 和 serving 都还在，只是不再围绕自有通用模型组织价值。</p>
+<h3>Training：从封装产品转向通用 GPU runtime</h3>
+<p><a href="https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/">Foundation Model Fine-tuning 文档</a>已标为 deprecated，并计划于 2026-08-14 移除，官方要求迁移到 AI Runtime。</p>
+<p>与此同时，<a href="https://www.databricks.com/blog/introducing-ai-runtime-scalable-serverless-nvidia-gpus-databricks-training-and-finetuning">AI Runtime 发布文</a>明确表示：</p>
+<blockquote>
+<p>“AI Runtime contains all the technology used for large scale training of LLMs such as MPT and DBRX.”</p>
+</blockquote>
+<p>AI Runtime 提供 serverless A10/H100、Composer、Hugging Face、Ray、PyTorch、MLflow 和 Unity Catalog。到文章日期，单节点 8x H100 为 Public Preview，多节点仍为 Private Preview；<a href="https://www.databricks.com/product/machine-learning/mosaic-ai-training">Model Training 产品页</a>也仍宣传 fine-tuning 和从零训练 custom LLM。</p>
+<p>所以变化不是训练能力消失，而是高度封装的 fine-tuning 入口退场，训练成为更通用的基础设施。公开可见的重点也从 DBRX 后继转向 small/domain models、RL、TAO 和 agent optimization。现有 AI Runtime 容量不能直接等同于 DBRX 当年的 3,072-H100 训练规模。</p>
+<h3>Serving：从自有模型 endpoint 转向多模型分发和治理</h3>
+<p><a href="https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/supported-models">官方模型目录</a>显示，Databricks 正托管 OpenAI、Anthropic、Google、Meta、Alibaba 等公司的模型，并将其置于 Databricks security perimeter 内。</p>
+<p>2024 年，DBRX 同时证明 Databricks 的 training 和 serving 栈。2026 年，第三方 frontier models 提供 intelligence，Databricks 提供 endpoint、security、routing、budget、logging、evaluation 和 enterprise context。</p>
+<p>这种平台模式不必押注单一模型赢家，却也依赖上游模型公司和底层云。model providers 与 cloud providers 可能拿走更高比例的价值和毛利。</p>
+<h2>MosaicML 收购复盘：模型家族没有延续，能力没有清空</h2>
+<p>认为 MosaicML 的原始故事被削弱，有四条直接依据：</p>
+<ul>
+<li>13 亿美元交易最初围绕“build, own and secure your own models”，现在的中心是“any model, any harness”。</li>
+<li>MPT 没有发展成持续的一线通用模型家族。</li>
+<li>公开材料中未找到 DBRX 后继，它也已退出官方按 token 模型目录。</li>
+<li><a href="https://techcrunch.com/2025/10/03/sources-naveen-raos-new-ai-hardware-startup-targets-5b-valuation-with-backing-from-a16z/">TechCrunch</a>报道 Naveen Rao 于 2025 年 9 月离开 Databricks。</li>
+</ul>
+<p>但“收购资产已被浪费”也不符合现有证据：</p>
+<ul>
+<li><a href="https://www.databricks.com/dataaisummit/speaker/hanlin-tang">Hanlin Tang 的 2026 Summit 简介</a>仍将这位 MosaicML 联合创始人列为 <code>CTO - Neural Networks</code>，并称其负责 Databricks AI products。</li>
+<li>Agent Bricks 2025 和 AI Runtime 2026 的发布团队都包括 Hanlin Tang。</li>
+<li><a href="https://www.infoworld.com/article/4005160/databricks-aims-to-optimize-agent-building-for-enterprises-with-agent-bricks.html">InfoWorld</a>报道 Agent Bricks 使用了 MosaicML research division 开发的 TAO、synthetic data 和 Mosaic Agent 技术。</li>
+<li><a href="https://github.com/mosaicml/llm-foundry"><code>mosaicml/llm-foundry</code></a> 与 <a href="https://github.com/mosaicml/composer"><code>mosaicml/composer</code></a> 仍未归档，并在 2026 年保持更新。</li>
+<li>DBRX 至少证明了收购团队能在 Databricks 上完成大规模预训练，相关经验进入 AI Runtime、评测和 agent learning。</li>
+</ul>
+<p>公开资料不足以计算 MosaicML 团队的整体留存率。一位创始人离职和另一位创始人留任，都不能代表完整团队。</p>
+<p>更合理的结论是：MosaicML 没有把 Databricks 变成持续发布通用模型的 frontier lab，但提供了训练、系统优化、评测和 agent learning 的技术组织。收购回报正从“模型家族”转化成“AI platform capability”；它是否值 13 亿美元，无法从公开收入拆分中验证。</p>
+<h2>Agent Bricks：从清晰差异点到大而全平台</h2>
+<h3>2025 年的原始差异化</h3>
+<p><a href="https://www.databricks.com/blog/introducing-agent-bricks">Agent Bricks 初始发布</a>并不只是又一个 agent orchestration 产品。它的核心是 evaluation-to-optimization loop：</p>
+<ol>
+<li>用户描述任务并连接数据。</li>
+<li>系统生成 task-specific evaluation datasets 和 LLM judges。</li>
+<li>系统搜索 prompt、model choice、fine-tuning、reward models 和 TAO 等方案。</li>
+<li>用户在 cost-optimized 与 quality-optimized 结果之间选择。</li>
+</ol>
+<p>InfoWorld 当时的评价是，许多竞品集中在 hosting 和 orchestration，而 Agent Bricks 试图自动化从评测到优化的完整链条。这是其最可信的原始差异化。</p>
+<p>但 Databricks 所称“最高 10x lower cost”和客户准确率提升主要来自公司与客户案例，不是统一的独立测试。自动优化还依赖有效 benchmark 和 judge；如果任务成功无法被准确度量，系统只会更高效地优化一个不完整指标。</p>
+<h3>2026 年的全面扩张</h3>
+<p><a href="https://www.databricks.com/blog/agent-bricks-dais-2026">Agent Bricks 2026 更新</a>称：</p>
+<blockquote>
+<p>“What began as an experiment in agent building has expanded into a comprehensive platform for developers to build agents with any model and any harness, access data anywhere, and confidently deploy and control.”</p>
+</blockquote>
+<p>新范围包括 models、harnesses、Apps deployment、MCP、Genie Ontology、agent tools、Lakebase memory、document intelligence、Sandbox、Unity AI Gateway、traces、policies 和 Unity Catalog registry。</p>
+<p>官方还披露 <code>100k+ agents</code> 和 <code>1+ quadrillion tokens per year</code>。这些是采用信号，但 agent 创建数不等于生产 agent 数，年化 token 也没有披露客户分布、收入或毛利。</p>
+<p>覆盖面扩大可能提高产品 attach rate，却会稀释最初容易理解的差异点，并带来集成复杂度、产品重叠和“每一层都不够深”的风险。</p>
+<h2>Omnigent：有意思的 wedge，还不是护城河</h2>
+<p><a href="https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents">Omnigent 发布文</a>针对一个具体问题：不同 agent harness 各自持有 session、context、controls 和 interfaces，难以互换和组合。</p>
+<p>Omnigent 在这些 harness 之上提供统一层，可组合 Claude Code、Codex、Cursor、Pi、自定义 agents 和 SDK agents，并支持一行配置切换 harness/model、stateful policies、cost controls、OS sandbox、network request interception、实时协作、共享 session，以及用 YAML 定义可迁移的 agent。</p>
+<p>它不是 Agent Bricks 的同义词。Omnigent 是开源 meta-harness；Agent Bricks 是企业 agent 平台；托管 Omnigent 则是 Agent Bricks 的一个 harness 和 orchestration 入口。</p>
+<p>成熟度必须降权看待：</p>
+<ul>
+<li>2026-06-13 发布时，开源版明确标为 alpha。</li>
+<li><a href="https://docs.databricks.com/aws/en/omnigent/">托管版文档</a>截至 2026-07-17 仍为 Beta，需要 workspace preview；Sandbox 仅在特定区域可用，custom policy functions 尚不支持。</li>
+<li><a href="https://github.com/omnigent-ai/omnigent">GitHub repository</a>核查时约有 7.4k stars、1.1k forks、1,584 commits，最新版本是 2026-07-10 的 v0.5.1。这证明开发活跃和开发者兴趣，不证明企业生产采用。</li>
+</ul>
+<p>如果 harness 快速轮换，Omnigent 可以让 Databricks 持有 session、policy、identity、sandbox、collaboration 和 spend control，而不必拥有最强 harness。</p>
+<p>但上游产品可以改变 API、授权和边界；common-denominator abstraction 可能损失各 harness 的独有能力；云厂商、LangChain、IDE 厂商和企业内部平台也能开发 adapters。Apache 2.0 许可有利于采用，同时降低了纯代码层的排他性。</p>
+<p>当前最合理的定位是：<strong>Omnigent 是有技术品味、值得观察的 wedge，不是已经验证的 moat。</strong></p>
+<h2>竞争对比：大部分能力已经进入拥挤区</h2>
+<table>
+<thead>
+<tr>
+<th>对手</th>
+<th>重合能力</th>
+<th>对手的结构性优势</th>
+<th>Databricks 的相对优势</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AWS AgentCore</td>
+<td>多 framework/model、runtime、MCP、identity、tracing、evaluation、security</td>
+<td>AWS 基础设施、IAM、Bedrock 采购和全球部署</td>
+<td>数据、MLflow 与跨云 Lakehouse 上下文更统一</td>
+</tr>
+<tr>
+<td>Microsoft Foundry Agent Service</td>
+<td>多框架、tools、memory、eval、optimizer、observability、identity、sandbox</td>
+<td>Entra、Azure、Teams、Microsoft 365 和 Copilot 分发</td>
+<td>模型更中立，data engineering 和 ML 更强</td>
+</tr>
+<tr>
+<td>Google Gemini Enterprise Agent Platform</td>
+<td>build、scale、govern、optimize、training、tuning、MLOps</td>
+<td>自有 Gemini、TPU/GPU、Google data 与全球云</td>
+<td>跨云和开放数据格式定位更强</td>
+</tr>
+<tr>
+<td>Anthropic / OpenAI</td>
+<td>frontier models、领先 harness、SDK、tools、MCP、eval</td>
+<td>控制 model-harness co-design 与开发者分发</td>
+<td>跨模型治理和完整 data platform 更强</td>
+</tr>
+<tr>
+<td>LangChain / LangSmith</td>
+<td>中立框架、runtime、deployment、memory、HITL、observability、evaluation</td>
+<td>开源生态和开发者 mindshare</td>
+<td>原生 Unity Catalog、MLflow、Lakebase 和企业关系</td>
+</tr>
+<tr>
+<td>Snowflake Cortex Agents</td>
+<td>governed data、runtime、sandbox、MCP、threads、monitoring、evaluations</td>
+<td>与 Snowflake 数据、SQL、BI 和采购紧耦合</td>
+<td>data engineering、ML、open formats 和 pro-code 生态更强</td>
+</tr>
+</tbody>
+</table>
+<p>这些重合可以从各家文档直接看到：<a href="https://aws.amazon.com/bedrock/agentcore/">AWS AgentCore</a>强调 “Any framework. Any model”；<a href="https://learn.microsoft.com/en-us/azure/ai-foundry/agents/overview">Microsoft Foundry Agent Service</a>已支持多个 SDK 和 agent optimizer；<a href="https://cloud.google.com/products/agent-builder">Google</a>主张 build、scale、govern 和 optimize enterprise agents；<a href="https://www.langchain.com/langgraph-platform">LangSmith</a>覆盖 durable execution、deployment、memory、sandbox、observability 和 evaluation；<a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents">Snowflake Cortex Agents</a>也提供 governed data、code sandbox、MCP、threads、monitoring 和 evaluations。</p>
+<p><code>any model / any harness / governed production agents</code> 正迅速成为 table stakes，而不是 Databricks 的独占定位。</p>
+<p><a href="https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027">Gartner 2025 年预测</a>，到 2027 年底超过 40% 的 agentic AI 项目将因成本上升、商业价值不清或风险控制不足而被取消。这个预测不证明 Agent Bricks 是 <code>agent washing</code>，但说明拥有一张完整 agent platform 清单本身没有多少战略信息量。</p>
+<h2>Databricks 真正不同的地方</h2>
+<p>Databricks 的优势真实存在，但主要来自已有平台组合，而不是 Agent Bricks 或 Omnigent 的单点算法。</p>
+<ol>
+<li><strong>数据邻近性。</strong> tables、documents、features、permissions、lineage、traces 和 memory 可以留在同一数据平台，减少复制和重复治理。</li>
+<li><strong>Unity Catalog 的统一资产模型。</strong> agents、models、tools、MCP 和 data assets 可以进入同一 registry 和权限体系。</li>
+<li><strong>MLflow 加自动优化。</strong> task-specific benchmark、judges、模型与 prompt 搜索，可与 traces 和 lifecycle 管理结合。</li>
+<li><strong>模型与 harness 中立。</strong> Databricks 不必保护自己的 frontier model，可以跨 OpenAI、Anthropic、Google、Meta 和开放模型做 routing 与成本优化。</li>
+<li><strong>跨云一致性。</strong> 相比单一 hyperscaler，Databricks 可在 AWS、Azure 和 GCP 上提供较一致的数据与 AI 控制层。</li>
+</ol>
+<p>这些优势也有边界。Snowflake、BigQuery、Fabric 和 hyperscalers 都在主张数据邻近性；Unity Catalog 与 MLflow 的价值很大程度上来自客户已经在使用 Databricks；<code>any model</code> 同时意味着 Databricks 不控制 intelligence roadmap、上游价格或最优的 model-harness integration。</p>
+<p>最准确的 moat 描述是：</p>
+<blockquote>
+<p><strong>installed data gravity + governance + workload integration + consumption distribution</strong></p>
+</blockquote>
+<p>而不是：</p>
+<blockquote>
+<p><strong>竞争对手无法复制的 agent algorithm 或 foundation model。</strong></p>
+</blockquote>
+<h2>最强 bear evidence</h2>
+<ol>
+<li><strong>DBRX 的承诺与产品寿命存在明显落差。</strong> <code>central pillar</code> 和 <code>expect much more to come</code> 之后，模型 13 个月即退出按 token 服务，且公开材料中未找到系列后继。退役是直接事实，后继缺失则是截至文章日期的负面检索结论。</li>
+<li><strong>资本与发布重点转向 agent layer。</strong> Agent Bricks、Quotient AI、Unity AI Gateway、Sandbox、memory 和 Omnigent 集中出现，而不是 DBRX 2。资源优先级变化可以观察，但不能由此证明管理层动机。</li>
+<li><strong>Agent Bricks 与大厂定位高度收敛。</strong> 多模型、多框架、deployment、identity、MCP、memory、observability、evaluation 和 governance 已被广泛覆盖。</li>
+<li><strong>Omnigent 尚早，却迅速进入旗舰叙事。</strong> alpha 开源版和 Beta 托管版的产品状态是事实；称其为过度营销则属于判断。</li>
+<li><strong>多模型中间层存在经济价值泄漏。</strong> Databricks 不拥有主要 frontier model，也不控制底层云。<a href="https://www.cnbc.com/2026/06/16/databricks-revenue-growth-tops-80percent-to-6point9-billion-annualized.html">CNBC 2026 年 6 月报道</a>称其 AI products 年化收入达到 17 亿美元，但底层模型成本正在压低利润率；Ali Ghodsi 未披露当前 gross margin，只确认还会下降。</li>
+</ol>
+<h2>最强反驳</h2>
+<ol>
+<li><strong>退出 DBRX endpoint 不等于退出 AI infrastructure。</strong> AI Runtime、Model Training、Model Serving、Foundation Model APIs、Unity AI Gateway、MLflow 和 Agent Bricks 仍在扩张。</li>
+<li><strong>Agent 方向与既有资产高度一致。</strong> 企业 agent 的难点正落在 data access、identity、context、evaluation、cost、security 和 production operations，这些正是 Databricks 的能力邻域。</li>
+<li><strong>MosaicML 技术仍在新产品中发挥作用。</strong> TAO、synthetic evaluations、fine-tuning、Composer、训练经验和关键技术领导者都延续到了新平台。</li>
+<li><strong>放弃通用模型竞赛可能是正确的资本配置。</strong> 与 OpenAI、Anthropic、Google、Meta 持续比拼通用模型需要巨额 compute，却未必形成企业分发优势。</li>
+<li><strong>已经出现采用与收入信号。</strong> <code>100k+ agents</code>、年化 <code>1+ quadrillion tokens</code> 和 17 亿美元 AI products 年化收入至少说明这不是没有用户的概念展示；但采用规模和价值捕获质量必须分开评价。</li>
+</ol>
+<h2>评分</h2>
+<table>
+<thead>
+<tr>
+<th>子命题</th>
+<th style="text-align: right;">评分</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Databricks 已从通用 first-party model 转向 agent/control plane</td>
+<td style="text-align: right;">8.5/10</td>
+<td>DBRX 退役、公开材料中未找到后继，以及连续 agent 投资构成强证据</td>
+</tr>
+<tr>
+<td>Agent Bricks / Omnigent 所在市场高度同质化</td>
+<td style="text-align: right;">8/10</td>
+<td><code>any model / any framework</code> 已是常见定位，能力矩阵高度重合</td>
+</tr>
+<tr>
+<td>Databricks 没有形成独特核心竞争力</td>
+<td style="text-align: right;">5/10</td>
+<td>agent 技术不够独特，但 data gravity、governance、MLflow 和分发是真实优势</td>
+</tr>
+<tr>
+<td>转向的主要动机是追逐 AI relevance</td>
+<td style="text-align: right;">4.5/10</td>
+<td>时间线支持这种解释，但没有直接动机证据，且转向有产品与经济逻辑</td>
+</tr>
+<tr>
+<td><strong>综合 bear case</strong></td>
+<td style="text-align: right;"><strong>6.5/10</strong></td>
+<td><strong>战略 pivot 和同质化属实；“只是追热点、没有核心”是过度推断</strong></td>
+</tr>
+</tbody>
+</table>
+<p>评分没有达到 8-9 分，因为 training 和 serving 仍在，MosaicML 的技术连续性可见，既有 data/governance 基础不是竞争者靠一张 roadmap 就能复制，而且退出通用模型竞赛可能提高战略胜率。</p>
+<p>评分也没有低到 3-4 分，因为 DBRX 的公开后继缺失是明显的不连续；Agent Bricks 从清晰的自动优化产品膨胀为总平台；Omnigent 在 alpha/Beta 阶段就进入旗舰故事；Databricks 还面临模型供应商与云厂商从上下游同时压缩价值的风险。</p>
+<h2>最终判断</h2>
+<p>最熊但仍准确的表述是：</p>
+<blockquote>
+<p><strong>Databricks 花 13 亿美元买到了成为 foundation-model company 的技术资格，却没有把这种资格延续成通用模型家族。随着 DBRX 退出官方 endpoint，它把 AI ambition 上移到 agent evaluation、context、governance 和 meta-harness；但这些层已经挤满 AWS、Microsoft、Google、Snowflake、LangChain、OpenAI 和 Anthropic，产品清单很难成为独占 moat。</strong></p>
+</blockquote>
+<p>最强反驳是：</p>
+<blockquote>
+<p><strong>Databricks 不需要赢得通用模型竞赛。企业 AI 的稀缺资源正在从 model weights 转向可信数据、业务语义、权限、评测、运行时和成本控制。Databricks 已经拥有这些资产，DBRX 的长期价值也可能更多是证明训练栈，而不是建立模型 franchise。</strong></p>
+</blockquote>
+<p>综合来看，这是一次<strong>真实、理性但不保证成功的战略收敛</strong>。追逐 relevance 是一种有证据支持但无法直接验证的解释，不能替代商业逻辑分析。Agent Bricks 和 Omnigent 的技术护城河弱于 Databricks 已有的 data、governance 与 workload 组合护城河；最终胜负取决于后者能否有效延伸为 enterprise AI control plane。</p>
+<h2>未来 6-18 个月的观察指标</h2>
+<ol>
+<li>是否出现 DBRX 后继或新的通用开放权重模型；若继续缺席，first-party foundation-model 退场判断会更强。</li>
+<li>AI Runtime 是否从单节点 8x H100 Public Preview 进入成熟多节点 GA，并披露大型客户训练规模。</li>
+<li>Agent Bricks 是否披露 production agents、付费客户、retention、独立收入和第三方质量/成本 benchmark，而不只是 agent/token 总量。</li>
+<li>Omnigent 是否从 alpha/Beta 进入 GA，保持多 harness feature parity，并出现 Databricks 之外的生产采用。</li>
+<li>Unity AI Gateway、Agent Bricks 和第三方 model serving 的 gross margin，尤其是模型与云成本是否稀释 AI 增长的经济性。</li>
+<li>Microsoft、AWS、Google 和 Snowflake 是否复制 Agent Bricks 的自动 benchmark 和 optimization 优势。</li>
+<li>MosaicML 原团队是否继续领导核心 AI 产品，以及 LLM Foundry、Composer、TAO、KARL 等技术能否持续转化为差异化产品。</li>
+</ol>
+<h2>主要来源</h2>
+<ul>
+<li><a href="https://www.databricks.com/blog/2023/04/12/dolly-first-open-commercially-viable-instruction-tuned-llm">Databricks：Dolly 2.0，2023-04-12</a></li>
+<li><a href="https://www.prnewswire.com/news-releases/databricks-signs-definitive-agreement-to-acquire-mosaicml-a-leading-generative-ai-platform-301863046.html">Databricks / PRNewswire：MosaicML 收购协议，2023-06-26</a></li>
+<li><a href="https://www.databricks.com/company/newsroom/press-releases/databricks-completes-acquisition-mosaicml">Databricks：MosaicML 收购完成，2023-07-19</a></li>
+<li><a href="https://techcrunch.com/2023/06/26/databricks-picks-up-mosaicml-an-openai-competitor-for-1-3b/">TechCrunch：MosaicML 交易背景，2023-06-26</a></li>
+<li><a href="https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm">Databricks：DBRX 发布，2024-03-27</a></li>
+<li><a href="https://docs.databricks.com/aws/en/release-notes/product/2025/april">Databricks：DBRX 与 fine-tuning 退役，2025-04-30</a></li>
+<li><a href="https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/supported-models">Databricks：Foundation Model APIs 模型目录</a></li>
+<li><a href="https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/">Databricks：Foundation Model Fine-tuning</a></li>
+<li><a href="https://www.databricks.com/blog/introducing-ai-runtime-scalable-serverless-nvidia-gpus-databricks-training-and-finetuning">Databricks：AI Runtime，2026-03-19</a></li>
+<li><a href="https://www.databricks.com/blog/introducing-agent-bricks">Databricks：Agent Bricks 初始发布，2025-06-11</a></li>
+<li><a href="https://www.infoworld.com/article/4005160/databricks-aims-to-optimize-agent-building-for-enterprises-with-agent-bricks.html">InfoWorld：Agent Bricks 与 MosaicML 技术，2025-06-11</a></li>
+<li><a href="https://www.databricks.com/blog/databricks-acquires-quotient-ai-power-ai-agent-evaluations">Databricks：收购 Quotient AI，2026-03-11</a></li>
+<li><a href="https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents">Databricks：Omnigent 发布，2026-06-13</a></li>
+<li><a href="https://www.databricks.com/blog/agent-bricks-dais-2026">Databricks：Agent Bricks 扩展，2026-06-16</a></li>
+<li><a href="https://docs.databricks.com/aws/en/omnigent/">Databricks：Omnigent 文档</a></li>
+<li><a href="https://github.com/omnigent-ai/omnigent">GitHub：Omnigent</a></li>
+<li><a href="https://www.databricks.com/dataaisummit/speaker/hanlin-tang">Databricks：Hanlin Tang 2026 简介</a></li>
+<li><a href="https://techcrunch.com/2025/10/03/sources-naveen-raos-new-ai-hardware-startup-targets-5b-valuation-with-backing-from-a16z/">TechCrunch：Naveen Rao 离开 Databricks，2025-10-03</a></li>
+<li><a href="https://www.cnbc.com/2026/06/16/databricks-revenue-growth-tops-80percent-to-6point9-billion-annualized.html">CNBC：Databricks AI products 年化收入，2026-06-16</a></li>
+<li><a href="https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027">Gartner：agentic AI 项目预测，2025-06-25</a></li>
+<li><a href="https://aws.amazon.com/bedrock/agentcore/">AWS：Amazon Bedrock AgentCore</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/ai-foundry/agents/overview">Microsoft：Foundry Agent Service</a></li>
+<li><a href="https://cloud.google.com/products/agent-builder">Google：Gemini Enterprise Agent Platform</a></li>
+<li><a href="https://openai.com/index/new-tools-for-building-agents/">OpenAI：Responses API 与 Agents SDK</a></li>
+<li><a href="https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk">Anthropic：Claude Agent SDK</a></li>
+<li><a href="https://www.langchain.com/langgraph-platform">LangChain：LangSmith Deployment</a></li>
+<li><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents">Snowflake：Cortex Agents</a></li>
+</ul>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Databricks From DBRX to Agents: Strategic Focus or a Bid to Stay Relevant?</h1>
+<p>Date: July 17, 2026</p>
+<p>Databricks' AI strategy has changed gears several times in three years: Dolly, the $1.3 billion acquisition of MosaicML, DBRX, Mosaic AI, and now Agent Bricks and Omnigent.</p>
+<p>The sharpest bearish interpretation is that Databricks failed to establish a durable general-purpose model business and has kept moving its product narrative up the stack to remain relevant to the latest AI trend.</p>
+<p>That case has a real factual basis, but its strongest version goes too far. Overall, it deserves roughly <strong>6.5/10</strong>.</p>
+<p>The more precise conclusion is that first-party, general-purpose foundation models have receded from the center of Databricks' strategy. The company has not abandoned AI training or serving; it is moving the point of control above the model, toward data, context, evaluation, runtime, and governance.</p>
+<p>This is partly a response to where the market is moving and partly a rational focus on assets Databricks already owns. “Staying relevant” may explain some of the branding and release cadence, but it is an interpretation, not a management motive that public evidence can establish.</p>
+<h2>Six Names, Six Different Things</h2>
+<p>Treating Dolly, MosaicML, DBRX, Mosaic AI, Agent Bricks, and Omnigent as a single sequence of failed model products begins with a category error.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>What it is</th>
+<th>A first-party foundation model?</th>
+<th>Strategic role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Dolly 2.0</td>
+<td>An open model and dataset built by fine-tuning EleutherAI's Pythia-12B</td>
+<td>No; it was not pretrained from scratch</td>
+<td>Demonstrate low-cost, commercially usable open instruction tuning</td>
+</tr>
+<tr>
+<td>MosaicML</td>
+<td>An acquired training platform, research team, MPT model family, and training software</td>
+<td>The team could train models from scratch</td>
+<td>Add large-model training, systems optimization, and product capabilities</td>
+</tr>
+<tr>
+<td>DBRX</td>
+<td>A 132B-parameter MoE open-weight model trained from scratch by Databricks and Mosaic</td>
+<td>Yes</td>
+<td>Prove the training, data, and serving stack could support a large model</td>
+</tr>
+<tr>
+<td>Mosaic AI</td>
+<td>An umbrella brand for training, serving, vector search, gateway, and agent products</td>
+<td>No</td>
+<td>Package Databricks' AI portfolio under one name</td>
+</tr>
+<tr>
+<td>Agent Bricks</td>
+<td>An enterprise agent platform that began as an automated evaluation and optimization builder</td>
+<td>No</td>
+<td>Control context, evaluation, runtime, and governance above the model</td>
+</tr>
+<tr>
+<td>Omnigent</td>
+<td>A meta-harness above Claude Code, Codex, Cursor, Pi, and other agent harnesses</td>
+<td>No</td>
+<td>Unify harnesses and add policy, sandboxing, collaboration, and composition</td>
+</tr>
+</tbody>
+</table>
+<p>Dolly was not an earlier version of DBRX, and Mosaic AI is not a product that Agent Bricks replaced one-for-one. The actual strategic transition is simpler: <strong>first-party general models matter less, while the control plane above models matters more.</strong></p>
+<h2>The Timeline</h2>
+<table>
+<thead>
+<tr>
+<th>Date</th>
+<th>Event</th>
+<th>Strategic meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apr. 12, 2023</td>
+<td>Dolly 2.0 launches: a 12B Pythia model fine-tuned on 15,000 employee-written examples</td>
+<td>The focus is open data, commercial usability, and fine-tuning, not SOTA pretraining</td>
+</tr>
+<tr>
+<td>June 26, 2023</td>
+<td>Databricks agrees to acquire MosaicML for about $1.3 billion, including retention packages</td>
+<td>A high-priced purchase of training talent, MPT, software, and a customer platform</td>
+</tr>
+<tr>
+<td>July 19, 2023</td>
+<td>The acquisition closes; MosaicML products remain available directly while integration begins</td>
+<td>Databricks is explicitly betting that enterprises will train, own, and secure models</td>
+</tr>
+<tr>
+<td>Mar. 27, 2024</td>
+<td>DBRX launches: 132B total parameters, 36B active, 12T tokens, and 3,072 H100s</td>
+<td>Databricks' clearest general-purpose foundation-model statement</td>
+</tr>
+<tr>
+<td>Apr. 30, 2025</td>
+<td>DBRX Instruct leaves the pay-per-token API, and the DBRX family leaves the old fine-tuning product</td>
+<td>DBRX's life as an officially hosted Databricks model ends</td>
+</tr>
+<tr>
+<td>June 11, 2025</td>
+<td>Agent Bricks enters beta</td>
+<td>The focus shifts toward automated evaluation and optimization of compound AI systems</td>
+</tr>
+<tr>
+<td>Sept. 2025</td>
+<td>MosaicML co-founder Naveen Rao leaves Databricks</td>
+<td>A key leader departs, but this does not prove the broader team disappeared</td>
+</tr>
+<tr>
+<td>Mar. 11, 2026</td>
+<td>Databricks acquires Quotient AI</td>
+<td>Investment moves toward continuous evaluation, trace analysis, and reinforcement learning</td>
+</tr>
+<tr>
+<td>Mar. 19, 2026</td>
+<td>AI Runtime enters Public Preview</td>
+<td>Training remains, now presented as a serverless GPU runtime for customers</td>
+</tr>
+<tr>
+<td>June 13, 2026</td>
+<td>Omnigent is released as open source in alpha</td>
+<td>Databricks enters the cross-harness meta-layer with an early product</td>
+</tr>
+<tr>
+<td>June 16, 2026</td>
+<td>Agent Bricks expands into a full developer agent platform</td>
+<td>A focused optimization product becomes an umbrella for the agent stack</td>
+</tr>
+<tr>
+<td>July 17, 2026</td>
+<td>Managed Omnigent documentation still labels it Beta</td>
+<td>A managed integration exists, but it is not yet a mature GA platform</td>
+</tr>
+<tr>
+<td>Aug. 14, 2026</td>
+<td>The old Foundation Model Fine-tuning product is scheduled for removal</td>
+<td>The packaged entry point ends while its capabilities move to AI Runtime</td>
+</tr>
+</tbody>
+</table>
+<h2>From Dolly to DBRX: What Actually Receded</h2>
+<h3>Dolly Was Never a General-Model Moat</h3>
+<p>The <a href="https://www.databricks.com/blog/2023/04/12/dolly-first-open-commercially-viable-instruction-tuned-llm">Dolly 2.0 announcement</a> describes a 12B model based on EleutherAI's Pythia family and fine-tuned on a newly created human instruction dataset:</p>
+<blockquote>
+<p>“Dolly 2.0 is a 12B parameter language model based on the EleutherAI Pythia model family and fine-tuned exclusively on a new, high-quality human generated instruction following dataset.”</p>
+</blockquote>
+<p>Databricks also set expectations explicitly:</p>
+<blockquote>
+<p>“As a technical and research artifact, we don't expect Dolly to be state-of-the-art in terms of effectiveness.”</p>
+</blockquote>
+<p>Dolly demonstrated open data, commercial licensing, and instruction tuning. Its later absence from the flagship model lineup is not evidence that a serious foundation-model strategy failed; that was never the product's intended role.</p>
+<h3>MosaicML Did Represent a Bet on Enterprise-Owned Models</h3>
+<p>The <a href="https://www.prnewswire.com/news-releases/databricks-signs-definitive-agreement-to-acquire-mosaicml-a-leading-generative-ai-platform-301863046.html">acquisition agreement</a> valued the transaction at about $1.3 billion, including retention packages, and made the strategic promise explicit:</p>
+<blockquote>
+<p>“Together, Databricks and MosaicML will enable any company to build, own and secure best-in-class generative AI models while maintaining control of their data.”</p>
+</blockquote>
+<p>The <a href="https://www.databricks.com/company/newsroom/press-releases/databricks-completes-acquisition-mosaicml">closing announcement</a> continued to emphasize training and deploying bespoke LLMs, while saying MosaicML products would remain available directly.</p>
+<p>That position is plainly different from the 2026 emphasis on third-party frontier models, any harness, and enterprise agents. The acquisition thesis evolved; brand continuity should not obscure that change.</p>
+<h3>DBRX Was the High-Water Mark for First-Party Models</h3>
+<p>The <a href="https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm">DBRX launch</a> was not a fine-tuning exercise. DBRX had 132 billion total parameters and 36 billion active parameters, was pretrained on 12 trillion text and code tokens, used 3,072 NVIDIA H100s over a core build period of roughly three months, and shipped with open base and instruct weights.</p>
+<p>Databricks wrote at the time:</p>
+<blockquote>
+<p>“DBRX is a central pillar of our next generation of GenAI products.”</p>
+<p>“This is also just the beginning of our work on DBRX, and you should expect much more to come.”</p>
+</blockquote>
+<p>Only 13 months later, the <a href="https://docs.databricks.com/aws/en/release-notes/product/2025/april">April 2025 release notes</a> recorded the retirement of DBRX Instruct from Foundation Model APIs pay-per-token. As of July 17, 2026, the <a href="https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/supported-models">supported-model catalog</a> included models from many outside providers but no DBRX. Available public materials also yielded no DBRX 2 or general-purpose successor.</p>
+<p>This is the strongest evidence for the bear case. DBRX left the official pay-per-token service, and no same-family replacement was found in public materials. That supports a retreat in first-party general-model ambition, but a negative search does not prove Databricks has ended all internal research on general models.</p>
+<h2>Training and Serving Remain, in Different Commercial Forms</h2>
+<p>DBRX's retreat is not the same as Databricks leaving AI infrastructure. Both training and serving remain active, but the value proposition is no longer organized around a first-party general model.</p>
+<h3>Training: From a Packaged Product to a General GPU Runtime</h3>
+<p>The <a href="https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/">Foundation Model Fine-tuning documentation</a> marks the product deprecated and scheduled for removal on August 14, 2026, directing customers to AI Runtime.</p>
+<p>At the same time, the <a href="https://www.databricks.com/blog/introducing-ai-runtime-scalable-serverless-nvidia-gpus-databricks-training-and-finetuning">AI Runtime announcement</a> says:</p>
+<blockquote>
+<p>“AI Runtime contains all the technology used for large scale training of LLMs such as MPT and DBRX.”</p>
+</blockquote>
+<p>AI Runtime includes serverless A10 and H100 GPUs, Composer, Hugging Face, Ray, PyTorch, MLflow, and Unity Catalog. As of the article date, a single node with eight H100s was in Public Preview and multi-node support remained in Private Preview. The <a href="https://www.databricks.com/product/machine-learning/mosaic-ai-training">Model Training product page</a> still advertises fine-tuning and training custom LLMs from scratch.</p>
+<p>Training capability has not vanished. A highly packaged fine-tuning entry point is giving way to broader infrastructure, while public emphasis has shifted from a DBRX successor to small and domain models, reinforcement learning, TAO, and agent optimization. Current AI Runtime capacity should not be equated with DBRX's 3,072-H100 training run.</p>
+<h3>Serving: From a First-Party Endpoint to Multi-Model Distribution</h3>
+<p>The <a href="https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/supported-models">current model catalog</a> shows Databricks hosting models from OpenAI, Anthropic, Google, Meta, Alibaba, and others within the Databricks security perimeter.</p>
+<p>In 2024, DBRX validated both the training and serving stack. In 2026, outside frontier models supply the intelligence, while Databricks supplies endpoints, security, routing, budgets, logging, evaluation, and enterprise context.</p>
+<p>This platform position avoids betting on one model winner. It also makes Databricks dependent on upstream model companies and underlying clouds, which may capture more of the value and margin.</p>
+<h2>Revisiting MosaicML: The Model Family Faded, the Capabilities Did Not</h2>
+<p>Four facts support the view that MosaicML's original story lost value:</p>
+<ul>
+<li>The $1.3 billion transaction was sold around building, owning, and securing models; the current center of gravity is “any model, any harness.”</li>
+<li>MPT did not develop into a sustained top-tier family of general-purpose models.</li>
+<li>No DBRX successor was identified in public materials, and DBRX left the official pay-per-token catalog.</li>
+<li><a href="https://techcrunch.com/2025/10/03/sources-naveen-raos-new-ai-hardware-startup-targets-5b-valuation-with-backing-from-a16z/">TechCrunch</a> reported that Naveen Rao left Databricks in September 2025.</li>
+</ul>
+<p>The claim that the acquired assets were simply wasted is also inconsistent with the evidence:</p>
+<ul>
+<li><a href="https://www.databricks.com/dataaisummit/speaker/hanlin-tang">Hanlin Tang's 2026 Summit profile</a> lists the MosaicML co-founder as <code>CTO - Neural Networks</code> and says he is responsible for Databricks' AI products.</li>
+<li>Tang was part of the launch teams for both Agent Bricks in 2025 and AI Runtime in 2026.</li>
+<li><a href="https://www.infoworld.com/article/4005160/databricks-aims-to-optimize-agent-building-for-enterprises-with-agent-bricks.html">InfoWorld</a> reported that Agent Bricks uses TAO, synthetic data, and Mosaic Agent technology developed by the MosaicML research division.</li>
+<li><a href="https://github.com/mosaicml/llm-foundry"><code>mosaicml/llm-foundry</code></a> and <a href="https://github.com/mosaicml/composer"><code>mosaicml/composer</code></a> remain unarchived and continued to receive updates in 2026.</li>
+<li>DBRX proved that the acquired team could complete large-scale pretraining on Databricks, and that experience carries into AI Runtime, evaluation, and agent learning.</li>
+</ul>
+<p>Public information is not sufficient to calculate retention across the whole MosaicML team. One founder's departure and another's continued leadership cannot stand in for a complete roster.</p>
+<p>The fair retrospective is that MosaicML did not turn Databricks into a frontier lab that releases a continuing family of general models. It did provide an organization capable of model training, systems optimization, evaluation, and agent learning. The return is shifting from a “model family” to “AI platform capability.” Public revenue disclosure is not granular enough to determine whether that return justified $1.3 billion.</p>
+<h2>Agent Bricks: From a Clear Wedge to a Broad Platform</h2>
+<h3>The Original 2025 Differentiation</h3>
+<p>The <a href="https://www.databricks.com/blog/introducing-agent-bricks">initial Agent Bricks launch</a> was more specific than a generic orchestration announcement. Its core was an evaluation-to-optimization loop:</p>
+<ol>
+<li>A user describes a task and connects data.</li>
+<li>The system creates task-specific evaluation datasets and LLM judges.</li>
+<li>It searches across prompts, model choice, fine-tuning, reward models, TAO, and other methods.</li>
+<li>The user chooses between cost-optimized and quality-optimized results.</li>
+</ol>
+<p>InfoWorld's contemporaneous assessment was that many competing products concentrated on hosting and orchestration, while Agent Bricks automated more of the evaluation-to-optimization lifecycle. That was the product's most credible original differentiation.</p>
+<p>There were important limits. Claims such as “up to 10x lower cost” and customer accuracy gains came mainly from Databricks and customer examples rather than standardized independent testing. Automated optimization also depends on a sound benchmark and judge. If task success is poorly specified, the system may simply optimize an incomplete metric more efficiently.</p>
+<h3>The 2026 Expansion</h3>
+<p>The <a href="https://www.databricks.com/blog/agent-bricks-dais-2026">2026 Agent Bricks update</a> says:</p>
+<blockquote>
+<p>“What began as an experiment in agent building has expanded into a comprehensive platform for developers to build agents with any model and any harness, access data anywhere, and confidently deploy and control.”</p>
+</blockquote>
+<p>The expanded scope includes models, harnesses, Apps deployment, MCP, Genie Ontology, agent tools, Lakebase memory, document intelligence, Sandbox, Unity AI Gateway, traces, policies, and a Unity Catalog registry.</p>
+<p>Databricks also reported <code>100k+ agents</code> and <code>1+ quadrillion tokens per year</code>. Those are adoption signals, but agents created are not the same as agents in production, and an annualized token count says little about customer concentration, revenue, or margin.</p>
+<p>Broader coverage may raise attach rates. It also weakens the original, easy-to-explain wedge and introduces integration complexity, product overlap, and the risk of being shallow at every layer.</p>
+<h2>Omnigent: An Interesting Wedge, Not Yet a Moat</h2>
+<p>The <a href="https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents">Omnigent announcement</a> starts from a concrete problem: agent harnesses keep their own sessions, context, controls, and interfaces, making them difficult to combine or replace.</p>
+<p>Omnigent adds a common layer over Claude Code, Codex, Cursor, Pi, custom agents, and SDK agents. It offers one-line harness and model switching, stateful policies, cost controls, OS sandboxing, network request interception, real-time collaboration, shared sessions, and portable agent definitions in YAML.</p>
+<p>Omnigent is not another name for Agent Bricks. Omnigent is an open-source meta-harness; Agent Bricks is Databricks' enterprise agent platform; managed Omnigent is one harness and orchestration entry point inside Agent Bricks.</p>
+<p>Its maturity needs to be discounted:</p>
+<ul>
+<li>The open-source release was explicitly labeled alpha on June 13, 2026.</li>
+<li>As of July 17, 2026, the <a href="https://docs.databricks.com/aws/en/omnigent/">managed documentation</a> still labeled it Beta and required a workspace preview. Sandbox availability was limited by region, and custom policy functions were unsupported.</li>
+<li>The <a href="https://github.com/omnigent-ai/omnigent">GitHub repository</a> had roughly 7.4k stars, 1.1k forks, and 1,584 commits when checked, with v0.5.1 released on July 10, 2026. That demonstrates active development and developer interest, not enterprise production adoption.</li>
+</ul>
+<p>If harnesses turn over quickly, Omnigent could let Databricks retain control of sessions, policy, identity, sandboxing, collaboration, and spending without owning the best harness.</p>
+<p>The risks are equally clear. Upstream products can change APIs, licensing, and boundaries. A common-denominator abstraction may hide each harness's distinctive capabilities. Cloud vendors, LangChain, IDE companies, and internal enterprise platforms can also build adapters. Apache 2.0 licensing helps adoption while reducing exclusivity at the code layer.</p>
+<p>The right description today is: <strong>Omnigent is a technically thoughtful wedge worth watching, not a validated moat.</strong></p>
+<h2>Competitive Comparison: Most of the Stack Is Crowded</h2>
+<table>
+<thead>
+<tr>
+<th>Competitor</th>
+<th>Overlapping capabilities</th>
+<th>Structural advantage</th>
+<th>Databricks' relative advantage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AWS AgentCore</td>
+<td>Multi-framework/model runtime, MCP, identity, tracing, evaluation, security</td>
+<td>AWS infrastructure, IAM, Bedrock purchasing, and global deployment</td>
+<td>More unified data, MLflow, and cross-cloud Lakehouse context</td>
+</tr>
+<tr>
+<td>Microsoft Foundry Agent Service</td>
+<td>Multiple frameworks, tools, memory, eval, optimizer, observability, identity, sandbox</td>
+<td>Entra, Azure, Teams, Microsoft 365, and Copilot distribution</td>
+<td>Greater model neutrality and stronger data engineering and ML</td>
+</tr>
+<tr>
+<td>Google Gemini Enterprise Agent Platform</td>
+<td>Build, scale, govern, optimize, train, tune, and operate models</td>
+<td>Gemini, TPUs/GPUs, Google data, and global cloud</td>
+<td>Stronger cross-cloud and open-data positioning</td>
+</tr>
+<tr>
+<td>Anthropic / OpenAI</td>
+<td>Frontier models, leading harnesses, SDKs, tools, MCP, and eval</td>
+<td>Control of model-harness co-design and developer distribution</td>
+<td>Cross-model governance and a broader enterprise data platform</td>
+</tr>
+<tr>
+<td>LangChain / LangSmith</td>
+<td>Neutral framework, runtime, deployment, memory, HITL, observability, evaluation</td>
+<td>Open-source ecosystem and developer mindshare</td>
+<td>Native Unity Catalog, MLflow, Lakebase, and enterprise relationships</td>
+</tr>
+<tr>
+<td>Snowflake Cortex Agents</td>
+<td>Governed data, runtime, sandbox, MCP, threads, monitoring, evaluations</td>
+<td>Tight coupling to Snowflake data, SQL, BI, and procurement</td>
+<td>Stronger data engineering, ML, open formats, and pro-code ecosystem</td>
+</tr>
+</tbody>
+</table>
+<p>The overlap is visible in first-party documentation. <a href="https://aws.amazon.com/bedrock/agentcore/">AWS AgentCore</a> emphasizes “Any framework. Any model.” <a href="https://learn.microsoft.com/en-us/azure/ai-foundry/agents/overview">Microsoft Foundry Agent Service</a> supports multiple SDKs and an agent optimizer. <a href="https://cloud.google.com/products/agent-builder">Google</a> positions its platform around building, scaling, governing, and optimizing enterprise agents. <a href="https://www.langchain.com/langgraph-platform">LangSmith</a> covers durable execution, deployment, memory, sandboxing, observability, and evaluation. <a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents">Snowflake Cortex Agents</a> combines governed data, a code sandbox, MCP, threads, monitoring, and evaluations.</p>
+<p>“Any model, any harness, governed production agents” is rapidly becoming table stakes rather than a Databricks-exclusive position.</p>
+<p><a href="https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027">Gartner predicted in 2025</a> that more than 40% of agentic AI projects would be canceled by the end of 2027 because of rising costs, unclear business value, or inadequate risk controls. This does not establish that Agent Bricks is <code>agent washing</code>; it does show that possessing a complete agent-platform checklist conveys little strategic information by itself.</p>
+<h2>What Actually Makes Databricks Different</h2>
+<p>Databricks has real advantages, but they come mainly from the combination of its existing platform assets, not from an exclusive Agent Bricks or Omnigent algorithm.</p>
+<ol>
+<li><strong>Data proximity.</strong> Tables, documents, features, permissions, lineage, traces, and memory can remain in one data platform, reducing copying and duplicate governance.</li>
+<li><strong>Unity Catalog's shared asset model.</strong> Agents, models, tools, MCP endpoints, and data assets can use one registry and permission system.</li>
+<li><strong>MLflow plus automated optimization.</strong> Task-specific benchmarks and judges, model and prompt search, traces, and lifecycle management can be connected in one system.</li>
+<li><strong>Model and harness neutrality.</strong> Databricks has no frontier model to protect and can route and optimize cost across OpenAI, Anthropic, Google, Meta, and open models.</li>
+<li><strong>Cross-cloud consistency.</strong> Compared with a single hyperscaler, Databricks can present a more consistent data and AI control layer across AWS, Azure, and GCP.</li>
+</ol>
+<p>These advantages have limits. Snowflake, BigQuery, Fabric, and the hyperscalers all claim data proximity. Unity Catalog and MLflow are most valuable where a customer already uses Databricks. “Any model” also means Databricks does not control the intelligence roadmap, upstream pricing, or the best model-harness integration.</p>
+<p>The most accurate description of its moat is:</p>
+<blockquote>
+<p><strong>installed data gravity + governance + workload integration + consumption distribution</strong></p>
+</blockquote>
+<p>Not:</p>
+<blockquote>
+<p><strong>an agent algorithm or foundation model that competitors cannot reproduce.</strong></p>
+</blockquote>
+<h2>The Strongest Bear Evidence</h2>
+<ol>
+<li><strong>DBRX's promise and product life diverged sharply.</strong> After describing DBRX as a <code>central pillar</code> and saying “expect much more to come,” Databricks retired it from pay-per-token service 13 months later. No family successor was identified in public materials. The retirement is a direct fact; the missing successor is a negative-search conclusion as of the article date.</li>
+<li><strong>Capital and releases moved toward the agent layer.</strong> Agent Bricks, Quotient AI, Unity AI Gateway, Sandbox, memory, and Omnigent arrived instead of DBRX 2. The priority change is observable; management intent is not.</li>
+<li><strong>Agent Bricks converged with large-platform positioning.</strong> Multi-model and multi-framework support, deployment, identity, MCP, memory, observability, evaluation, and governance are broadly available.</li>
+<li><strong>Omnigent entered the flagship narrative while still early.</strong> Its alpha open-source and Beta managed status are facts. Calling the positioning excessive is an interpretation.</li>
+<li><strong>A multi-model middle layer leaks economic value.</strong> Databricks owns neither the leading frontier models nor the underlying cloud. <a href="https://www.cnbc.com/2026/06/16/databricks-revenue-growth-tops-80percent-to-6point9-billion-annualized.html">CNBC reported in June 2026</a> that Databricks' AI products had reached $1.7 billion in annualized revenue, while underlying model costs were pressuring margins. Ali Ghodsi declined to disclose current gross margin but confirmed it would fall further.</li>
+</ol>
+<h2>The Strongest Counterarguments</h2>
+<ol>
+<li><strong>Retiring a DBRX endpoint is not an exit from AI infrastructure.</strong> AI Runtime, Model Training, Model Serving, Foundation Model APIs, Unity AI Gateway, MLflow, and Agent Bricks are still expanding.</li>
+<li><strong>The agent direction fits Databricks' installed assets.</strong> Enterprise agents are constrained by data access, identity, context, evaluation, cost, security, and production operations, all adjacent to Databricks' strengths.</li>
+<li><strong>MosaicML technology remains active in newer products.</strong> TAO, synthetic evaluations, fine-tuning, Composer, training experience, and key technical leadership carried into the new platform.</li>
+<li><strong>Leaving the general-model race may be sound capital allocation.</strong> Competing indefinitely with OpenAI, Anthropic, Google, and Meta requires enormous compute spending without guaranteeing enterprise distribution.</li>
+<li><strong>There are adoption and revenue signals.</strong> <code>100k+ agents</code>, annualized volume above <code>1 quadrillion tokens</code>, and $1.7 billion in annualized AI-product revenue indicate more than a userless concept demo. Adoption scale and quality of value capture still need to be evaluated separately.</li>
+</ol>
+<h2>Scorecard</h2>
+<table>
+<thead>
+<tr>
+<th>Sub-claim</th>
+<th style="text-align: right;">Score</th>
+<th>Assessment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Databricks has shifted from general first-party models to an agent control plane</td>
+<td style="text-align: right;">8.5/10</td>
+<td>DBRX's retirement, the absence of an identified successor in public materials, and sustained agent investment are strong evidence</td>
+</tr>
+<tr>
+<td>Agent Bricks and Omnigent operate in a highly convergent market</td>
+<td style="text-align: right;">8/10</td>
+<td>“Any model, any framework” is common and capability matrices overlap heavily</td>
+</tr>
+<tr>
+<td>Databricks has no distinctive core advantage</td>
+<td style="text-align: right;">5/10</td>
+<td>The agent technology is not unique, but data gravity, governance, MLflow, and distribution are real advantages</td>
+</tr>
+<tr>
+<td>The primary motive is to remain relevant to the AI narrative</td>
+<td style="text-align: right;">4.5/10</td>
+<td>The timeline permits that interpretation, but offers no direct evidence of motive, while the shift has product and economic logic</td>
+</tr>
+<tr>
+<td><strong>Overall bear case</strong></td>
+<td style="text-align: right;"><strong>6.5/10</strong></td>
+<td><strong>The pivot and convergence are real; “only trend-chasing, with no core” overstates the evidence</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The score is not 8 or 9 because training and serving remain active, MosaicML's technical continuity is visible, the installed data and governance base cannot be copied with a product roadmap, and leaving the general-model race may improve Databricks' odds.</p>
+<p>It is not 3 or 4 because the absence of an identified public DBRX successor is a clear discontinuity; Agent Bricks expanded from focused optimization into an umbrella platform; Omnigent entered the flagship story in alpha and Beta; and model and cloud providers can compress Databricks' value from both sides.</p>
+<h2>Final Judgment</h2>
+<p>The most bearish formulation that remains accurate is:</p>
+<blockquote>
+<p><strong>Databricks paid $1.3 billion to acquire the technical capability to become a foundation-model company, but did not turn that capability into a continuing family of general-purpose models. As DBRX left the official endpoint, Databricks moved its AI ambition up to agent evaluation, context, governance, and the meta-harness layer. Those layers are already crowded with AWS, Microsoft, Google, Snowflake, LangChain, OpenAI, and Anthropic, making a feature checklist a weak basis for an exclusive moat.</strong></p>
+</blockquote>
+<p>The strongest rebuttal is:</p>
+<blockquote>
+<p><strong>Databricks does not need to win the general-model race. Scarcity in enterprise AI is moving from model weights toward trusted data, business semantics, permissions, evaluation, runtime, and cost control. Databricks already owns those assets, and DBRX's durable purpose may have been to validate the training stack rather than establish a model franchise.</strong></p>
+</blockquote>
+<p>On balance, this is a <strong>real and rational strategic focus, with no guarantee of success</strong>. Staying relevant is a plausible but unprovable interpretation, not a substitute for analyzing the business logic. The technical moat in Agent Bricks and Omnigent is weaker than Databricks' existing combination of data, governance, and workloads. The outcome depends on whether that existing moat can be extended into the enterprise AI control plane.</p>
+<h2>What to Watch Over the Next 6-18 Months</h2>
+<ol>
+<li>Whether a DBRX successor or a new general-purpose open-weight model appears. Continued absence would strengthen the conclusion that first-party foundation models have receded.</li>
+<li>Whether AI Runtime progresses from a single-node, eight-H100 Public Preview to mature multi-node GA, with disclosure of large customer training runs.</li>
+<li>Whether Agent Bricks reports production agents, paying customers, retention, standalone revenue, and third-party quality and cost benchmarks rather than only agent and token totals.</li>
+<li>Whether Omnigent reaches GA, maintains feature parity across harnesses, and gains production adoption outside Databricks.</li>
+<li>Gross margin for Unity AI Gateway, Agent Bricks, and third-party model serving, especially whether model and cloud costs dilute the economics of AI growth.</li>
+<li>Whether Microsoft, AWS, Google, and Snowflake reproduce Agent Bricks' automated benchmark and optimization advantage.</li>
+<li>Whether the former MosaicML team continues to lead core AI products, and whether LLM Foundry, Composer, TAO, KARL, and related technology keep producing differentiated products.</li>
+</ol>
+<h2>Key Sources</h2>
+<ul>
+<li><a href="https://www.databricks.com/blog/2023/04/12/dolly-first-open-commercially-viable-instruction-tuned-llm">Databricks: Dolly 2.0, Apr. 12, 2023</a></li>
+<li><a href="https://www.prnewswire.com/news-releases/databricks-signs-definitive-agreement-to-acquire-mosaicml-a-leading-generative-ai-platform-301863046.html">Databricks / PRNewswire: MosaicML acquisition agreement, June 26, 2023</a></li>
+<li><a href="https://www.databricks.com/company/newsroom/press-releases/databricks-completes-acquisition-mosaicml">Databricks: MosaicML acquisition closes, July 19, 2023</a></li>
+<li><a href="https://techcrunch.com/2023/06/26/databricks-picks-up-mosaicml-an-openai-competitor-for-1-3b/">TechCrunch: MosaicML transaction background, June 26, 2023</a></li>
+<li><a href="https://www.databricks.com/blog/introducing-dbrx-new-state-art-open-llm">Databricks: DBRX launch, Mar. 27, 2024</a></li>
+<li><a href="https://docs.databricks.com/aws/en/release-notes/product/2025/april">Databricks: DBRX and fine-tuning retirements, Apr. 30, 2025</a></li>
+<li><a href="https://docs.databricks.com/aws/en/machine-learning/foundation-model-apis/supported-models">Databricks: Foundation Model APIs model catalog</a></li>
+<li><a href="https://docs.databricks.com/aws/en/large-language-models/foundation-model-training/">Databricks: Foundation Model Fine-tuning</a></li>
+<li><a href="https://www.databricks.com/blog/introducing-ai-runtime-scalable-serverless-nvidia-gpus-databricks-training-and-finetuning">Databricks: AI Runtime, Mar. 19, 2026</a></li>
+<li><a href="https://www.databricks.com/blog/introducing-agent-bricks">Databricks: Agent Bricks launch, June 11, 2025</a></li>
+<li><a href="https://www.infoworld.com/article/4005160/databricks-aims-to-optimize-agent-building-for-enterprises-with-agent-bricks.html">InfoWorld: Agent Bricks and MosaicML technology, June 11, 2025</a></li>
+<li><a href="https://www.databricks.com/blog/databricks-acquires-quotient-ai-power-ai-agent-evaluations">Databricks: Quotient AI acquisition, Mar. 11, 2026</a></li>
+<li><a href="https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents">Databricks: Omnigent launch, June 13, 2026</a></li>
+<li><a href="https://www.databricks.com/blog/agent-bricks-dais-2026">Databricks: Agent Bricks expansion, June 16, 2026</a></li>
+<li><a href="https://docs.databricks.com/aws/en/omnigent/">Databricks: Omnigent documentation</a></li>
+<li><a href="https://github.com/omnigent-ai/omnigent">GitHub: Omnigent</a></li>
+<li><a href="https://www.databricks.com/dataaisummit/speaker/hanlin-tang">Databricks: Hanlin Tang 2026 profile</a></li>
+<li><a href="https://techcrunch.com/2025/10/03/sources-naveen-raos-new-ai-hardware-startup-targets-5b-valuation-with-backing-from-a16z/">TechCrunch: Naveen Rao leaves Databricks, Oct. 3, 2025</a></li>
+<li><a href="https://www.cnbc.com/2026/06/16/databricks-revenue-growth-tops-80percent-to-6point9-billion-annualized.html">CNBC: Databricks annualized AI-product revenue, June 16, 2026</a></li>
+<li><a href="https://www.gartner.com/en/newsroom/press-releases/2025-06-25-gartner-predicts-over-40-percent-of-agentic-ai-projects-will-be-canceled-by-end-of-2027">Gartner: Agentic AI project forecast, June 25, 2025</a></li>
+<li><a href="https://aws.amazon.com/bedrock/agentcore/">AWS: Amazon Bedrock AgentCore</a></li>
+<li><a href="https://learn.microsoft.com/en-us/azure/ai-foundry/agents/overview">Microsoft: Foundry Agent Service</a></li>
+<li><a href="https://cloud.google.com/products/agent-builder">Google: Gemini Enterprise Agent Platform</a></li>
+<li><a href="https://openai.com/index/new-tools-for-building-agents/">OpenAI: Responses API and Agents SDK</a></li>
+<li><a href="https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk">Anthropic: Claude Agent SDK</a></li>
+<li><a href="https://www.langchain.com/langgraph-platform">LangChain: LangSmith Deployment</a></li>
+<li><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-agents">Snowflake: Cortex Agents</a></li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
