@@ -1,0 +1,1383 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>微软财报后为何暴涨：市场重新定价的不是 EPS，而是 AI 资本回报 / Why Microsoft Surged After Earnings: The Market Repriced Returns on AI Investment, Not Just EPS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>微软财报后为何暴涨：市场重新定价的不是 EPS，而是 AI 资本回报</h1>
+<p>日期：2026-07-30<br />
+行情截点：2026-07-30 10:30 EDT，美股尚未收盘<br />
+说明：本文是公开市场研究，不构成投资建议。</p>
+<h2>核心结论</h2>
+<p>微软财报后盘中一度上涨约 <code>15%</code>。这不是市场突然发现“微软是一家好公司”，也不主要是因为 EPS 超预期。真正发生的是：</p>
+<blockquote>
+<p><strong>市场把微软从“AI 资本开支吞噬现金流、Azure 可能被 Google 追赶、Copilot 可能冲击传统软件”的争议资产，重新归类为“AI 基础设施和企业应用已经同步变现”的平台资产。</strong></p>
+</blockquote>
+<p>改变市场判断的四组证据是：</p>
+<ol>
+<li>Azure 本季增长 <code>43%</code>，超过约 <code>40%</code> 的预期；下季固定汇率指引进一步达到约 <code>45%</code>，超过约 <code>41%</code> 的预期。</li>
+<li>商业 RPO 达到 <code>$678B</code>，环比增加约 <code>$51B</code>，全部环比增量来自 frontier model companies 之外的客户；M365 Copilot 付费席位从上季超过 <code>20M</code> 增至超过 <code>30M</code>。</li>
+<li>Q4 含融资租赁 capex 约 <code>$41B</code>，略低于约 <code>$42.37B</code> 的预期；自由现金流 <code>$19.6B</code>，高于约 <code>$13.44B</code> 的预期。</li>
+<li>财报前 MSFT 年内下跌约 <code>18%-19%</code>，前收盘价比 52 周高点低近 <code>30%</code>。低预期和此前显著跑输，使一次明确的 <code>beat-and-raise</code> 被放大成估值修复。</li>
+</ol>
+<p>但这份财报没有证明 AI 投资周期已经去风险。微软没有真正削减建设计划，Cloud 毛利率从 <code>68%</code> 降至 <code>65%</code>，Q4 自由现金流仍同比下降 <code>23%</code>。以盘中约 <code>$450</code> 计算，FY26 调整后 P/E 约 <code>26x</code>、forward P/E 约 <code>23x</code>，基于传统 FCF 的收益率约 <code>2.0%</code>。</p>
+<p><strong>上涨方向有基本面支撑，但约 15% 的幅度还包含了风险折价快速消失。微软的长期价值没有一夜之间增加 15%，市场只是突然愿意为同一组资产支付更高倍数。</strong></p>
+<h2>先校准“逆大盘上涨”</h2>
+<p>截至 <code>2026-07-30 10:30 EDT</code>，行情仍是盘中数据：</p>
+<table>
+<thead>
+<tr>
+<th>标的</th>
+<th style="text-align: right;">盘中价格/指数</th>
+<th style="text-align: right;">当日涨跌</th>
+<th>来源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft</td>
+<td style="text-align: right;"><code>$450.16</code></td>
+<td style="text-align: right;"><code>+15.27%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/MSFT/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Alphabet A</td>
+<td style="text-align: right;"><code>$331.82</code></td>
+<td style="text-align: right;"><code>-1.45%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/GOOGL/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Apple</td>
+<td style="text-align: right;"><code>$330.95</code></td>
+<td style="text-align: right;"><code>-2.14%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/AAPL/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Meta</td>
+<td style="text-align: right;"><code>$530.94</code></td>
+<td style="text-align: right;"><code>-9.34%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/META/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Amazon</td>
+<td style="text-align: right;"><code>$237.58</code></td>
+<td style="text-align: right;"><code>+4.82%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/AMZN/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Nasdaq Composite</td>
+<td style="text-align: right;"><code>25,106.87</code></td>
+<td style="text-align: right;"><code>+2.72%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/COMP/info?assetclass=index">Nasdaq</a></td>
+</tr>
+<tr>
+<td>S&amp;P 500</td>
+<td style="text-align: right;"><code>7,409.97</code></td>
+<td style="text-align: right;"><code>+1.28%</code></td>
+<td><a href="https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=.SPX%7CUS10Y%7CUS30Y&amp;requestMethod=quick&amp;noform=1&amp;partnerId=2&amp;fund=1&amp;exthrs=1&amp;output=json">CNBC quote service</a></td>
+</tr>
+</tbody>
+</table>
+<p>所以，严格说并不是“大盘都在跌”。更准确的说法是：<strong>大型科技股内部发生了剧烈分化，Microsoft 和 Amazon 把市值加权指数推高，但 Alphabet、Apple、Meta 等显著下跌。</strong></p>
+<p>宏观环境也不是普遍利好科技股。美联储前一天以 <code>9-3</code> 维持联邦基金利率在 <code>3.5%-3.75%</code>，三名反对者甚至主张加息 <code>25bp</code>（<a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm">Federal Reserve</a>）。截至 10:30 ET，10 年期美债收益率升至 <code>4.659%</code>，30 年期升至 <code>5.203%</code>。</p>
+<p>这说明 MSFT 的上涨不是利率下降推动的科技股普涨，而是公司级利好压过了利率逆风。</p>
+<h2>财报到底有多强</h2>
+<p>Microsoft 于 <code>2026-07-29</code> 发布 FY2026 Q4 财报，季度截至 <code>2026-06-30</code>。实际值来自 <a href="https://www.microsoft.com/en-us/Investor/earnings/FY-2026-Q4/press-release-webcast">Microsoft 官方财报</a>，共识来自 <a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters/Visible Alpha/LSEG</a> 和 <a href="https://www.cnbc.com/2026/07/29/microsoft-msft-q4-earnings-report-2026.html">CNBC/StreetAccount</a>。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: right;">FY26 Q4 实际</th>
+<th style="text-align: right;">市场预期/对比</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收入</td>
+<td style="text-align: right;"><code>$90.01B</code>，同比 <code>+18%</code></td>
+<td style="text-align: right;">LSEG <code>$87.62B</code></td>
+<td>超约 <code>$2.39B</code></td>
+</tr>
+<tr>
+<td>GAAP EPS</td>
+<td style="text-align: right;"><code>$4.81</code>，同比 <code>+32%</code></td>
+<td style="text-align: right;">口径不可直接比较</td>
+<td>含投资收益</td>
+</tr>
+<tr>
+<td>非 GAAP EPS</td>
+<td style="text-align: right;"><code>$4.74</code>，同比 <code>+23%</code></td>
+<td style="text-align: right;">LSEG <code>$4.24</code></td>
+<td>表面超约 <code>11.8%</code>，口径不完全可比</td>
+</tr>
+<tr>
+<td>营业利润</td>
+<td style="text-align: right;"><code>$40.60B</code>，同比 <code>+18%</code></td>
+<td style="text-align: right;">剔除离散项后仍超预期</td>
+<td>营业利润率约 <code>45.1%</code></td>
+</tr>
+<tr>
+<td>Microsoft Cloud</td>
+<td style="text-align: right;"><code>$59.3B</code>，同比 <code>+27%</code></td>
+<td style="text-align: right;">FY26 全年 <code>$214.4B</code></td>
+<td>规模和增速兼具</td>
+</tr>
+<tr>
+<td>Azure</td>
+<td style="text-align: right;"><code>+43%</code></td>
+<td style="text-align: right;">约 <code>40.0%-40.2%</code></td>
+<td>超约 <code>3ppt</code>，且较 Q3 加速</td>
+</tr>
+<tr>
+<td>Commercial RPO</td>
+<td style="text-align: right;"><code>$678B</code>，同比 <code>+84%</code></td>
+<td style="text-align: right;">约 <code>$647.6B</code></td>
+<td>超约 <code>$30B</code></td>
+</tr>
+<tr>
+<td>M365 Copilot</td>
+<td style="text-align: right;"><code>&gt;30M</code> 付费席位</td>
+<td style="text-align: right;">Reuters 汇总约 <code>26.9M</code></td>
+<td>上季 <code>&gt;20M</code></td>
+</tr>
+<tr>
+<td>含融资租赁 capex</td>
+<td style="text-align: right;">约 <code>$41B</code></td>
+<td style="text-align: right;">Visible Alpha <code>$42.37B</code></td>
+<td>略低于预期</td>
+</tr>
+<tr>
+<td>自由现金流</td>
+<td style="text-align: right;"><code>$19.64B</code>，同比 <code>-23%</code></td>
+<td style="text-align: right;">Visible Alpha <code>$13.44B</code></td>
+<td>仍下降，但明显好于预期</td>
+</tr>
+</tbody>
+</table>
+<p>这不是一份所有业务都完美的财报。More Personal Computing 收入下降 <code>4%</code>，Windows OEM &amp; Devices 下降 <code>7%</code>，Xbox content and services 下降 <code>10%</code>。真正改变估值的是 Intelligent Cloud，以及 M365/Copilot 的组合。</p>
+<h2>Azure 的 <code>43%/45%</code> 为什么如此关键</h2>
+<h3>同时打破“本季失速”和“下季减速”两种担忧</h3>
+<p>Azure Q4 增长 <code>43%</code>，高于约 <code>40%</code> 的市场预期。更重要的是，CFO Amy Hood 给出 FY27 Q1 固定汇率增长约 <code>45%</code> 的指引，而 Visible Alpha 和 StreetAccount 的预期约为 <code>40.9%-41.4%</code>。</p>
+<p>这不是普通的单季 beat，而是 <code>beat-and-raise</code>：</p>
+<ul>
+<li>市场原来担心 Azure 会从约 <code>40%</code> 继续减速。</li>
+<li>实际结果是 <code>43%</code>，下季又指向 <code>45%</code>。</li>
+<li>投资者必须同时上调近期收入、增长持续性和 Azure 的竞争地位。</li>
+</ul>
+<p>FY27 Q1 总收入指引中点 <code>$90.40B</code>，只比 LSEG 共识高不到 <code>1%</code>。真正拉开预期差的，是 Azure 指引高出共识约 <code>4ppt</code>。</p>
+<h3>新容量一上线就能变现</h3>
+<p>管理层在 <a href="https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4">官方电话会</a> 中说：</p>
+<blockquote>
+<p>“Customer demand continues to exceed available capacity.”</p>
+<p>“That additional in-quarter capacity for Azure was quickly monetized.”</p>
+</blockquote>
+<p>微软本季新增 <code>31</code> 个数据中心，全年新增 <code>88</code> 个；本季又增加约 <code>1GW</code> 容量，并计划两年内将总体容量约翻倍。Azure 的超预期部分来自 CPU/GPU 利用效率和新算力上线速度改善，而新增供给很快转成收入。</p>
+<p>市场最怕的是“先建数据中心，再寻找需求”；微软本季展示的是“需求已经排队，新容量一上线就能收费”。这显著降低了短期过度建设的风险折价。</p>
+<h3>Google Cloud 没有把 Azure 挤出赛道</h3>
+<p>Google Cloud 上一周公布约 <code>82%</code> 的增长，一度强化了 Google 抢份额、Azure 失速的担忧。<a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters</a> 引述 Aptus Capital Advisors 的 Dave Wagner：</p>
+<blockquote>
+<p>“It seemed kind of like Google was taking market share from everybody ... But what Azure is showing us is that it's staying right there in the race.”</p>
+</blockquote>
+<p>Google Cloud 和 Azure 的产品构成并不完全可比，不能机械比较 <code>82%</code> 和 <code>43%</code>。但市场真正要确认的是 Azure 是否还在加速、是否仍有供给约束、客户需求是否广泛；本季三个答案都是肯定的。</p>
+<h2>AI 变现已经从一个点扩散成三层结构</h2>
+<p>微软与其他大型科技公司的关键差别，是它可以在同一批企业客户上同时出售三层 AI 产品：</p>
+<ol>
+<li><strong>基础设施层</strong>：Azure 出售 CPU、GPU、模型推理和云服务。</li>
+<li><strong>平台层</strong>：Foundry、Fabric、GitHub 和安全/身份体系承接企业的模型、数据、开发和治理需求。</li>
+<li><strong>应用层</strong>：M365 Copilot、Dynamics、GitHub Copilot 和 agents 直接进入企业工作流。</li>
+</ol>
+<p>本季三层都出现了可量化信号（<a href="https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4">Microsoft 官方电话会</a>）：</p>
+<table>
+<thead>
+<tr>
+<th>变现层</th>
+<th>披露</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Azure</td>
+<td>FY26 收入首次超过 <code>$100B</code>，同比 <code>+41%</code></td>
+<td>云及 AI 基础设施平台已经是超大规模业务</td>
+</tr>
+<tr>
+<td>Foundry</td>
+<td><code>100,000</code> 客户，收入同比超过翻倍</td>
+<td>AI 平台需求不只来自少数模型公司</td>
+</tr>
+<tr>
+<td>M365 Copilot</td>
+<td><code>&gt;30M</code> 付费席位，净新增环比超过翻倍</td>
+<td>从试点走向企业级部署</td>
+</tr>
+<tr>
+<td>大型 Copilot 客户</td>
+<td><code>&gt;50,000</code> 席位客户数同比超过 <code>7x</code></td>
+<td>大客户正在扩容</td>
+</tr>
+<tr>
+<td>GitHub Copilot</td>
+<td><code>50M</code> 用户，usage-based billing 后消费收入强于预期</td>
+<td>从 seat 走向 seat + usage</td>
+</tr>
+<tr>
+<td>Commercial RPO</td>
+<td><code>$678B</code>，剔除 OpenAI 后仍同比 <code>+25%</code></td>
+<td>订单增长不是单一依赖 OpenAI</td>
+</tr>
+</tbody>
+</table>
+<p>管理层对商业模式的概括是：</p>
+<blockquote>
+<p>“It’s seat plus usage.”</p>
+</blockquote>
+<p>如果这条路径持续成立，微软不只是把 Copilot 当作 Office 的加价包，而是在企业订阅上增加一层按使用量收费的 AI 计费层。这是市场愿意重新给微软平台型估值的根本原因。</p>
+<h2>RPO 很有说服力，但不能直接当收入</h2>
+<p>Commercial RPO 达到 <code>$678B</code>，同比增长 <code>84%</code>，环比增加约 <code>$51B</code>。管理层说：</p>
+<blockquote>
+<p>“All sequential commercial RPO growth was driven by commitments from customers outside of frontier model companies.”</p>
+</blockquote>
+<p>这缓解了 Azure 增长和积压订单过度依赖 OpenAI 等少数 frontier labs 的担忧。全年 Microsoft Cloud 收入中，也有接近 <code>90%</code> 来自 frontier model companies 之外的客户。</p>
+<p>但 RPO 不等于未来一年的收入：</p>
+<ul>
+<li>加权平均期限为 <code>2.3 年</code>。</li>
+<li>约 <code>30%</code> 会在未来 12 个月确认，该部分同比增长 <code>37%</code>。</li>
+<li>12 个月以后部分同比增长 <code>112%</code>。</li>
+<li>RPO 还包括已签约但尚未开票的金额。</li>
+</ul>
+<p><code>$678B</code> 说明需求可见度很强，但不能直接加入短期收入或自由现金流模型。</p>
+<h2>资本开支：空头被缓解，但没有被解决</h2>
+<h3>市场为什么先松了一口气</h3>
+<p>Q4 capex 含融资租赁约 <code>$41B</code>，同比增长约 <code>69%-70%</code>，但略低于约 <code>$42.37B</code> 的共识。现金购置 PP&amp;E 为 <code>$35.80B</code>；经营现金流 <code>$55.44B</code>，传统自由现金流因此为 <code>$19.64B</code>，高于约 <code>$13.44B</code> 的预期。</p>
+<p>管理层还预计 FY27 保持正自由现金流，避免了市场此前担心的极端情形。这与 Meta 本季自由现金流仅 <code>$0.784B</code>、Alphabet 出现 <code>$5.9B</code> 现金消耗形成鲜明对比。</p>
+<h3><code>$190B</code> 变 <code>$175B</code> 主要是会计变化</h3>
+<p>微软从 FY27 起将数据中心和办公楼预计使用寿命从 <code>15 年</code>延长至 <code>25 年</code>。这会使更多未来数据中心租赁从融资租赁变成经营租赁；前者计入公司所称 capex，后者不计入。</p>
+<p>Amy Hood 的原话是：</p>
+<blockquote>
+<p>“Outside of this useful life impact, our calendar year 2026 CapEx investment expectations remain unchanged.”</p>
+</blockquote>
+<p>所以约 <code>$190B</code> 变为约 <code>$175B</code> 并不代表经济性投资减少 <code>$15B</code>。FY27 Q1 capex 仍预计超过 <code>$50B</code>，FY27 全年还将同比增长。Microsoft 10-K 还披露约 <code>$329.1B</code> 尚未开始的数据中心租赁承诺（<a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters</a>）。</p>
+<h3>现金流和利润率仍在承压</h3>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: right;">FY26 Q4</th>
+<th style="text-align: right;">对比</th>
+<th>风险含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>传统自由现金流</td>
+<td style="text-align: right;"><code>$19.64B</code></td>
+<td style="text-align: right;">同比 <code>-23%</code></td>
+<td>收入增长尚未转成同等现金增长</td>
+</tr>
+<tr>
+<td>Microsoft Cloud 毛利率</td>
+<td style="text-align: right;"><code>65%</code></td>
+<td style="text-align: right;">去年同期 <code>68%</code></td>
+<td>AI 基建和使用量提高收入成本</td>
+</tr>
+<tr>
+<td>公司毛利率</td>
+<td style="text-align: right;">约 <code>67.2%</code></td>
+<td style="text-align: right;">去年约 <code>68.6%</code></td>
+<td>同比下降约 <code>1.4ppt</code></td>
+</tr>
+<tr>
+<td>Intelligent Cloud 毛利率</td>
+<td style="text-align: right;">约 <code>57.1%</code></td>
+<td style="text-align: right;">去年约 <code>60.4%</code></td>
+<td>同比下降约 <code>3.3ppt</code></td>
+</tr>
+<tr>
+<td>公司营业利润率</td>
+<td style="text-align: right;">约 <code>45.1%</code></td>
+<td style="text-align: right;">去年约 <code>44.9%</code></td>
+<td>费用控制暂时抵消毛利压力</td>
+</tr>
+</tbody>
+</table>
+<p>微软还能维持约 <code>45%</code> 的营业利润率，部分因为经营杠杆和费用控制；总员工数同比下降 <code>2%</code>。但新增基础设施的折旧、能源和租赁成本会在未来逐步进入损益表。</p>
+<h2>EPS 的会计质量：不能只看 <code>$4.74 vs. $4.24</code></h2>
+<p>官方 GAAP EPS 为 <code>$4.81</code>，非 GAAP EPS 为 <code>$4.74</code>。但微软的这一非 GAAP 口径只剔除了 OpenAI 投资影响，并没有剔除所有离散项目。</p>
+<p>本季还有：</p>
+<ul>
+<li>Anthropic 投资产生 <code>$3.2B</code> 收益。</li>
+<li>退休计划费用低于预期。</li>
+<li>部分收益被遣散费和 Xbox 减值抵消。</li>
+<li>上述离散项目合计使 diluted EPS 增加约 <code>$0.27</code>。</li>
+<li>OpenAI 投资净影响使 GAAP EPS 增加 <code>$0.07</code>。</li>
+</ul>
+<p>机械地从 <code>$4.74</code> 扣除 <code>$0.27</code>，更接近经营性的 EPS 约为 <code>$4.47</code>。粗略数字上仍高于 <code>$4.24</code> 的共识，但超预期幅度更像约 <code>5%</code>，不是表面的约 <code>12%</code>；由于共识调整项可能不同，这也不是完全同口径比较。</p>
+<p>公司明确表示，剔除这些项目后，收入、营业利润和 EPS 仍超过预期。所以这不是靠投资收益制造出来的 beat，但 GAAP <code>+32%</code> 的利润增速明显高估了核心经营增速。</p>
+<h2>为什么 Microsoft 涨、Google 和 Apple 却跌</h2>
+<p>“都是科技股”并不足以解释同一天的表现。市场当天交易的是各家公司 <strong>AI 投入如何转成可验证现金回报</strong>，而不是行业标签。</p>
+<h3>Microsoft：三层直接变现出口</h3>
+<p>Azure 可以出售算力，Foundry/GitHub 可以出售平台和开发工具，M365/Dynamics 可以出售应用和使用量。微软本季同时拿出了 Azure 加速、RPO、Copilot 席位、usage-based revenue 和正自由现金流，形成完整证据链。</p>
+<h3>Alphabet：云增长极强，但现金回报承压</h3>
+<p>Alphabet 上周的 Google Cloud 增长约 <code>82%</code>，但集团 Q2 出现 <code>$5.9B</code> 现金消耗，并将 2026 支出预测再上调 <code>$15B</code>（<a href="https://www.reuters.com/business/retail-consumer/alphabets-cash-burn-raises-alarm-big-tech-ai-spending-climbs-2026-07-23/">Reuters</a>）。</p>
+<p>Google Cloud 的产品和份额进展并不差；GOOGL 当天 <code>-1.45%</code> 更像此前财报后资本开支担忧的延续，而不是云业务失败。微软刚好在同一个问题上给出了比担忧更好的答案：FCF 仍为正且高于预期、capex 没有再超预期、Azure 继续加速。</p>
+<h3>Apple：高位、财报前、没有同一催化</h3>
+<p>Apple 截至本文行情截点尚未发布当季财报。财报前股价年内已经上涨约 <code>25%</code>，此前短暂触及 <code>$5T</code> 市值和历史高位，同时面临存储器短缺、设备涨价、Siri/AI 产品进度和 CEO 交接等问题（<a href="https://www.cnbc.com/2026/07/29/tim-cooks-last-earnings-call-comes-at-momentous-time-for-apple-.html">CNBC</a>）。</p>
+<p>MSFT 是低预期、财报后、基本面上修；AAPL 是高位、财报前、投资者先降低风险。Apple 走的是较轻 capex、外部模型合作和消费硬件分发路线，与 Azure 的企业云变现不是同一种交易。</p>
+<h3>Meta：同日财报提供了最清楚的反例</h3>
+<p>Meta Q2 收入 <code>$60.8B</code>、同比 <code>+28%</code>，但成本费用增长 <code>55%</code>，营业利润下降 <code>8%</code>，自由现金流仅 <code>$0.784B</code>，同比约下降 <code>91%</code>；同时将全年 capex 区间收窄至 <code>$130B-$145B</code>，即提高下限（<a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx">Meta 官方财报</a>）。股价盘中下跌 <code>9.34%</code>。</p>
+<p><a href="https://www.reuters.com/business/retail-consumer/metas-ai-splurge-lays-bare-its-compute-conundrum-2026-07-30/">Reuters</a> 引述 eToro 的概括很准确：</p>
+<blockquote>
+<p>“Meta is spending like a hyperscaler without a hyperscaler's business model.”</p>
+</blockquote>
+<p>Meta 的广告业务可以因 AI 获益，但尚未像 Azure 那样把数据中心算力直接大规模卖给企业。市场因此惩罚“投入先发生、变现路径仍模糊”，而奖励微软“投入已经对应订单和收入”。</p>
+<h3>Amazon：更像云需求的正向 read-through</h3>
+<p>Amazon 当时尚未公布自己的 Q2 财报，但股价盘中上涨 <code>4.82%</code>。最合理但仍属推断的解释是：Azure 强劲需求和供给约束给 AWS 提供了正向行业验证。Amazon 与微软的云商业模式更接近，因此获得了同向 read-through。</p>
+<h2>为什么涨幅会放大到约 15%</h2>
+<h3>财报前的定价已经相当悲观</h3>
+<p>财报前 MSFT 年内约下跌 <code>18%-19%</code>，Reuters 称其为 Magnificent Seven 表现最差者；前收盘 <code>$390.54</code>，比 52 周高点 <code>$555.45</code> 低约 <code>29.7%</code>。</p>
+<p>市场此前担心 Azure 减速、OpenAI 集中、Copilot shelfware、AI capex 吞噬 FCF，以及 AI agents 冲击按席位收费的 SaaS 模式。本季没有彻底解决所有问题，但每个问题都给出了比悲观情形更好的证据。</p>
+<h3>指引比历史财报更重要</h3>
+<p>管理层给出 Azure <code>45%</code>、收入中点 <code>$90.4B</code>、Q1 capex 超过 <code>$50B</code>但低于约 <code>$56B</code> 共识，以及 FY27 维持正 FCF 的指引。<a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters</a> 在 forecast 之后记录盘后上涨超过 <code>8%</code>；第二天正常交易时段涨幅扩大到约 <code>15%</code>。</p>
+<p>市场不是因为过去一个季度多赚了多少钱而上涨，而是在重估未来几个季度的 Azure 增速和资本回报率。</p>
+<h3>主要是估值倍数回升</h3>
+<p>以 10:30 ET 的 <code>$450.16</code> 和约 <code>7.427B</code> 流通股估算，微软市值约 <code>$3.34T</code>，相对前一日增加约 <code>$443B</code>。如此大的价值变化不可能只由单季 EPS beat 的现值解释，更像是整个增长轨迹和风险折价被重估。</p>
+<p><a href="https://stockanalysis.com/stocks/msft/statistics/">StockAnalysis/S&amp;P Global Market Intelligence</a> 当时给出的 forward P/E 约 <code>23.0x</code>。如果用同一 forward EPS 分母回看前收盘价，财报前倍数约为 <code>20x</code>。大部分涨幅可以理解为市场迅速恢复了约 <code>3</code> 个 P/E turns。实际 forward EPS 还会被分析师更新，因此这只是近似说明。</p>
+<h2>分析师怎么看</h2>
+<p>以下是 <code>2026-07-30</code> 财报后机构更新，来自 <a href="https://www.cnbc.com/2026/07/30/analysts-react-to-microsofts-earnings-results-.html">CNBC 对机构报告的摘录</a>：</p>
+<table>
+<thead>
+<tr>
+<th>机构</th>
+<th>评级/目标价</th>
+<th>核心看法</th>
+<th>保留意见</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stifel</td>
+<td>Hold，<code>$400 -&gt; $450</code></td>
+<td>FY27 双位数增长可持续</td>
+<td>云业务组合压毛利，当前价上行有限</td>
+</tr>
+<tr>
+<td>Melius</td>
+<td>Hold，<code>$400 -&gt; $465</code></td>
+<td>Azure 和 Copilot 好于预期</td>
+<td>正 FCF 不等于现金充裕，仍担忧 SaaS 模式</td>
+</tr>
+<tr>
+<td>BofA</td>
+<td>Buy，<code>$500</code></td>
+<td>Azure <code>45%</code> 与 Copilot <code>30M</code> 验证 AI 战略</td>
+<td>仍需把席位转为使用量和利润</td>
+</tr>
+<tr>
+<td>Barclays</td>
+<td>Overweight，<code>$545 -&gt; $512</code></td>
+<td>Azure 和 Office 趋势改善</td>
+<td>下调 CY27 EPS 和软件同业倍数</td>
+</tr>
+<tr>
+<td>Evercore ISI</td>
+<td>Outperform，<code>$525 -&gt; $528</code></td>
+<td>Azure 超预期，正 FCF 移除极端情景</td>
+<td>现金 capex 可能仍接近 <code>$200B</code></td>
+</tr>
+<tr>
+<td>Citi</td>
+<td>Buy，<code>$575 -&gt; $600</code></td>
+<td>多模型策略和核心业务加速</td>
+<td>模型架构变化仍可能重塑竞争</td>
+</tr>
+<tr>
+<td>Goldman Sachs</td>
+<td>Buy，<code>$610 -&gt; $640</code></td>
+<td>Azure、AI 单位经济和 Copilot 都有 proof points</td>
+<td>仍需持续证明 ROIC</td>
+</tr>
+<tr>
+<td>Wells Fargo</td>
+<td>Overweight，<code>$625 -&gt; $650</code></td>
+<td>ROIC 解释更清晰，支持重新评级</td>
+<td>依赖后续季度持续兑现</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://www.morningstar.com/stocks/microsoft-earnings-azure-accelerates-while-capital-expenditure-guidance-is-steady">Morningstar</a> 维持 <code>$600</code> 公允价值、Wide Moat 和五星评级；它上调增长预测，但用更低利润率抵消更高 Azure capex。这是一个重要提醒：增长更好和利润率更差可以同时成立。</p>
+<p>卖方共识明显转多，但不是完全一致。最谨慎的两家只给 <code>$450-$465</code>，接近财报后盘中价；多头的 <code>$600-$650</code> 依赖 Azure、Copilot 和 ROIC 未来数年连续兑现。</p>
+<h2>财报后估值：不离谱，但不再明显便宜</h2>
+<p>以盘中 <code>$450.16</code> 为计算锚点：</p>
+<table>
+<thead>
+<tr>
+<th>估值项</th>
+<th>计算</th>
+<th style="text-align: right;">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>市值</td>
+<td><code>$450.16 x 7.427B</code></td>
+<td style="text-align: right;">约 <code>$3.34T</code></td>
+</tr>
+<tr>
+<td>FY26 调整后 P/E</td>
+<td><code>$450.16 / $17.28</code></td>
+<td style="text-align: right;">约 <code>26.1x</code></td>
+</tr>
+<tr>
+<td>Forward P/E</td>
+<td>S&amp;P Global 汇总</td>
+<td style="text-align: right;">约 <code>23.0x</code></td>
+</tr>
+<tr>
+<td>FY26 传统 FCF</td>
+<td><code>$182.94B CFO - $115.95B cash capex</code></td>
+<td style="text-align: right;"><code>$66.99B</code></td>
+</tr>
+<tr>
+<td>传统 FCF yield</td>
+<td><code>$66.99B / $3.34T</code></td>
+<td style="text-align: right;">约 <code>2.0%</code></td>
+</tr>
+</tbody>
+</table>
+<p>FY26 调整后 EPS <code>$17.28</code> 只剔除了 OpenAI 投资影响；传统 FCF 又没有完整反映融资租赁和未来转为经营租赁的数据中心承诺。这两种口径都不是完美的经济利润，但足以说明财报后价格已经重新包含持续高增长预期。</p>
+<h3>三年敏感性分析</h3>
+<p>以 FY26 调整后 EPS <code>$17.28</code> 为起点、折现率 <code>9%</code>。这不是目标价预测，只用于展示价格对增长和退出倍数的敏感度：</p>
+<table>
+<thead>
+<tr>
+<th>情景</th>
+<th style="text-align: right;">EPS 三年 CAGR</th>
+<th style="text-align: right;">三年后 P/E</th>
+<th style="text-align: right;">折现后的当前价值</th>
+<th style="text-align: right;">相对约 <code>$450</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>悲观</td>
+<td style="text-align: right;"><code>8%</code></td>
+<td style="text-align: right;"><code>20x</code></td>
+<td style="text-align: right;">约 <code>$336</code></td>
+<td style="text-align: right;"><code>-25%</code></td>
+</tr>
+<tr>
+<td>基准</td>
+<td style="text-align: right;"><code>15%</code></td>
+<td style="text-align: right;"><code>24x</code></td>
+<td style="text-align: right;">约 <code>$487</code></td>
+<td style="text-align: right;"><code>+8%</code></td>
+</tr>
+<tr>
+<td>乐观</td>
+<td style="text-align: right;"><code>22%</code></td>
+<td style="text-align: right;"><code>28x</code></td>
+<td style="text-align: right;">约 <code>$678</code></td>
+<td style="text-align: right;"><code>+51%</code></td>
+</tr>
+</tbody>
+</table>
+<p>反向来看，如果三年后仍给 <code>24x</code> P/E、折现率 <code>9%</code>，当前约 <code>$450</code> 要求调整后 EPS 未来三年复合增长约 <code>12%</code>。对微软不是不现实，但绝不是零风险，尤其是在 FCF yield 约 <code>2%</code>、云毛利率下滑和 capex 继续增长的背景下。</p>
+<h2>最值得认真对待的反方观点</h2>
+<ol>
+<li><strong>AI 建设计划没有真正降温。</strong> <code>$175B</code> 主要是会计口径变化；FY27 capex 还会增长，Q1 单季超过 <code>$50B</code>。</li>
+<li><strong>折旧和运营成本可能滞后。</strong> FY26 现金 PP&amp;E 支出 <code>$115.95B</code>，远高于当期折旧、摊销及其他 <code>$38.53B</code>。新增资产的成本尚未完全进入损益表。</li>
+<li><strong>Cloud 毛利率持续承压。</strong> Microsoft Cloud 毛利率从 <code>68%</code> 降至 <code>65%</code>。如果推理成本和 Copilot 使用增长快于收费，收入增长不会等比例转成利润。</li>
+<li><strong>Copilot 席位不是完整单位经济。</strong> 微软尚未披露 M365 Copilot 收入绝对值、续约率、独立毛利率和真实的 usage economics。</li>
+<li><strong>多模型战略也意味着独占性下降。</strong> Microsoft 与 OpenAI 的新版协议允许 OpenAI 跨云服务客户，并将微软的 IP license 改为非独占（<a href="https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/">Microsoft</a>）。</li>
+<li><strong>投资收益增加利润波动。</strong> Anthropic 和 OpenAI 的投资收益有价值，但不应与 Azure、M365 等经常性营业利润使用相同倍数。</li>
+</ol>
+<h2>接下来两个季度最该看什么</h2>
+<table>
+<thead>
+<tr>
+<th>观察指标</th>
+<th>多头需要看到</th>
+<th>空头被验证的信号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Azure Q1 增长</td>
+<td>接近固定汇率 <code>45%</code>，H1 继续加速</td>
+<td>明显低于指引，或无法维持 <code>40%+</code></td>
+</tr>
+<tr>
+<td>Commercial RPO</td>
+<td>剔除 OpenAI 后继续保持 <code>20%+</code> 增长</td>
+<td>增长重新集中于少数 frontier labs</td>
+</tr>
+<tr>
+<td>M365 Copilot</td>
+<td>席位、usage revenue、M365 ARPU 同步增长</td>
+<td>席位增加但使用、续约或利润率不跟进</td>
+</tr>
+<tr>
+<td>Cloud 毛利率</td>
+<td>稳定在约 <code>65%</code>，效率开始抵消投入</td>
+<td>继续明显下滑</td>
+</tr>
+<tr>
+<td>Capex 与 FCF</td>
+<td><code>&gt;$50B</code> capex 对应 Azure 加速，FY27 仍正 FCF</td>
+<td>capex 上修、FCF 接近零，但增长不再加速</td>
+</tr>
+<tr>
+<td>营业利润率</td>
+<td>FY27 全年下降少于 <code>1ppt</code></td>
+<td>折旧、能源和推理成本导致降幅扩大</td>
+</tr>
+</tbody>
+</table>
+<h2>最终判断</h2>
+<p>微软这次财报最重要的，不是某一个数字特别大，而是此前互相冲突的三条叙事第一次在同一季度同时得到缓解：</p>
+<ol>
+<li><strong>AI 需求是否真实？</strong> Azure 加速、供给一上线就变现、RPO 和非 frontier 客户增长说明需求真实。</li>
+<li><strong>AI 是否只有基础设施收入？</strong> M365 Copilot、GitHub Copilot 和 usage-based billing 说明应用层开始跟上。</li>
+<li><strong>AI capex 是否会吞掉微软？</strong> FCF 仍在下降，但好于预期且保持为正，营业利润率仍稳定，极端空头情景暂时落空。</li>
+</ol>
+<p>这也解释了为什么它能与 Google、Apple、Meta 分化。市场不是在笼统买“科技”，而是在给每家公司打分：谁能把 AI 支出最快、最清楚地转成企业收入和现金流。微软本季给出的答案最好；Meta 最差；Alphabet 的云增长很强但现金回报承压；Apple 尚未公布财报且处在高预期位置。</p>
+<p>不过，约 <code>15%</code> 的单日涨幅已经把 Microsoft 从“被怀疑的 AI 资本消耗者”快速推回“被认可的 AI 平台赢家”。下一阶段不能再靠同样的叙事修复，必须靠连续兑现：Azure <code>45%</code>、Copilot usage、Cloud 毛利率稳定，以及在 <code>&gt;$50B</code> 单季 capex 下仍产生足够自由现金流。</p>
+<blockquote>
+<p><strong>这份财报足以证明微软值得重新定价，但还不足以证明财报后任何价格都值得追。</strong></p>
+</blockquote>
+<h2>主要来源</h2>
+<ul>
+<li><a href="https://www.microsoft.com/en-us/Investor/earnings/FY-2026-Q4/press-release-webcast">Microsoft FY26 Q4 财报及财务报表</a></li>
+<li><a href="https://www.microsoft.com/en-us/Investor/earnings/FY-2026-Q4/metrics">Microsoft FY26 Q4 investor metrics</a></li>
+<li><a href="https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4">Microsoft FY26 Q4 官方电话会全文</a></li>
+<li><a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters：Microsoft says cash will keep flowing from AI</a></li>
+<li><a href="https://www.cnbc.com/2026/07/29/microsoft-msft-q4-earnings-report-2026.html">CNBC：Microsoft Q4 earnings</a></li>
+<li><a href="https://www.cnbc.com/2026/07/30/analysts-react-to-microsofts-earnings-results-.html">CNBC：分析师财报后反应</a></li>
+<li><a href="https://www.reuters.com/business/retail-consumer/alphabets-cash-burn-raises-alarm-big-tech-ai-spending-climbs-2026-07-23/">Reuters：Alphabet 现金消耗与 AI 支出</a></li>
+<li><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx">Meta Q2 2026 官方财报</a></li>
+<li><a href="https://www.reuters.com/business/retail-consumer/metas-ai-splurge-lays-bare-its-compute-conundrum-2026-07-30/">Reuters：Meta's AI compute conundrum</a></li>
+<li><a href="https://www.cnbc.com/2026/07/29/tim-cooks-last-earnings-call-comes-at-momentous-time-for-apple-.html">CNBC：Apple 财报前瞻</a></li>
+<li><a href="https://www.morningstar.com/stocks/microsoft-earnings-azure-accelerates-while-capital-expenditure-guidance-is-steady">Morningstar 财报后评估</a></li>
+<li><a href="https://stockanalysis.com/stocks/msft/statistics/">StockAnalysis/S&amp;P Global 估值快照</a></li>
+</ul>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Why Microsoft Surged After Earnings: The Market Repriced Returns on AI Investment, Not Just EPS</h1>
+<p>Date: July 30, 2026<br />
+Market data cutoff: July 30, 2026, 10:30 a.m. EDT; U.S. markets were still open<br />
+Note: This is public-market research, not investment advice.</p>
+<h2>Key Takeaways</h2>
+<p>Microsoft traded roughly <code>15%</code> higher after earnings. The move was not simply the market rediscovering that Microsoft is a good company, nor was it mainly about an EPS beat. What changed was the classification of the stock:</p>
+<blockquote>
+<p><strong>Investors moved Microsoft from a contested asset burdened by concerns that AI capex was consuming cash, Azure might lose ground to Google, and Copilot might disrupt traditional software, back into the category of “a platform already monetizing AI across infrastructure and enterprise applications.”</strong></p>
+</blockquote>
+<p>Four sets of evidence drove that reassessment:</p>
+<ol>
+<li>Azure grew <code>43%</code> in the quarter, above expectations of roughly <code>40%</code>. Management then guided to approximately <code>45%</code> constant-currency growth next quarter, versus a consensus near <code>41%</code>.</li>
+<li>Commercial RPO reached <code>$678B</code>, up roughly <code>$51B</code> sequentially, with all sequential growth coming from customers outside frontier model companies. Paid Microsoft 365 Copilot seats rose from more than <code>20M</code> last quarter to more than <code>30M</code>.</li>
+<li>Fourth-quarter capex including finance leases was approximately <code>$41B</code>, modestly below the <code>$42.37B</code> consensus. Free cash flow was <code>$19.6B</code>, ahead of the <code>$13.44B</code> consensus.</li>
+<li>Before earnings, MSFT was down approximately <code>18%-19%</code> year to date and nearly <code>30%</code> below its 52-week high. Low expectations and substantial prior underperformance amplified a clear beat-and-raise into a valuation reset.</li>
+</ol>
+<p>The results did not eliminate the risks of the AI investment cycle. Microsoft did not meaningfully reduce its construction plans. Microsoft Cloud gross margin fell from <code>68%</code> to <code>65%</code>, and fourth-quarter free cash flow was still down <code>23%</code> year over year. At roughly <code>$450</code> intraday, the stock traded at about <code>26x</code> FY2026 adjusted earnings, <code>23x</code> forward earnings, and a traditional FCF yield near <code>2.0%</code>.</p>
+<p><strong>The direction of the rally is supported by fundamentals, but the roughly 15% magnitude also reflects the rapid removal of a risk discount. Microsoft's long-term value did not literally increase by 15% overnight; the market suddenly became willing to pay a higher multiple for the same asset base.</strong></p>
+<h2>First, Calibrate the “Rally Against the Market”</h2>
+<p>As of <code>10:30 a.m. EDT on July 30, 2026</code>, the figures were still intraday:</p>
+<table>
+<thead>
+<tr>
+<th>Security</th>
+<th style="text-align: right;">Intraday price/index</th>
+<th style="text-align: right;">Daily move</th>
+<th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Microsoft</td>
+<td style="text-align: right;"><code>$450.16</code></td>
+<td style="text-align: right;"><code>+15.27%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/MSFT/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Alphabet A</td>
+<td style="text-align: right;"><code>$331.82</code></td>
+<td style="text-align: right;"><code>-1.45%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/GOOGL/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Apple</td>
+<td style="text-align: right;"><code>$330.95</code></td>
+<td style="text-align: right;"><code>-2.14%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/AAPL/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Meta</td>
+<td style="text-align: right;"><code>$530.94</code></td>
+<td style="text-align: right;"><code>-9.34%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/META/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Amazon</td>
+<td style="text-align: right;"><code>$237.58</code></td>
+<td style="text-align: right;"><code>+4.82%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/AMZN/info?assetclass=stocks">Nasdaq</a></td>
+</tr>
+<tr>
+<td>Nasdaq Composite</td>
+<td style="text-align: right;"><code>25,106.87</code></td>
+<td style="text-align: right;"><code>+2.72%</code></td>
+<td><a href="https://api.nasdaq.com/api/quote/COMP/info?assetclass=index">Nasdaq</a></td>
+</tr>
+<tr>
+<td>S&amp;P 500</td>
+<td style="text-align: right;"><code>7,409.97</code></td>
+<td style="text-align: right;"><code>+1.28%</code></td>
+<td><a href="https://quote.cnbc.com/quote-html-webservice/restQuote/symbolType/symbol?symbols=.SPX%7CUS10Y%7CUS30Y&amp;requestMethod=quick&amp;noform=1&amp;partnerId=2&amp;fund=1&amp;exthrs=1&amp;output=json">CNBC quote service</a></td>
+</tr>
+</tbody>
+</table>
+<p>Strictly speaking, this was not a broad market decline. It was <strong>extreme dispersion within mega-cap technology</strong>: Microsoft and Amazon pushed capitalization-weighted indexes higher while Alphabet, Apple, and Meta fell sharply.</p>
+<p>The macro backdrop was not especially favorable to technology stocks either. A day earlier, the Federal Reserve voted <code>9-3</code> to hold the federal funds target at <code>3.5%-3.75%</code>; all three dissenters preferred a <code>25-basis-point</code> increase (<a href="https://www.federalreserve.gov/newsevents/pressreleases/monetary20260729a.htm">Federal Reserve</a>). At 10:30 a.m. EDT, the 10-year Treasury yield had risen to <code>4.659%</code>, and the 30-year yield to <code>5.203%</code>.</p>
+<p>MSFT was not rising on a broad duration rally caused by lower rates. Its company-specific news was strong enough to overcome a rates headwind.</p>
+<h2>How Strong Was the Quarter?</h2>
+<p>Microsoft reported fiscal fourth-quarter 2026 results on July 29 for the period ended June 30. Actual results are from <a href="https://www.microsoft.com/en-us/Investor/earnings/FY-2026-Q4/press-release-webcast">Microsoft's earnings release</a>; consensus estimates are from <a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters/Visible Alpha/LSEG</a> and <a href="https://www.cnbc.com/2026/07/29/microsoft-msft-q4-earnings-report-2026.html">CNBC/StreetAccount</a>.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: right;">FY2026 Q4 actual</th>
+<th style="text-align: right;">Consensus/comparison</th>
+<th>Assessment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Revenue</td>
+<td style="text-align: right;"><code>$90.01B</code>, <code>+18%</code> YoY</td>
+<td style="text-align: right;">LSEG <code>$87.62B</code></td>
+<td>Beat by roughly <code>$2.39B</code></td>
+</tr>
+<tr>
+<td>GAAP EPS</td>
+<td style="text-align: right;"><code>$4.81</code>, <code>+32%</code> YoY</td>
+<td style="text-align: right;">Not directly comparable</td>
+<td>Includes investment gains</td>
+</tr>
+<tr>
+<td>Non-GAAP EPS</td>
+<td style="text-align: right;"><code>$4.74</code>, <code>+23%</code> YoY</td>
+<td style="text-align: right;">LSEG <code>$4.24</code></td>
+<td>Headline beat of <code>11.8%</code>, but definitions differ</td>
+</tr>
+<tr>
+<td>Operating income</td>
+<td style="text-align: right;"><code>$40.60B</code>, <code>+18%</code> YoY</td>
+<td style="text-align: right;">Still beat after discrete-item adjustment</td>
+<td>Operating margin near <code>45.1%</code></td>
+</tr>
+<tr>
+<td>Microsoft Cloud</td>
+<td style="text-align: right;"><code>$59.3B</code>, <code>+27%</code> YoY</td>
+<td style="text-align: right;">FY2026 total of <code>$214.4B</code></td>
+<td>Scale and growth together</td>
+</tr>
+<tr>
+<td>Azure</td>
+<td style="text-align: right;"><code>+43%</code></td>
+<td style="text-align: right;">Approximately <code>40.0%-40.2%</code></td>
+<td>Roughly <code>3ppt</code> beat and acceleration from Q3</td>
+</tr>
+<tr>
+<td>Commercial RPO</td>
+<td style="text-align: right;"><code>$678B</code>, <code>+84%</code> YoY</td>
+<td style="text-align: right;">Approximately <code>$647.6B</code></td>
+<td>Roughly <code>$30B</code> above consensus</td>
+</tr>
+<tr>
+<td>Microsoft 365 Copilot</td>
+<td style="text-align: right;"><code>&gt;30M</code> paid seats</td>
+<td style="text-align: right;">Reuters compilation near <code>26.9M</code></td>
+<td>Up from <code>&gt;20M</code> last quarter</td>
+</tr>
+<tr>
+<td>Capex including finance leases</td>
+<td style="text-align: right;">Approximately <code>$41B</code></td>
+<td style="text-align: right;">Visible Alpha <code>$42.37B</code></td>
+<td>Modestly below consensus</td>
+</tr>
+<tr>
+<td>Free cash flow</td>
+<td style="text-align: right;"><code>$19.64B</code>, <code>-23%</code> YoY</td>
+<td style="text-align: right;">Visible Alpha <code>$13.44B</code></td>
+<td>Still down, but well above consensus</td>
+</tr>
+</tbody>
+</table>
+<p>This was not a perfect quarter across every business. More Personal Computing revenue fell <code>4%</code>, Windows OEM and Devices fell <code>7%</code>, and Xbox content and services fell <code>10%</code>. The revaluation came from Intelligent Cloud and the combination of Microsoft 365 and Copilot.</p>
+<h2>Why Azure's <code>43%/45%</code> Mattered So Much</h2>
+<h3>It Broke Both the “Current Slowdown” and “Next-Quarter Deceleration” Narratives</h3>
+<p>Azure grew <code>43%</code> in Q4, above a consensus near <code>40%</code>. More importantly, CFO Amy Hood guided to approximately <code>45%</code> constant-currency growth in FY2027 Q1, versus Visible Alpha and StreetAccount expectations of roughly <code>40.9%-41.4%</code>.</p>
+<p>This was not a routine quarterly beat. It was a beat-and-raise:</p>
+<ul>
+<li>Investors had feared that Azure growth might continue slowing from approximately <code>40%</code>.</li>
+<li>Actual growth reached <code>43%</code>, followed by guidance near <code>45%</code>.</li>
+<li>Models had to be revised for near-term revenue, growth duration, and Azure's competitive position at the same time.</li>
+</ul>
+<p>The midpoint of companywide Q1 revenue guidance, <code>$90.40B</code>, was less than <code>1%</code> above the LSEG consensus. The real surprise was the approximately <code>4ppt</code> gap in Azure guidance.</p>
+<h3>Newly Available Capacity Monetized Immediately</h3>
+<p>Management said on the <a href="https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4">official earnings call</a>:</p>
+<blockquote>
+<p>“Customer demand continues to exceed available capacity.”</p>
+<p>“That additional in-quarter capacity for Azure was quickly monetized.”</p>
+</blockquote>
+<p>Microsoft added <code>31</code> data centers in the quarter and <code>88</code> during the year. It added roughly <code>1GW</code> of capacity in Q4 and plans to approximately double overall capacity within two years. Part of the Azure upside came from better CPU/GPU fleet efficiency and faster delivery of newly installed capacity, which converted quickly into revenue.</p>
+<p>The market's fear is “build data centers first and search for demand later.” Microsoft showed “demand is already waiting, and new capacity can be billed as soon as it comes online.” That sharply reduces the near-term risk discount for overbuilding.</p>
+<h3>Google Cloud Did Not Push Azure Out of the Race</h3>
+<p>Google Cloud had reported growth of approximately <code>82%</code> a week earlier, intensifying fears that Google was taking share while Azure slowed. <a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters</a> quoted Aptus Capital Advisors portfolio manager Dave Wagner:</p>
+<blockquote>
+<p>“It seemed kind of like Google was taking market share from everybody ... But what Azure is showing us is that it's staying right there in the race.”</p>
+</blockquote>
+<p>Google Cloud and Azure do not have identical reporting mixes, so comparing <code>82%</code> and <code>43%</code> mechanically is misleading. The relevant questions were whether Azure was still accelerating, still constrained by supply, and supported by broad customer demand. The answers were yes on all three.</p>
+<h2>AI Monetization Is Spreading Across Three Layers</h2>
+<p>Microsoft's key distinction from other mega-cap technology companies is its ability to sell three layers of AI products to the same enterprise customers:</p>
+<ol>
+<li><strong>Infrastructure</strong>: Azure sells CPU, GPU, model inference, and cloud services.</li>
+<li><strong>Platform</strong>: Foundry, Fabric, GitHub, and the security/identity stack address enterprise models, data, development, and governance.</li>
+<li><strong>Applications</strong>: Microsoft 365 Copilot, Dynamics, GitHub Copilot, and agents enter business workflows directly.</li>
+</ol>
+<p>All three layers produced measurable evidence this quarter (<a href="https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4">Microsoft earnings call</a>):</p>
+<table>
+<thead>
+<tr>
+<th>Monetization layer</th>
+<th>Disclosure</th>
+<th>Implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Azure</td>
+<td>FY2026 revenue exceeded <code>$100B</code>, up <code>41%</code></td>
+<td>Cloud and AI infrastructure is already a business at enormous scale</td>
+</tr>
+<tr>
+<td>Foundry</td>
+<td><code>100,000</code> customers; revenue more than doubled</td>
+<td>Platform demand extends beyond a few frontier labs</td>
+</tr>
+<tr>
+<td>Microsoft 365 Copilot</td>
+<td><code>&gt;30M</code> paid seats; net adds more than doubled sequentially</td>
+<td>Adoption is moving from pilots toward enterprise deployment</td>
+</tr>
+<tr>
+<td>Large Copilot customers</td>
+<td>The number of customers with <code>&gt;50,000</code> seats grew more than <code>7x</code></td>
+<td>Large customers are expanding deployments</td>
+</tr>
+<tr>
+<td>GitHub Copilot</td>
+<td><code>50M</code> users; consumption revenue was stronger than expected after usage-based billing</td>
+<td>Monetization is moving from seats toward seats plus usage</td>
+</tr>
+<tr>
+<td>Commercial RPO</td>
+<td><code>$678B</code>; still <code>+25%</code> excluding OpenAI</td>
+<td>Contract growth is not solely dependent on OpenAI</td>
+</tr>
+</tbody>
+</table>
+<p>Management summarized the model as:</p>
+<blockquote>
+<p>“It’s seat plus usage.”</p>
+</blockquote>
+<p>If that transition holds, Copilot is not merely an Office add-on. It becomes a new usage-based AI billing layer on top of existing enterprise subscriptions. That is the fundamental reason investors are again willing to value Microsoft as a platform.</p>
+<h2>RPO Is Persuasive, but It Is Not Revenue</h2>
+<p>Commercial RPO reached <code>$678B</code>, up <code>84%</code> year over year and roughly <code>$51B</code> sequentially. Management said:</p>
+<blockquote>
+<p>“All sequential commercial RPO growth was driven by commitments from customers outside of frontier model companies.”</p>
+</blockquote>
+<p>That reduces the concern that Azure's growth and backlog are excessively dependent on OpenAI and a small group of frontier labs. Nearly <code>90%</code> of full-year Microsoft Cloud revenue also came from customers outside frontier model companies.</p>
+<p>But RPO is not equivalent to revenue over the next 12 months:</p>
+<ul>
+<li>Its weighted average duration is <code>2.3 years</code>.</li>
+<li>Approximately <code>30%</code> will be recognized during the next 12 months, up <code>37%</code> year over year.</li>
+<li>The portion beyond 12 months grew <code>112%</code>.</li>
+<li>RPO includes contracted but not yet invoiced amounts.</li>
+</ul>
+<p>The <code>$678B</code> figure provides strong demand visibility, but it should not be dropped directly into a near-term revenue or free-cash-flow model.</p>
+<h2>Capex: The Bear Case Was Eased, Not Solved</h2>
+<h3>Why Investors Initially Relaxed</h3>
+<p>Q4 capex including finance leases was approximately <code>$41B</code>, up around <code>69%-70%</code> year over year, but modestly below the <code>$42.37B</code> consensus. Cash purchases of PP&amp;E were <code>$35.80B</code>; cash from operations was <code>$55.44B</code>, producing traditional free cash flow of <code>$19.64B</code>, above the <code>$13.44B</code> consensus.</p>
+<p>Management also expects Microsoft to remain free-cash-flow positive in FY2027, avoiding the most extreme scenario investors had feared. That contrasts sharply with Meta's <code>$0.784B</code> of quarterly free cash flow and Alphabet's <code>$5.9B</code> cash burn.</p>
+<h3>The Change From <code>$190B</code> to <code>$175B</code> Is Primarily Accounting</h3>
+<p>Beginning in FY2027, Microsoft is extending the estimated useful life of data centers and office buildings from <code>15</code> to <code>25 years</code>. That causes more future data-center leases to be classified as operating leases rather than finance leases; finance leases are included in Microsoft's capex measure, while operating leases are not.</p>
+<p>Amy Hood was explicit:</p>
+<blockquote>
+<p>“Outside of this useful life impact, our calendar year 2026 CapEx investment expectations remain unchanged.”</p>
+</blockquote>
+<p>The move from approximately <code>$190B</code> to <code>$175B</code> does not represent a <code>$15B</code> reduction in economic investment. FY2027 Q1 capex is still expected to exceed <code>$50B</code>, and full-year FY2027 capex will grow year over year. Microsoft's 10-K also disclosed <code>$329.1B</code> of data-center leases that have not yet commenced (<a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters</a>).</p>
+<h3>Cash Flow and Margins Remain Under Pressure</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: right;">FY2026 Q4</th>
+<th style="text-align: right;">Comparison</th>
+<th>Risk implication</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Traditional free cash flow</td>
+<td style="text-align: right;"><code>$19.64B</code></td>
+<td style="text-align: right;"><code>-23%</code> YoY</td>
+<td>Revenue growth is not converting into equivalent cash growth</td>
+</tr>
+<tr>
+<td>Microsoft Cloud gross margin</td>
+<td style="text-align: right;"><code>65%</code></td>
+<td style="text-align: right;"><code>68%</code> a year earlier</td>
+<td>AI infrastructure and usage are raising cost of revenue</td>
+</tr>
+<tr>
+<td>Company gross margin</td>
+<td style="text-align: right;">Approximately <code>67.2%</code></td>
+<td style="text-align: right;">Approximately <code>68.6%</code> a year earlier</td>
+<td>Down roughly <code>1.4ppt</code></td>
+</tr>
+<tr>
+<td>Intelligent Cloud gross margin</td>
+<td style="text-align: right;">Approximately <code>57.1%</code></td>
+<td style="text-align: right;">Approximately <code>60.4%</code> a year earlier</td>
+<td>Down roughly <code>3.3ppt</code></td>
+</tr>
+<tr>
+<td>Company operating margin</td>
+<td style="text-align: right;">Approximately <code>45.1%</code></td>
+<td style="text-align: right;">Approximately <code>44.9%</code> a year earlier</td>
+<td>Expense leverage is offsetting gross-margin pressure for now</td>
+</tr>
+</tbody>
+</table>
+<p>Microsoft maintained an operating margin near <code>45%</code> partly through scale and cost discipline; total headcount fell <code>2%</code> year over year. Depreciation, energy, and lease costs from new infrastructure will continue entering the income statement over time.</p>
+<h2>EPS Quality: Do Not Stop at <code>$4.74 vs. $4.24</code></h2>
+<p>GAAP EPS was <code>$4.81</code>, while non-GAAP EPS was <code>$4.74</code>. Microsoft's non-GAAP definition removed the impact of OpenAI investments, but not every discrete item.</p>
+<p>The quarter also included:</p>
+<ul>
+<li>A <code>$3.2B</code> gain on the Anthropic investment.</li>
+<li>Lower-than-expected voluntary retirement program costs.</li>
+<li>Partial offsets from severance and Xbox impairment charges.</li>
+<li>A net benefit of approximately <code>$0.27</code> to diluted EPS from these discrete items.</li>
+<li>A <code>$0.07</code> positive impact to GAAP EPS from the OpenAI investment.</li>
+</ul>
+<p>Mechanically subtracting <code>$0.27</code> from <code>$4.74</code> produces an operating-oriented figure near <code>$4.47</code>. That is still above the <code>$4.24</code> consensus on a rough numerical basis, but the beat looks closer to <code>5%</code> than the headline <code>12%</code>; consensus adjustment definitions may also differ, so even this is not perfectly comparable.</p>
+<p>Microsoft explicitly said revenue, operating income, and EPS still beat expectations after adjusting for these items. The beat was therefore not manufactured by investment gains, but the <code>32%</code> GAAP earnings growth materially overstates core operating growth.</p>
+<h2>Why Microsoft Rose While Google and Apple Fell</h2>
+<p>The label “technology stock” is not enough to explain the day's moves. Investors were scoring <strong>how clearly each company's AI spending converts into revenue and cash flow</strong>, not simply buying or selling the sector.</p>
+<h3>Microsoft: Three Direct Monetization Outlets</h3>
+<p>Azure sells compute, Foundry and GitHub sell platforms and developer tools, and Microsoft 365 and Dynamics sell applications and usage. Microsoft produced evidence across Azure growth, RPO, Copilot seats, usage-based revenue, and positive free cash flow in the same quarter.</p>
+<h3>Alphabet: Exceptional Cloud Growth, but Cash Returns Under Pressure</h3>
+<p>Google Cloud grew approximately <code>82%</code> in the prior week's report, but Alphabet burned <code>$5.9B</code> of cash in Q2 and raised its 2026 spending forecast by another <code>$15B</code> (<a href="https://www.reuters.com/business/retail-consumer/alphabets-cash-burn-raises-alarm-big-tech-ai-spending-climbs-2026-07-23/">Reuters</a>).</p>
+<p>Google Cloud is not failing. GOOGL's <code>1.45%</code> intraday decline looked more like a continuation of post-earnings capex concerns. Microsoft delivered a better answer to the same question: free cash flow remained positive and beat expectations, capex did not overshoot again, and Azure accelerated.</p>
+<h3>Apple: At a High, Ahead of Earnings, Without the Same Catalyst</h3>
+<p>Apple had not yet reported its quarter at this article's market-data cutoff. The stock was up approximately <code>25%</code> for the year, had briefly crossed <code>$5T</code> in market capitalization, and had reached an all-time high, while investors were weighing memory shortages, device price increases, progress on Siri and other AI products, and a CEO transition (<a href="https://www.cnbc.com/2026/07/29/tim-cooks-last-earnings-call-comes-at-momentous-time-for-apple-.html">CNBC</a>).</p>
+<p>MSFT entered earnings with low expectations and then raised the fundamental outlook. AAPL was near a high ahead of its own report, with investors de-risking beforehand. Apple's relatively capex-light strategy, external model partnerships, and consumer hardware distribution also make it a different trade from Azure's enterprise-cloud monetization.</p>
+<h3>Meta: The Clearest Same-Day Counterexample</h3>
+<p>Meta's Q2 revenue rose <code>28%</code> to <code>$60.8B</code>, but costs and expenses increased <code>55%</code>, operating income fell <code>8%</code>, and free cash flow collapsed approximately <code>91%</code> to <code>$0.784B</code>. Meta also narrowed its full-year capex range to <code>$130B-$145B</code>, effectively raising the lower bound (<a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx">Meta</a>). Its shares fell <code>9.34%</code> intraday.</p>
+<p><a href="https://www.reuters.com/business/retail-consumer/metas-ai-splurge-lays-bare-its-compute-conundrum-2026-07-30/">Reuters</a> quoted eToro's summary:</p>
+<blockquote>
+<p>“Meta is spending like a hyperscaler without a hyperscaler's business model.”</p>
+</blockquote>
+<p>Meta's advertising business can benefit from AI, but it has not yet sold data-center compute to enterprises at Azure's scale. Investors punished “spending first, monetization still unclear” and rewarded Microsoft for showing that spending already maps to contracts and revenue.</p>
+<h3>Amazon: More Likely a Positive Cloud Read-Through</h3>
+<p>Amazon had not yet released its own Q2 results, but shares rose <code>4.82%</code> intraday. The most plausible, though still inferential, explanation is that Azure's strong demand and supply constraints provided positive industry evidence for AWS. Amazon's cloud business model is more comparable to Microsoft's than those of Apple or Meta.</p>
+<h2>Why the Move Expanded to Approximately 15%</h2>
+<h3>Expectations Were Already Pessimistic</h3>
+<p>Before the report, MSFT was down approximately <code>18%-19%</code> year to date, and Reuters described it as the worst-performing Magnificent Seven stock. The prior close of <code>$390.54</code> was <code>29.7%</code> below the 52-week high of <code>$555.45</code>.</p>
+<p>Investors had been worried about slower Azure growth, OpenAI concentration, Copilot shelfware, AI capex consuming FCF, and AI agents disrupting per-seat SaaS. The quarter did not eliminate every risk, but it delivered better evidence than the bearish scenario on each one.</p>
+<h3>Guidance Mattered More Than Historical Results</h3>
+<p>Management guided to <code>45%</code> Azure growth, a <code>$90.4B</code> companywide revenue midpoint, more than <code>$50B</code> of Q1 capex but below a roughly <code>$56B</code> consensus, and positive FY2027 free cash flow. <a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters</a> recorded the shares up more than <code>8%</code> in after-hours trading after the guidance; the move expanded to roughly <code>15%</code> during the next regular session.</p>
+<p>Investors were not paying for one quarter of extra earnings. They were repricing the next several quarters of Azure growth and return on capital.</p>
+<h3>The Move Was Primarily Multiple Expansion</h3>
+<p>At <code>$450.16</code> and approximately <code>7.427B</code> shares, Microsoft's intraday market capitalization was roughly <code>$3.34T</code>, an increase of approximately <code>$443B</code> from the prior close. A value change that large cannot be explained by the present value of a single quarterly EPS beat. It reflects a reset of the growth path and risk premium.</p>
+<p><a href="https://stockanalysis.com/stocks/msft/statistics/">StockAnalysis/S&amp;P Global Market Intelligence</a> showed a forward P/E near <code>23.0x</code> at the time. Using the same forward EPS denominator at the prior close implies a pre-earnings multiple near <code>20x</code>. Much of the move can be interpreted as a rapid restoration of roughly three P/E turns. Forward EPS estimates will be revised, so this is only an approximation of the mechanism.</p>
+<h2>What Analysts Said</h2>
+<p>The following post-earnings updates were compiled from <a href="https://www.cnbc.com/2026/07/30/analysts-react-to-microsofts-earnings-results-.html">CNBC's excerpts of analyst reports</a>:</p>
+<table>
+<thead>
+<tr>
+<th>Firm</th>
+<th>Rating/target</th>
+<th>Core view</th>
+<th>Reservation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Stifel</td>
+<td>Hold, <code>$400 -&gt; $450</code></td>
+<td>Double-digit FY2027 growth remains sustainable</td>
+<td>Cloud mix pressures margins; limited upside at the intraday price</td>
+</tr>
+<tr>
+<td>Melius</td>
+<td>Hold, <code>$400 -&gt; $465</code></td>
+<td>Azure guidance and Copilot were better than expected</td>
+<td>Positive FCF does not mean cash generation is ample; long-term SaaS concerns remain</td>
+</tr>
+<tr>
+<td>Bank of America</td>
+<td>Buy, <code>$500</code></td>
+<td>Azure at <code>45%</code> and Copilot at <code>30M</code> validate the AI strategy</td>
+<td>Seats still need to translate into usage and profit</td>
+</tr>
+<tr>
+<td>Barclays</td>
+<td>Overweight, <code>$545 -&gt; $512</code></td>
+<td>Azure and Office trends improved</td>
+<td>Lower CY2027 EPS and software-peer multiple</td>
+</tr>
+<tr>
+<td>Evercore ISI</td>
+<td>Outperform, <code>$525 -&gt; $528</code></td>
+<td>Azure upside and positive FCF remove an extreme downside case</td>
+<td>Cash capex may still approach <code>$200B</code></td>
+</tr>
+<tr>
+<td>Citi</td>
+<td>Buy, <code>$575 -&gt; $600</code></td>
+<td>Multi-model strategy and core businesses are accelerating</td>
+<td>Model architecture could still reshape competition</td>
+</tr>
+<tr>
+<td>Goldman Sachs</td>
+<td>Buy, <code>$610 -&gt; $640</code></td>
+<td>Proof points across Azure, AI unit economics, and Copilot</td>
+<td>Return on invested capital still requires repeated evidence</td>
+</tr>
+<tr>
+<td>Wells Fargo</td>
+<td>Overweight, <code>$625 -&gt; $650</code></td>
+<td>Better ROIC visibility supports rerating</td>
+<td>Depends on continued delivery in future quarters</td>
+</tr>
+</tbody>
+</table>
+<p><a href="https://www.morningstar.com/stocks/microsoft-earnings-azure-accelerates-while-capital-expenditure-guidance-is-steady">Morningstar</a> maintained a <code>$600</code> fair value estimate, a Wide Moat rating, and a five-star stock rating. It raised its growth forecast but offset that with lower margins because of higher Azure capex. That is an important reminder: stronger growth and weaker margins can coexist.</p>
+<p>The sell side turned clearly more constructive, but not unanimously so. The most cautious targets of <code>$450-$465</code> were close to the post-earnings intraday price. The bullish <code>$600-$650</code> targets require Azure, Copilot, and ROIC to keep delivering for years.</p>
+<h2>Post-Earnings Valuation: Not Absurd, but No Longer Obviously Cheap</h2>
+<p>Using <code>$450.16</code> as the intraday anchor:</p>
+<table>
+<thead>
+<tr>
+<th>Valuation item</th>
+<th>Calculation</th>
+<th style="text-align: right;">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Market capitalization</td>
+<td><code>$450.16 x 7.427B</code></td>
+<td style="text-align: right;">Approximately <code>$3.34T</code></td>
+</tr>
+<tr>
+<td>FY2026 adjusted P/E</td>
+<td><code>$450.16 / $17.28</code></td>
+<td style="text-align: right;">Approximately <code>26.1x</code></td>
+</tr>
+<tr>
+<td>Forward P/E</td>
+<td>S&amp;P Global compilation</td>
+<td style="text-align: right;">Approximately <code>23.0x</code></td>
+</tr>
+<tr>
+<td>FY2026 traditional FCF</td>
+<td><code>$182.94B CFO - $115.95B cash capex</code></td>
+<td style="text-align: right;"><code>$66.99B</code></td>
+</tr>
+<tr>
+<td>Traditional FCF yield</td>
+<td><code>$66.99B / $3.34T</code></td>
+<td style="text-align: right;">Approximately <code>2.0%</code></td>
+</tr>
+</tbody>
+</table>
+<p>FY2026 adjusted EPS of <code>$17.28</code> removes the OpenAI investment impact, but not all other unusual items. Traditional FCF does not fully capture finance leases and future data-center commitments that will become operating leases. Neither measure is a perfect representation of economic earnings, but both show that the post-report price again assumes sustained growth.</p>
+<h3>Three-Year Sensitivity Analysis</h3>
+<p>The following uses FY2026 adjusted EPS of <code>$17.28</code> and a <code>9%</code> discount rate. It is not a price target; it shows sensitivity to earnings growth and exit multiples:</p>
+<table>
+<thead>
+<tr>
+<th>Scenario</th>
+<th style="text-align: right;">Three-year EPS CAGR</th>
+<th style="text-align: right;">Year-three P/E</th>
+<th style="text-align: right;">Discounted present value</th>
+<th style="text-align: right;">Versus approximately <code>$450</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Bear</td>
+<td style="text-align: right;"><code>8%</code></td>
+<td style="text-align: right;"><code>20x</code></td>
+<td style="text-align: right;">Approximately <code>$336</code></td>
+<td style="text-align: right;"><code>-25%</code></td>
+</tr>
+<tr>
+<td>Base</td>
+<td style="text-align: right;"><code>15%</code></td>
+<td style="text-align: right;"><code>24x</code></td>
+<td style="text-align: right;">Approximately <code>$487</code></td>
+<td style="text-align: right;"><code>+8%</code></td>
+</tr>
+<tr>
+<td>Bull</td>
+<td style="text-align: right;"><code>22%</code></td>
+<td style="text-align: right;"><code>28x</code></td>
+<td style="text-align: right;">Approximately <code>$678</code></td>
+<td style="text-align: right;"><code>+51%</code></td>
+</tr>
+</tbody>
+</table>
+<p>Viewed in reverse, assuming a <code>24x</code> exit P/E in three years and a <code>9%</code> discount rate, a current price near <code>$450</code> requires adjusted EPS to compound at approximately <code>12%</code> annually. That is not unrealistic for Microsoft, but it is far from risk-free given the roughly <code>2%</code> FCF yield, falling cloud margin, and rising capex.</p>
+<h2>The Most Important Bear Arguments</h2>
+<ol>
+<li><strong>The AI buildout has not truly slowed.</strong> The <code>$175B</code> figure primarily reflects accounting classification. FY2027 capex will still grow, and Q1 alone will exceed <code>$50B</code>.</li>
+<li><strong>Depreciation and operating costs may lag.</strong> FY2026 cash PP&amp;E spending of <code>$115.95B</code> was far above depreciation, amortization, and other charges of <code>$38.53B</code>. The cost of new assets has not fully entered the income statement.</li>
+<li><strong>Cloud gross margin remains under pressure.</strong> Microsoft Cloud gross margin fell from <code>68%</code> to <code>65%</code>. If inference and Copilot usage costs grow faster than billing, revenue will not translate proportionally into profit.</li>
+<li><strong>Copilot seats are not full unit economics.</strong> Microsoft has not disclosed absolute Microsoft 365 Copilot revenue, renewal rates, standalone gross margin, or complete usage economics.</li>
+<li><strong>A multi-model strategy also means less exclusivity.</strong> The revised Microsoft-OpenAI agreement allows OpenAI to serve customers across clouds and makes Microsoft's IP license non-exclusive (<a href="https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/">Microsoft</a>).</li>
+<li><strong>Investment gains make earnings more volatile.</strong> Gains from Anthropic and OpenAI have value, but they should not receive the same multiple as recurring operating earnings from Azure or Microsoft 365.</li>
+</ol>
+<h2>What to Watch Over the Next Two Quarters</h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>What bulls need</th>
+<th>What would validate the bear case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Azure Q1 growth</td>
+<td>Near <code>45%</code> constant currency, with H1 acceleration</td>
+<td>Material miss or inability to sustain <code>40%+</code></td>
+</tr>
+<tr>
+<td>Commercial RPO</td>
+<td>Continued <code>20%+</code> growth excluding OpenAI</td>
+<td>Growth becomes concentrated again in a few frontier labs</td>
+</tr>
+<tr>
+<td>Microsoft 365 Copilot</td>
+<td>Seats, usage revenue, and Microsoft 365 ARPU rise together</td>
+<td>Seats rise without usage, renewals, or margins following</td>
+</tr>
+<tr>
+<td>Cloud gross margin</td>
+<td>Stabilizes near <code>65%</code>, with efficiency offsetting investment</td>
+<td>Continues to fall materially</td>
+</tr>
+<tr>
+<td>Capex and FCF</td>
+<td><code>&gt;$50B</code> capex maps to Azure acceleration; FY2027 stays FCF-positive</td>
+<td>Capex guidance is raised, FCF approaches zero, and growth stops accelerating</td>
+</tr>
+<tr>
+<td>Operating margin</td>
+<td>Full-year decline stays below <code>1ppt</code></td>
+<td>Depreciation, energy, and inference costs cause a larger decline</td>
+</tr>
+</tbody>
+</table>
+<h2>Final Assessment</h2>
+<p>The most important feature of Microsoft's quarter was not the size of any one number. It was that, for the first time, three previously conflicting narratives were eased simultaneously in the same quarter:</p>
+<ol>
+<li><strong>Is AI demand real?</strong> Azure acceleration, immediate monetization of new capacity, RPO, and growth outside frontier labs say yes.</li>
+<li><strong>Is AI revenue limited to infrastructure?</strong> Microsoft 365 Copilot, GitHub Copilot, and usage-based billing show that the application layer is beginning to catch up.</li>
+<li><strong>Will AI capex consume Microsoft?</strong> Free cash flow is still declining, but it beat expectations and remained positive, while operating margin stayed stable. The extreme bear case did not materialize.</li>
+</ol>
+<p>That is also why Microsoft diverged from Google, Apple, and Meta. Investors were not trading “technology” as a single category. They were scoring which company can convert AI spending into enterprise revenue and cash flow most quickly and visibly. Microsoft gave the best answer this quarter; Meta the weakest. Alphabet's cloud growth is exceptional but cash returns are under pressure, while Apple had not yet reported and entered the day with much higher expectations.</p>
+<p>The approximately <code>15%</code> move has already shifted Microsoft from “questioned AI capital spender” back toward “recognized AI platform winner.” The next phase cannot rely on the same narrative repair. It requires repeated delivery: Azure near <code>45%</code>, Copilot usage, stable cloud margins, and sufficient free cash flow despite more than <code>$50B</code> of quarterly capex.</p>
+<blockquote>
+<p><strong>The quarter was strong enough to justify a revaluation. It was not strong enough to prove that Microsoft is attractive at any price after the rally.</strong></p>
+</blockquote>
+<h2>Primary Sources</h2>
+<ul>
+<li><a href="https://www.microsoft.com/en-us/Investor/earnings/FY-2026-Q4/press-release-webcast">Microsoft FY2026 Q4 earnings release and financial statements</a></li>
+<li><a href="https://www.microsoft.com/en-us/Investor/earnings/FY-2026-Q4/metrics">Microsoft FY2026 Q4 investor metrics</a></li>
+<li><a href="https://www.microsoft.com/en-us/Investor/events/FY-2026/earnings-fy-2026-q4">Microsoft FY2026 Q4 official earnings-call transcript</a></li>
+<li><a href="https://www.reuters.com/business/microsoft-tops-quarterly-cloud-growth-estimates-easing-spending-concerns-2026-07-29/">Reuters: Microsoft says cash will keep flowing from AI</a></li>
+<li><a href="https://www.cnbc.com/2026/07/29/microsoft-msft-q4-earnings-report-2026.html">CNBC: Microsoft Q4 earnings</a></li>
+<li><a href="https://www.cnbc.com/2026/07/30/analysts-react-to-microsofts-earnings-results-.html">CNBC: post-earnings analyst reactions</a></li>
+<li><a href="https://www.reuters.com/business/retail-consumer/alphabets-cash-burn-raises-alarm-big-tech-ai-spending-climbs-2026-07-23/">Reuters: Alphabet cash burn and AI spending</a></li>
+<li><a href="https://investor.atmeta.com/investor-news/press-release-details/2026/Meta-Reports-Second-Quarter-2026-Results/default.aspx">Meta Q2 2026 official results</a></li>
+<li><a href="https://www.reuters.com/business/retail-consumer/metas-ai-splurge-lays-bare-its-compute-conundrum-2026-07-30/">Reuters: Meta's AI compute conundrum</a></li>
+<li><a href="https://www.cnbc.com/2026/07/29/tim-cooks-last-earnings-call-comes-at-momentous-time-for-apple-.html">CNBC: Apple earnings setup</a></li>
+<li><a href="https://www.morningstar.com/stocks/microsoft-earnings-azure-accelerates-while-capital-expenditure-guidance-is-steady">Morningstar post-earnings assessment</a></li>
+<li><a href="https://stockanalysis.com/stocks/msft/statistics/">StockAnalysis/S&amp;P Global valuation snapshot</a></li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
