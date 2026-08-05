@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>别让 Data Agent 猜数据是什么意思</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>别让 Data Agent 猜数据是什么意思</h1>
+<p><em>OpenAI 展示了如何让 Agent 在 70,000 个数据集里做数据考古。更值得从头构建的，是一套让语义随数据一起产生、被验证和被执行的系统。</em></p>
+<p>日期：2026-08-05</p>
+<p>OpenAI 最近公开了它的内部 <a href="https://openai.com/index/inside-our-in-house-data-agent/">Data Agent</a>。它运行在一个服务 3,500 多名内部用户、横跨 600 PB 数据和 70,000 个数据集的数据平台之上。为了回答一个看似简单的业务问题，它会综合表结构、历史查询、人工注释、生产代码、Slack、文档、长期记忆和运行时数据，再由模型判断该用哪张表、如何 join、应该加什么过滤条件。</p>
+<p>这篇文章最容易让人得出的结论是：Data Agent 的关键是尽可能丰富的 context。</p>
+<p>我的结论刚好相反。</p>
+<p>如果一个 Agent 必须从代码、查询历史、内部文档和对话记忆中重新拼出一张表的含义，那么更根本的问题不是 context 还不够多，而是数据在产生时没有把自己的语义一起交付出来。</p>
+<p>OpenAI 构建的是一套很强的数据考古系统。对于一个已经拥有数万数据集的大型组织，这可能是合理而务实的选择。但如果从头设计，系统的方向应该反过来：<strong>语义不应该在消费数据时由 Agent 事后推断，而应该在数据产生和转换的边界被声明、编译和验证。Agent 应该消费语义，而不应该成为语义的事实来源。</strong></p>
+<h2>OpenAI 解决的是一个真实问题，但不一定是正确的目标架构</h2>
+<p>OpenAI 将自己的关键经验概括为：</p>
+<blockquote>
+<p>“Schemas and query history describe a table’s shape and usage, but its true meaning lives in the code that produces it.”</p>
+</blockquote>
+<p>这句话比“只看 schema 就能生成 SQL”前进了很多。代码确实包含 schema 看不到的过滤、粒度、更新方式和派生逻辑。但代码仍然不是语义本身。</p>
+<p>代码记录的是实现，不一定是意图。它可能包含 bug，也经常只能解释系统做了什么，不能解释为什么这样做。历史查询告诉我们什么做法流行，却不能证明它正确。Slack 和文档可以记录业务背景，但它们可能已经过期。OpenAI 描述的 Agent memory 有用户确认和个人、全局两种 scope，但文章没有交代 global memory 的 owner、review、版本和回滚机制。</p>
+<p>这些信息都很有价值，但它们的价值是作为证据，而不是自动成为权威定义。</p>
+<p>OpenAI 的系统并非完全忽略权威来源。文章提到了人工维护的表注释、关键指标的 canonical definitions，以及用于评测的 golden SQL。真正的问题是这些权威定义仍然分散在文档、代码和人的记忆里，最后需要由 Agent 在运行时检索、解释和组合。至少从公开描述看，我们不知道这些来源冲突时采用什么 precedence，也不知道哪些定义经过了独立于 Agent 的版本化和执行约束。</p>
+<p>这正是架构应该反转的地方。</p>
+<h2>数据产品的输出不应该只有数据</h2>
+<p>一个数据 pipeline 今天通常输出一张表或一组文件。更完整的数据产品应该同时输出：</p>
+<ul>
+<li>数据本身</li>
+<li>机器可读的语义</li>
+<li>producer 与 consumer 之间的 contract</li>
+<li>transformation 和 lineage</li>
+<li>quality、freshness 与兼容性保证</li>
+<li>access policy 和敏感性规则</li>
+<li>当前运行状态及其 provenance</li>
+</ul>
+<p>这些信息不应该只是 catalog 里的一段说明，而应该与生产逻辑一起版本化，并尽可能进入 CI、构建和运行时检查。</p>
+<p>这不是一个全新的方向。Zhamak Dehghani 在 <a href="https://martinfowler.com/articles/data-mesh-principles.html">Data Mesh</a> 中已经主张把数据质量责任推到尽可能靠近源头的位置，让 data product 同时携带代码、数据、metadata 和 semantic declaration，并由平台自动执行 federated governance 制定的规则。Andrew Jones 在 2021 年的 <a href="https://andrew-jones.com/blog/data-contracts/">Data Contracts</a> 文章中也提出，数据应该像 API 一样被设计、记录和版本化，而不是把源数据库的内部结构直接暴露给下游，再让消费者自己推导含义。</p>
+<p>关键变化是：<strong>semantics 本身也应该成为 pipeline 的正式产物。</strong></p>
+<p>例如，一个 <code>orders</code> 数据产品不能只输出若干列。它还需要声明一行代表订单、订单状态还是状态变更；金额是下单金额、支付金额还是确认收入；时间字段使用事件时间还是处理时间；取消、退款、测试账号和内部流量如何处理；哪些变化属于 breaking change。</p>
+<p>当这些定义发生变化时，系统应该像检查 API 兼容性一样检查下游影响，而不是等到 Agent 的查询结果异常后再去阅读代码。</p>
+<h2>我想要的是一个 dbt-like semantic compiler</h2>
+<p>dbt 已经证明了一个重要模式：transformation 可以被声明为一个 DAG，和代码一起接受测试、构建、依赖分析和版本管理。<a href="https://docs.getdbt.com/docs/mesh/govern/model-contracts">dbt model contracts</a> 还可以在构建前检查输出列名和类型是否符合约定；<a href="https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl">dbt Semantic Layer</a> 则把 metric definitions 从 BI 工具移到 modeling layer，并统一处理指标和 join。</p>
+<p>但现有 dbt 仍然不够。</p>
+<p>Model contract 主要保证数据集的 shape，不保证 <code>revenue</code> 的业务含义正确；Semantic Layer 虽然提供 access permissions，但主要覆盖经过建模的指标，没有统一覆盖应用事件产生、流式系统、完整的隐私生命周期、运行时事故和端到端的数据生命周期。更重要的是，它通常从 warehouse transformation 开始，此时上游语义可能已经丢失。</p>
+<p>真正需要的是一个更完整的 semantic compiler：</p>
+<pre><code class="language-text">Producer contracts
+        ↓
+Transformation DAG
+        ↓
+Domain entities and metrics
+        ↓
+Quality, freshness and access policies
+        ↓
+Compiled datasets, lineage, tests and semantic query APIs
+</code></pre>
+<p>它的输入包括 source contract、transformation definition、entity、metric、dimension、policy 和 SLO；输出则包括可以执行的 transformation、兼容性检查、质量测试、lineage、权限判断、文档，以及供人和 Agent 共同使用的 semantic query interface。</p>
+<p>在这个架构里，Agent 不再需要默认在 70,000 个数据集中自由探索。一次查询可以变成：</p>
+<pre><code class="language-text">自然语言问题
+  → 解析为 canonical entity、metric 和 dimension
+  → 生成 semantic query plan
+  → 检查权限和当前数据状态
+  → 由 compiler 生成并执行 SQL
+  → 返回结果、定义、版本和 provenance
+</code></pre>
+<p>LLM 负责理解人的意图和处理开放式问题。给定相同版本的语义定义、查询参数和 policy，semantic compiler 应该产生稳定、可审计的执行逻辑。模型可以选择指标，但不应该每次重新发明指标。</p>
+<h2>已经有人提出过相近方向</h2>
+<p>这个想法的组件并不新，甚至“Agent 应该建立在 semantic layer 上”也已经有人明确写过。</p>
+<p><a href="https://cube.dev/blog/why-agentic-ai-needs-a-semantic-core">Cube 在 2025 年提出</a>，semantic layer 的关键不只是 knowledge graph，而是一个能把高级请求确定性编译为 SQL 的 compiler。Agent 查询的是 approved、governed metrics，而不是自己处理底层 join 和 aggregation。</p>
+<p><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst">Snowflake Cortex Analyst</a> 也明确承认，只给 LLM database schema 并不足以可靠生成 SQL，因为 schema 不包含业务流程和指标定义。它使用 Semantic Views 声明 logical tables、dimensions、facts、metrics 和 relationships，再把这些信息交给模型。</p>
+<p><a href="https://www.databricks.com/blog/semantic-layer-architecture-components-design-patterns-and-ai-integration/">Databricks 对 semantic layer 的描述</a> 更接近这里的论点：让 LLM 查询 governed metric definitions，而不是 raw tables；让定义进入 Git、review 和 CI/CD；让人、BI 工具和 Agent 使用同一个语义来源。</p>
+<p>这些资料大多来自正在销售数据平台或 semantic-layer 产品的厂商，能证明这个方向已有明确的技术实践和多家厂商投入，不能单独证明它已经成为市场共识，或者在所有组织中都优于 OpenAI 的方案。</p>
+<p>因此，这篇文章的主张不能是“我发明了 data contracts”或者“第一次发现 Agent 需要 semantic layer”。更准确的贡献是重新安排这些组件在系统中的权威关系：</p>
+<table>
+<thead>
+<tr>
+<th>信息类型</th>
+<th>例子</th>
+<th>在系统中的位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>声明的语义</td>
+<td>contract、metric、entity、policy</td>
+<td>经过 owner review 的权威定义</td>
+</tr>
+<tr>
+<td>编译产物</td>
+<td>SQL、schema、静态 lineage、测试</td>
+<td>权威定义的可执行结果</td>
+</tr>
+<tr>
+<td>运行时观测</td>
+<td>实际 lineage、freshness、事故、质量结果</td>
+<td>对“现在发生了什么”的带时间证据</td>
+</tr>
+<tr>
+<td>推断信息</td>
+<td>代码分析、query history、table similarity</td>
+<td>发现缺口和检测漂移的辅助证据</td>
+</tr>
+<tr>
+<td>Agent memory</td>
+<td>用户纠正、局部约定、探索结论</td>
+<td>有 scope 的候选知识，不能直接覆盖权威定义</td>
+</tr>
+</tbody>
+</table>
+<p>OpenAI 的六层 context 解决了怎样选择和组合相关信息，文章也强调了减少工具重叠和加强验证。这里想继续追问一个公开描述没有回答的问题：<strong>当信息互相冲突时，谁有资格定义数据的含义？</strong></p>
+<p>这是 context engineering 和 semantic architecture 的区别。</p>
+<h2>“从源头获得”不等于让原始 producer 决定一切</h2>
+<p>把语义推向生产边界，也不能简化成“所有定义都由最上游应用团队负责”。</p>
+<p>一种更合理的分工是：应用团队定义一个 event 为什么产生、字段是什么意思、哪些 invariant 必须成立；transformation owner 定义派生表的 grain、join、过滤和刷新方式；Finance、Product 或其他相关 domain owner 共同确认 recognized revenue、active user、retention 等跨数据源业务指标；跨域 identity、隐私分类和互操作规则则由 federated governance 协调。具体 owner 会随组织结构变化，但不应由 Agent 自己决定。</p>
+<p>因此，“源头”不是唯一的一处原始数据库，而是<strong>每一种新语义被创造的地方</strong>。原始事实有自己的 producer，派生模型有自己的 producer，业务指标也有自己的 producer。每一层都应该对自己新增的意义负责。</p>
+<p>这也意味着系统不应该追求一个包办所有业务语言的全局 canonical model。Data Mesh 强调 bounded context 和 polysemy 是有原因的。同一个 <code>customer</code> 或 <code>revenue</code> 在不同领域可能有合法的不同含义。平台应该统一 identity、contract 形式、版本和执行规则，而不是强迫所有 domain 使用一个定义。</p>
+<h2>最大风险不是技术，而是把它做成 YAML 墓地</h2>
+<p>任何 contract-first 方案最终都会遇到一个现实问题：谁来维护这些定义？</p>
+<p>如果答案是让工程师再写一份不会被执行的 YAML，那么几年之后我们仍然会回到 OpenAI 的做法，让 Codex 阅读真实代码来猜文档哪里过期。dbt 自己也提醒，过早给仍在快速变化的 model 增加 contract 会提高维护和回滚成本。</p>
+<p>所以不是每张临时表、每个探索性指标都需要立刻进入正式 semantic layer。Contract 应优先覆盖稳定、被复用、影响重要决策的边界。一个声明要成为权威，至少应该满足下列条件之一：</p>
+<ul>
+<li>能编译成 transformation 或 query plan</li>
+<li>能在 CI 中验证兼容性</li>
+<li>能在运行时检查质量和 freshness</li>
+<li>能控制访问和政策执行</li>
+<li>有明确 owner、版本和 review 记录</li>
+</ul>
+<p>不能被执行或验证的自然语言描述仍然有价值，但它应该被标为 asserted context，而不是 contract。</p>
+<h2>Data Agent 仍然重要，只是角色应该改变</h2>
+<p>反转架构并不意味着 OpenAI 的六层 context 全部失去价值。</p>
+<p>即使在理想系统里，运行时事故、临时实验、业务背景和新的探索性问题也不可能全部提前编译。声明的 lineage 说明应该发生什么，<a href="https://openlineage.io/docs/">OpenLineage</a> 这类运行时事件则提供一次执行中观测到的 metadata；它仍取决于 instrumentation 是否准确完整，但与设计时声明不能互相替代。Agent 仍然需要解释歧义、发现异常、组合外部知识，并在 contract 尚未覆盖的区域探索。</p>
+<p>但 Agent 更适合承担四个角色：</p>
+<ul>
+<li>在遗留系统中做数据考古，生成 contract 候选</li>
+<li>比较声明、代码和运行时行为，检测 semantic drift</li>
+<li>遇到冲突时指出 provenance，并请求 owner 决策</li>
+<li>在没有正式语义的探索区工作，但明确降低答案置信度</li>
+</ul>
+<p>一条从 query history 或代码中发现的规则，不应该悄悄写进 global memory 并成为新的事实来源。它应该变成一个可 review 的变更：由 owner 确认，进入 semantic definition，通过测试后发布。</p>
+<p>这样，Agent 的学习闭环不再是“模型记住了更多东西”，而是“系统把一次发现转化成了可治理的知识”。</p>
+<h2>真正应该从头重建的是什么</h2>
+<p>对于已有 70,000 个数据集的组织，物理上推倒重来通常不现实。OpenAI 的数据考古方案可以帮助它逐步识别高价值表、补齐 contract，并把隐含语义迁移到正式的 control plane。</p>
+<p>但如果讨论目标架构，我们确实应该从头重建一件东西：<strong>数据语义的控制面。</strong></p>
+<p>它不一定替换 warehouse、lakehouse、Spark、Airflow 或 dbt。它重新规定这些系统必须在边界上交付什么，以及 Agent 可以把什么当成真相。它让 declared semantics、compiled behavior、runtime observation 和 inferred evidence 各自拥有清楚的位置。</p>
+<p>OpenAI 的文章更侧重展示如何让模型在既有数据世界里检索、验证和组合语义。下一步不应该只是继续改进这种能力，也应该让数据系统本身变得更容易理解、更难误用，更能解释自己。</p>
+<p><strong>模型不应该负责学会整个公司的数据架构。公司的数据架构应该主动把自己描述给模型，并且证明这份描述仍然是真的。</strong></p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Stop Making Data Agents Guess What Data Means</h1>
+<p><em>OpenAI showed how an agent can perform data archaeology across 70,000 datasets. A better clean-sheet architecture would make semantics something the data system produces, validates, and executes.</em></p>
+<p>Date: August 5, 2026</p>
+<p>OpenAI recently published an inside look at its internal <a href="https://openai.com/index/inside-our-in-house-data-agent/">Data Agent</a>. The agent operates on a data platform that serves more than 3,500 internal users and spans 600 petabytes of data across 70,000 datasets. To answer a seemingly simple business question, it combines schemas, historical queries, human annotations, production code, Slack, documents, long-term memory, and live system state. The model then decides which tables to use, how to join them, and which filters to apply.</p>
+<p>The obvious lesson is that a Data Agent needs as much context as possible.</p>
+<p>I came away with the opposite conclusion.</p>
+<p>If an agent must reconstruct the meaning of a table from code, query history, internal documents, and conversational memory, the deeper problem is not a lack of context. The problem is that the data was produced without its semantics attached.</p>
+<p>OpenAI has built a powerful data archaeology system. For a large organization with tens of thousands of existing datasets, that may be exactly the pragmatic solution it needs. But a clean-sheet architecture should reverse the direction: <strong>semantics should not be inferred after the fact when data is consumed. They should be declared, compiled, and validated at the boundaries where data is produced and transformed. The agent should consume semantics, not become their source of truth.</strong></p>
+<h2>OpenAI Solves a Real Problem, but Not Necessarily the Right Target Architecture</h2>
+<p>OpenAI summarizes one of its most important lessons this way:</p>
+<blockquote>
+<p>“Schemas and query history describe a table’s shape and usage, but its true meaning lives in the code that produces it.”</p>
+</blockquote>
+<p>That is a major improvement over the idea that schema alone is enough for reliable text-to-SQL. Production code does contain filters, grain, refresh behavior, and derivation logic that schemas cannot express. But code still is not meaning itself.</p>
+<p>Code records implementation, not necessarily intent. It can contain bugs, and it often explains what a system does without explaining why. Query history tells us what is popular, not what is correct. Slack and documents preserve business context, but they can become stale. OpenAI's Agent memory requires user confirmation and supports personal and global scopes, but the article does not explain ownership, review, versioning, or rollback for global memory.</p>
+<p>All of these sources are valuable as evidence. That does not automatically make them authoritative definitions.</p>
+<p>OpenAI does not ignore authoritative sources. Its article mentions domain-expert table annotations, canonical definitions for key metrics, and golden SQL used in evaluation. The issue is that these definitions remain distributed across documents, code, and institutional memory, leaving the agent to retrieve, interpret, and combine them at runtime. From the public description, we do not know the precedence rules when those sources conflict, or which definitions are versioned and enforced independently of the agent.</p>
+<p>That is the part of the architecture I would reverse.</p>
+<h2>A Data Product Should Produce More Than Data</h2>
+<p>A data pipeline usually outputs a table or a collection of files. A complete data product should produce all of the following:</p>
+<ul>
+<li>The data itself</li>
+<li>Machine-readable semantics</li>
+<li>A contract between producer and consumer</li>
+<li>Transformations and lineage</li>
+<li>Quality, freshness, and compatibility guarantees</li>
+<li>Access policies and sensitivity rules</li>
+<li>Current runtime state with provenance</li>
+</ul>
+<p>This information should not live only as prose in a catalog. It should be versioned alongside production logic and, wherever possible, enforced through CI, build-time checks, and runtime monitoring.</p>
+<p>This direction is not new. In her writing on <a href="https://martinfowler.com/articles/data-mesh-principles.html">Data Mesh</a>, Zhamak Dehghani argues that accountability for data quality should move as close to the source as possible. A data product carries code, data, metadata, and semantic declarations, while the platform automatically enforces rules established through federated governance. Andrew Jones made a related argument in his 2021 essay on <a href="https://andrew-jones.com/blog/data-contracts/">Data Contracts</a>: data should be designed, documented, and versioned like an API, rather than exposing the internal structure of a source database and forcing every downstream consumer to reconstruct its meaning.</p>
+<p>The important next step is to make <strong>semantics a first-class output of the pipeline.</strong></p>
+<p>An <code>orders</code> data product, for example, should not merely expose columns. It should declare whether one row represents an order, the current state of an order, or a state transition; whether an amount means order amount, payment amount, or recognized revenue; whether timestamps use event time or processing time; how cancellations, refunds, test accounts, and internal traffic are handled; and which changes are breaking changes.</p>
+<p>When any of those definitions change, the system should analyze downstream impact the same way it checks API compatibility. It should not wait until an agent produces a suspicious result and then send the model back into the codebase.</p>
+<h2>What I Want Is a dbt-Like Semantic Compiler</h2>
+<p>dbt has already demonstrated an important pattern: transformations can form a declared DAG and participate in testing, builds, dependency analysis, and version control. <a href="https://docs.getdbt.com/docs/mesh/govern/model-contracts">dbt model contracts</a> can check before a build that output column names and types match an agreed shape. The <a href="https://docs.getdbt.com/docs/use-dbt-semantic-layer/dbt-sl">dbt Semantic Layer</a> moves metric definitions out of individual BI tools and into the modeling layer, centralizing those definitions and automatically handling joins.</p>
+<p>But existing dbt is not enough.</p>
+<p>A model contract primarily guarantees shape. It does not prove that the business meaning of <code>revenue</code> is correct. The Semantic Layer supports access permissions, but its main scope is modeled metrics. It does not provide one unified system for application event production, streaming data, the full privacy lifecycle, runtime incidents, and end-to-end data lifecycle management. It also usually starts at the warehouse transformation layer, after important upstream meaning may already have been lost.</p>
+<p>What we need is a broader semantic compiler:</p>
+<pre><code class="language-text">Producer contracts
+        ↓
+Transformation DAG
+        ↓
+Domain entities and metrics
+        ↓
+Quality, freshness and access policies
+        ↓
+Compiled datasets, lineage, tests and semantic query APIs
+</code></pre>
+<p>Its inputs would include source contracts, transformation definitions, entities, metrics, dimensions, policies, and SLOs. Its outputs would include executable transformations, compatibility checks, quality tests, lineage, access decisions, documentation, and a semantic query interface shared by humans and agents.</p>
+<p>In this architecture, the agent would no longer need to explore 70,000 datasets by default. A query could follow this path:</p>
+<pre><code class="language-text">Natural-language question
+  → Resolve canonical entities, metrics, and dimensions
+  → Build a semantic query plan
+  → Check permissions and current data state
+  → Compile and execute SQL
+  → Return results, definitions, versions, and provenance
+</code></pre>
+<p>The LLM would interpret human intent and handle open-ended questions. Given the same versioned semantic definitions, query parameters, and policies, the semantic compiler should produce stable, auditable execution logic. The model can select a metric, but it should not redefine that metric on every query.</p>
+<h2>Others Have Proposed Similar Directions</h2>
+<p>The components of this idea are not new. Even the narrower claim that agents should be built on semantic layers has already been made explicitly.</p>
+<p><a href="https://cube.dev/blog/why-agentic-ai-needs-a-semantic-core">Cube argued in 2025</a> that what distinguishes a semantic layer from a generic knowledge graph is a compiler that can deterministically translate a high-level request into SQL. In this model, the agent queries approved, governed metrics rather than implementing joins and aggregations itself.</p>
+<p><a href="https://docs.snowflake.com/en/user-guide/snowflake-cortex/cortex-analyst">Snowflake Cortex Analyst</a> similarly acknowledges that database schemas alone are insufficient for reliable text-to-SQL because they do not contain business process definitions or metric logic. Snowflake uses Semantic Views to define logical tables, dimensions, facts, metrics, and relationships before giving that information to the model.</p>
+<p><a href="https://www.databricks.com/blog/semantic-layer-architecture-components-design-patterns-and-ai-integration/">Databricks' description of semantic-layer architecture</a> comes even closer to this argument: let an LLM query governed metric definitions rather than raw tables; version definitions in Git and subject them to review and CI/CD checks; and give humans, BI tools, and agents the same semantic source.</p>
+<p>Most of these materials come from vendors selling data-platform or semantic-layer products. They demonstrate concrete technical practice and investment by multiple vendors. They do not prove that the approach already represents market consensus or that it outperforms OpenAI's architecture in every organization.</p>
+<p>The claim here, then, is not that data contracts are new or that no one has noticed agents need semantic layers. A more accurate characterization of the contribution is to rearrange the authority relationships between these components:</p>
+<table>
+<thead>
+<tr>
+<th>Information type</th>
+<th>Examples</th>
+<th>Role in the system</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Declared semantics</td>
+<td>Contracts, metrics, entities, policies</td>
+<td>Owner-reviewed authoritative definitions</td>
+</tr>
+<tr>
+<td>Compiled artifacts</td>
+<td>SQL, schemas, static lineage, tests</td>
+<td>Executable results of authoritative definitions</td>
+</tr>
+<tr>
+<td>Runtime observations</td>
+<td>Observed lineage, freshness, incidents, quality results</td>
+<td>Time-bound evidence of what is happening now</td>
+</tr>
+<tr>
+<td>Inferred information</td>
+<td>Code analysis, query history, table similarity</td>
+<td>Supporting evidence for finding gaps and detecting drift</td>
+</tr>
+<tr>
+<td>Agent memory</td>
+<td>User corrections, local conventions, exploratory conclusions</td>
+<td>Scoped candidate knowledge that cannot directly override authoritative definitions</td>
+</tr>
+</tbody>
+</table>
+<p>OpenAI's six layers of context address how to select and combine relevant information. The article also emphasizes reducing overlapping tools and strengthening validation. I want to push one step further and ask a question its public description does not answer: <strong>When those sources conflict, who has the authority to define what the data means?</strong></p>
+<p>That is the distinction between context engineering and semantic architecture.</p>
+<h2>“At the Source” Does Not Mean the Original Producer Decides Everything</h2>
+<p>Moving semantics toward production boundaries should not be simplified into giving the most upstream application team authority over every definition.</p>
+<p>A more reasonable division of responsibility is for application teams to define why an event is emitted, what its fields mean, and which invariants must hold; for transformation owners to define the grain, joins, filters, and refresh behavior of derived models; for Finance, Product, or other relevant domain owners to agree on cross-source business metrics such as recognized revenue, active users, and retention; and for federated governance to coordinate cross-domain identity, privacy classification, and interoperability rules. The exact owners will vary by organization, but the agent should not choose them on its own.</p>
+<p>The “source” is therefore not one original database. It is <strong>the boundary where each new piece of meaning is created.</strong> Raw facts have a producer. Derived models have a producer. Business metrics also have a producer. Each layer should own the meaning it introduces.</p>
+<p>This also means the system should not force all business language into one global canonical model. Data Mesh emphasizes bounded contexts and polysemy for a reason. <code>customer</code> or <code>revenue</code> can have legitimately different meanings across domains. A platform should standardize identity, contract formats, versioning, and execution rules without forcing every domain to adopt one universal definition.</p>
+<h2>The Biggest Risk Is Building a YAML Graveyard</h2>
+<p>Every contract-first architecture eventually runs into the same practical question: who maintains the definitions?</p>
+<p>If the answer is that engineers must write another YAML file that nothing executes, the organization will eventually return to OpenAI's approach and ask Codex to inspect real code to determine which documentation is stale. dbt itself warns that applying contracts too early to rapidly changing models can increase maintenance costs and make rollbacks harder.</p>
+<p>Not every temporary table or exploratory metric needs to enter the formal semantic layer immediately. Contracts should focus first on stable, reused boundaries that affect important decisions. For a declaration to become authoritative, it should satisfy at least one of these conditions:</p>
+<ul>
+<li>It compiles into a transformation or query plan</li>
+<li>CI can validate its compatibility</li>
+<li>Runtime systems can monitor its quality and freshness</li>
+<li>It controls access or policy enforcement</li>
+<li>It has a clear owner, version, and review history</li>
+</ul>
+<p>Natural-language descriptions that cannot be executed or verified still have value. They should be labeled asserted context, not contracts.</p>
+<h2>The Data Agent Still Matters, but Its Role Should Change</h2>
+<p>Reversing the architecture does not make OpenAI's six context layers irrelevant.</p>
+<p>Even an ideal system cannot precompile every incident, temporary experiment, piece of business context, or exploratory question. Declared lineage describes what should happen. Runtime events from systems such as <a href="https://openlineage.io/docs/">OpenLineage</a> provide metadata observed during a particular execution. Those observations still depend on accurate and complete instrumentation, but runtime observations and design-time declarations cannot replace each other. Agents will still need to interpret ambiguity, find anomalies, combine external knowledge, and explore areas not yet covered by contracts.</p>
+<p>The agent is better suited to four roles:</p>
+<ul>
+<li>Perform data archaeology in legacy systems and propose contract candidates</li>
+<li>Compare declarations, code, and runtime behavior to detect semantic drift</li>
+<li>Surface provenance when sources conflict and request a decision from the appropriate owner</li>
+<li>Explore areas without formal semantics while explicitly lowering confidence</li>
+</ul>
+<p>A rule discovered in query history or source code should not silently enter global memory and become a new source of truth. It should become a reviewable change: confirmed by an owner, added to the semantic definition, tested, and then published.</p>
+<p>The learning loop then stops meaning “the model remembered more things.” It becomes “the system converted a discovery into governed knowledge.”</p>
+<h2>What Actually Needs Rebuilding</h2>
+<p>For an organization with 70,000 existing datasets, physically starting over is usually unrealistic. OpenAI's data archaeology system could help identify high-value datasets, fill contract gaps, and migrate implicit meaning into a formal control plane over time.</p>
+<p>But if we are discussing the target architecture, there is one thing we should rebuild from first principles: <strong>the control plane for data semantics.</strong></p>
+<p>It does not have to replace the warehouse, lakehouse, Spark, Airflow, or dbt. It changes what those systems must deliver at their boundaries and what an agent is allowed to treat as authoritative. It gives declared semantics, compiled behavior, runtime observations, and inferred evidence distinct roles.</p>
+<p>OpenAI's article focuses on helping a model retrieve, validate, and combine meaning in an existing data environment. The next step should not be only to improve that ability. We should also make the data system itself easier to understand, harder to misuse, and better able to explain itself.</p>
+<p><strong>The model should not be responsible for learning the company's entire data architecture. The data architecture should describe itself to the model, and prove that the description is still true.</strong></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
