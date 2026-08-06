@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Open in OpenCode</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      font-family: ui-monospace, "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+      background: #11130f;
+      color: #eff2e8;
+    }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(178, 220, 126, 0.16), transparent 36rem),
+        #11130f;
+    }
+    main {
+      width: min(34rem, calc(100% - 3rem));
+      border: 1px solid #4a5340;
+      background: rgba(25, 28, 23, 0.92);
+      padding: 2rem;
+      box-shadow: 0.75rem 0.75rem 0 #090a08;
+    }
+    .eyebrow {
+      color: #b2dc7e;
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    h1 {
+      margin: 0.7rem 0 0.8rem;
+      font-size: clamp(1.65rem, 6vw, 2.6rem);
+      line-height: 1.05;
+    }
+    p {
+      color: #bfc5b8;
+      line-height: 1.6;
+    }
+    .actions {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 1.5rem;
+    }
+    a {
+      display: block;
+      padding: 0.9rem 1rem;
+      border: 1px solid #b2dc7e;
+      color: #11130f;
+      background: #b2dc7e;
+      text-decoration: none;
+      font-weight: 700;
+      text-align: center;
+    }
+    a.secondary {
+      color: #eff2e8;
+      background: transparent;
+      border-color: #4a5340;
+    }
+    [hidden] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">OpenCode daily briefing</div>
+    <h1>Continue this session</h1>
+    <p id="status">Open the iOS client, or continue in the browser.</p>
+    <div class="actions" id="actions" hidden>
+      <a id="app-link" href="#">Open iOS App</a>
+      <a class="secondary" id="web-link" href="#">Continue on Web</a>
+    </div>
+  </main>
+  <script>
+    const params = new URLSearchParams(window.location.search)
+    const session = params.get("session") || ""
+    const directory = params.get("directory") || ""
+    const validToken = /^[A-Za-z0-9_-]+$/
+
+    if (validToken.test(session) && validToken.test(directory)) {
+      document.getElementById("app-link").href = `opencode://session/${encodeURIComponent(session)}`
+      document.getElementById("web-link").href = `https://code.simin.you/${directory}/session/${encodeURIComponent(session)}`
+      document.getElementById("actions").hidden = false
+    } else {
+      document.getElementById("status").textContent = "This session link is invalid."
+    }
+  </script>
+</body>
+</html>
