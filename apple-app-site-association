@@ -1,0 +1,17 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "9EBAJFD7FH.you.simin.OpenCodeClient"
+        ],
+        "components": [
+          {
+            "/": "/opencode-session.html",
+            "comment": "Open a daily briefing session in the OpenCode iOS client"
+          }
+        ]
+      }
+    ]
+  }
+}
