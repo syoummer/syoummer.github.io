@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>美团盈利回来了，但核心业务 7.9% 还不能叫正常 Margin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>美团盈利回来了，但核心业务 7.9% 还不能叫正常 Margin</h1>
+<blockquote>
+<p>日期：2026-08-31<br />
+本文仅讨论公司经营与盈利结构，不构成投资建议。</p>
+</blockquote>
+<p>美团在 2026 年第二季度重新盈利了，但这句话只说对了一半。</p>
+<p>第二季度收入达到 1,046.43 亿元，经营利润 26.91 亿元，净利润 21.55 亿元，几个主要利润口径都已转正；把时间拉长到上半年，公司仍净亏损 46.72 亿元。<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">官方财报</a> 一边是单季拐点，一边是半年亏损，这正是判断美团盈利能力时最重要的张力。</p>
+<p>我的判断是：<strong>2026Q2 是真实的经营拐点，但不是历史高利润率的回归。</strong> 比集团 2.6% 经营利润率更值得看的，是核心本地商业 7.9% 的分部经营利润率。本文标题中的 7.9% 指的正是这个核心业务口径，不是集团 margin。它说明外卖、闪购、到店和酒旅组成的核心利润池已经重新转正，却仍明显低于 2024 年的水平。</p>
+<p>未来可持续水平很可能低于 2024 年。骑手保障提高了长期成本底线；更重的即时零售 1P 结构可能稀释报表 margin；到店竞争带来持续但可调节的投入压力；海外扩张则继续影响集团利润。最可信的修复来源是补贴正常化、广告与商户服务、会员经营和配送密度，而非收入总量本身。</p>
+<h2>一张表看清 Q2</h2>
+<p>单位：人民币亿元；margin 均按收入计算。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th style="text-align: right;">2026Q2</th>
+<th style="text-align: right;">Margin</th>
+<th>应如何理解</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>集团收入</td>
+<td style="text-align: right;">1,046.43</td>
+<td style="text-align: right;">100.0%</td>
+<td>同比增长 14.4%</td>
+</tr>
+<tr>
+<td>集团经营利润</td>
+<td style="text-align: right;">26.91</td>
+<td style="text-align: right;">2.6%</td>
+<td>IFRS 口径转正</td>
+</tr>
+<tr>
+<td>集团净利润</td>
+<td style="text-align: right;">21.55</td>
+<td style="text-align: right;">2.1%</td>
+<td>H1 仍净亏损 46.72 亿元</td>
+</tr>
+<tr>
+<td>经调整净利润</td>
+<td style="text-align: right;">25.24</td>
+<td style="text-align: right;">2.4%</td>
+<td>不等于经营现金流</td>
+</tr>
+<tr>
+<td>核心本地商业收入</td>
+<td style="text-align: right;">715.31</td>
+<td style="text-align: right;"></td>
+<td>核心利润池</td>
+</tr>
+<tr>
+<td>核心本地商业经营利润</td>
+<td style="text-align: right;">56.68</td>
+<td style="text-align: right;">7.9%</td>
+<td>判断国内主业修复的关键口径</td>
+</tr>
+<tr>
+<td>新业务收入</td>
+<td style="text-align: right;">331.12</td>
+<td style="text-align: right;"></td>
+<td>同比增长 25.0%</td>
+</tr>
+<tr>
+<td>新业务经营亏损</td>
+<td style="text-align: right;">-17.39</td>
+<td style="text-align: right;">-5.3%</td>
+<td>仍在消耗核心利润</td>
+</tr>
+</tbody>
+</table>
+<p>以上均来自<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">美团 2026Q2 及 H1 官方公告</a>。核心与新业务的分部利润合计 39.29 亿元，再扣除 12.38 亿元未分配项目，才得到集团经营利润 26.91 亿元。因此，56.68 亿元不能当成集团利润，2.6% 也不能单独代表国内主业的盈利能力。</p>
+<p>盈利质量还要多看两步。第一，Q2 经营现金流为 97.33 亿元，但 H1 只有 27.19 亿元，反映出明显的季度波动和营运资金影响，不能把 Q2 单季简单年化。第二，Q2 集团经营利润包含 34.94 亿元其他收益净额，主要与投资相关；机械剔除这项收益，集团经营结果约为亏损 8.03 亿元。<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">官方财报</a></p>
+<p>这与核心本地商业赚到 56.68 亿元并不矛盾。前者是集团利润表口径，后者是扣除新业务和未分配项目之前的分部口径，未分配项目还包含部分其他收益及总部费用等调节项。更准确的结论是：核心业务修复真实存在，但集团转盈仍受到投资相关其他收益支持，利润质量需要连续几个季度验证。</p>
+<h2>为什么真正要看 7.9%</h2>
+<p>集团 margin 混合了三件方向相反的事：国内核心业务修复、新业务持续亏损，以及未分配项目与其他收益。核心本地商业则把外卖、闪购、到店和酒店旅游放在一起，更接近美团现有商业网络的盈利底盘。</p>
+<p>7.9% 的意义不在于它有多高，而在于核心业务从价格战造成的深度亏损中重新转正。这个指标从 2024Q2 的 25.1%，跌至 2025Q3 的 -21.0%，到 2026Q2 回到 7.9%。<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0326/2026032600964.pdf">2025 年业绩公告</a>、<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">2026Q2 官方公告</a> 如此大的摆幅表明，美团不能只按稳定的平台公司理解。它是高毛利平台服务、重履约配送、补贴竞争和新业务投入的组合体，竞争强度变化会迅速穿透利润表。</p>
+<p>这也解释了为什么收入增长不是最可靠的盈利指标。Q2 商品销售同比增长 48.8%，显著快于集团收入。1P 自营商品按总额确认，能抬高收入，却同时带来采购、库存、仓储、损耗、配送和营运资本需求。因此 1P mix 上升时，收入可能更快增长，表观毛利率和现金效率却未必改善。<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">官方财报</a></p>
+<h2>三层盈利模型</h2>
+<p>理解美团 margin，最好把业务拆成三层，而不是统称为“抽佣平台”。</p>
+<p><strong>第一层是高毛利平台服务。</strong> 到店、酒店旅游、交易佣金、在线营销和商户数字化服务通常不承担商品本身的采购成本，广告的边际履约成本也较低。这一层最容易把交易规模转成利润，也是未来利润质量最高的来源。<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042400179.pdf">2025 年完整年报</a></p>
+<p><strong>第二层是即时配送。</strong> 外卖、闪购和 Keeta 收取配送及交易相关收入，同时承担骑手、调度、运力激励、保险、客服和服务保障。单笔经济取决于订单密度、合单效率、配送距离、天气、客单价、补贴和广告变现。规模只有在提高密度、改善订单结构或降低单均成本时，才会变成 margin。</p>
+<p><strong>第三层是自营零售。</strong> 小象超市及部分自营药品、酒水和食杂业务要承担采购、库存、前置仓、损耗与履约。它们可以带来更大的收入和更可控的供给，但利润依赖采购规模、私牌、预测准确率、仓效和库存周转。它与轻资产广告收入不是同一种增长。</p>
+<p>这三层并不等于财报中的三个分部。国内外卖、闪购、到店和酒旅大多落在核心本地商业；Keeta 和小象超市主要落在新业务；闪购中的部分 1P 商品销售又属于核心本地商业。7.9% 因而是多个轻重模式混合后的核心分部结果，不是任何单一业务的 margin。</p>
+<p>三层之间确实互相增强：外卖提供频次，配送网络服务闪购，会员促进跨品类购买，到店和广告贡献高毛利。但公开披露无法量化到店酒旅究竟“补贴”了多少配送成本，也无法证明每单配送费是否覆盖骑手成本。业务互补是合理判断，可量化的会计交叉补贴则不是已披露事实。</p>
+<h2>Q2 修复了什么</h2>
+<p>核心 margin 的历史路径比单点数字更有信息量。</p>
+<table>
+<thead>
+<tr>
+<th>季度</th>
+<th style="text-align: right;">核心本地商业经营利润率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024Q2</td>
+<td style="text-align: right;">25.1%</td>
+</tr>
+<tr>
+<td>2025Q1</td>
+<td style="text-align: right;">21.1%</td>
+</tr>
+<tr>
+<td>2025Q2</td>
+<td style="text-align: right;">5.7%</td>
+</tr>
+<tr>
+<td>2025Q3</td>
+<td style="text-align: right;">-21.0%</td>
+</tr>
+<tr>
+<td>2025Q4</td>
+<td style="text-align: right;">-15.5%</td>
+</tr>
+<tr>
+<td>2026Q1</td>
+<td style="text-align: right;">-3.2%</td>
+</tr>
+<tr>
+<td>2026Q2</td>
+<td style="text-align: right;">7.9%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>财务事实：</strong> 核心业务重新盈利，集团毛利和经营利润也较 Q1 明显改善。<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">官方财报</a></p>
+<p><strong>公司归因：</strong> Q2 改善主要来自用户激励减少，以及有利季节性令单均配送成本下降。<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">官方财报</a></p>
+<p><strong>管理层补充：</strong> 业绩会上，管理层称即时配送 unit economics 已转正，但行业补贴仍显著高于 2024 年，正常化还需要几个季度。这里的单位经济判断是管理层表述，公司没有披露单均数值。<a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">业绩会转录</a></p>
+<p><strong>分析判断：</strong> 这更像价格战最差阶段过去后的均值回归，而非商业模式突然变轻。真正可持续的改善，要来自更少的普遍补贴、更精准的会员权益、更高的广告和商户服务变现，以及订单密度带来的单均履约效率。只要增长仍主要依赖发券或低毛利 1P 销售，收入扩张就不会自动变成利润扩张。</p>
+<h2>为什么 2024 年不宜作为近期锚</h2>
+<p>2024Q2 的 25.1% 和 2024 全年的 20.9%，更像低竞争环境下的上限参照，不是未来两年的默认水平。核心分部和集团还分别面对几类不同压力。</p>
+<p>一是骑手保障。公司称职业伤害保障截至 2026 年 8 月 28 日已覆盖全国；管理层同时表示全国推广从 7 月 1 日开始，将为 Q3 增加成本。<a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">业绩会转录</a> 这类保障及其他骑手福利提高了核心业务的长期成本底线。</p>
+<p>二是即时零售 mix。商品销售 Q2 增长 48.8%，说明增长重心正在向更重的 1P 模式偏移，它可能稀释核心分部的报表 margin。三是到店竞争。抖音争夺的是本地消费入口与商户广告预算，美团需要持续但可调节的投入，而非只等外卖补贴退潮。海外扩张则主要落在新业务，影响集团利润率，而不是核心本地商业 7.9% 本身。</p>
+<p>监管压低极端价格战的概率，却不会消除竞争。<a href="https://www.samr.gov.cn/xw/zj/art/2026/art_a41bece706204a9d839c9d5c33fc0b06.html">市场监管总局</a>对“拼补贴、拼价格、控流量”的关注，以及行业折扣收缩，是 Q2 修复的重要背景。<a href="https://www.reuters.com/business/retail-consumer/meituan-swings-profit-q2-price-wars-subside-2026-08-28/">Reuters</a>报道也显示阿里和京东带来的即时零售竞争并未消失。抖音对本地消费入口和商户预算的争夺，则是另一条竞争战线。近期更合理的问题不是“何时回到 20% 以上”，而是“全国骑手保障推广后，在持续竞争下，7.9% 能否稳定并继续上行”。</p>
+<h2>下一轮增长靠什么</h2>
+<p><strong>闪购、食杂和待交割的叮咚交易。</strong> 闪购可以提高配送网络利用率，以更高客单价改善单笔经济，并承接品牌广告预算；小象超市和叮咚则强化采购、私牌与仓网能力。边界必须说清：美团签署的是附条件交易，截至 2026 年 8 月 20 日仍待交割，叮咚没有被美团收购完成，也没有并表。<a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0205/2026020501302.pdf">交易公告</a>、<a href="https://www.sec.gov/Archives/edgar/data/1854545/000119312526359862/ddl_2026q2_er.htm">叮咚披露</a> 即使交割，其价值也更偏供应链能力，不应预设为短期利润收购。</p>
+<p><strong>会员、广告与商户服务。</strong> 会员的核心价值不是单独收取会员费，而是把面向所有人的补贴转为针对高价值用户的权益，提高外卖、闪购、酒店和到店之间的频次与交叉销售。更好的交易标签还可改善广告 ROI。相比继续扩大低毛利交易额，这条路径更可能提升 margin。</p>
+<p><strong>Keeta。</strong> <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">Q2 官方公告</a>只确认香港稳定盈利；沙特在 2026 年 7 月转正来自管理层在业绩会的表述，发生在 Q2 之后。<a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">业绩会转录</a> 这不能推出 Keeta 整体、中东整体或巴西已经盈利。海外业务应按单城留存、密度和持续盈利来判断，而不是按进入国家数判断。</p>
+<p><strong>AI。</strong> 美团将 AI 用于搜索推荐、广告匹配、客服、研发和商户运营，并表示不打算成为“token factory”。<a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">业绩会转录</a> 在公司尚未披露独立模型收入、付费商户、增量交易或成本节省金额前，AI 应放在效率层，而非作为独立收入故事。</p>
+<h2>未来 4 至 8 个季度监控表</h2>
+<p>最优先的验证项是前五个，它们直接决定 7.9% 能否成为可持续水平。叮咚、Keeta 和 AI 更适合作为增长期权跟踪，暂不放进核心 margin 验证表。</p>
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>当前基线</th>
+<th>要验证的问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>核心本地商业经营利润率</td>
+<td>2026Q2 为 7.9%</td>
+<td>全国骑手保障推广后能否稳定，是否向 10% 以上修复</td>
+</tr>
+<tr>
+<td>即时配送 UE</td>
+<td>管理层称 Q2 转正，未披露数值</td>
+<td>Q3 旺季、天气与保障成本加入后是否仍为正</td>
+</tr>
+<tr>
+<td>商户服务收入</td>
+<td>Q2 同比增长 6.6%</td>
+<td>广告和佣金能否快于低毛利收入增长</td>
+</tr>
+<tr>
+<td>商品销售</td>
+<td>Q2 同比增长 48.8%</td>
+<td>1P 扩张时毛利、库存和营运资本是否恶化</td>
+</tr>
+<tr>
+<td>新业务亏损率</td>
+<td>Q2 为 -5.3%</td>
+<td>海外与食杂增长时能否继续收窄</td>
+</tr>
+<tr>
+<td>到店酒旅</td>
+<td>未单独披露 margin</td>
+<td>增加竞争投入后的利润回落幅度</td>
+</tr>
+<tr>
+<td>经营现金流与自由现金流</td>
+<td>H1 OCF 为 27.19 亿元</td>
+<td>能否连续多个季度为正，而非依赖 Q2 单季</td>
+</tr>
+</tbody>
+</table>
+<h2>有边界的结论</h2>
+<p>2026Q2 显示美团核心商业模式在这一季度仍能赚钱，却不足以证明旧利润率已经回来。7.9% 更适合判断国内核心业务的修复，集团 2.6% 则完整反映了新业务和未分配项目的稀释。两者回答的是不同问题，不能互相替代。</p>
+<p>未来最可信的盈利修复，不需要收入突然加速。它需要补贴下降后用户与商户仍然留存，广告和商户服务重新成为增量利润，会员把普遍补贴变得更精准，配送密度抵消部分保障成本，同时 1P、海外和到店投入保持纪律。如果这些条件连续兑现，美团可以形成一个低于 2024 年峰值、但更可持续的盈利中枢；如果补贴战重启，或到店、食杂与海外同时加码，margin 仍会显著波动。</p>
+<p>所以现在可以说盈利回来了，但还不能把 7.9% 叫作正常 margin。正常水平要由全国骑手保障推广后的未来 4 至 8 个季度，在真实竞争下共同定义。</p>
+<h2>主要来源</h2>
+<ul>
+<li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">美团 2026Q2 及 H1 业绩公告，港交所，2026-08-28</a></li>
+<li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0326/2026032600964.pdf">美团 2025 年业绩公告，港交所，2026-03-26</a></li>
+<li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042400179.pdf">美团 2025 年完整年报，港交所，2026-04-24</a></li>
+<li><a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">美团 2026Q2 业绩会转录，2026-08-28</a></li>
+<li><a href="https://www.samr.gov.cn/xw/zj/art/2026/art_a41bece706204a9d839c9d5c33fc0b06.html">市场监管总局：外卖平台服务行业市场竞争状况调查评估，2026-01-09</a></li>
+<li><a href="https://www.reuters.com/business/retail-consumer/meituan-swings-profit-q2-price-wars-subside-2026-08-28/">Reuters：Meituan swings to profit in Q2 as price wars subside，2026-08-28</a></li>
+<li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0205/2026020501302.pdf">美团拟收购叮咚中国业务公告，港交所，2026-02-05</a></li>
+<li><a href="https://www.sec.gov/Archives/edgar/data/1854545/000119312526359862/ddl_2026q2_er.htm">叮咚 2026Q2 披露，SEC，2026-08-20</a></li>
+</ul>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>Meituan Is Profitable Again, but Its 7.9% Core Margin Is Not Yet the New Normal</h1>
+<blockquote>
+<p>Date: 2026-08-31<br />
+This article discusses operating performance and profitability. It does not constitute investment advice.</p>
+</blockquote>
+<p>Meituan returned to profit in the second quarter of 2026, but that statement captures only half the picture.</p>
+<p>Quarterly revenue reached RMB104.64 billion. Operating profit was RMB2.69 billion, net profit was RMB2.16 billion, and all the main profit measures were positive. Yet over the full first half, Meituan still recorded a net loss of RMB4.67 billion, according to its <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">official Q2 and H1 results</a>. The tension between a profitable quarter and a loss-making half is the right place to begin assessing the company's earnings power.</p>
+<p>My conclusion is that <strong>Q2 was a genuine operating inflection, but it was not a return to Meituan's historically high margins</strong>. The more revealing number is not the group's 2.6% operating margin. It is the 7.9% segment operating margin at Core Local Commerce. That figure shows that the domestic profit pool spanning food delivery, Meituan Instashopping, in-store services, hotels, and travel has turned positive again. It remains far below 2024 levels.</p>
+<p>The sustainable margin level may now be lower than it was in 2024. Rider protection raises the recurring cost floor. A heavier first-party retail mix can dilute reported margins. Competition in in-store services creates continuing but partly discretionary investment pressure, while overseas expansion weighs on group profit. The most credible sources of further recovery are subsidy normalization, advertising and merchant services, membership economics, and delivery density. Revenue growth by itself is much less informative.</p>
+<h2>Q2 in one table</h2>
+<p>Amounts are in RMB billions. Margins are calculated against revenue.</p>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th style="text-align: right;">2026 Q2</th>
+<th style="text-align: right;">Margin</th>
+<th>How to read it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Group revenue</td>
+<td style="text-align: right;">104.643</td>
+<td style="text-align: right;">100.0%</td>
+<td>Up 14.4% year over year</td>
+</tr>
+<tr>
+<td>Group operating profit</td>
+<td style="text-align: right;">2.691</td>
+<td style="text-align: right;">2.6%</td>
+<td>Positive on an IFRS basis</td>
+</tr>
+<tr>
+<td>Group net profit</td>
+<td style="text-align: right;">2.155</td>
+<td style="text-align: right;">2.1%</td>
+<td>H1 still had a RMB4.672 billion net loss</td>
+</tr>
+<tr>
+<td>Adjusted net profit</td>
+<td style="text-align: right;">2.524</td>
+<td style="text-align: right;">2.4%</td>
+<td>Not equivalent to operating cash flow</td>
+</tr>
+<tr>
+<td>Core Local Commerce revenue</td>
+<td style="text-align: right;">71.531</td>
+<td style="text-align: right;"></td>
+<td>The core domestic profit pool</td>
+</tr>
+<tr>
+<td>Core Local Commerce operating profit</td>
+<td style="text-align: right;">5.668</td>
+<td style="text-align: right;">7.9%</td>
+<td>The key measure of core-business recovery</td>
+</tr>
+<tr>
+<td>New Initiatives revenue</td>
+<td style="text-align: right;">33.112</td>
+<td style="text-align: right;"></td>
+<td>Up 25.0% year over year</td>
+</tr>
+<tr>
+<td>New Initiatives operating loss</td>
+<td style="text-align: right;">-1.739</td>
+<td style="text-align: right;">-5.3%</td>
+<td>Still consuming core-business profit</td>
+</tr>
+</tbody>
+</table>
+<p>All figures come from Meituan's <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">Q2 and H1 filing</a>. Core Local Commerce and New Initiatives produced RMB3.929 billion of combined segment operating profit. After RMB1.238 billion of unallocated items, group operating profit was RMB2.691 billion. This is why the RMB5.668 billion segment result cannot be treated as group profit, while the 2.6% group margin cannot fully describe the earnings power of the domestic core.</p>
+<p>Profit quality requires two further checks. First, operating cash flow was RMB9.733 billion in Q2 but only RMB2.719 billion for H1. The large quarterly swing reflects seasonality and working-capital effects, so the Q2 number should not be annualized mechanically. Second, Q2 group operating profit included RMB3.494 billion of other gains, net, primarily related to investments. Mechanically excluding those gains would leave an operating loss of approximately RMB0.803 billion, according to the <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">official filing</a>.</p>
+<p>That does not conflict with Core Local Commerce earning RMB5.668 billion. The former is a group income-statement measure; the latter is a segment result before New Initiatives and unallocated items. Unallocated items also reconcile certain other gains and corporate expenses. The defensible reading is that recovery in the core segment is real, while group profitability still received material support from investment-related other gains.</p>
+<h2>Why 7.9% matters more than 2.6%</h2>
+<p>The group margin mixes three forces moving in different directions: recovery in the domestic core, continuing losses in New Initiatives, and the effects of unallocated items and other gains. Core Local Commerce combines food delivery, Instashopping, in-store services, hotels, and travel. It is therefore a better, though still imperfect, measure of the earnings foundation in Meituan's established commercial network.</p>
+<p>The importance of 7.9% is not that it is a high margin. It is that the figure marks an exit from several quarters of severe losses in the core segment. Core Local Commerce operating margin moved from 25.1% in 2024 Q2 to -21.0% in 2025 Q3, then recovered to 7.9% in 2026 Q2, based on the <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0326/2026032600964.pdf">2025 results</a> and the latest <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">Q2 filing</a>.</p>
+<p>That enormous range shows why Meituan should not be understood as a stable-margin internet platform. Its economics combine high-margin platform services, labor-intensive fulfillment, consumer and merchant subsidies, and investment in new businesses. A change in competitive intensity can pass through the income statement very quickly.</p>
+<p>It also explains why revenue is an unreliable shortcut to profitability. Product sales grew 48.8% year over year in Q2, much faster than group revenue. First-party merchandise is recognized on a gross basis, which lifts reported revenue while adding procurement, inventory, warehousing, shrinkage, fulfillment, and working-capital requirements. As the 1P mix rises, revenue can accelerate without a corresponding improvement in reported gross margin or cash efficiency. <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">Official filing</a></p>
+<h2>Meituan has three distinct earnings layers</h2>
+<p>Calling Meituan a commission platform obscures the differences among the businesses sitting inside its reported revenue.</p>
+<p><strong>The first layer is high-margin platform monetization.</strong> In-store services, hotels and travel, transaction commissions, online marketing, and merchant digital services and tools generally do not require Meituan to purchase the underlying meal, hotel room, or local service. Advertising also carries relatively low incremental fulfillment cost. This layer has the most direct path from transaction activity to profit and is likely to remain the highest-quality source of incremental earnings. The accounting and business descriptions are set out in Meituan's <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042400179.pdf">2025 annual report</a>.</p>
+<p><strong>The second layer is on-demand delivery.</strong> Food delivery, Instashopping, and Keeta generate delivery and transaction-related revenue, while Meituan bears costs for riders, dispatch, capacity incentives, insurance, customer service, and service protection. Unit economics depend on order density, batching efficiency, distance, weather, average order value, subsidies, and advertising monetization. Scale improves margin only when it produces denser routes, a better order mix, or lower fulfillment cost per order.</p>
+<p><strong>The third layer is first-party retail.</strong> Xiaoxiang Supermarket and self-operated sales of medicines, alcoholic beverages, groceries, and other retail products carry procurement, inventory, front-warehouse, shrinkage, and delivery costs. They can generate substantial reported revenue and give Meituan greater control over supply, but profitability depends on purchasing scale, private labels, forecasting accuracy, warehouse productivity, inventory turns, and shrinkage. A yuan of first-party sales is economically different from a yuan of advertising revenue.</p>
+<p>These three layers do not map one-to-one onto the reported segments. Domestic delivery, Instashopping, in-store services, hotels, and travel largely sit in Core Local Commerce. Keeta and Xiaoxiang Supermarket mainly sit in New Initiatives. Some first-party Instashopping sales, however, are reported inside Core Local Commerce. The 7.9% figure is therefore a blended core-segment result, not the margin of any single business.</p>
+<p>The three layers reinforce one another. Food delivery creates frequency, the delivery network supports Instashopping, membership encourages cross-category purchases, and in-store services and advertising add high-margin monetization. There is nevertheless an important evidence boundary. Public disclosures do not quantify how much in-store and hotel profit offsets delivery costs, nor do they establish whether the delivery fee on an individual order covers rider cost. Portfolio complementarity is a reasonable analytical conclusion. A quantified accounting cross-subsidy is not a disclosed fact.</p>
+<h2>What actually repaired the Q2 margin</h2>
+<p>The historical path provides more information than the latest point estimate.</p>
+<table>
+<thead>
+<tr>
+<th>Quarter</th>
+<th style="text-align: right;">Core Local Commerce operating margin</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2024 Q2</td>
+<td style="text-align: right;">25.1%</td>
+</tr>
+<tr>
+<td>2025 Q1</td>
+<td style="text-align: right;">21.1%</td>
+</tr>
+<tr>
+<td>2025 Q2</td>
+<td style="text-align: right;">5.7%</td>
+</tr>
+<tr>
+<td>2025 Q3</td>
+<td style="text-align: right;">-21.0%</td>
+</tr>
+<tr>
+<td>2025 Q4</td>
+<td style="text-align: right;">-15.5%</td>
+</tr>
+<tr>
+<td>2026 Q1</td>
+<td style="text-align: right;">-3.2%</td>
+</tr>
+<tr>
+<td>2026 Q2</td>
+<td style="text-align: right;">7.9%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Financial fact:</strong> Core Local Commerce returned to profit, while group gross profit and operating profit improved materially from Q1, according to the <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">official filing</a>.</p>
+<p><strong>Company attribution:</strong> Meituan attributed the Q2 improvement mainly to lower user incentives and favorable seasonality that reduced delivery cost per order in the <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">official filing</a>.</p>
+<p><strong>Management's additional assessment:</strong> On the earnings call, management said on-demand delivery unit economics had turned positive. It cautioned that industry subsidies remained materially above 2024 levels and could take several quarters to normalize. The unit-economics assessment is a management statement; no numerical unit-level data were disclosed in the <a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">earnings-call transcript</a>.</p>
+<p><strong>Analytical judgment:</strong> Q2 looks more like mean reversion after the worst phase of a price war than a sudden shift to a lighter business model. Durable improvement should come from less indiscriminate subsidization, more targeted member benefits, stronger advertising and merchant-service monetization, and lower fulfillment cost through density. If growth remains driven primarily by coupons or low-margin first-party sales, higher revenue will not automatically produce higher margins.</p>
+<h2>Why 2024 is the wrong near-term anchor</h2>
+<p>The 25.1% Core Local Commerce margin in 2024 Q2, and the 20.9% full-year margin in 2024, are better viewed as upper-bound references from a less competitive period than as default expectations for the next two years. The core segment and the group also face different types of pressure.</p>
+<p>First is rider protection. As of August 28, 2026, the company said occupational injury protection covered the whole country. Management also stated that the national rollout began on July 1 and would add cost in Q3, according to the <a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">earnings call</a>. Occupational injury protection and other rider benefits raise the recurring cost floor of the core business.</p>
+<p>Second is the instant-retail mix. The 48.8% growth in Q2 product sales indicates that a heavier 1P model is becoming more important, potentially diluting the reported core-segment margin. Third is competition in in-store services. Douyin competes for consumer discovery and merchant advertising budgets, which can require sustained but adjustable investment even after food-delivery subsidies decline. International expansion mainly sits in New Initiatives and weighs on the group margin rather than the 7.9% Core Local Commerce margin itself.</p>
+<p>Regulation can reduce the probability of another extreme price war without removing competition. China's State Administration for Market Regulation has scrutinized subsidy, pricing, and traffic-control practices in food-delivery platforms, as described in its <a href="https://www.samr.gov.cn/xw/zj/art/2026/art_a41bece706204a9d839c9d5c33fc0b06.html">industry assessment</a>. <a href="https://www.reuters.com/business/retail-consumer/meituan-swings-profit-q2-price-wars-subside-2026-08-28/">Reuters</a> reported that blanket discounting had retreated while competition from Alibaba and JD.com remained. Douyin's contest for local-commerce discovery and merchant budgets is a separate competitive front.</p>
+<p>The useful near-term question is therefore not when Core Local Commerce returns above 20%. It is whether the 7.9% margin can hold and continue improving after the nationwide rider-protection rollout and under continuing competition.</p>
+<h2>Where the next growth can come from</h2>
+<p><strong>Instashopping, grocery, and the pending Dingdong transaction.</strong> Instashopping can improve utilization of the delivery network, benefit from higher average order values, and attract brand advertising budgets. Xiaoxiang Supermarket and Dingdong could deepen purchasing, private-label, and warehouse-network capabilities. The transaction boundary matters: Meituan signed a conditional agreement, and the deal was still pending closing as of August 20, 2026. The acquisition had not closed, and Dingdong had not been consolidated into Meituan. That status is documented in Meituan's <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0205/2026020501302.pdf">transaction announcement</a> and Dingdong's <a href="https://www.sec.gov/Archives/edgar/data/1854545/000119312526359862/ddl_2026q2_er.htm">Q2 disclosure</a>. Even if it closes, the strategic case is primarily about supply-chain capability, not an assumed short-term profit contribution.</p>
+<p><strong>Membership, advertising, and merchant services.</strong> The value of membership need not come mainly from subscription fees. It can replace broad subsidies with benefits targeted at high-lifetime-value customers, raise frequency across delivery, Instashopping, hotels, and in-store services, and improve advertising returns through better transaction data. This route has a stronger chance of raising margin than simply expanding low-margin gross sales.</p>
+<p><strong>Keeta.</strong> Meituan's <a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">Q2 announcement</a> says only that Hong Kong achieved stable profitability. The statement that Saudi Arabia turned profitable in July 2026 came from management on the <a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">earnings call</a>, after the end of Q2. Neither statement proves that Keeta as a whole, the Middle East as a whole, or Brazil is profitable. International performance should be judged city by city through retention, density, and sustained profitability, not by the number of countries entered.</p>
+<p><strong>Artificial intelligence.</strong> Meituan is applying AI to search and recommendation, advertising matching, customer service, software development, and merchant operations. Management has said it does not intend to become a "token factory." Until the company discloses standalone model revenue, paying merchant adoption, incremental transactions, or quantified cost savings, AI belongs in the efficiency layer rather than in a separate revenue narrative. <a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">Earnings-call transcript</a></p>
+<h2>What to monitor over the next 4 to 8 quarters</h2>
+<p>The first five indicators deserve priority because they directly test whether 7.9% can become sustainable. Dingdong, Keeta, and AI remain important growth options, but they are not in the core-margin scorecard below.</p>
+<table>
+<thead>
+<tr>
+<th>Indicator</th>
+<th>Current baseline</th>
+<th>What needs to be tested</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core Local Commerce operating margin</td>
+<td>7.9% in 2026 Q2</td>
+<td>Whether it holds after the nationwide rider-protection rollout and progresses above 10%</td>
+</tr>
+<tr>
+<td>On-demand delivery unit economics</td>
+<td>Management says positive in Q2; no figure disclosed</td>
+<td>Whether it remains positive through Q3 weather, peak-season, and protection costs</td>
+</tr>
+<tr>
+<td>Merchant services revenue</td>
+<td>Up 6.6% year over year in Q2</td>
+<td>Whether advertising and commissions outgrow lower-margin revenue</td>
+</tr>
+<tr>
+<td>Product sales</td>
+<td>Up 48.8% year over year in Q2</td>
+<td>Whether gross margin, inventory, and working capital deteriorate as 1P expands</td>
+</tr>
+<tr>
+<td>New Initiatives loss margin</td>
+<td>-5.3% in Q2</td>
+<td>Whether losses keep narrowing as international and grocery businesses grow</td>
+</tr>
+<tr>
+<td>In-store, hotel, and travel economics</td>
+<td>Margin not separately disclosed</td>
+<td>How much profitability falls as competitive investment rises</td>
+</tr>
+<tr>
+<td>Operating and free cash flow</td>
+<td>H1 operating cash flow of RMB2.719 billion</td>
+<td>Multiple consecutive positive quarters rather than reliance on Q2</td>
+</tr>
+</tbody>
+</table>
+<h2>A bounded conclusion</h2>
+<p>The second quarter shows that Meituan's core business model could still earn money in this period. It does not show that the old margin structure has returned. The 7.9% figure is better for assessing recovery in the domestic core, while the 2.6% group margin fully reflects dilution from New Initiatives and unallocated items. They answer different questions and should not replace one another.</p>
+<p>The most credible path to further recovery does not require revenue growth to accelerate sharply. It requires users and merchants to remain after subsidies decline, advertising and merchant services to regain their role as incremental profit engines, membership to make incentives more precise, and delivery density to offset part of the higher protection cost. It also requires discipline in first-party retail, overseas expansion, and in-store competition.</p>
+<p>If those conditions hold for several quarters, Meituan can establish a sustainable margin level below the 2024 peak. If broad subsidies return, or if the company simultaneously accelerates investment in in-store services, grocery, and overseas markets, margins can become volatile again.</p>
+<p>Profitability has returned. Calling 7.9% a sustainable run-rate margin would still be premature. The new normal will be defined by the next 4 to 8 quarters after the nationwide rider-protection rollout and under real competitive conditions.</p>
+<h2>Principal sources</h2>
+<ul>
+<li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0828/2026082800435.pdf">Meituan 2026 Q2 and H1 results announcement, HKEX, 2026-08-28</a></li>
+<li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0326/2026032600964.pdf">Meituan 2025 results announcement, HKEX, 2026-03-26</a></li>
+<li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0424/2026042400179.pdf">Meituan 2025 annual report, HKEX, 2026-04-24</a></li>
+<li><a href="https://www.investing.com/news/transcripts/earnings-call-transcript-meituan-posts-q2-2026-profit-as-revenue-growth-accelerates-93CH-4881117">Meituan 2026 Q2 earnings-call transcript, 2026-08-28</a></li>
+<li><a href="https://www.samr.gov.cn/xw/zj/art/2026/art_a41bece706204a9d839c9d5c33fc0b06.html">SAMR assessment of competition in food-delivery platforms, 2026-01-09</a></li>
+<li><a href="https://www.reuters.com/business/retail-consumer/meituan-swings-profit-q2-price-wars-subside-2026-08-28/">Reuters: Meituan swings to profit in Q2 as price wars subside, 2026-08-28</a></li>
+<li><a href="https://www1.hkexnews.hk/listedco/listconews/sehk/2026/0205/2026020501302.pdf">Meituan announcement on the proposed Dingdong China transaction, HKEX, 2026-02-05</a></li>
+<li><a href="https://www.sec.gov/Archives/edgar/data/1854545/000119312526359862/ddl_2026q2_er.htm">Dingdong 2026 Q2 disclosure, SEC, 2026-08-20</a></li>
+</ul>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
