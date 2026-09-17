@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Jev 的真正意义：当 AI 判断不再需要生成文字</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>Jev 的真正意义：当 AI 判断不再需要生成文字</h1>
+<p>截至 2026 年 9 月 16 日</p>
+<p>一张工单进入系统：“昨晚升级以后，付款一直失败。我们是企业客户，今天要上线。”程序需要知道该分到哪个队列、是否紧急、要不要升级处理。我们常用 LLM 输出一份符合 schema 的 JSON，再让代码执行后续流程。但这里真正需要的是几个判断，生成文字只是取得判断的一种途径。</p>
+<p>TypeSafe AI 在 9 月 15 日发布、目前仍处于 early access 的 Jev，瞄准的就是这类工作。现有外部测试支持它作为专用判断 API 的效率价值。当语义判断足够便宜，软件可能从偶尔调用 AI，转向在每条数据、每个步骤上使用它。这个变化可以很大，却还不足以证明 LLM 或硬件产业迎来了革命。</p>
+<h2>一、把判断直接交给程序</h2>
+<p>Jev 的<a href="https://docs.typesafe.ai/primitives">接口</a>有三种：Choice 从候选项中选择，Score 按预定义等级评分，Noul 返回模型估计的命题成立概率，并非客观概率保证。前两者还提供等级或选项的概率分布与 confidence。同一输入可以提出多个问题，由服务并行评估，代码再组合结果。工单分流只是用法示意，并非本文实测。</p>
+<p>这适合标签、筛选、路由和检查，但不能直接写回复、生成代码或任意工具参数。当前 Choice 最多接受 255 个候选；所谓提取，也可能需要先用正则找候选值，再让模型选择。<a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">发布说明</a>与<a href="https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook.md">提取示例</a>都体现了这一边界。</p>
+<p>公平的对照应是现代结构化输出 LLM，而非任意聊天文本加一个脆弱的 JSON 解析器。<a href="https://openai.com/index/introducing-structured-outputs-in-the-api/">OpenAI 的 Structured Outputs</a>早已通过受约束解码保障结构；TypeSafe 的<a href="https://github.com/typesafe-ai/system-one-adapter-python">公开适配器</a>也支持供应商原生结构化输出。Jev 的潜在优势，是围绕有限答案直接计算判断，减少逐 token 生成的开销，并把速度、成本与质量做成更好的组合。仅仅输出合法结构，不构成新范式。</p>
+<h2>二、便宜和快速有证据，倍数取决于对手</h2>
+<p>Jev 的<a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">公开价格</a>是每百万输入 tokens <strong>0.042 美元，输出免费</strong>。若每次总计费输入为 2,000 tokens，一百万次调用约 84 美元；问题、候选项、重试和多阶段处理都会影响实际费用。API 价格反映采购成本，不能直接换算成底层 FLOPs、毛利或长期可持续性。</p>
+<p><a href="https://goodstartlabs.com/research/verification-is-the-bottleneck">Good Start Labs</a>提供了最有解释力的成本对照。它用 1,203 份金融研究答案、6,003 个 rubric checks 比较 Jev 与五个 LLM，后者关闭推理或尽量调低。下表列出 Jev 与五个对照 LLM 中的三个，费用按价目外推；单位是每百万份被评判答案，不是 tokens，一份答案可能包含多个检查。</p>
+<table>
+<thead>
+<tr>
+<th>评判模型</th>
+<th style="text-align: right;">估算费用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jev</td>
+<td style="text-align: right;">$160</td>
+</tr>
+<tr>
+<td>DeepSeek V4.1 Flash</td>
+<td style="text-align: right;">$260</td>
+</tr>
+<tr>
+<td>GPT-5.6 Luna</td>
+<td style="text-align: right;">$400</td>
+</tr>
+<tr>
+<td>Claude Fable 5.1</td>
+<td style="text-align: right;">$33,000</td>
+</tr>
+</tbody>
+</table>
+<p>Jev 的费用约为 Fable 的 1/206，对 DeepSeek 则只便宜约 38.5%。它与 Fable 的判定一致率为 91.5%，DeepSeek 与 Fable 为 93.5%。<strong>模型之间同意，不等于答案真实正确</strong>；Jev 使用 7 月判定，其他模型在 9 月重评，也削弱了严格可比性。另一组游戏任务中，10,500 次调用无失败、每次约半秒，仅为这些测试条件下的调用可靠性提供证据，不代表全部判断正确，也不能证明其他条件下的服务可靠性。</p>
+<p><a href="https://every.to/also-true-for-humans/mini-vibe-check-typesafe-s-jev-judged-everything-i-ve-written-in-0-7-seconds">Every 的测试</a>把效率与错误放在了同一张图里：37 篇文章、每篇 21 个问题并发检查，777 个判断不到 0.7 秒，估算费用 0.0025 美元，但没有完整标注真值。另一个 12 段合成文本的小实验中，Jev 中位延迟 <strong>0.35 秒</strong>，高推理强度的 Fable 5.1 为 <strong>8.83 秒</strong>；Jev 找到七个预设问题中的六个，Fable 找到全部七个。对“家长和教职工一起教一个共享日历”这种动作不合理的句子，Jev 连续三次漏判。</p>
+<p><a href="https://nearhere.events/blog/typesafe-jev-mistral-gemini-event-validation">Near Here</a>则测试本地活动文本是否合格。主要 50 条样本中，Jev、Gemini 3.5 Flash-Lite、Mistral Small 4 分别有 48、43、42 条判断与预期标签一致，但这批数据参与过提示词选择，有选择偏差。额外 21 条上，三者分别有 19、20、19 条与预期标签一致。平均延迟分别为 0.59、3.40、2.90 秒，每千次决策估价分别为 0.043、2.496、0.370 美元。这些比较使用的是报告称由 assistant 编写、未经独立人工裁决的预期标签；对手采用高推理且生成解释。这里的“96%”不能外推为生产准确率。</p>
+<p>这些是不同外部组织的使用报告，不是三次完整独立复现。具体关系是：Good Start Labs 是早期接入用户；Every 获得了访问权，并采访了创始人。这些关系本身不意味着付费推广。官方同样<a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">承认</a>：短输入、靠近服务所在地的测试，以及要求对手生成完整概率分布，都有利于放大差距，官网的大倍数处于预期收益的较高端。</p>
+<h2>三、类型安全不等于判断正确</h2>
+<p>只允许返回 <code>approve / reject</code>，可以防止模型编造第三个选项，却不能防止它批准本该拒绝的请求。创始人也在 <a href="https://news.ycombinator.com/item?id=49718780">Hacker News</a>承认模型可能“confidently wrong”。把 schema 保证称为“不会幻觉”，容易让读者误以为业务判断也不会错。</p>
+<p><a href="https://evals.typesafe.ai/">官方评测</a>的得分衡量工作流结果与模型生成的共识参考标签的一致程度，不是相对于人工真值的正确率。四工作流等权平均得分，Jev 为 <strong>67.8%</strong>，GPT-5.6 Sol 为 <strong>74.1%</strong>；发票任务上分别为 <strong>61.8%</strong> 和 <strong>79.1%</strong>。参考标签主要来自强模型回答；公开样例还包含回退参考模型等例外。它们能说明相对于这套参考标签的任务表现差异，不能直接读成真实业务准确率。</p>
+<p>概率也需要单独验证。<a href="https://docs.typesafe.ai/confidence.md">文档</a>说明，confidence 是从答案概率分布计算出的统计量，因此 <code>confidence = 0.9</code> 并不自动等于“这次有 90% 概率正确”。校准要求大量预测为 90% 的事件实际发生率接近 90%；反复得到同一答案只是稳定性。Every 的重复漏判恰好说明两者不同。</p>
+<p>目前公开材料仍缺充分的独立可靠性曲线、Brier score 和跨领域校准测试。即使单题概率可靠，多个相关判断经过阈值、分支、加权组合，也不自动获得相同可靠性。<a href="https://news.ycombinator.com/item?id=49720703">社区关于组合校准的质疑</a>因此比笼统的赞扬或否定更值得追踪。接口中的独立评估，不意味着错误在统计上相互独立。</p>
+<p>回到工单系统，漏掉一次紧急故障与多升级一次普通请求，代价并不相同。上线标准应看阈值改变后，两类错误各有多少、多少工单可以自动处理、多少需要人工或强模型接手。一个统一的 confidence 门槛无法替代这项验证；便宜的单次调用，也未必意味着便宜的完整处理流程。</p>
+<h2>四、技术谱系可能渐进，应用变化仍可能很大</h2>
+<p>非生成式语言理解有<a href="https://arxiv.org/abs/1810.04805">BERT</a>等长期基础；<a href="https://arxiv.org/abs/2508.07662">GLiClass</a>在 2025 年已把动态标签、零／少样本分类、效率与分类器上的 PPO 训练放在一起讨论。分类不必通过逐 token 生成完成，并非 Jev 首次提出。</p>
+<p>TypeSafe 将训练方法称为 RLCD，即 Reinforcement Learning for Calibrated Decisions。但<a href="https://docs.typesafe.ai/introduction/machine-learning-primer.md">公开说明</a>尚不足以复现完整架构、训练目标和奖励构造，也缺少能隔离组件贡献的消融实验。现阶段既不能认定算法革命，也不能断言只是加了一个分类头。真正需要证明的，是能否把专用分类器的效率、强模型般的任务泛化和可信概率同时交付。</p>
+<p>反营销也要接受同样检验。Harsha Gundala 的<a href="https://huggingface.co/harshatheg/Qwen-2.5-1B-RLCD">相似实现</a>用 Qwen、KV-cache 共享和受约束选择，声称比自己的自回归基线快 5.6–7 倍。这是说明类似接口可实现的反向演示，没有同题质量对比，也没有复现 Jev 的 RLCD 或校准。另一方面，Rohan Paul 的<a href="https://x.com/rohanpaul_ai/status/2099946321495068746">介绍帖</a>带有 Paid partnership 标签，应视为推广而非独立测试；标签本身也不能确定付款方。</p>
+<p>技术上的增量，不等于应用上的小事。若一种组合能让过去只值得抽查的判断变成逐条检查，成本曲线就可能改变产品设计。但答案只有一个 bit，也不代表问题简单：证明数学命题、识别复杂欺诈，最终都能回答 yes/no，中间仍可能需要昂贵推理。省掉输出序列，不能省掉求解本身。</p>
+<p>发布时的游戏演示也应放在这个边界内理解。<a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">官方说明</a>中的 Doom 使用文字和结构化状态，不是从图像理解游戏；Wikiracing 则从候选链接中选择下一步。它们展示快速读取状态、选择已有动作的能力，不能由此推出通用视觉控制或开放式规划的突破。</p>
+<h2>五、更可能发生的分工：生成、判断与数据处理</h2>
+<p>较可信的架构是：通用 LLM 处理新任务、生成内容和解决复杂例外；代码组织流程；快速判断模型执行高频筛选、评分与检查；困难案例再回到强模型。TypeSafe 的<a href="https://docs.typesafe.ai/cookbooks/sde_cascade.md">提取—验证—升级示例</a>也采用“小 LLM 提取 → Jev 检查 → 必要时强模型重做”。这是架构示例，其中有硬编码错误用于演示，不能当成效果的独立证明。</p>
+<p>昂贵的生成调用仍有必要：报告、代码、任意工具参数和长链推理不会因为分类更便宜而消失。便宜检查甚至可能让更多 Agent 工作流可行，增加生成需求。大厂也可能直接提供类似端点。因此，专用判断路线有价值、Jev 有优势、TypeSafe 有持久壁垒，是三个不同命题。</p>
+<p>对数据基础设施，影响可能更直接。ETL 可以逐条给反馈打语义标签，流处理可以判断哪些事件值得进一步处理，实体匹配可以成为常规算子。这些仍是条件推断，并非已确认的客户规模。随之重要的，是批量推理、限流重试、幂等性、数据就近处理，以及模型、问题、阈值和输入的版本记录。</p>
+<p>模型或提示词更新后哪些标签需要重算？模型固定时，数据漂移是否仍会使误判率上升？这些问题把增量重算、抽样人工标注和回退机制带入数据平台。语义判断的概率性不等于重复调用必然产生不同结果；模型或提示词变化可能改变输出，而数据分布变化可能改变固定模型的错误率。把这类判断封装为类似 SQL 函数的算子，并不会消除版本与评估需求。平台可能承载更多工作，也不意味着收入自动增长；还取决于推理在哪里运行、费用归谁，以及客户是否愿意为集成付费。</p>
+<h2>六、推理服务会调整，GPU 需求不能这样外推</h2>
+<p>生成服务的延迟包含输入处理、逐 token 解码、排队和网络。有限输出判断若减少解码，优化重心可能转向输入吞吐、共享输入计算、动态 batching、数据位置和 p95/p99 尾延迟。评价单位也可以从输出 tokens/s，转为每秒完成多少个达到质量要求的判断。</p>
+<p>这不要求推翻现有技术栈。<a href="https://docs.vllm.ai/en/latest/models/pooling_models/">vLLM pooling</a>已有 classify、embed、score 等非生成式接口；<a href="https://docs.vllm.ai/en/latest/features/automatic_prefix_caching/">prefix caching</a>能复用共同前缀的输入计算，但不会消除后续解码。这不等于 vLLM 已兼容 Jev，却说明行业并非从零开始。Jev 的内部计算路径和硬件成本未充分公开，也不能据此认定它是单次前向传播的 encoder，或天然适合 CPU、端侧。</p>
+<p>比较还要允许对手优化调用方式。官方<a href="https://docs.typesafe.ai/cookbooks/parallel_questions.md">一次提出 13 个问题的示例</a>报告约 12.2 倍费用改善、10 倍耗时改善，对照却是 Jev 自己的 13 次单问：耗时串行求和，费用重复计入长文档。这主要说明组织请求的重要性，不能全算成对 LLM 的架构优势。</p>
+<p>对固定工作量下的推理计算，可以用一个<strong>纯假设</strong>说明尺度：假设现有推理计算的 20% 可被替代，替代部分计算量降为原来的百分之一，工作量与质量不变，则推理计算量剩下 <code>80% + 20% / 100 = 80.2%</code>。这不是硬件总需求的估算。两个假设数字都不是 Jev 实测；API 价格降为原来的百分之一，更不代表计算量也降为原来的百分之一。</p>
+<p>新增调用可能抵消单次节省，但需要真实潜在需求，不能仅凭“杰文斯悖论”就认定反弹必然发生。训练、未替代的生成、采用速度、模型并行和需求弹性都影响最终结果。目前没有足够证据据此判断 GPU、HBM、高速互连或数据中心需求会大增或大减。</p>
+<h2>七、真正值得观察的，是同等质量下的工作流</h2>
+<p>Jev 已有可信的专用判断组件价值。下一步最有说服力的证据，是在人工或可验证真值上，与优化过的廉价结构化输出 LLM、专用分类器比较，在相同误判水平下仍保留明显优势。长输入、跨地域、生产并发下的尾延迟、回退率、校准和完整工作流费用，比单个漂亮倍数更重要。</p>
+<p>如果优势只留在窄任务，它就是一个有用的增量工具。如果跨领域优势和组合可靠性得到验证，生成模型与判断模型的分工会更普遍，语义处理也可能成为数据基础设施的日常工作。</p>
+<p>判断影响范围时，还应跟踪实际替代了多少生成式计算，而非只数 API 调用：大量简单判断并不一定占据大量算力。长期价格是否稳定、开源与大厂能否追平，也决定了这项改进最终由谁获益。眼下产品刚发布，尚没有足够长的生产记录回答这些问题。</p>
+<p><strong>Jev 的潜力，是让更多软件负担得起频繁的语义判断。</strong>现有证据支持认真看待这种效率改进，尚不支持“判断不会错”、普遍百倍优势，或 LLM 与硬件革命。技术谱系可以渐进，应用后果却可能远大于算法的新颖程度。</p>
+<p><em>证据说明：本文基于截至 2026-09-16 的公开文档、发布材料和外部使用报告，未自行调用 Jev API。计时、费用和评测结果归属所链接的原始发布方；基础设施影响属于条件分析。</em></p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>What Jev Changes When AI Decisions No Longer Require Text Generation</h1>
+<p>As of September 16, 2026</p>
+<p>A support ticket arrives: “Payments have been failing since last night’s upgrade. We’re an enterprise customer, and we’re launching today.” The system needs to choose a queue, assess urgency, and decide whether to escalate. A common approach is to have an LLM produce schema-conforming JSON, then let code execute the next steps. But what the system actually needs is a handful of judgments. Generating text is just one way to obtain them.</p>
+<p>Jev, released by TypeSafe AI on September 15 and still in early access, targets precisely this work. Published external tests support its value as an efficient, specialized decision API. Sufficiently cheap semantic judgments could move software from occasional AI calls to decisions on every record and at every step. That could be a substantial change. It is not yet evidence of a revolution in LLMs or the hardware industry.</p>
+<h2>1. Delivering decisions directly to software</h2>
+<p>Jev offers three <a href="https://docs.typesafe.ai/primitives">primitives</a>: Choice selects among candidates, Score rates an input on predefined levels, and Noul returns a model-estimated probability that a proposition holds, not a guarantee of an objective probability. The first two also provide probability distributions over the options or levels, along with a confidence value. Multiple questions can share an input and be evaluated in parallel by the service, with code combining the results. The support-ticket scenario illustrates the interface; it is not an experiment conducted for this article.</p>
+<p>This fits labeling, filtering, routing, and checking. It does not directly write replies, generate code, or produce arbitrary tool arguments. Choice currently accepts at most 255 candidates. Even extraction may require a regular expression to identify candidate values before the model selects one. Both the <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">launch post</a> and the <a href="https://docs.typesafe.ai/cookbooks/pre_parsed_value_extraction_cookbook.md">extraction example</a> show that boundary.</p>
+<p>The fair comparison is a modern structured-output LLM, not unrestricted chat text followed by a fragile JSON parser. <a href="https://openai.com/index/introducing-structured-outputs-in-the-api/">OpenAI’s Structured Outputs</a> already uses constrained decoding to enforce structure, and TypeSafe’s <a href="https://github.com/typesafe-ai/system-one-adapter-python">public adapter</a> supports provider-native structured outputs. Jev’s potential advantage is computing judgments directly over a limited answer space, reducing token-by-token generation overhead, and delivering a better combination of speed, cost, and quality. Producing valid structure alone does not establish a new paradigm.</p>
+<h2>2. There is evidence for speed and low cost; the multiplier depends on the opponent</h2>
+<p>Jev’s <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">published price</a> is <strong>$0.042 per million input tokens, with free output</strong>. At 2,000 total billable input tokens per call, one million calls would cost about $84. Questions, candidate options, retries, and multistage processing all affect the actual bill. An API price describes what a customer pays. It cannot be directly translated into underlying FLOPs, margins, or long-term sustainability.</p>
+<p><a href="https://goodstartlabs.com/research/verification-is-the-bottleneck">Good Start Labs</a> provides the most revealing cost comparison. It evaluated 1,203 financial research answers across 6,003 rubric checks, comparing Jev with five LLMs whose reasoning was disabled or minimized. The table selects three of those five comparison LLMs alongside Jev, with costs extrapolated from published prices. The unit is per million answers judged, not tokens, and one answer may involve multiple checks.</p>
+<table>
+<thead>
+<tr>
+<th>Judge model</th>
+<th style="text-align: right;">Estimated cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Jev</td>
+<td style="text-align: right;">$160</td>
+</tr>
+<tr>
+<td>DeepSeek V4.1 Flash</td>
+<td style="text-align: right;">$260</td>
+</tr>
+<tr>
+<td>GPT-5.6 Luna</td>
+<td style="text-align: right;">$400</td>
+</tr>
+<tr>
+<td>Claude Fable 5.1</td>
+<td style="text-align: right;">$33,000</td>
+</tr>
+</tbody>
+</table>
+<p>Jev costs roughly 1/206 as much as Fable, but only about 38.5% less than DeepSeek. Jev agreed with Fable on 91.5% of judgments; DeepSeek agreed with Fable on 93.5%. <strong>Agreement between models is not ground truth.</strong> Jev’s judgments were from July, while the other models were reevaluated in September, further limiting strict comparability. In a separate set of game tasks, 10,500 calls completed without failure at roughly half a second each. That provides evidence of call reliability under those test conditions only. It establishes neither that every judgment was correct nor that the service is reliable under other conditions.</p>
+<p><a href="https://every.to/also-true-for-humans/mini-vibe-check-typesafe-s-jev-judged-everything-i-ve-written-in-0-7-seconds">Every’s tests</a> put efficiency and error in the same picture. Concurrent checks of 37 articles, with 21 questions per article, produced 777 judgments in under 0.7 seconds at an estimated cost of $0.0025, but without comprehensive ground-truth labels. In another small experiment using 12 synthetic passages, Jev’s median latency was <strong>0.35 seconds</strong>, versus <strong>8.83 seconds</strong> for Fable 5.1 at high reasoning effort. Jev detected six of seven planted problems; Fable detected all seven. Jev missed a sentence with an implausible action—parents and staff “teaching a shared calendar” together—on three consecutive attempts.</p>
+<p><a href="https://nearhere.events/blog/typesafe-jev-mistral-gemini-event-validation">Near Here</a> tested whether scraped text qualified as a local event listing. On the main 50 examples, Jev, Gemini 3.5 Flash-Lite, and Mistral Small 4 matched the expected labels on 48, 43, and 42 examples, respectively. But those examples had participated in prompt selection, introducing selection bias. On 21 additional records, they matched the expected labels on 19, 20, and 19 records, respectively. Average latencies were 0.59, 3.40, and 2.90 seconds; estimated costs per thousand decisions were $0.043, $2.496, and $0.370. These comparisons used expected labels described as assistant-written and not independently human-adjudicated; the competing models used high reasoning effort and generated explanations. The headline “96%” cannot be extrapolated into production accuracy.</p>
+<p>These are usage reports from separate external organizations, not three complete independent replications. Specifically, Good Start Labs was an early-access user; Every obtained access and interviewed the founder. Those relationships do not themselves imply paid promotion. The company itself <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">acknowledges</a> that short inputs, testing near the service’s location, and requiring competitors to generate full probability distributions can enlarge the gap. It describes its largest headline multipliers as being toward the high end of expected real-world gains.</p>
+<h2>3. Type safety does not settle correctness</h2>
+<p>Restricting output to <code>approve / reject</code> prevents a model from inventing a third option. It does not prevent approval of a request that should have been rejected. The founder has also acknowledged on <a href="https://news.ycombinator.com/item?id=49718780">Hacker News</a> that the model can be “confidently wrong.” Describing a schema guarantee as an inability to hallucinate risks suggesting that business judgments cannot be wrong either.</p>
+<p>The <a href="https://evals.typesafe.ai/">official evaluation</a> scores measure workflow agreement with model-derived consensus reference labels, not correctness against human ground truth. The equally weighted average across four workflows is <strong>67.8%</strong> for Jev and <strong>74.1%</strong> for GPT-5.6 Sol. On invoices, the respective scores are <strong>61.8%</strong> and <strong>79.1%</strong>. Reference labels come primarily from strong models; public examples also contain exceptions such as fallback reference models. These results reveal differences in task performance relative to those reference labels. They are not direct measurements of real-world business accuracy.</p>
+<p>Probabilities require their own validation. The <a href="https://docs.typesafe.ai/confidence.md">documentation</a> explains that confidence is a statistic computed from an answer’s probability distribution. Consequently, <code>confidence = 0.9</code> does not automatically mean “this judgment has a 90% chance of being correct.” Calibration requires events assigned a 90% probability to occur roughly 90% of the time over many predictions. Repeatedly producing the same answer measures consistency. Every’s repeated miss illustrates the difference.</p>
+<p>The public evidence still lacks sufficient independent reliability curves, Brier scores, and cross-domain calibration tests. Even reliable individual probabilities do not automatically preserve that reliability when correlated judgments are combined through thresholds, branches, and weighted rules. That makes the <a href="https://news.ycombinator.com/item?id=49720703">community objection about compositional calibration</a> more useful to follow than blanket praise or dismissal. Independent evaluation at the interface level does not imply statistically independent errors.</p>
+<p>Returning to the ticketing system, missing an urgent outage and unnecessarily escalating an ordinary request have different costs. Deployment criteria should examine how changing the threshold affects each kind of error, how many tickets can be handled automatically, and how many require a human or stronger model. A single confidence cutoff cannot replace that validation. A cheap individual call does not necessarily mean a cheap end-to-end process.</p>
+<h2>4. An incremental technical lineage can still produce a large application shift</h2>
+<p>Non-generative language understanding has a long history, including <a href="https://arxiv.org/abs/1810.04805">BERT</a>. In 2025, <a href="https://arxiv.org/abs/2508.07662">GLiClass</a> was already discussing dynamic labels, zero- and few-shot classification, efficiency, and PPO training for classifiers together. Jev did not introduce the idea that classification need not proceed through token-by-token generation.</p>
+<p>TypeSafe calls its training approach RLCD, or Reinforcement Learning for Calibrated Decisions. Its <a href="https://docs.typesafe.ai/introduction/machine-learning-primer.md">public explanation</a> is not yet sufficient to reproduce the full architecture, training objective, or reward construction. Ablations that isolate the contributions of individual components are also missing. At this stage, neither an algorithmic revolution nor the claim that it is merely an added classification head is established. What needs to be demonstrated is the simultaneous delivery of specialized-classifier efficiency, strong-model-like task generalization, and trustworthy probabilities.</p>
+<p>Counter-marketing deserves the same scrutiny. Harsha Gundala’s <a href="https://huggingface.co/harshatheg/Qwen-2.5-1B-RLCD">similar implementation</a> uses Qwen, shared KV caches, and constrained selection, claiming a 5.6–7× speedup over its own autoregressive baseline. This is a counter-demo showing that a similar interface can be built. It offers neither a matched-task quality comparison nor a reproduction of Jev’s RLCD or calibration. On the promotional side, Rohan Paul’s <a href="https://x.com/rohanpaul_ai/status/2099946321495068746">introduction</a> carries a Paid partnership label and should be treated as promotion rather than an independent test. The label alone does not establish who paid.</p>
+<p>Incremental technology need not mean a minor application impact. If a combination of techniques makes it economical to check every item where previously only sampling was affordable, the cost curve can change product design. But a one-bit answer does not make a problem easy: proving a mathematical proposition or identifying sophisticated fraud can both end in yes/no while still requiring expensive reasoning. Eliminating the output sequence does not eliminate the computation needed to solve the problem.</p>
+<p>The launch’s game demonstrations should be understood within this boundary too. According to the <a href="https://typesafe.ai/blog/introducing-system-one-models-and-jev">official explanation</a>, Doom uses text and structured state, rather than understanding the game from images; Wikiracing selects the next step from candidate links. They demonstrate the ability to read a state quickly and choose among available actions. They do not establish a breakthrough in general visual control or open-ended planning.</p>
+<h2>5. The more plausible division of labor: generation, judgment, and data processing</h2>
+<p>A credible architecture assigns new tasks, content generation, and complex exceptions to a general-purpose LLM; workflow organization to code; and frequent filtering, scoring, and checks to a fast decision model. Difficult cases go back to a stronger model. TypeSafe’s <a href="https://docs.typesafe.ai/cookbooks/sde_cascade.md">extract–verify–escalate example</a> follows this pattern: a small LLM extracts, Jev checks, and a stronger model redoes the work when necessary. It is an architectural illustration that includes a hard-coded error for demonstration, not independent proof of effectiveness.</p>
+<p>Expensive generation calls remain necessary. Reports, code, arbitrary tool arguments, and long-chain reasoning do not disappear because classification becomes cheaper. Inexpensive checks might even make more agent workflows viable, increasing demand for generation. Large providers could also offer similar endpoints themselves. The value of specialized decision models, Jev’s advantage, and TypeSafe’s durable competitive moat are therefore three separate propositions.</p>
+<p>The effects on data infrastructure could be more direct. ETL pipelines could assign semantic labels to every piece of feedback; streaming systems could decide which events merit further processing; entity matching could become a routine operator. These are conditional implications, not claims about confirmed customer scale. They would make batch inference, rate limiting, retries, idempotency, data locality, and versioning of models, questions, thresholds, and inputs increasingly important.</p>
+<p>Which labels should be recomputed after a model or prompt update? Can data drift increase the error rate even when the model is fixed? Such questions bring incremental recomputation, sampled human labeling, and fallback mechanisms into data platforms. The probabilistic nature of semantic judgments does not mean repeated calls must produce different results: model or prompt changes may alter outputs, while changes in the data distribution may alter a fixed model’s error rate. Wrapping these judgments in SQL-like operators does not remove the need for versioning and evaluation. Platforms might host more work without automatically earning more revenue. That depends on where inference runs, who receives the spending, and whether customers will pay for the integration.</p>
+<h2>6. Serving may change; GPU demand cannot be extrapolated this way</h2>
+<p>Generation latency includes input processing, token-by-token decoding, queuing, and networking. If limited-output decisions reduce decoding, optimization may shift toward input throughput, shared input computation, dynamic batching, data placement, and p95/p99 tail latency. The useful metric may also shift from output tokens per second to quality-qualified decisions completed per second.</p>
+<p>This does not require replacing the existing stack. <a href="https://docs.vllm.ai/en/latest/models/pooling_models/">vLLM pooling</a> already offers non-generative interfaces such as classify, embed, and score. <a href="https://docs.vllm.ai/en/latest/features/automatic_prefix_caching/">Prefix caching</a> reuses input computation for shared prefixes, though it does not eliminate subsequent decoding. That does not establish vLLM compatibility with Jev, but it shows that the industry is not starting from zero. Jev’s internal computation paths and hardware costs have not been sufficiently disclosed to conclude that it is a single-forward-pass encoder or naturally suited to CPUs or edge deployment.</p>
+<p>Comparisons must also let competitors optimize their request patterns. The official <a href="https://docs.typesafe.ai/cookbooks/parallel_questions.md">13-question batching example</a> reports about a 12.2× cost improvement and a 10× time improvement. Its baseline, however, is Jev itself answering 13 separate questions: time is summed serially, and the long document is billed repeatedly. This primarily demonstrates the importance of organizing requests. It cannot all be credited as an architectural advantage over LLMs.</p>
+<p>For inference computation at a fixed workload, a <strong>purely hypothetical</strong> example clarifies the scale. Suppose 20% of existing inference computation is replaceable, and the replacement uses one-hundredth of that portion’s computation. At unchanged workload and quality, inference computation would remain at <code>80% + 20% / 100 = 80.2%</code>. This is not an estimate of total hardware demand. Neither assumption is a Jev measurement. An API costing one-hundredth as much certainly does not mean it uses one-hundredth as much computation.</p>
+<p>Additional calls could offset per-call savings, but that requires actual latent demand. Invoking the Jevons paradox does not make a rebound inevitable. Training, unreplaced generation, adoption speed, model parallelism, and demand elasticity all affect the outcome. There is not yet enough evidence to infer a large rise or fall in demand for GPUs, HBM, high-speed interconnects, or data centers.</p>
+<h2>7. What matters next is the workflow at matched quality</h2>
+<p>Jev already has credible value as a specialized decision component. The most persuasive next evidence would compare it against optimized, inexpensive structured-output LLMs and specialized classifiers on human-labeled or otherwise verifiable ground truth, while retaining a substantial advantage at the same error level. Tail latency under long inputs, cross-region access, and production concurrency—as well as fallback rates, calibration, and full-workflow cost—matter more than a single attractive multiplier.</p>
+<p>If the advantage remains confined to narrow tasks, Jev is a useful incremental tool. If cross-domain advantages and compositional reliability are validated, the division of labor between generative and decision models could become more common, and semantic processing could become routine work for data infrastructure.</p>
+<p>Assessing the scale of the impact also requires tracking how much generative computation is actually replaced, rather than simply counting API calls: many simple judgments need not account for much compute. Whether prices remain stable and whether open-source projects or large providers catch up will also determine who benefits. With the product only just launched, the production track record is not yet long enough to answer these questions.</p>
+<p><strong>Jev’s potential is to make frequent semantic judgments affordable for more software.</strong> The current evidence supports taking that efficiency improvement seriously. It does not support infallible decisions, universal hundredfold gains, or a revolution in LLMs and hardware. The technical lineage can be incremental while the application consequences greatly exceed the novelty of the algorithm.</p>
+<p><em>Evidence note: This article draws on public documentation, launch materials, and external usage reports available as of September 16, 2026. No Jev API experiments were conducted for this article. Timings, costs, and evaluation results belong to the linked original publishers; infrastructure implications are conditional analysis.</em></p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
