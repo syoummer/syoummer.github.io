@@ -62,6 +62,27 @@
             line-height: 1.8;
         }
 
+        .research-list {
+            display: grid;
+            gap: 12px;
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .research-list a {
+            display: block;
+            padding: 16px 20px;
+            background: #fff;
+            border: 1px solid #ecf0f1;
+            border-radius: 8px;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .research-list a:hover { border-color: #7f8c8d; }
+        .research-list a:focus-visible { outline: 2px solid #0066cc; outline-offset: 2px; }
+        .research-list time { display: block; color: #7f8c8d; font-size: 0.9rem; }
+
         footer {
             text-align: center;
             margin-top: 80px;
@@ -109,12 +130,8 @@
         <section class="research">
             <h2>Research</h2>
             <div class="about-content">
-                <p><a href="/share/anthropic-pause-button-strategy-20260605.html">Anthropic 的 AI 暂停按钮：安全倡议，还是行业节奏控制？</a></p>
-                <p><a href="/share/anthropic-pause-button-strategy-20260605.html">Anthropic's AI Pause Button: Safety Proposal or Industry Tempo Control?</a></p>
-                <p><a href="/share/mongodb-ai-era-database-default-20260529.html">MongoDB 在 AI 时代相对不好用了吗？数据库默认选择变化与股价压力调研</a></p>
-                <p><a href="/share/mongodb-ai-era-database-default-20260529.html">Is MongoDB Less Compelling in the AI Era? Database Defaults, AI Agents, and Stock Pressure</a></p>
-                <p><a href="/share/diskless-kafka-iceberg-lakehouse-20260528.html">Diskless Kafka、Lakehouse/Iceberg 与学术前沿调研</a></p>
-                <p><a href="/share/diskless-kafka-iceberg-lakehouse-20260528.html">Survey: Diskless Kafka, Lakehouse/Iceberg, and the Academic Frontier</a></p>
+                <ul class="research-list" id="research-list" aria-label="Latest articles"></ul>
+                <p><a href="/share/">全部文章 / All articles →</a></p>
             </div>
         </section>
 
@@ -122,5 +139,42 @@
             <p>&copy; 2024 Simin You. All rights reserved.</p>
         </footer>
     </div>
+    <script>
+        // Use the publishing pipeline's article index as the single source of truth.
+        async function loadLatestArticles() {
+            try {
+                const response = await fetch('/share/index.html', { cache: 'no-cache' });
+                if (!response.ok) throw new Error(`Article index: ${response.status}`);
+                const index = new DOMParser().parseFromString(await response.text(), 'text/html');
+                const articles = [];
+                for (const section of index.querySelectorAll('.article-date-section')) {
+                    const date = section.querySelector('h3')?.textContent.trim();
+                    if (!/^\d{4}-\d{2}-\d{2}$/.test(date || '')) continue;
+                    for (const source of section.querySelectorAll('.article-list a')) {
+                        const url = new URL(source.getAttribute('href'), new URL('/share/', location.origin));
+                        if (url.origin !== location.origin || !url.pathname.startsWith('/share/')) continue;
+                        articles.push({ date, title: source.textContent.trim(), url });
+                    }
+                }
+                articles.sort((a, b) => b.date.localeCompare(a.date));
+                const items = articles.slice(0, 6).map(article => {
+                    const item = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = article.url.href;
+                    const date = document.createElement('time');
+                    date.dateTime = article.date;
+                    date.textContent = article.date;
+                    link.append(date, document.createTextNode(article.title));
+                    item.append(link);
+                    return item;
+                });
+                document.getElementById('research-list').replaceChildren(...items);
+            } catch (error) {
+                // The permanent all-articles link also works without JavaScript.
+                console.error('Could not load latest articles', error);
+            }
+        }
+        loadLatestArticles();
+    </script>
 </body>
 </html>
