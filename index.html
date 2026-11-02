@@ -83,6 +83,40 @@
         .research-list a:focus-visible { outline: 2px solid #0066cc; outline-offset: 2px; }
         .research-list time { display: block; color: #7f8c8d; font-size: 0.9rem; }
 
+        .project-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+            list-style: none;
+        }
+
+        .project-list li { min-width: 0; }
+        .project-list a {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ecf0f1;
+            border-radius: 8px;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+
+        .project-list a:hover { border-color: #7f8c8d; }
+        .project-list a:focus-visible { outline: 2px solid #0066cc; outline-offset: 2px; }
+        .project-list h3 { font-size: 1.1rem; font-weight: 500; margin-bottom: 8px; }
+        .project-list p { color: #555; font-size: 0.95rem; margin-bottom: 16px; }
+        .project-link { margin-top: auto; color: #0066cc; font-size: 0.9rem; overflow-wrap: anywhere; }
+        .source-list { padding-left: 20px; color: #555; }
+        .source-list li { margin-bottom: 12px; }
+        .source-list a, .github-links a { color: #0066cc; }
+        .github-links { margin-top: 20px; }
+
+        @media (max-width: 540px) {
+            .project-list { grid-template-columns: 1fr; }
+        }
+
         footer {
             text-align: center;
             margin-top: 80px;
@@ -126,6 +160,77 @@
             </div>
         </section>
 
+        <section class="projects" aria-labelledby="projects-heading">
+            <h2 id="projects-heading">Projects</h2>
+            <ul class="project-list">
+                <li>
+                    <a href="https://justfoldpaper.com/">
+                        <h3>Just Fold Paper</h3>
+                        <p>交互式折纸与纸飞机教程，逐步跟折、旋转查看，附可打印图解。</p>
+                        <span class="project-link">justfoldpaper.com ↗</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://snipfold.com/">
+                        <h3>SnipFold</h3>
+                        <p>纸花与立体纸艺模板，结合 3D 组装指引和可下载的打印模板。</p>
+                        <span class="project-link">snipfold.com ↗</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://nyc-family-weekend.pages.dev/">
+                        <h3>NYC Family Activities</h3>
+                        <p>纽约市与 Nassau County 亲子活动地图，支持日期、年龄、地区和费用筛选，中英双语。</p>
+                        <span class="project-link">nyc-family-weekend.pages.dev ↗</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://smail.simin.you/">
+                        <h3>Smail</h3>
+                        <p>原生 iOS Gmail 整理工具，每次处理十封邮件，滑动分类；网站提供演示与源码入口。</p>
+                        <span class="project-link">smail.simin.you ↗</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://cards.simin.you/">
+                        <h3>Cards · 单词卡</h3>
+                        <p>轻量英文学习卡片，随机抽卡、翻面和词库筛选，内置 Fry 1000 常用词。</p>
+                        <span class="project-link">cards.simin.you ↗</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://lunzige.pages.dev/">
+                        <h3>问轮子哥</h3>
+                        <p>可复制的 AI Prompt 与公开观点资料，按核心论点和表达风格分层阅读。</p>
+                        <span class="project-link">lunzige.pages.dev ↗</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://weixin.md/">
+                        <h3>weixin.md</h3>
+                        <p>面向用户与 AI Agent 的微信官方链接导航和使用指引，非官方网站。</p>
+                        <span class="project-link">weixin.md ↗</span>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+        <section class="open-source" aria-labelledby="open-source-heading">
+            <h2 id="open-source-heading">Open Source</h2>
+            <ul class="source-list">
+                <li><a href="https://github.com/siminyou-agent/nyc-family-activities">NYC Family Activities</a> — 活动网站源码与带来源的开放数据。</li>
+                <li><a href="https://github.com/siminyou-agent/smail">Smail</a> — 中英双语的原生 iOS 邮件整理工具。</li>
+                <li><a href="https://github.com/siminyou-agent/cards">Cards</a> — 静态网页单词卡。</li>
+                <li><a href="https://github.com/siminyou-agent/voiceflow-backend">VoiceFlow Backend</a> — 自托管语音转写 API，兼容 OpenAI 接口，附实时浏览器演示。</li>
+                <li><a href="https://github.com/siminyou-agent/health-quantification">Health Quantification</a> — 基于 Apple Health、SQLite 与 CLI 的个人健康量化工具（fork）。</li>
+                <li><a href="https://github.com/syoummer/opencode_ios_client">OpenCode iOS Client</a> — OpenCode 的 iOS 客户端（fork）。</li>
+                <li><a href="https://github.com/siminyou-agent/HappyHerd">HappyHerd</a> — 基于 Happy 的开源 AI Agent 运行与协作工具（fork）。</li>
+                <li><a href="https://github.com/syoummer/SpatialSpark">SpatialSpark</a> — 基于 Apache Spark 的大规模空间数据处理。</li>
+                <li><a href="https://github.com/syoummer/close-tab">Close Tab</a> — 随机关闭一个标签页的 Chrome 扩展。</li>
+                <li><a href="https://github.com/syoummer/llm-todo">llm-todo</a> — 与 LLM 共创的 C++20 命令行待办工具。</li>
+            </ul>
+            <p class="github-links">更多公开仓库：<a href="https://github.com/syoummer?tab=repositories">syoummer</a> · <a href="https://github.com/siminyou-agent?tab=repositories">siminyou-agent</a></p>
+        </section>
 
         <section class="research">
             <h2>Research</h2>
