@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>问一问 · Asks — Simin You</title>
+    <meta name="description" content="换个视角想问题。选择人物，复制专属 Prompt，让 AI 结合整理好的观点资料与你讨论。从问轮子哥开始。">
+    <link rel="canonical" href="https://simin.you/asks/">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.7;
+            min-height: 100vh;
+        }
+        main { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
+        a { color: #0066cc; }
+        a:focus-visible { outline: 2px solid #0066cc; outline-offset: 4px; }
+        .back { display: inline-block; margin-bottom: 40px; text-decoration: none; }
+        header { margin-bottom: 40px; }
+        .eyebrow { color: #555; font-size: 0.9rem; letter-spacing: 0.12em; margin-bottom: 8px; }
+        h1 { color: #2c3e50; font-size: 2.5rem; font-weight: 400; margin-bottom: 12px; }
+        .intro { color: #555; font-size: 1.1rem; }
+        .people { list-style: none; display: grid; gap: 20px; }
+        .person {
+            display: block;
+            padding: 28px;
+            background: #fff;
+            border: 1px solid #e0e4e8;
+            border-radius: 12px;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        .person:hover { border-color: #7f8c8d; }
+        h2 { font-size: 1.5rem; font-weight: 500; }
+        .handle { color: #555; font-size: 0.9rem; margin-bottom: 16px; }
+        .description { color: #555; margin-bottom: 20px; }
+        .topics { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+        .topics span { background: #f0f4f8; padding: 3px 10px; border-radius: 4px; font-size: 0.85rem; }
+        .action { color: #0066cc; }
+        .how { margin-top: 40px; color: #555; }
+        .how h2 { color: #34495e; font-size: 1.1rem; margin-bottom: 12px; }
+        .how ol { padding-left: 24px; }
+        .how li { margin-bottom: 8px; }
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid #e0e4e8; color: #555; font-size: 0.9rem; }
+        @media (max-width: 540px) {
+            main { padding: 32px 20px; }
+            h1 { font-size: 2rem; }
+            .person { padding: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <a class="back" href="/">← Simin You</a>
+        <header>
+            <p class="eyebrow">ASKS</p>
+            <h1>问一问</h1>
+            <p class="intro">换个视角想问题。选一个人物，让 AI 结合整理好的观点资料，陪你讨论。</p>
+        </header>
+
+        <ul class="people" aria-label="选择人物">
+            <li>
+                <a class="person" href="https://lunzige.pages.dev/">
+                    <h2>问轮子哥</h2>
+                    <p class="handle">轮子哥 / GeniusVczh</p>
+                    <p class="description">从软件工程与 AI 编程出发，看看一种重视证据、条件和工程判断的思考方式。</p>
+                    <div class="topics" aria-label="话题">
+                        <span>AI 编程</span>
+                        <span>软件工程</span>
+                        <span>工程判断</span>
+                    </div>
+                    <span class="action">打开资料与 Prompt →</span>
+                </a>
+            </li>
+        </ul>
+
+        <section class="how" aria-labelledby="how-heading">
+            <h2 id="how-heading">怎么问？</h2>
+            <ol>
+                <li>打开人物页面，复制专属 Prompt。</li>
+                <li>粘贴给能读取网页的 AI，并在末尾写下你的问题。</li>
+                <li>让 AI 根据资料中的观点和适用条件，与你讨论。</li>
+            </ol>
+        </section>
+
+        <footer>这里提供的是基于整理资料的 AI 模拟，不是人物本人的回答。</footer>
+    </main>
+</body>
+</html>
