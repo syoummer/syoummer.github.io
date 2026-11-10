@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research · Simin You</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        .container { max-width: 800px; margin: 0 auto; padding: 60px 20px; }
+        a { color: #0066cc; }
+        nav { margin-bottom: 40px; }
+        header { margin-bottom: 40px; }
+        h1 { font-size: 2.5rem; font-weight: 300; color: #2c3e50; }
+        .subtitle { font-size: 1.1rem; color: #7f8c8d; }
+        h2 { font-size: 1.5rem; font-weight: 400; color: #34495e; margin-bottom: 20px; }
+        .research-list { display: grid; gap: 12px; list-style: none; margin-bottom: 20px; }
+        .research-list a {
+            display: block;
+            padding: 16px 20px;
+            background: #fff;
+            border: 1px solid #ecf0f1;
+            border-radius: 8px;
+            color: #2c3e50;
+            text-decoration: none;
+        }
+        .research-list a:hover { border-color: #7f8c8d; }
+        a:focus-visible { outline: 2px solid #0066cc; outline-offset: 2px; }
+        .research-list time { display: block; color: #7f8c8d; font-size: 0.9rem; }
+        @media (max-width: 768px) {
+            .container { padding: 40px 20px; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <main class="container">
+        <nav aria-label="Navigation"><a href="/">← Simin You</a></nav>
+        <header>
+            <h1>Research</h1>
+            <p class="subtitle">研究与探索</p>
+        </header>
+        <section aria-labelledby="latest-heading">
+            <h2 id="latest-heading">最新文章 / Latest articles</h2>
+            <ul class="research-list" id="research-list" aria-label="Latest articles"></ul>
+            <p><a href="/share/">全部文章 / All articles →</a></p>
+        </section>
+    </main>
+    <script>
+        // Use the publishing pipeline's article index as the single source of truth.
+        async function loadLatestArticles() {
+            try {
+                const response = await fetch('/share/index.html', { cache: 'no-cache' });
+                if (!response.ok) throw new Error(`Article index: ${response.status}`);
+                const index = new DOMParser().parseFromString(await response.text(), 'text/html');
+                const articles = [];
+                for (const section of index.querySelectorAll('.article-date-section')) {
+                    const date = section.querySelector('h3')?.textContent.trim();
+                    if (!/^\d{4}-\d{2}-\d{2}$/.test(date || '')) continue;
+                    for (const source of section.querySelectorAll('.article-list a')) {
+                        const url = new URL(source.getAttribute('href'), new URL('/share/', location.origin));
+                        if (url.origin !== location.origin || !url.pathname.startsWith('/share/')) continue;
+                        articles.push({ date, title: source.textContent.trim(), url });
+                    }
+                }
+                articles.sort((a, b) => b.date.localeCompare(a.date));
+                const items = articles.slice(0, 6).map(article => {
+                    const item = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = article.url.href;
+                    const date = document.createElement('time');
+                    date.dateTime = article.date;
+                    date.textContent = article.date;
+                    link.append(date, document.createTextNode(article.title));
+                    item.append(link);
+                    return item;
+                });
+                document.getElementById('research-list').replaceChildren(...items);
+            } catch (error) {
+                // The permanent all-articles link also works without JavaScript.
+                console.error('Could not load latest articles', error);
+            }
+        }
+        loadLatestArticles();
+    </script>
+</body>
+</html>
